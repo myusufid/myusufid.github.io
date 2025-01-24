@@ -1,40 +1,42 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu handling
-    const menuToggle = document.querySelector('.navbar-toggler');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            const navMenu = document.querySelector('.navbar-collapse');
-            navMenu.classList.toggle('show');
-        });
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    function setTheme(isDark) {
+        document.body.classList.toggle('dark-theme', isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
-
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        setTheme(savedTheme === 'dark');
+    } else {
+        setTheme(prefersDark.matches);
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        setTheme(!document.body.classList.contains('dark-theme'));
+    });
+    
+    // Code block copy functionality
+    document.querySelectorAll('pre code').forEach(block => {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.innerHTML = 'Copy';
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-wrapper';
+        block.parentNode.parentNode.insertBefore(wrapper, block.parentNode);
+        wrapper.appendChild(block.parentNode);
+        
+        wrapper.appendChild(button);
+        
+        button.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(block.textContent);
+            button.innerHTML = 'Copied!';
+            setTimeout(() => button.innerHTML = 'Copy', 2000);
         });
-    });
-
-    // Active link highlighting
-    const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-link').forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-            link.classList.add('active');
-        }
-    });
-
-    // Lazy loading images
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        img.setAttribute('src', img.getAttribute('data-src'));
-        img.onload = function() {
-            img.removeAttribute('data-src');
-        };
     });
 });

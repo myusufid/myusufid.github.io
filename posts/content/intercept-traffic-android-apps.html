@@ -1,0 +1,38 @@
+<!--
+title: Intercept Traffic Android Apps
+description: 
+date: 2024-02-16
+tags: android
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Intercept Traffic Android Apps with Memu, Http Toolkit, & ADB</h1>
+    <div class="meta mb-4">October 17, 2024</div>
+
+    <div class="content">
+        <p>Dalam pengembangan aplikasi, terkadang kita ingin debugging semua traffic network di aplikasi mobile. Kita dapat melihat semua itu dengan melakukan intercept pada traffic tersebut.</p>
+
+        <h2>Steps</h2>
+        <ol>
+            <li>Download <a href="https://www.memuplay.com/" target="_blank">Memu emulator Android</a></li>
+            <li>Download <a href="https://httptoolkit.tech/" target="_blank">HTTP Toolkit</a></li>
+            <li>Download aplikasi Android HTTP Toolkit di Memu</li>
+            <li>Download adb toolkit – Download the Android SDK Platform Tools ZIP file for Windows</li>
+            <li>Buka Terminal</li>
+            <li>Masuk ke folder toolkit adb</li>
+            <li>Running program adb</li>
+            <li>Konek ke Memu dengan menjalankan perintah berikut:
+                <pre><code>./adb connect localhost:21503</code></pre>
+            </li>
+            <li>Jika berhasil, kembali ke HTTP Toolkit. Terhubunglah ke Memu dari HTTP Toolkit dengan menggunakan menu android device yang terhubung melalui ADB.</li>
+        </ol>
+
+        <h2>Referensi</h2>
+        <ul>
+            <li><a href="https://www.xda-developers.com/install-adb-windows-macos-linux/" target="_blank">XDA - Install ADB on Windows, macOS & Linux</a></li>
+            <li><a href="https://docs.genymotion.com/desktop/latest/03_Virtual_devices.html#managing-virtual-devices" target="_blank">Genymotion Docs - Managing Virtual Devices</a></li>
+            <li><a href="https://support.genymotion.com/hc/en-us/articles/360002738297-How-to-connect-to-a-Genymotion-Desktop-virtual-device-remotely-with-ADB-" target="_blank">Genymotion Support - Connect to Virtual Device with ADB</a></li>
+        </ul>
+    </div>
+</article>

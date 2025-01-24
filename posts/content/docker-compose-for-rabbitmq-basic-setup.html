@@ -1,0 +1,64 @@
+<!--
+title: Docker Compose for RabbitMQ: Basic Setup
+description: Learn how to set up RabbitMQ locally using Docker Compose with persistent storage, management UI, and secure defaults
+date: 2024-02-16
+tags: docker, rabbitmq, devops, message-queue
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Docker Compose for RabbitMQ: Basic Setup</h1>
+    <div class="meta mb-4">16/02/2024</div>
+    
+    <div class="content">
+        <p>Setting up RabbitMQ locally for development can be streamlined using Docker Compose. Here's a practical guide to get you started.</p>
+
+        <h2>Basic Setup</h2>
+        <p>Create a new file named <code>docker-compose.yml</code> with this configuration:</p>
+
+        <pre><code data-lang="sh">version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    ports:
+      - "5672:5672"   # AMQP protocol port
+      - "15672:15672" # Management UI port
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data:</code></pre>
+
+        <h2>Running the Container</h2>
+        <p>Start RabbitMQ using:</p>
+        <pre><code>docker-compose up -d</code></pre>
+
+        <h2>Accessing Management UI</h2>
+        <ol>
+            <li>Open <code>http://localhost:15672</code></li>
+            <li>Login with:
+                <ul>
+                    <li>Username: admin</li>
+                    <li>Password: admin123</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Persistent storage using named volume</li>
+            <li>Management UI enabled</li>
+            <li>Custom default credentials</li>
+            <li>Standard AMQP port mapping</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge bg-light text-dark">#Docker</span>
+            <span class="badge bg-light text-dark">#RabbitMQ</span>
+            <span class="badge bg-light text-dark">#DevOps</span>
+        </div>
+    </div>
+</article>
