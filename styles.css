@@ -1,0 +1,37 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.blog-list article {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.blog-list .meta {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.nav-link {
+    color: #333;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    color: #0066cc;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+}
