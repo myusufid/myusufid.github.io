@@ -1,0 +1,38 @@
+<!--
+title: Trigger job queue tinker laravel
+description: Learn how to manually trigger Laravel job queues using Tinker for testing and debugging purposes
+date: 2024-02-16
+tags: laravel, php, queue, tips, debugging
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Cara Trigger Job Queue di Tinker Laravel</h1>
+    <div class="meta mb-4">February 16, 2024</div>
+
+    <div class="content">
+        <p>Berikut contoh cara trigger Job Queue di Tinker Laravel.</p>
+
+        <h2>Langkah-langkah</h2>
+        <ol>
+            <li>Pertama masuk ke tinker laravel:
+                <pre><code>php artisan tinker</code></pre>
+            </li>
+            <li>Lalu masukan command berikut:
+                <pre><code>\Queue::push(new \App\Jobs\ManualTriggerPush(\App\Models\User::find(634)))</code></pre>
+            </li>
+        </ol>
+
+        <h2>Output</h2>
+        <pre><code>Psy Shell v0.10.12 (PHP 7.4.20 — cli) by Justin Hileman
+New version is available (current: v0.10.12, latest: v0.11.10)
+>>> \Queue::push(new \App\Jobs\ManualTriggerPush(\App\Models\User::find(634)))</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Laravel</span>
+            <span class="badge">#PHP</span>
+            <span class="badge">#Queue</span>
+            <span class="badge">#Tips</span>
+        </div>
+    </div>
+</article>
