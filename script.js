@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle mobile menu toggle
+    // Mobile menu handling
     const menuToggle = document.querySelector('.navbar-toggler');
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
@@ -8,13 +8,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add smooth scrolling to all links
+    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
+    });
+
+    // Active link highlighting
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
+
+    // Lazy loading images
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        img.setAttribute('src', img.getAttribute('data-src'));
+        img.onload = function() {
+            img.removeAttribute('data-src');
+        };
     });
 });
