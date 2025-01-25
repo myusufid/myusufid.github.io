@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Solution for handling unique email constraints with soft deletes using partial index">
-    <title>Database Tips: Email Unique Softdeletes | M Yusuf - Backend Developer</title>
+    <meta name="description" content="Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter">
+    <title>Using Blade Formatter | M Yusuf - Backend Developer</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Solution for handling unique email constraints with soft deletes using partial index">
+    <meta name="description" content="Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter">
     <meta name="author" content="M Yusuf">
     <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Database Tips: Email Unique Softdeletes | M Yusuf - Backend Developer">
-    <meta property="og:description" content="Solution for handling unique email constraints with soft deletes using partial index">
+    <meta property="og:title" content="Using Blade Formatter | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://myusufid.github.io">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Database Tips: Email Unique Softdeletes | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="Solution for handling unique email constraints with soft deletes using partial index">
+    <meta name="twitter:title" content="Using Blade Formatter | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
@@ -61,34 +61,25 @@
 
     <main class="container py-5">
         <article class="blog-post">
-    <h1>Database Tips: Email Unique untuk Softdeletes</h1>
+    <h1>Using Blade Formatter to Automatically Format All Blade Files</h1>
     <div class="meta mb-4">October 30, 2021</div>
 
     <div class="content">
-        <p>Terkadang mau bikin column email yang unique, tapi bakal jadi masalah kalau kita menggunakan softdeletes fitur.</p>
+        <p>Blade-formatter adalah alat yang digunakan untuk memformat template Blade, templating yang digunakan dalam framework PHP Laravel. Ini dirancang untuk membantu supaya para developer menjaga gaya yang konsisten di template Blade mereka.</p>
 
-        <h2>Solusi</h2>
-        <p>Solusinya dengan menggunakan partial index berikut ini:</p>
+        <p>Untuk menggunakan blade-formatter, Anda harus menginstallnya melalui composer, package manager untuk PHP. Setelah terinstall, Anda dapat menjalankannya dari command line dengan menentukan path ke template Blade Anda.</p>
 
-        <pre><code lang="sql">ALTER TABLE users ADD COLUMN email_unique varchar(512) 
-    GENERATED ALWAYS AS (
-        CONCAT(email, '#', IF(deleted_at IS NULL, '-', deleted_at))
-    ) VIRTUAL;
+        <p>Secara keseluruhan, blade-formatter adalah alat yang berharga bagi setiap developer yang bekerja dengan template Blade. Ini membantu untuk memastikan bahwa template Anda terformat dengan baik dan bebas dari kesalahan sintaksis, menghemat waktu dan usaha dalam jangka panjang.</p>
 
-CREATE UNIQUE INDEX email_unique ON users (email_unique);</code></pre>
-
-        <h2>Referensi</h2>
-        <ul>
-            <li><a href="https://www.itsolutionstuff.com/post/laravel-unique-validation-with-soft-delete-exampleexample.html" target="_blank">Laravel Unique Validation with Soft Delete Example</a></li>
-            <li><a href="https://twitter.com/tobias_petry/status/1454085321180819457/photo/1" target="_blank">Original Twitter Thread by Tobias Petry</a></li>
-        </ul>
+        <h2>Resources</h2>
+        <p>Check the package: <a href="https://github.com/shufo/blade-formatter?utm=github" target="_blank">blade-formatter on GitHub</a></p>
 
         <div class="tags mt-4">
-            <span class="badge">#Database</span>
-            <span class="badge">#MySQL</span>
             <span class="badge">#Laravel</span>
-            <span class="badge">#Tips</span>
-            <span class="badge">#SoftDeletes</span>
+            <span class="badge">#Blade</span>
+            <span class="badge">#PHP</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Formatting</span>
         </div>
     </div>
 </article>
