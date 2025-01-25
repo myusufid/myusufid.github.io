@@ -16,7 +16,7 @@ author: M Yusuf
         <h2>Solusi</h2>
         <p>Solusinya dengan menggunakan partial index berikut ini:</p>
 
-        <pre><code>ALTER TABLE users ADD COLUMN email_unique varchar(512) 
+        <pre><code lang="sql">ALTER TABLE users ADD COLUMN email_unique varchar(512) 
     GENERATED ALWAYS AS (
         CONCAT(email, '#', IF(deleted_at IS NULL, '-', deleted_at))
     ) VIRTUAL;
