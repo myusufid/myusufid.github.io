@@ -1,0 +1,257 @@
+<!--
+title: Laravel Envoy Deployment Configuration
+description: Complete example of Laravel Envoy configuration for automated deployment with staging and production environments
+date: 2024-02-16
+tags: laravel, envoy, deployment, devops, automation
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Laravel Envoy Deployment Configuration</h1>
+    <div class="meta mb-4">February 16, 2024</div>
+
+    <div class="content">
+        <h2>Server Configuration</h2>
+        <pre><code>@setup
+$__container->servers([
+    'staging' => 'user@ip_address',
+    'production' => ['user@ip_address -p 8288'],
+]);
+@endsetup</code></pre>
+
+        <h2>Environment Setup</h2>
+        <pre><code>@setup
+$repository = 'git@gitlab.com:username/awesome_project_ever.git';
+$releases_dir = '/var/www/html/app/awesome_project_ever/releases';
+$app_dir = '/var/www/html/app/awesome_project_ever';
+$release = date('YmdHis');
+$new_release_dir = $releases_dir .'/'. $release;
+$branch = isset($branch) ? $branch : "master";
+if($server == "staging"){
+    $branch = "staging";
+}
+@endsetup</code></pre>
+
+        <h2>Deployment Story</h2>
+        <pre><code>@story('deploy',['on' => $server,'parallel' => true])
+clone_repository
+run_composer
+update_symlinks
+deployment_migrate
+deployment_cache
+clean_old_releases
+set_permission_folder
+say_finished
+@endstory</code></pre>
+
+        <h2>Task Definitions</h2>
+
+        <h3>Clone Repository</h3>
+        <pre><code>@task('clone_repository')
+echo 'Cloning repository'
+[ -d {{ $releases_dir }} ] || mkdir {{ $releases_dir }}
+git clone --depth 1 {{ $repository }} --branch={{ $branch }} {{ $new_release_dir }}
+@endtask</code></pre>
+
+        <h3>Run Composer</h3>
+        <pre><code>@task('run_composer')
+echo "Starting deployment ({{ $release }})"
+cd {{ $new_release_dir }}
+composer install --prefer-dist --no-scripts -q -o
+@endtask</code></pre>
+
+        <h3>Update Symlinks</h3>
+        <pre><code>@task('update_symlinks')
+echo "Linking storage directory"
+cp -R {{ $new_release_dir }}/storage {{ $app_dir }}
+rm -rf {{ $new_release_dir }}/storage
+ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
+
+cp -R {{ $new_release_dir }}/public {{ $app_dir }}
+rm -rf {{ $new_release_dir }}/public/images
+ln -nfs {{ $app_dir }}/public/images {{ $new_release_dir }}/public/images
+
+echo 'Linking .env file'
+ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
+
+echo 'Linking current release'
+ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
+@endtask</code></pre>
+
+        <h3>Database Migration</h3>
+        <pre><code>@task('deployment_migrate')
+echo "Migrating..."
+php {{ $new_release_dir }}/artisan migrate --force --no-interaction
+@endtask</code></pre>
+
+        <h3>Cache Management</h3>
+        <pre><code>@task('deployment_cache')
+echo "clearing cache..."
+php {{ $new_release_dir }}/artisan cache:clear --quiet
+php {{ $new_release_dir }}/artisan config:clear
+echo "Cache cleared"
+@endtask</code></pre>
+
+        <h3>Cleanup Old Releases</h3>
+        <pre><code>@task('clean_old_releases')
+echo "Cleaning old releases ..."
+rm -rf `ls -dt {{ $app_dir }}/releases/* | tail -n +4`
+@endtask</code></pre>
+
+        <h3>Set Permissions</h3>
+        <pre><code>@task('set_permission_folder')
+echo "Set permission folder"
+cd {{ $app_dir }}
+sudo chgrp -R www-data storage public
+sudo chmod -R ug+rwx storage public
+
+cd {{ $app_dir }}/current
+sudo chgrp -R www-data bootstrap/cache
+sudo chmod -R ug+rwx bootstrap/cache
+@endtask</code></pre>
+
+        <h3>Slack Notification</h3>
+        <pre><code>@finished
+@slack('https://hooks.slack.com/services/(Kode)', '#gitlab-activities', "Deployed {$server}")
+@endfinished</code></pre>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>Create .env file</li>
+            <li>Create folder storage</li>
+            <li>Create folder public/images</li>
+        </ul>
+
+        <h2>Usage</h2>
+        <p>For staging deployment:</p>
+        <pre><code>envoy run deploy --server=staging</code></pre>
+
+        <p>For production deployment:</p>
+        <pre><code>envoy run deploy --server=production</code></pre>
+
+        <p>Full Code</p>
+        <pre><code>
+
+            @setup
+$__container->servers([
+    'staging' => 'user@ip_address',
+    'production' => ['user@ip_address -p 8288'],
+]);
+@endsetup
+
+@setup
+    $repository = 'git@gitlab.com:username/awesome_project_ever.git';
+    $releases_dir = '/var/www/html/app/awesome_project_ever/releases';
+    $app_dir = '/var/www/html/app/awesome_project_ever';
+    $release = date('YmdHis');
+    $new_release_dir = $releases_dir .'/'. $release;
+    $branch = isset($branch) ? $branch : "master";
+    if($server == "staging"){
+        $branch = "staging";
+    }
+@endsetup
+
+@story('deploy',['on' => $server,'parallel' => true])
+    clone_repository
+    run_composer
+    update_symlinks
+    deployment_migrate
+    deployment_cache
+    clean_old_releases
+    set_permission_folder
+    say_finished
+@endstory
+
+@task('clone_repository')
+    echo 'Cloning repository'
+    [ -d {{ $releases_dir }} ] || mkdir {{ $releases_dir }}
+    git clone --depth 1 {{ $repository }} --branch={{ $branch }} {{ $new_release_dir }}
+@endtask
+
+@task('run_composer')
+    echo "Starting deployment ({{ $release }})"
+    cd {{ $new_release_dir }}
+    composer install --prefer-dist --no-scripts -q -o
+@endtask
+
+@task('update_symlinks')
+    echo "Linking storage directory"
+    cp -R {{ $new_release_dir }}/storage {{ $app_dir }}
+    rm -rf {{ $new_release_dir }}/storage
+    ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
+
+    cp -R {{ $new_release_dir }}/public {{ $app_dir }}
+    rm -rf {{ $new_release_dir }}/public/images
+    ln -nfs {{ $app_dir }}/public/images {{ $new_release_dir }}/public/images
+
+    echo 'Linking .env file'
+    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
+
+    echo 'Linking current release'
+    ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
+@endtask
+
+@task('deployment_migrate')
+    echo "Migrating..."
+    php {{ $new_release_dir }}/artisan migrate --force --no-interaction
+@endtask
+
+@task('deployment_cache')
+    echo "clearing cache..."
+    php {{ $new_release_dir }}/artisan cache:clear --quiet
+    php {{ $new_release_dir }}/artisan config:clear
+    echo "Cache cleared"
+@endtask
+
+@task('clean_old_releases')
+  echo "Cleaning old releases ..."
+  rm -rf `ls -dt {{ $app_dir }}/releases/* | tail -n +4`
+@endtask
+
+@task('set_permission_folder')
+    echo "Set permission folder"
+    cd {{ $app_dir }}
+    sudo chgrp -R www-data storage public
+    sudo chmod -R ug+rwx storage public
+
+    cd {{ $app_dir }}/current
+    sudo chgrp -R www-data bootstrap/cache
+    sudo chmod -R ug+rwx bootstrap/cache
+@endtask
+
+
+@finished
+    @slack('https://hooks.slack.com/services/(Kode)', '#gitlab-activities', "Deployed {$server}")
+@endfinished
+
+@task('say_finished')
+    echo "Finished..."
+@endtask
+
+
+
+{{--
+
+create .env
+create folder storage
+create folder public/images
+
+How to run : 
+if staging
+envoy run deploy --server=staging
+
+if production
+envoy run deploy --server=production
+
+--}}
+        </code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Envoy</span>
+            <span class="badge">#Deployment</span>
+            <span class="badge">#DevOps</span>
+            <span class="badge">#Automation</span>
+        </div>
+    </div>
+</article>
