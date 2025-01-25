@@ -1,0 +1,40 @@
+<!--
+title: Database Tips: Email Unique untuk Softdeletes
+description: Solution for handling unique email constraints with soft deletes using partial index
+date: 2021-10-30
+tags: database, mysql, laravel, tips, softdeletes
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Database Tips: Email Unique untuk Softdeletes</h1>
+    <div class="meta mb-4">October 30, 2021</div>
+
+    <div class="content">
+        <p>Terkadang mau bikin column email yang unique, tapi bakal jadi masalah kalau kita menggunakan softdeletes fitur.</p>
+
+        <h2>Solusi</h2>
+        <p>Solusinya dengan menggunakan partial index berikut ini:</p>
+
+        <pre><code>ALTER TABLE users ADD COLUMN email_unique varchar(512) 
+    GENERATED ALWAYS AS (
+        CONCAT(email, '#', IF(deleted_at IS NULL, '-', deleted_at))
+    ) VIRTUAL;
+
+CREATE UNIQUE INDEX email_unique ON users (email_unique);</code></pre>
+
+        <h2>Referensi</h2>
+        <ul>
+            <li><a href="https://www.itsolutionstuff.com/post/laravel-unique-validation-with-soft-delete-exampleexample.html" target="_blank">Laravel Unique Validation with Soft Delete Example</a></li>
+            <li><a href="https://twitter.com/tobias_petry/status/1454085321180819457/photo/1" target="_blank">Original Twitter Thread by Tobias Petry</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Database</span>
+            <span class="badge">#MySQL</span>
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Tips</span>
+            <span class="badge">#SoftDeletes</span>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,54 @@
+<!--
+title: Docker Commands Cheat Sheet
+description: Essential Docker commands for local development and container management
+date: 2024-02-16
+tags: docker, devops, containers, tips
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Docker Commands yang Paling Sering Digunakan</h1>
+    <div class="meta mb-4">February 16, 2024</div>
+
+    <div class="content">
+        <p>Berikut adalah beberapa cheat sheet command Docker yang berguna saat sedang melakukan development atau bekerja di lingkungan local:</p>
+
+        <h2>Container Management</h2>
+        <p>Menghentikan semua container yang sedang berjalan:</p>
+        <pre><code>docker container stop $(docker container ls -a -q)</code></pre>
+
+        <p>Menghapus semua container:</p>
+        <pre><code>docker container rm $(docker container ls -a -q)</code></pre>
+
+        <p>Memulai container dan detach:</p>
+        <pre><code>docker-compose up -d</code></pre>
+
+        <p>Melihat log container:</p>
+        <pre><code>docker logs container_name</code></pre>
+
+        <h2>Volume & Image Cleanup</h2>
+        <p>Menghapus semua volume:</p>
+        <pre><code>docker volume rm $(docker volume ls -q)</code></pre>
+
+        <p>Menghapus semua image:</p>
+        <pre><code>docker rmi -f $(docker images -aq)</code></pre>
+
+        <p>Menghapus semua container, volume, dan network yang tidak digunakan:</p>
+        <pre><code>docker system prune -a --volumes</code></pre>
+
+        <h2>Container Access</h2>
+        <p>Masuk ke bash container:</p>
+        <pre><code>docker-compose exec workspace bash</code></pre>
+
+        <p>Melihat IP Container:</p>
+        <pre><code>docker container ls
+docker inspect {container_id} | grep "IP Address"</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Docker</span>
+            <span class="badge">#DevOps</span>
+            <span class="badge">#Containers</span>
+            <span class="badge">#Tips</span>
+        </div>
+    </div>
+</article>

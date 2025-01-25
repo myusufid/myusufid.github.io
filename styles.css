@@ -29,6 +29,18 @@ body.dark-theme {
     letter-spacing: -0.5px;
 }
 
+.brand a {
+    color: var(--text-primary-light);
+}
+
+.dark-theme .brand a {
+    color: var(--text-primary-dark);
+}
+
+.brand a:hover {
+    color: var(--accent-color);
+}
+
 .subtitle {
     color: var(--text-secondary-light);
 }

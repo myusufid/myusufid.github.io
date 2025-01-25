@@ -72,6 +72,7 @@ def build_index(posts_metadata, template_file, output_file):
         template = f.read()
     
     index_html = template.replace('<!-- CONTENT -->', '\n'.join(posts_html))
+    index_html = index_html.replace('<!-- TITLE -->', 'Beranda')
     
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(index_html)

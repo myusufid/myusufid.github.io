@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>About Me | M Yusuf - Backend Developer</title>
+    <meta name="description" content="Learn how to import MySQL databases in Laradock environment using Docker commands">
+    <title>Import Database MYSQL Laradock | M Yusuf - Backend Developer</title>
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to import MySQL databases in Laradock environment using Docker commands">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Import Database MYSQL Laradock | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Learn how to import MySQL databases in Laradock environment using Docker commands">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Import Database MYSQL Laradock | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Learn how to import MySQL databases in Laradock environment using Docker commands">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="../styles.css" rel="stylesheet">
     <link href="../torchlight.css" rel="stylesheet">
 
@@ -19,7 +32,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@torchlight-api/torchlight-cli@0.1.x/dist/theme.min.css">
 
 </head>
-
 <body>
     <header class="py-4">
         <div class="container">
@@ -48,65 +60,23 @@
     </header>
 
     <main class="container py-5">
-        <!-- CONTENT -->
         <article class="blog-post">
-            <h1>About Me</h1>
+    <h1>Import Database MYSQL di Laradock</h1>
+    <div class="meta mb-4">October 28, 2021</div>
 
-            <div class="content">
-                <p class="lead mb-4">I'm Yusuf, a Software Engineer with four years of experience.</p>
+    <div class="content">
+        <p>Command untuk import database MySQL di environment Laradock:</p>
 
-                <h2>Core Technologies</h2>
-                <p>My expertise lies in a diverse range of technologies and tools, including:</p>
-                <ul>
-                    <li>Laravel</li>
-                    <li>Ruby on Rails</li>
-                    <li>Linux</li>
-                    <li>Gitlab (CI/CD)</li>
-                    <li>PHP Storm</li>
-                    <li>ZSH</li>
-                    <li>AWS (Lambda, RDS, AutoScalling, Load Balancer, ElastiCache, CodeDeploy, S3, EC2)</li>
-                    <li>Google Cloud Platform (BigQuery)</li>
-                    <li>Huawei Cloud (AutoScalling, Load Balancer, ECS)</li>
-                    <li>Docker</li>
-                    <li>Golang</li>
-                    <li>GoFiber</li>
-                </ul>
+        <pre><code>docker-compose exec -T mysql mysql -uroot -proot databasename < ~/Downloads/databasefile.sql</code></pre>
 
-                <h2>Additional Skills</h2>
-                <p>Additionally, I have hands-on experience with:</p>
-                <ul>
-                    <li>Rust Language</li>
-                    <li>Micro Services</li>
-                    <li>Kubernetes</li>
-                </ul>
-
-                <h2>Work Opportunities</h2>
-                <p>I am actively seeking part-time opportunities as a Backend Developer, specializing in:</p>
-                <ul>
-                    <li>Creating APIs</li>
-                    <li>Backend Systems</li>
-                    <li>Web Applications</li>
-                    <li>Custom Web App</li>
-                    <li>Microsites</li>
-                </ul>
-
-                <div class="contact-section mt-5">
-                    <h2>Get in Touch</h2>
-                    <p>You can reach out to me via email at <a href="mailto:muhammadyusuf931@gmail.com"
-                            class="text-accent">muhammadyusuf931@gmail.com</a> for inquiries or collaborations.</p>
-                </div>
-
-                <div class="tech-stack mt-5">
-                    <span class="badge">Laravel</span>
-                    <span class="badge">Rails</span>
-                    <span class="badge">AWS</span>
-                    <span class="badge">Docker</span>
-                    <span class="badge">Go</span>
-                    <span class="badge">K8s</span>
-                </div>
-            </div>
-        </article>
-
+        <div class="tags mt-4">
+            <span class="badge">#MySQL</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Laradock</span>
+            <span class="badge">#Database</span>
+        </div>
+    </div>
+</article>
     </main>
 
     <footer class="footer py-4">
@@ -122,8 +92,7 @@
                 </div>
                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                     <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
-                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i
-                            class="bi bi-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
         </div>
@@ -132,5 +101,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../script.js"></script>
 </body>
-
 </html>
