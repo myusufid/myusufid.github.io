@@ -1,0 +1,53 @@
+<!--
+title: Running Gitlab on Local with Gitlab Runner
+description: Guide to setup and run Gitlab Runner locally with Docker integration
+date: 2021-11-22
+tags: gitlab, docker, ci-cd, runner
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Running Gitlab on Local with Gitlab Runner</h1>
+    <div class="meta mb-4">November 22, 2021</div>
+
+    <div class="content">
+        <h2>Install GitLab Runner</h2>
+        <p>Install using Homebrew:</p>
+        <pre><code>brew install gitlab-runner</code></pre>
+
+        <p>Start GitLab Runner service:</p>
+        <pre><code>brew services start gitlab-runner</code></pre>
+
+        <h2>Configure Docker Registry Access</h2>
+        <p>Add credentials to <code>/Users/muhyusuf/.docker/config.json</code> for private registry access:</p>
+
+        <pre><code>{
+    "auths": {
+        "registry.gitlab.com": {
+            "username": "iambbb",
+            "password": "password"
+        }
+    },
+    "credsStore": "desktop",
+    "experimental": "disabled", 
+    "stackOrchestrator": "swarm",
+    "currentContext": "default"
+}</code></pre>
+
+        <h2>Run Specific Pipeline Stage</h2>
+        <p>Execute specific stage (e.g., unit_test):</p>
+        <pre><code>sudo gitlab-runner exec docker unit_test</code></pre>
+
+        <p>Reference:</p>
+        <ul>
+            <li><a href="https://docs.gitlab.com/runner/install/osx.html#homebrew-installation-alternative">GitLab Runner Installation Guide</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#GitLab</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#CI-CD</span>
+            <span class="badge">#Runner</span>
+        </div>
+    </div>
+</article>

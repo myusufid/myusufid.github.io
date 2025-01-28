@@ -1,0 +1,59 @@
+<!--
+title: Laradock mkcert Setup
+description: Guide to setup SSL certificates with mkcert in Laradock environment
+date: 2021-11-17
+tags: laradock, docker, ssl, mkcert
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Laradock + mkcert Setup</h1>
+    <div class="meta mb-4">November 17, 2021</div>
+
+    <div class="content">
+        <p>Generate SSL certificate in laradock/certbot/letsencrypt folder:</p>
+
+        <pre><code>sudo mkcert -install
+sudo mkcert dev.jepara.com</code></pre>
+
+        <p>Update docker-compose.yml nginx configuration:</p>
+
+        <pre><code>nginx:
+  build:
+    context: ./nginx
+    args:
+      - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+      - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+      - CHANGE_SOURCE=${CHANGE_SOURCE}
+      - http_proxy
+      - https_proxy
+      - no_proxy
+  volumes:
+    - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+    - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+    - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+    - ./data/certbot/certs/:/var/certs
+    - ./certbot/letsencrypt/:/var/www/letsencrypt</code></pre>
+
+        <p>Add SSL configuration to jepara.conf in nginx/sites:</p>
+
+        <pre><code># For https
+listen 443 ssl;
+#listen [::]:443 ssl ipv6only=on;
+ssl_certificate /var/www/letsencrypt/dev.jepara.com.pem;
+ssl_certificate_key /var/www/letsencrypt/dev.jepara.com-key.pem;</code></pre>
+
+        <p>Rebuild and restart nginx container:</p>
+
+        <pre><code>docker-compose build nginx
+docker-compose restart nginx</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Laradock</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#SSL</span>
+            <span class="badge">#mkcert</span>
+        </div>
+    </div>
+</article>

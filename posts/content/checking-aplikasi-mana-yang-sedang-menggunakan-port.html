@@ -1,0 +1,25 @@
+<!--
+title: Checking Aplikasi Mana yang Sedang Menggunakan Port
+description: How to check which applications are using specific ports on your system
+date: 2021-11-27
+tags: terminal, ports, networking, linux
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Checking Aplikasi Mana yang Sedang Menggunakan Port</h1>
+    <div class="meta mb-4">November 27, 2021</div>
+
+    <div class="content">
+        <p>To check which application is using port 9200 (or any other port):</p>
+
+        <pre><code>sudo lsof -i -P -n | grep LISTEN | grep 9200</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Terminal</span>
+            <span class="badge">#Ports</span>
+            <span class="badge">#Networking</span>
+            <span class="badge">#Linux</span>
+        </div>
+    </div>
+</article>

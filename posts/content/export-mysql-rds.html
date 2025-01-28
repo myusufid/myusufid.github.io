@@ -1,0 +1,44 @@
+<!--
+title: Export MYSQL RDS
+description: Guide for exporting MySQL databases using mysqldump including RDS AWS backups
+date: 2021-11-27
+tags: mysql, rds, aws, backup
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Export MYSQL / RDS</h1>
+    <div class="meta mb-4">November 27, 2021</div>
+
+    <div class="content">
+        <h2>Backup RDS MySQL AWS</h2>
+        <pre><code>mysqldump -h xxxxxxx.ap-southeast-3.rds.amazonaws.com -u adminxxxx --password=passwordxxx databasexxx --set-gtid-purged=OFF > /home/ubuntu/waikiki/backup_database_26jan2024.sql</code></pre>
+
+        <h2>Single Database Backup</h2>
+        <pre><code>mysqldump -u root -ppassword wpdb > wpdb_backup.sql</code></pre>
+
+        <h2>Multiple Database Backup</h2>
+        <pre><code>mysqldump -u root -ppassword --databases wpdb1 wpdb2 wpdb3 > wpdb_backup3.sql</code></pre>
+
+        <h2>All Database Backup</h2>
+        <pre><code>mysqldump -u root -ppassword --all-databases > alldb_backup.sql</code></pre>
+
+        <h2>Table Structure Only Backup</h2>
+        <pre><code>mysqldump -u root -ppassword --no-data wpdb > wpdb_backup.sql</code></pre>
+
+        <h2>Specific Table Backup</h2>
+        <pre><code>mysqldump -u root -ppassword --no-data wpdb wptable > wpdbtable_backup.sql</code></pre>
+
+        <p>Reference:</p>
+        <ul>
+            <li><a href="https://snapshooter.com/learn/mysqldump-ultimate-guide">MySQL Dump Ultimate Guide</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#MySQL</span>
+            <span class="badge">#RDS</span>
+            <span class="badge">#AWS</span>
+            <span class="badge">#Backup</span>
+        </div>
+    </div>
+</article>
