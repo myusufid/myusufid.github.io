@@ -1,6 +1,7 @@
 import os
 import re
 from datetime import datetime
+import json
 
 def extract_metadata(content):
     metadata = {
@@ -10,7 +11,8 @@ def extract_metadata(content):
         'tags': '',
         'author': 'M Yusuf',
         'image': '',
-        'keywords': ''
+        'keywords': '',
+        'content': ''  # Add content field
     }
     
     meta_match = re.search(r'<!--\s*(.*?)\s*-->', content, re.DOTALL)
@@ -21,6 +23,8 @@ def extract_metadata(content):
                 key, value = line.split(':', 1)
                 metadata[key.strip().lower()] = value.strip()
     
+    # Extract content by removing metadata
+    metadata['content'] = re.sub(r'<!--\s*(.*?)\s*-->', '', content, flags=re.DOTALL).strip()
     return metadata
 
 def generate_slug(title):
@@ -52,7 +56,7 @@ def build_page(content_file, template_file, output_file):
     
     return metadata
 
-def build_index(posts_metadata, template_file, output_file, posts_per_page=20):
+def build_index(posts_metadata, template_file, output_file, posts_per_page=40):
     # Sort posts by date
     sorted_posts = sorted(posts_metadata, key=lambda x: x['date'], reverse=True)
     
@@ -140,7 +144,22 @@ def build_site():
         os.path.join(template_dir, 'base.html'),
         'index.html'
     )
+    build_search_index(posts_metadata)
     print("Built index.html")
+
+def build_search_index(posts_metadata):
+    search_index = []
+    for meta in posts_metadata:
+        search_index.append({
+            'title': meta['title'],
+            'description': meta['description'],
+            'content': meta['content'],  # You'll need to add content to metadata
+            'url': f"posts/{generate_slug(meta['title'])}.html",
+            'tags': meta['tags']
+        })
+    
+    with open('search-index.json', 'w', encoding='utf-8') as f:
+        json.dump(search_index, f, ensure_ascii=False)
 
 if __name__ == "__main__":
     build_site()
