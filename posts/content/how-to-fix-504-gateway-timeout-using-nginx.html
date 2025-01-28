@@ -1,0 +1,64 @@
+<!--
+title: How to Fix 504 Gateway Timeout using Nginx
+description: Guide to resolve 504 Gateway Timeout errors in Nginx with FastCGI and Proxy configurations
+date: 2021-12-19
+tags: nginx, server, timeout, php-fpm
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to Fix 504 Gateway Timeout using Nginx</h1>
+    <div class="meta mb-4">December 19, 2021</div>
+
+    <div class="content">
+        <h2>Common Error Messages</h2>
+        <ul>
+            <li>"504 Gateway Timeout"</li>
+            <li>"504 Gateway Time-Out"</li>
+            <li>"504 Gateway Timeout NGINX"</li>
+            <li>"Nginx 504 Gateway Timeout"</li>
+            <li>"HTTP 504 Gateway Timeout"</li>
+            <li>"HTTP 504 Error"</li>
+            <li>"HTTP 504"</li>
+            <li>"Gateway Timeout (504)"</li>
+        </ul>
+
+        <h2>Fix for Nginx + FastCGI (php-fpm)</h2>
+        
+        <h3>1. Update PHP Configuration</h3>
+        <p>Modify php.ini file (/etc/php.ini):</p>
+        <pre><code>max_execution_time = 300</code></pre>
+
+        <h3>2. Update PHP-FPM Configuration</h3>
+        <p>Edit /etc/php-fpm.d/www.conf:</p>
+        <pre><code>request_terminate_timeout = 300</code></pre>
+
+        <h3>3. Update Nginx Virtual Host</h3>
+        <pre><code>location ~ .php$ {
+    root /var/www/sites/nginxtips.com;
+    try_files $uri =404;
+    fastcgi_pass unix:/tmp/php5-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+    fastcgi_read_timeout 300;
+}</code></pre>
+
+        <h2>Fix for Nginx as Proxy</h2>
+        <p>Add to nginx.conf:</p>
+        <pre><code>proxy_connect_timeout       600;
+proxy_send_timeout          600;
+proxy_read_timeout          600;
+send_timeout                600;</code></pre>
+
+        <h3>Reload Configuration</h3>
+        <pre><code>service nginx reload</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Nginx</span>
+            <span class="badge">#Server</span>
+            <span class="badge">#Timeout</span>
+            <span class="badge">#PHP-FPM</span>
+        </div>
+    </div>
+</article>

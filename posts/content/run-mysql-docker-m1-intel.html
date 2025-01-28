@@ -1,0 +1,42 @@
+<!--
+title: Run MySQL Docker M1 Intel
+description: Guide to run MySQL container on Docker for both M1 and Intel processors
+date: 2021-12-19
+tags: docker, mysql, m1, tableplus
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Run MySQL Docker on M1 & Intel</h1>
+    <div class="meta mb-4">December 19, 2021</div>
+
+    <div class="content">
+        <h2>Run on Terminal</h2>
+
+        <h3>For M1 Mac</h3>
+        <pre><code>docker run -d -p 3306:3306 --name mysql_container --platform linux/x86_64 --env MYSQL_ROOT_PASSWORD=12345 mysql</code></pre>
+
+        <h3>For Intel Mac</h3>
+        <pre><code>docker run -d -p 3306:3306 --name mysql_container --env MYSQL_ROOT_PASSWORD=12345 mysql</code></pre>
+
+        <img src="../../assets/images/Screen-Shot-2021-12-19-at-02.10.06.png" alt="Docker MySQL Running" class="img-fluid mb-4">
+
+        <h2>Connect Using TablePlus</h2>
+        <p>Configuration settings:</p>
+        <ul>
+            <li>Host: 127.0.0.1</li>
+            <li>User: root</li>
+            <li>Password: 12345</li>
+            <li>Port: 3306</li>
+        </ul>
+
+        <img src="../../assets/images/Screen-Shot-2021-12-06-at-03.02.46.png" alt="TablePlus Configuration" class="img-fluid">
+
+        <div class="tags mt-4">
+            <span class="badge">#Docker</span>
+            <span class="badge">#MySQL</span>
+            <span class="badge">#M1</span>
+            <span class="badge">#TablePlus</span>
+        </div>
+    </div>
+</article>
