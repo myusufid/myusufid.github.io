@@ -52,7 +52,7 @@ def build_page(content_file, template_file, output_file):
     
     return metadata
 
-def build_index(posts_metadata, template_file, output_file, posts_per_page=10):
+def build_index(posts_metadata, template_file, output_file, posts_per_page=20):
     # Sort posts by date
     sorted_posts = sorted(posts_metadata, key=lambda x: x['date'], reverse=True)
     
