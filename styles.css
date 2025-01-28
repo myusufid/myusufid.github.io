@@ -256,3 +256,37 @@ pre code {
         font-size: 2rem;
     }
 }
+
+
+/* Pagination Styles */
+.pagination-wrapper {
+    margin-top: 3rem;
+}
+
+.pagination .page-link {
+    color: var(--text-primary-light);
+    background-color: var(--bg-light);
+    border-color: var(--border-light);
+    padding: 0.5rem 1rem;
+}
+
+.dark-theme .pagination .page-link {
+    color: var(--text-primary-dark);
+    background-color: var(--bg-dark);
+    border-color: var(--border-dark);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.pagination .page-link:hover {
+    color: var(--accent-color);
+    background-color: var(--code-bg-light);
+}
+
+.dark-theme .pagination .page-link:hover {
+    background-color: var(--code-bg-dark);
+}

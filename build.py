@@ -52,30 +52,66 @@ def build_page(content_file, template_file, output_file):
     
     return metadata
 
-def build_index(posts_metadata, template_file, output_file):
-    posts_html = []
-    for meta in sorted(posts_metadata, key=lambda x: x['date'], reverse=True):
-        posts_html.append(f'''
-            <article class="post">
-                <div class="meta">{meta['date']}</div>
-                <h3>
-                    <a href="posts/{generate_slug(meta['title'])}.html">{meta['title']}</a>
-                </h3>
-                <p>{meta['description']}</p>
-                <div class="tags">
-                    {' '.join(f'<span class="badge bg-light text-dark">#{tag.strip()}</span>' for tag in meta['tags'].split(','))}
-                </div>
-            </article>
-        ''')
+def build_index(posts_metadata, template_file, output_file, posts_per_page=5):
+    # Sort posts by date
+    sorted_posts = sorted(posts_metadata, key=lambda x: x['date'], reverse=True)
     
-    with open(template_file, 'r', encoding='utf-8') as f:
-        template = f.read()
+    # Calculate total pages
+    total_posts = len(sorted_posts)
+    total_pages = (total_posts + posts_per_page - 1) // posts_per_page
     
-    index_html = template.replace('<!-- CONTENT -->', '\n'.join(posts_html))
-    index_html = index_html.replace('<!-- TITLE -->', 'Beranda')
-    
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(index_html)
+    for page in range(total_pages):
+        start_idx = page * posts_per_page
+        end_idx = start_idx + posts_per_page
+        current_posts = sorted_posts[start_idx:end_idx]
+        
+        posts_html = []
+        for meta in current_posts:
+            posts_html.append(f'''
+                <article class="post">
+                    <div class="meta">{meta['date']}</div>
+                    <h3>
+                        <a href="posts/{generate_slug(meta['title'])}.html">{meta['title']}</a>
+                    </h3>
+                    <p>{meta['description']}</p>
+                    <div class="tags">
+                        {' '.join(f'<span class="badge bg-light text-dark">#{tag.strip()}</span>' for tag in meta['tags'].split(','))}
+                    </div>
+                </article>
+            ''')
+        
+        # Add pagination HTML
+        pagination_html = '''
+        <nav class="pagination-wrapper">
+            <ul class="pagination justify-content-center">
+        '''
+        
+        for i in range(total_pages):
+            active_class = 'active' if i == page else ''
+            pagination_html += f'''
+                <li class="page-item {active_class}">
+                    <a class="page-link" href="{'index.html' if i == 0 else f'page{i+1}.html'}">{i+1}</a>
+                </li>
+            '''
+        
+        pagination_html += '''
+            </ul>
+        </nav>
+        '''
+        
+        with open(template_file, 'r', encoding='utf-8') as f:
+            template = f.read()
+        
+        index_html = template.replace('<!-- CONTENT -->', '\n'.join(posts_html) + pagination_html)
+        index_html = index_html.replace('<!-- TITLE -->', 'Beranda')
+        
+        # Generate output filename
+        output_name = 'index.html' if page == 0 else f'page{page+1}.html'
+        output_path = os.path.join(os.path.dirname(output_file), output_name)
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(index_html)
+
 
 def build_site():
     # Setup paths
