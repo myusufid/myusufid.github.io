@@ -1,15 +1,27 @@
-/* Add Torchlight theme customization */
-.torchlight {
+pre {
+    position: relative;
     border-radius: 8px;
     margin: 1.5rem 0;
 }
 
-.torchlight pre {
+pre code {
     padding: 1.5rem;
     font-family: 'JetBrains Mono', monospace;
+    display: block;
+    overflow-x: auto;
 }
 
-.torchlight-copy {
+/* Light theme */
+pre code[theme="github"] {
+    background: #f6f8fa;
+}
+
+/* Dark theme */
+.dark-theme pre code[theme="monokai"] {
+    background: #272822;
+}
+
+.copy-button {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
