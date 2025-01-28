@@ -1,0 +1,75 @@
+<!--
+title: Compress Directory with Tar
+description: Guide to compressing and extracting files using tar command
+date: 2024-02-04
+tags: linux, cli, compression, tar
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Compress Directory with Tar</h1>
+    <div class="meta mb-4">February 4, 2024</div>
+
+    <div class="content">
+        <h2>Compression</h2>
+        <pre><code lang="bash">tar -czvf name-of-archive.tar.gz /path/to/directory-or-file</code></pre>
+
+        <h2>Options Explained</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>-c</code></td>
+                    <td>Create an archive</td>
+                </tr>
+                <tr>
+                    <td><code>-z</code></td>
+                    <td>Compress the archive with gzip</td>
+                </tr>
+                <tr>
+                    <td><code>-v</code></td>
+                    <td>Display progress in terminal (verbose mode)</td>
+                </tr>
+                <tr>
+                    <td><code>-f</code></td>
+                    <td>Specify the filename of the archive</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Extraction</h2>
+        <pre><code lang="bash">tar -xzvf archive.tar.gz</code></pre>
+
+        <h2>Common Use Cases</h2>
+        <pre><code lang="bash"># Compress multiple directories
+tar -czvf backup.tar.gz dir1 dir2 dir3
+
+# Compress excluding certain files
+tar -czvf archive.tar.gz --exclude='*.log' directory/
+
+# Extract to specific directory
+tar -xzvf archive.tar.gz -C /target/directory/
+
+# List contents without extracting
+tar -tvf archive.tar.gz</code></pre>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Use meaningful archive names</li>
+            <li>Include date in backup archives</li>
+            <li>Verify archive contents after creation</li>
+            <li>Check available disk space before compression</li>
+            <li>Use verbose mode for better tracking</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#CLI</span>
+            <span class="badge">#Compression</span>
+            <span class="badge">#Tar</span>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server">
+    <title>Deploy Ruby on Rails with Capistrano and Ubuntu Server | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Deploy Ruby on Rails with Capistrano and Ubuntu Server | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Deploy Ruby on Rails with Capistrano and Ubuntu Server | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Deploy Ruby on Rails with Capistrano and Ubuntu Server</h1>
+    <div class="meta mb-4">September 3, 2023</div>
+
+    <div class="content">
+        <h2>Step 1: Install Dependencies</h2>
+        <pre><code lang="bash">sudo apt-get update && sudo apt-get -y upgrade
+sudo apt install zlib1g-dev build-essential libssl-dev libreadline-dev
+sudo apt install libyaml-dev libsqlite3-dev sqlite3 libxml2-dev
+sudo apt install libxslt1-dev libcurl4-openssl-dev
+sudo apt install software-properties-common libffi-dev nodejs
+sudo apt install git
+sudo apt install nginx
+sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev libsqlite3-dev</code></pre>
+
+        <h2>Step 2: Setup Rbenv</h2>
+        <pre><code lang="bash">git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+rbenv init
+type rbenv</code></pre>
+
+        <h2>Step 3: Setup Ruby Build</h2>
+        <pre><code lang="bash">git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build</code></pre>
+
+        <h2>Step 4: Install Ruby</h2>
+        <pre><code lang="bash">RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.7.5
+rbenv rehash
+echo "gem: --no-document" > ~/.gemrc</code></pre>
+
+        <h2>Step 5-8: Install Rails, Puma, Bundler, Node-JS and Yarn</h2>
+        <pre><code lang="bash">gem install rails
+gem install puma
+gem install bundler -v 2.1.4 --no-ri --no-rdoc
+sudo apt-get install nodejs
+sudo apt install yarn</code></pre>
+
+        <h2>Step 9: Install MySQL Dependencies</h2>
+        <pre><code lang="bash">sudo apt-get install libmysqlclient-dev
+gem install mysql2 -v '0.5.0' --source 'https://rubygems.org/'</code></pre>
+
+        <h2>Step 10: SSH Configuration</h2>
+        <pre><code lang="bash">ssh-keygen -o -t rsa -b 4096 -C "ubuntu@13.250.29.89"
+chmod o+x $HOME</code></pre>
+
+        <h2>Step 11: Capistrano Setup</h2>
+        <pre><code lang="ruby">group :development do
+  gem "web-console"
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-puma'
+end</code></pre>
+
+        <h2>Step 12-13: Initialize Capistrano and Database Config</h2>
+        <pre><code lang="bash">cd root-project
+cap install STAGES=production</code></pre>
+
+        <h2>Step 14-16: Service Configuration</h2>
+        <p>Configure Puma service, set secret key, and setup Nginx for your application.</p>
+
+        <h3>Puma Service Configuration</h3>
+        <pre><code lang="ini">[Unit]
+Description=Puma HTTP Server for timetable (production)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/timetable/current
+ExecStart=/home/ubuntu/.rbenv/bin/rbenv exec bundle exec --keep-file-descriptors puma -C /home/ubuntu/timetable/shared/puma.rb
+ExecReload=/bin/kill -USR1 $MAINPID
+StandardOutput=append:/home/ubuntu/timetable/current/log/puma.access.log
+StandardError=append:/home/ubuntu/timetable/current/log/puma.error.log
+
+Restart=always
+RestartSec=1
+
+SyslogIdentifier=puma
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+
+        <h3>Nginx Configuration</h3>
+        <pre><code lang="nginx">upstream timetable_app {
+  server unix:/home/ubuntu/timetable/shared/tmp/sockets/puma.sock fail_timeout=0;
+}
+
+server {
+  listen 80;
+  server_name _;
+  root /home/ubuntu/timetable/current/public;
+
+  location / {
+    try_files $uri/index.html $uri @timetable_app;
+  }
+
+  location @timetable_app {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://timetable_app;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+}</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Ruby</span>
+            <span class="badge">#Rails</span>
+            <span class="badge">#Capistrano</span>
+            <span class="badge">#Ubuntu</span>
+            <span class="badge">#Deployment</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

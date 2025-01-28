@@ -1,0 +1,100 @@
+<!--
+title: How to Install InfluxDB using Docker
+description: Step-by-step guide for installing InfluxDB and its client using Docker
+date: 2023-10-09
+tags: influxdb, docker, database, monitoring, timeseries
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to Install InfluxDB using Docker</h1>
+    <div class="meta mb-4">October 9, 2023</div>
+
+    <div class="content">
+        <h2>Setup InfluxDB</h2>
+        <p>Create directory and navigate to it:</p>
+        <pre><code lang="bash">mkdir influxdb
+cd influxdb</code></pre>
+
+        <h2>Docker Compose Configuration</h2>
+        <p>Create docker-compose.yml file:</p>
+        <pre><code lang="yaml">version: '3.8'
+
+services:
+  influxdb:
+    image: quay.io/influxdb/influxdb:v2.0.4
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
+      - DOCKER_INFLUXDB_INIT_ORG=mycompany
+      - DOCKER_INFLUXDB_INIT_BUCKET=geoip2influx
+    volumes:
+      - ./influxdb-data:/var/lib/influxdb2
+    networks:
+      - influxdb-net
+
+networks:
+  influxdb-net:</code></pre>
+
+        <h2>Install InfluxDB Client</h2>
+        <p>Download and install the client:</p>
+        <pre><code lang="bash">wget https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.7.3-linux-amd64.tar.gz
+tar xvzf influxdb2-client-2.7.3-linux-amd64.tar.gz
+sudo cp influx /usr/local/bin/</code></pre>
+
+        <h2>Configure InfluxDB Client</h2>
+        <p>Create client configuration:</p>
+        <pre><code lang="bash">influx config create \
+    --config-name defaul-config \
+    --host-url http://localhost:8086 \
+    --org mycompany \
+    --token KIRocbUKK8dQ1knGakgs_QUtXqsbzH0b_YACP83Jqzl8nyc6Pye_dVK_yFO6RK_GX53kRwqu2ddxqHXEXG-b7nUQ== \
+    --active</code></pre>
+
+        <h2>Configuration Details</h2>
+        <ul>
+            <li><strong>Port:</strong> 8086</li>
+            <li><strong>Version:</strong> v2.0.4</li>
+            <li><strong>Default Credentials:</strong>
+                <ul>
+                    <li>Username: admin</li>
+                    <li>Password: adminpassword</li>
+                </ul>
+            </li>
+            <li><strong>Organization:</strong> mycompany</li>
+            <li><strong>Default Bucket:</strong> geoip2influx</li>
+        </ul>
+
+        <h2>Verification Steps</h2>
+        <ol>
+            <li>Start the containers:
+                <pre><code lang="bash">docker-compose up -d</code></pre>
+            </li>
+            <li>Check container status:
+                <pre><code lang="bash">docker ps | grep influxdb</code></pre>
+            </li>
+            <li>Access web interface:
+                <pre><code>http://localhost:8086</code></pre>
+            </li>
+        </ol>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Secure your token</li>
+            <li>Regular backups of data volume</li>
+            <li>Monitor disk usage</li>
+            <li>Set up retention policies</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#InfluxDB</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Monitoring</span>
+            <span class="badge">#TimeSeries</span>
+        </div>
+    </div>
+</article>

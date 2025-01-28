@@ -1,0 +1,82 @@
+<!--
+title: How to Delete AWS ACM Certificate Management from ELB
+description: Step-by-step guide to removing ACM certificates from Elastic Load Balancer
+date: 2024-06-06
+tags: aws, acm, elb, certificates
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to Delete AWS ACM Certificate Management from ELB</h1>
+    <div class="meta mb-4">June 6, 2024</div>
+
+    <div class="content">
+        <h2>Step-by-Step Instructions</h2>
+        <ol>
+            <li>Select your ELB</li>
+            <li>Select your HTTPS Listener</li>
+            <li>Navigate to the Certificates Tab to view "Listener certificates for SNI"</li>
+            <li>Remove the Certificate ID</li>
+            <li>Return to ACM console to delete the certificate</li>
+        </ol>
+
+        <h2>Detailed Process</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Step</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>EC2 Console > Load Balancers</td>
+                    <td>Select target ELB</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Listeners tab</td>
+                    <td>Find HTTPS listener</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Certificates tab</td>
+                    <td>View SNI certificates</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Certificate list</td>
+                    <td>Remove certificate</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>ACM Console</td>
+                    <td>Delete certificate</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Important Notes</h2>
+        <ul>
+            <li>Verify no other services use the certificate before deletion</li>
+            <li>Removal may take a few minutes to propagate</li>
+            <li>Keep backup of certificate details if needed</li>
+            <li>Consider impact on existing HTTPS connections</li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Document certificate removals</li>
+            <li>Schedule removal during low-traffic periods</li>
+            <li>Update DNS records if necessary</li>
+            <li>Review security group settings</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#AWS</span>
+            <span class="badge">#ACM</span>
+            <span class="badge">#ELB</span>
+            <span class="badge">#Certificates</span>
+        </div>
+    </div>
+</article>

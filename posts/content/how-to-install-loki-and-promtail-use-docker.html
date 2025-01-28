@@ -1,0 +1,83 @@
+<!--
+title: How to Install Loki and Promtail use Docker
+description: Step-by-step guide for installing Grafana Loki and Promtail using Docker
+date: 2023-10-09
+tags: grafana, loki, promtail, docker, monitoring
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to Install Loki and Promtail use Docker</h1>
+    <div class="meta mb-4">October 9, 2023</div>
+
+    <div class="content">
+        <h2>Setup Configuration Directory</h2>
+        <p>Create and navigate to configuration directory:</p>
+        <pre><code lang="bash">mkdir grafana_configs
+cd grafana_configs</code></pre>
+
+        <h2>Download Configuration Files</h2>
+        <p>Get Loki and Promtail configuration files:</p>
+        <pre><code lang="bash">sudo wget https://raw.githubusercontent.com/grafana/loki/v2.8.0/cmd/loki/loki-local-config.yaml -O loki-config.yaml
+sudo wget https://raw.githubusercontent.com/grafana/loki/v2.8.0/clients/cmd/promtail/promtail-docker-config.yaml -O promtail-config.yaml</code></pre>
+
+        <h2>Run Loki Container</h2>
+        <p>Start Loki with mounted configuration:</p>
+        <pre><code lang="bash">docker run -d --name loki \
+    -v $(pwd):/mnt/config \
+    -p 3100:3100 \
+    grafana/loki:2.8.0 \
+    --config.file=/mnt/config/loki-config.yaml</code></pre>
+
+        <h2>Run Promtail Container</h2>
+        <p>Start Promtail with mounted configuration and log access:</p>
+        <pre><code lang="bash">docker run -d --name promtail \
+    -v $(pwd):/mnt/config \
+    -v /var/log:/var/log \
+    --link loki \
+    grafana/promtail:2.8.0 \
+    --config.file=/mnt/config/promtail-config.yaml</code></pre>
+
+        <h2>Configuration Details</h2>
+        <ul>
+            <li><strong>Loki Port:</strong> 3100</li>
+            <li><strong>Version:</strong> 2.8.0</li>
+            <li><strong>Mounted Volumes:</strong>
+                <ul>
+                    <li>Configuration files: /mnt/config</li>
+                    <li>System logs: /var/log</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Verification Steps</h2>
+        <ol>
+            <li>Check container status:
+                <pre><code lang="bash">docker ps | grep 'loki\|promtail'</code></pre>
+            </li>
+            <li>Verify Loki is accessible:
+                <pre><code lang="bash">curl http://localhost:3100/ready</code></pre>
+            </li>
+            <li>Check logs for any issues:
+                <pre><code lang="bash">docker logs loki
+docker logs promtail</code></pre>
+            </li>
+        </ol>
+
+        <h2>Next Steps</h2>
+        <ul>
+            <li>Configure Loki as a data source in Grafana</li>
+            <li>Create log dashboards</li>
+            <li>Set up log alerts</li>
+            <li>Configure retention policies</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Grafana</span>
+            <span class="badge">#Loki</span>
+            <span class="badge">#Promtail</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Monitoring</span>
+        </div>
+    </div>
+</article>

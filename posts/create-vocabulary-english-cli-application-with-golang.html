@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Building a CLI application to display random English words with meanings using Golang">
+    <title>Create Vocabulary English CLI Application with Golang | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Building a CLI application to display random English words with meanings using Golang">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Create Vocabulary English CLI Application with Golang | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Building a CLI application to display random English words with meanings using Golang">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Create Vocabulary English CLI Application with Golang | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Building a CLI application to display random English words with meanings using Golang">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Create Vocabulary English CLI Application with Golang</h1>
+    <div class="meta mb-4">April 12, 2022</div>
+
+    <div class="content">
+        <img src="../../assets/images/Screen-Shot-2022-04-12-at-09.51.37.png" alt="Vocabulary CLI Demo" class="img-fluid mb-4" />
+
+        <p>Aplikasi yang diharapkan adalah menampilkan word in english secara random bersama meaning dan examplenya setiap membuka Command Line.</p>
+
+        <h2>Tujuan</h2>
+        <p>Memperkaya kosakata bahasa English</p>
+
+        <h2>Dependencies</h2>
+        <ol>
+            <li>Framework CLI golang: <code>github.com/urfave/cli/v2</code></li>
+            <li>API Dictionary: <code>https://api.dictionaryapi.dev/api/v2/entries/en/</code></li>
+            <li>List English word: <code>github.com/bitcoinjs/bip39/blob/master/src/wordlists/english.json</code></li>
+            <li>Coloring text on Terminal: <code>github.com/fatih/color</code></li>
+        </ol>
+
+        <h2>Struktur Folder</h2>
+        <pre><code lang="plaintext">/vocabulary
+├── go.mod
+├── go.sum
+├── vocabulary.go
+└── word.json</code></pre>
+
+        <h2>Implementation</h2>
+        <pre><code lang="go">
+            package main
+
+import (
+  _ "embed"
+  "encoding/json"
+  "fmt"
+  "github.com/fatih/color"
+  "io/ioutil"
+  "log"
+  "math/rand"
+  "net/http"
+  "os"
+  "strings"
+  "time"
+
+  "github.com/urfave/cli/v2"
+)
+
+// ResponseDictionary converted by https://mholt.github.io/json-to-go/
+type ResponseDictionary []struct {
+  Word       string      `json:"word"`
+  Phonetic   string      `json:"phonetic"`
+  Phonetics  []Phonetics `json:"phonetics"`
+  Meanings   []Meanings  `json:"meanings"`
+  License    License     `json:"license"`
+  SourceUrls []string    `json:"sourceUrls"`
+}
+type License struct {
+  Name string `json:"name"`
+  URL  string `json:"url"`
+}
+type Phonetics struct {
+  Text      string  `json:"text"`
+  Audio     string  `json:"audio"`
+  SourceURL string  `json:"sourceUrl,omitempty"`
+  License   License `json:"license,omitempty"`
+}
+type Definitions struct {
+  Definition string        `json:"definition"`
+  Synonyms   []interface{} `json:"synonyms"`
+  Antonyms   []interface{} `json:"antonyms"`
+  Example    string        `json:"example,omitempty"`
+}
+type Meanings struct {
+  PartOfSpeech string        `json:"partOfSpeech"`
+  Definitions  []Definitions `json:"definitions"`
+  Synonyms     []interface{} `json:"synonyms"`
+  Antonyms     []interface{} `json:"antonyms"`
+}
+
+type Word []string
+
+//go:embed word.json
+var wordJson []byte
+
+func main() {
+  app := &cli.App{
+    Name: "vocabulary",
+    Usage: "get a word today",
+    Action: func(c *cli.Context) error {
+
+      var word Word
+      err := json.Unmarshal(wordJson, &word)
+      if err != nil {
+        return nil
+      }
+
+      rand.Seed(time.Now().UnixNano())
+      min := 0
+      max := len(word)
+      randomNumber := rand.Intn(max - min + 1) + min
+      wordToday := word[randomNumber]
+      URIBuilt := fmt.Sprintf("https://api.dictionaryapi.dev/api/v2/entries/en/%v", wordToday)
+      response, err := http.Get(URIBuilt)
+
+      if err != nil {
+        fmt.Print(err.Error())
+        os.Exit(1)
+      }
+
+      responseData, err := ioutil.ReadAll(response.Body)
+
+      var responseDictionary ResponseDictionary
+      err = json.Unmarshal(responseData, &responseDictionary)
+      if err != nil {
+        log.Fatal(err)
+      }
+      color.Set(color.FgYellow)
+      fmt.Println("Word:",strings.ToTitle(strings.ToLower(responseDictionary[0].Word)))
+      color.Unset()
+      fmt.Println("Meaning:", responseDictionary[0].Meanings[0].Definitions[0].Definition)
+
+      if responseDictionary[0].Meanings[0].Definitions[0].Example  != "" {
+        fmt.Println("Example:", responseDictionary[0].Meanings[0].Definitions[0].Example)
+      }
+      return nil
+    },
+  }
+
+  err := app.Run(os.Args)
+  if err != nil {
+    log.Fatal(err)
+  }
+}
+        </code></pre>
+
+        <h2>Installation</h2>
+        <pre><code lang="bash">cd vocabulary
+go install
+go build</code></pre>
+
+        <h2>Auto-start Configuration</h2>
+        <p>Biar setiap buka Command Line otomatis jalanin aplikasi golang, buka menu preferences di terminal ZSH, isi Login Shell dengan lokasi executed golang application</p>
+        
+        <img src="../../assets/images/Screen-Shot-2022-04-12-at-10.03.31.png" alt="ZSH Preferences Setup" class="img-fluid mb-4" />
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Random word selection</li>
+            <li>Word definitions and examples</li>
+            <li>Colored output for better readability</li>
+            <li>Auto-start capability</li>
+        </ul>
+
+        <h2>Source Code</h2>
+        <p>Full source code available on GitHub: <a href="https://github.com/myusufid/vocabulary-cli-golang" target="_blank">vocabulary-cli-golang</a></p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#CLI</span>
+            <span class="badge">#English</span>
+            <span class="badge">#Vocabulary</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux">
+    <title>UID User Identifier di Linux | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="UID User Identifier di Linux | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="UID User Identifier di Linux | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>UID (User Identifier) di Linux</h1>
+    <div class="meta mb-4">September 27, 2023</div>
+
+    <div class="content">
+        <h2>Pengertian UID</h2>
+        <p>UID adalah singkatan dari User Identifier. Ini adalah angka unik yang digunakan oleh sistem Linux untuk mengidentifikasi setiap pengguna dalam sistem. Saat seorang pengguna dibuat, sistem memberikan UID unik kepadanya. UID ini digunakan oleh sistem untuk mengenali pengguna secara internal, dan ini adalah bagian penting dari manajemen hak akses di Linux.</p>
+
+        <h2>Melihat UID Pengguna</h2>
+        <p>Untuk melihat UID pengguna di Linux, Anda dapat menggunakan perintah id:</p>
+        <pre><code lang="bash">id</code></pre>
+
+        <h2>Membuat Pengguna dengan UID Tertentu</h2>
+        <p>Untuk membuat pengguna baru dengan UID tertentu, Anda dapat menggunakan perintah useradd:</p>
+        <pre><code lang="bash">sudo useradd -u 1001 nama_pengguna_baru</code></pre>
+
+        <h2>Range UID di Linux</h2>
+        <ul>
+            <li><strong>0:</strong> Root user</li>
+            <li><strong>1-99:</strong> Predefined users</li>
+            <li><strong>100-999:</strong> System users</li>
+            <li><strong>1000+:</strong> Regular users</li>
+        </ul>
+
+        <h2>Perintah Berguna Terkait UID</h2>
+        <pre><code lang="bash"># Melihat UID pengguna tertentu
+id username
+
+# Melihat daftar semua user dengan UID
+cat /etc/passwd
+
+# Mengubah UID pengguna
+usermod -u new_uid username
+
+# Melihat file yang dimiliki user
+find / -user username</code></pre>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Gunakan UID di atas 1000 untuk pengguna regular</li>
+            <li>Dokumentasikan alokasi UID custom</li>
+            <li>Backup /etc/passwd sebelum modifikasi</li>
+            <li>Verifikasi kepemilikan file setelah mengubah UID</li>
+        </ul>
+
+        <h2>Keamanan</h2>
+        <ul>
+            <li>UID 0 memiliki akses penuh ke sistem</li>
+            <li>Batasi akses ke akun sistem</li>
+            <li>Monitor perubahan UID</li>
+            <li>Audit penggunaan sudo regularly</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#SystemAdmin</span>
+            <span class="badge">#Security</span>
+            <span class="badge">#Users</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

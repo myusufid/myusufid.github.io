@@ -1,0 +1,143 @@
+<!--
+title: The Ultimate Guide to Setting Up Your MacBook for Web Development
+description: Comprehensive guide to configuring a MacBook for web development with essential tools and software
+date: 2024-08-24
+tags: macos, development, tools, setup
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>The Ultimate Guide to Setting Up Your MacBook for Web Development</h1>
+    <div class="meta mb-4">August 24, 2024</div>
+
+    <div class="content">
+        <h2>1. Show Hidden Files</h2>
+        <pre><code lang="bash">defaults write com.apple.Finder AppleShowAllFiles true
+killall Finder</code></pre>
+
+        <h2>2. Package Manager</h2>
+        <pre><code lang="bash">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+brew update && brew upgrade && brew cleanup && brew doctor</code></pre>
+
+        <h2>3. Terminal Setup</h2>
+        <pre><code lang="bash">brew install --cask iterm2
+brew install git
+brew install zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
+
+        <h2>4. Development Tools</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Category</th>
+                    <th>Tools</th>
+                </tr>
+                <tr>
+                    <td>IDEs/Editors</td>
+                    <td>
+                        <ul>
+                            <li>Visual Studio Code</li>
+                            <li>PHPStorm</li>
+                            <li>PyCharm</li>
+                            <li>Goland</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Database Tools</td>
+                    <td>
+                        <ul>
+                            <li>TablePlus</li>
+                            <li>MySQL Workbench</li>
+                            <li>DBeaver</li>
+                            <li>DataGrip</li>
+                            <li>Another Redis Desktop Manager</li>
+                            <li>Getmedis</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Development Utils</td>
+                    <td>
+                        <ul>
+                            <li>Docker</li>
+                            <li>Lazydocker</li>
+                            <li>Postman</li>
+                            <li>HTTP Toolkit</li>
+                            <li>Lens Kubernetes</li>
+                            <li>VirtualBox</li>
+                            <li>Genymotion</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Productivity</td>
+                    <td>
+                        <ul>
+                            <li>Rectangle</li>
+                            <li>Alfred</li>
+                            <li>AltTab</li>
+                            <li>BetterTouchTool</li>
+                            <li>Spectacle</li>
+                            <li>TextSniper</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>File Management</td>
+                    <td>
+                        <ul>
+                            <li>CyberDuck</li>
+                            <li>Sourcetree</li>
+                            <li>Folx</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Writing/Documentation</td>
+                    <td>
+                        <ul>
+                            <li>Typora</li>
+                            <li>Boop</li>
+                            <li>Grammarly</li>
+                            <li>Anki</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Other Tools</td>
+                    <td>
+                        <ul>
+                            <li>Laravelshift</li>
+                            <li>Treblle</li>
+                            <li>Blocsapp</li>
+                            <li>Boom 3D</li>
+                            <li>1Password</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Installation Commands</h2>
+        <pre><code lang="bash"># Core development tools
+brew install --cask visual-studio-code docker iterm2
+
+# Database tools
+brew install --cask tableplus dbeaver
+
+# Productivity tools
+brew install --cask rectangle alfred alt-tab
+
+# Additional tools
+brew install --cask cyberduck sourcetree typora</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#macOS</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Setup</span>
+        </div>
+    </div>
+</article>

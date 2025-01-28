@@ -1,0 +1,93 @@
+<!--
+title: Git command yang paling sering digunakan
+description: Panduan perintah Git yang sering digunakan dalam pengembangan software
+date: 2024-10-17
+tags: git, version-control, development, commands
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Git command yang paling sering digunakan</h1>
+    <div class="meta mb-4">October 17, 2024</div>
+
+    <div class="content">
+        <h2>Branch Management</h2>
+
+        <h3>List Local Branches</h3>
+        <pre><code lang="bash">git branch</code></pre>
+        <p>Menampilkan semua branch lokal, dengan branch aktif yang ditandai.</p>
+
+        <h3>List Branches with Recent Commits</h3>
+        <pre><code lang="bash">git branch --sort=-committerdate --format="%(refname:short) - %(committerdate:relative)"</code></pre>
+        <p>Menampilkan branch berdasarkan urutan commit terbaru, dengan informasi waktu commit terakhir.</p>
+
+        <h3>List Recently Checked-out Branches</h3>
+        <pre><code lang="bash">git reflog</code></pre>
+        <p>Menampilkan log aktivitas Git terakhir, termasuk perpindahan antar branch.</p>
+
+        <h2>Common Git Operations</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Command</th>
+                    <th>Usage</th>
+                </tr>
+                <tr>
+                    <td>Status Check</td>
+                    <td><code>git status</code></td>
+                    <td>Melihat status perubahan</td>
+                </tr>
+                <tr>
+                    <td>Add Files</td>
+                    <td><code>git add .</code></td>
+                    <td>Menambahkan semua perubahan</td>
+                </tr>
+                <tr>
+                    <td>Commit</td>
+                    <td><code>git commit -m "message"</code></td>
+                    <td>Menyimpan perubahan</td>
+                </tr>
+                <tr>
+                    <td>Push</td>
+                    <td><code>git push origin branch</code></td>
+                    <td>Mengirim perubahan ke remote</td>
+                </tr>
+                <tr>
+                    <td>Pull</td>
+                    <td><code>git pull origin branch</code></td>
+                    <td>Mengambil perubahan dari remote</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Branch Operations</h2>
+        <pre><code lang="bash"># Create new branch
+git checkout -b new-branch
+
+# Switch branch
+git checkout existing-branch
+
+# Delete branch
+git branch -d branch-name
+
+# Force delete branch
+git branch -D branch-name</code></pre>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Selalu pull sebelum mulai bekerja</li>
+            <li>Commit dengan pesan yang jelas</li>
+            <li>Gunakan branch untuk fitur baru</li>
+            <li>Review perubahan sebelum commit</li>
+            <li>Backup branch penting</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Git</span>
+            <span class="badge">#VersionControl</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Commands</span>
+        </div>
+    </div>
+</article>

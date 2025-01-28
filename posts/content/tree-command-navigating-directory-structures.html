@@ -1,0 +1,98 @@
+<!--
+title: tree Command Navigating Directory Structures
+description: Guide to using the tree command for visualizing directory structures in Unix-like systems
+date: 2023-12-11
+tags: cli, unix, tools, filesystem
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>tree Command: Navigating Directory Structures</h1>
+    <div class="meta mb-4">December 11, 2023</div>
+
+    <div class="content">
+        <h2>Command Overview</h2>
+        <pre><code lang="bash">tree -I tmp -C</code></pre>
+
+        <div class="command-explanation">
+            <ul>
+                <li><code>tree</code>: This is a command-line utility that displays the contents of a directory in a tree-like format.</li>
+                <li><code>-I tmp</code>: This option is used to exclude a specific pattern or directory from the tree view. In this case, it excludes any directories or files with the name "tmp."</li>
+                <li><code>-C</code>: This option is used to colorize the output, making it more visually appealing by using different colors for different types of files.</li>
+            </ul>
+        </div>
+
+        <div class="image-container text-center my-4">
+            <img src="../../assets/images/Screenshot-2023-12-11-at-09.29.10.png" 
+                 alt="Tree Command Output Example" 
+                 class="img-fluid rounded"
+                 loading="lazy">
+        </div>
+
+        <h2>Installation</h2>
+        <p>Install tree command using Homebrew:</p>
+        <pre><code lang="bash">brew install tree</code></pre>
+
+        <h2>Common Options</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>-a</code></td>
+                    <td>Show all files (including hidden)</td>
+                </tr>
+                <tr>
+                    <td><code>-d</code></td>
+                    <td>List directories only</td>
+                </tr>
+                <tr>
+                    <td><code>-L n</code></td>
+                    <td>Limit depth to n levels</td>
+                </tr>
+                <tr>
+                    <td><code>-f</code></td>
+                    <td>Print full path prefix</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Use Cases</h2>
+        <ul>
+            <li>Project structure documentation</li>
+            <li>Directory navigation</li>
+            <li>File system exploration</li>
+            <li>Project organization</li>
+        </ul>
+
+        <h2>Example Commands</h2>
+        <pre><code lang="bash"># Show only directories
+tree -d
+
+# Limit depth to 2 levels
+tree -L 2
+
+# Exclude multiple patterns
+tree -I 'node_modules|tmp|cache'
+
+# Show with file size
+tree -sh</code></pre>
+
+        <h2>Tips</h2>
+        <ul>
+            <li>Use patterns to exclude unwanted directories</li>
+            <li>Combine options for specific needs</li>
+            <li>Redirect output to file for documentation</li>
+            <li>Use color output for better visibility</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#CLI</span>
+            <span class="badge">#Unix</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Filesystem</span>
+        </div>
+    </div>
+</article>

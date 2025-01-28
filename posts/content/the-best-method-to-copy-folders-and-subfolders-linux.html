@@ -1,0 +1,83 @@
+<!--
+title: The Best Method to Copy Folders and Subfolders : Linux
+description: Guide to efficiently copy folders and subfolders in Linux using the cp command
+date: 2023-09-26
+tags: linux, command-line, system-admin, tutorial
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>The Best Method to Copy Folders and Subfolders : Linux</h1>
+    <div class="meta mb-4">September 26, 2023</div>
+
+    <div class="content">
+        <h2>Introduction</h2>
+        <p>Copying folders and subfolders in a Linux environment is a common task, especially for system administrators, developers, and anyone working with files and directories. To efficiently duplicate directory structures, you need to use the right command and options.</p>
+
+        <h2>The cp Command</h2>
+        <p>The cp command in Linux is used to copy files and directories. To copy folders and their contents, including subfolders, you should use the -r or --recursive option.</p>
+
+        <h3>Basic Syntax</h3>
+        <pre><code lang="bash">cp -r source_directory destination_directory</code></pre>
+
+        <h3>Example Usage</h3>
+        <pre><code lang="bash">cp -r Yusuf/. /var/www/html/web_yusuf/</code></pre>
+
+        <h2>Why Use -r Option?</h2>
+        <p>The -r option is crucial when copying folders and subfolders because it ensures that all contents within the source directory are copied, including files and nested directories.</p>
+
+        <h2>Advantages of Using -r with cp</h2>
+        <ul>
+            <li><strong>Preserves Directory Structure:</strong> Maintains the entire directory hierarchy</li>
+            <li><strong>Recursively Copies Subdirectories:</strong> Handles all nested directories automatically</li>
+            <li><strong>Efficient:</strong> Quick way to copy large directory structures</li>
+        </ul>
+
+        <h2>Example Use Cases</h2>
+        <div class="use-cases">
+            <h3>Website Deployment</h3>
+            <pre><code lang="bash">cp -r website/. /var/www/html/production/</code></pre>
+
+            <h3>Backup Creation</h3>
+            <pre><code lang="bash">cp -r project/ project_backup_$(date +%Y%m%d)/</code></pre>
+
+            <h3>Development Environment</h3>
+            <pre><code lang="bash">cp -r src/ experimental_feature/</code></pre>
+        </div>
+
+        <h2>Additional Options</h2>
+        <table class="table">
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>-v</td>
+                <td>Verbose output</td>
+            </tr>
+            <tr>
+                <td>-p</td>
+                <td>Preserve permissions</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>Update only when source is newer</td>
+            </tr>
+        </table>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Always verify the destination path before copying</li>
+            <li>Use verbose mode (-v) for important operations</li>
+            <li>Consider using -p to preserve permissions when needed</li>
+            <li>Create backups before large copy operations</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#CommandLine</span>
+            <span class="badge">#SystemAdmin</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>

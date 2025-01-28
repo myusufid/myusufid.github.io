@@ -1,0 +1,96 @@
+<!--
+title: Flaky Tests
+description: Understanding and dealing with flaky tests in software testing
+date: 2023-11-09
+tags: testing, quality-assurance, development, best-practices
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Flaky Tests</h1>
+    <div class="meta mb-4">November 9, 2023</div>
+
+    <div class="content">
+        <h2>What are Flaky Tests?</h2>
+        <p>Flaky tests are defined as tests that return both passes and failures despite no changes to the code or the test itself.</p>
+
+        <h2>Common Causes</h2>
+        <ul>
+            <li>Asynchronous operations</li>
+            <li>Time dependencies</li>
+            <li>Shared state between tests</li>
+            <li>Race conditions</li>
+            <li>Network reliability</li>
+            <li>Resource constraints</li>
+        </ul>
+
+        <h2>Impact on Development</h2>
+        <ul>
+            <li>Reduced confidence in test suite</li>
+            <li>Increased build times</li>
+            <li>Developer frustration</li>
+            <li>Delayed releases</li>
+            <li>Technical debt</li>
+        </ul>
+
+        <h2>Solutions</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Problem</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>Async Issues</td>
+                    <td>Implement proper wait mechanisms</td>
+                </tr>
+                <tr>
+                    <td>Timing Problems</td>
+                    <td>Use deterministic time controls</td>
+                </tr>
+                <tr>
+                    <td>Shared State</td>
+                    <td>Isolate test environments</td>
+                </tr>
+                <tr>
+                    <td>Race Conditions</td>
+                    <td>Implement proper synchronization</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Best Practices</h2>
+        <ol>
+            <li>Isolate tests properly</li>
+            <li>Use deterministic data</li>
+            <li>Implement retry mechanisms</li>
+            <li>Monitor test execution times</li>
+            <li>Document known flaky tests</li>
+            <li>Set up proper test environments</li>
+        </ol>
+
+        <h2>Detection Strategies</h2>
+        <ul>
+            <li>Run tests multiple times</li>
+            <li>Use test analytics tools</li>
+            <li>Monitor test execution history</li>
+            <li>Implement logging for failures</li>
+        </ul>
+
+        <h2>Prevention Tips</h2>
+        <ul>
+            <li>Write deterministic tests</li>
+            <li>Avoid external dependencies when possible</li>
+            <li>Use proper mocking techniques</li>
+            <li>Implement proper cleanup routines</li>
+            <li>Regular test maintenance</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Testing</span>
+            <span class="badge">#QualityAssurance</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#BestPractices</span>
+        </div>
+    </div>
+</article>

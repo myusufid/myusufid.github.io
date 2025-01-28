@@ -1,0 +1,72 @@
+<!--
+title: How to check whether my user data passing to EC2 instance is working
+description: Guide to verifying EC2 user data script execution through log files
+date: 2024-01-26
+tags: aws, ec2, cloud-init, devops
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to check whether my user data passing to EC2 instance is working</h1>
+    <div class="meta mb-4">January 26, 2024</div>
+
+    <div class="content">
+        <h2>Verification Steps</h2>
+        <ol>
+            <li>SSH into your launched EC2 instance</li>
+            <li>Check the following log files:
+                <pre><code lang="bash">cat /var/log/cloud-init.log
+cat /var/log/cloud-init-output.log</code></pre>
+            </li>
+        </ol>
+
+        <h2>What to Look For</h2>
+        <ul>
+            <li>Complete script execution logs in cloud-init.log</li>
+            <li>Script output and errors in cloud-init-output.log</li>
+            <li>Creation of /etc/cloud directory</li>
+        </ul>
+
+        <h2>Additional Verification Methods</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Command</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td><code>cloud-init status</code></td>
+                    <td>Check cloud-init service status</td>
+                </tr>
+                <tr>
+                    <td><code>ls -l /etc/cloud</code></td>
+                    <td>Verify cloud directory creation</td>
+                </tr>
+                <tr>
+                    <td><code>grep cloud-init /var/log/syslog</code></td>
+                    <td>Search system logs for cloud-init entries</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Include logging statements in your user data script</li>
+            <li>Check logs immediately after instance launch</li>
+            <li>Monitor script execution time</li>
+            <li>Verify expected file/directory creation</li>
+            <li>Test scripts locally when possible</li>
+        </ul>
+
+        <div class="source-reference mt-4">
+            <p>Source: <a href="https://stackoverflow.com/questions/15904095/how-to-check-whether-my-user-data-passing-to-ec2-instance-is-working" target="_blank">Stack Overflow Discussion</a></p>
+        </div>
+
+        <div class="tags mt-4">
+            <span class="badge">#AWS</span>
+            <span class="badge">#EC2</span>
+            <span class="badge">#CloudInit</span>
+            <span class="badge">#DevOps</span>
+        </div>
+    </div>
+</article>

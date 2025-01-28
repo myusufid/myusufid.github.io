@@ -1,0 +1,81 @@
+<!--
+title: Lumen lifecycle
+description: Understanding the request lifecycle in Lumen framework
+date: 2024-02-01
+tags: lumen, php, framework, architecture
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Lumen lifecycle</h1>
+    <div class="meta mb-4">February 1, 2024</div>
+
+    <div class="content">
+        <div class="image-container text-center my-4">
+            <img src="../../assets/images/Lumen_lifecycle-new-run.png" 
+                 alt="Lumen Request Lifecycle Diagram" 
+                 class="img-fluid rounded"
+                 width="2000" 
+                 height="1500"
+                 loading="lazy">
+            <p class="text-muted mt-2">Lumen Framework Request Lifecycle Flow</p>
+        </div>
+
+        <h2>Key Components</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Stage</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Public Index</td>
+                    <td>Entry point of the application</td>
+                </tr>
+                <tr>
+                    <td>Application</td>
+                    <td>Bootstrap and service container setup</td>
+                </tr>
+                <tr>
+                    <td>Kernel</td>
+                    <td>HTTP request handling and middleware</td>
+                </tr>
+                <tr>
+                    <td>Router</td>
+                    <td>Route matching and dispatching</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Request Flow</h2>
+        <ol>
+            <li>HTTP Request enters application</li>
+            <li>Bootstrap application services</li>
+            <li>Load service providers</li>
+            <li>Process middleware stack</li>
+            <li>Route matching and controller dispatch</li>
+            <li>Response generation</li>
+            <li>Return HTTP Response</li>
+        </ol>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Fast and lightweight framework</li>
+            <li>Service container architecture</li>
+            <li>Middleware support</li>
+            <li>Eloquent ORM (optional)</li>
+            <li>RESTful routing</li>
+        </ul>
+
+        <div class="source-reference mt-4">
+            <p>Source: <a href="https://fivezh.github.io/2016/07/31/Lumem-part2-lifecycle/" target="_blank">Detailed Lumen Lifecycle Analysis</a></p>
+        </div>
+
+        <div class="tags mt-4">
+            <span class="badge">#Lumen</span>
+            <span class="badge">#PHP</span>
+            <span class="badge">#Framework</span>
+            <span class="badge">#Architecture</span>
+        </div>
+    </div>
+</article>

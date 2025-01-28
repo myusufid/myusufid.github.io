@@ -1,0 +1,64 @@
+<!--
+title: Connect reconnect docker container
+description: Guide for managing Docker container network connections
+date: 2023-11-02
+tags: docker, networking, containers, devops
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Connect reconnect docker container</h1>
+    <div class="meta mb-4">November 2, 2023</div>
+
+    <div class="content">
+        <h2>View Container Networks</h2>
+        <p>To see what network(s) your container is connected to:</p>
+        <pre><code lang="bash">docker inspect container_name -f "{{json .NetworkSettings.Networks }}"</code></pre>
+
+        <h2>Disconnect from Network</h2>
+        <p>To disconnect your container from a network:</p>
+        <pre><code lang="bash">docker network disconnect test-net container_name</code></pre>
+
+        <h2>Connect to New Network</h2>
+        <p>To connect your container to another network:</p>
+        <pre><code lang="bash">docker network connect test-net-2 container_name</code></pre>
+
+        <h2>Additional Network Commands</h2>
+        <pre><code lang="bash"># List all networks
+docker network ls
+
+# Create a new network
+docker network create test-net-2
+
+# Inspect network details
+docker network inspect test-net-2
+
+# Remove a network
+docker network rm test-net</code></pre>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Always verify network connections before disconnecting</li>
+            <li>Use meaningful network names</li>
+            <li>Document network configurations</li>
+            <li>Monitor container connectivity</li>
+            <li>Use custom networks instead of default bridge</li>
+        </ul>
+
+        <h2>Common Use Cases</h2>
+        <ul>
+            <li>Migrating containers between networks</li>
+            <li>Isolating container groups</li>
+            <li>Setting up multi-tier applications</li>
+            <li>Testing network configurations</li>
+            <li>Troubleshooting connectivity issues</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Docker</span>
+            <span class="badge">#Networking</span>
+            <span class="badge">#Containers</span>
+            <span class="badge">#DevOps</span>
+        </div>
+    </div>
+</article>

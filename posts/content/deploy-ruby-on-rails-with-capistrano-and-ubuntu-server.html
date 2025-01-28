@@ -1,0 +1,132 @@
+<!--
+title: Deploy Ruby on Rails with Capistrano and Ubuntu Server
+description: Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server
+date: 2023-09-03
+tags: ruby, rails, capistrano, ubuntu, deployment
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Deploy Ruby on Rails with Capistrano and Ubuntu Server</h1>
+    <div class="meta mb-4">September 3, 2023</div>
+
+    <div class="content">
+        <h2>Step 1: Install Dependencies</h2>
+        <pre><code lang="bash">sudo apt-get update && sudo apt-get -y upgrade
+sudo apt install zlib1g-dev build-essential libssl-dev libreadline-dev
+sudo apt install libyaml-dev libsqlite3-dev sqlite3 libxml2-dev
+sudo apt install libxslt1-dev libcurl4-openssl-dev
+sudo apt install software-properties-common libffi-dev nodejs
+sudo apt install git
+sudo apt install nginx
+sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev libsqlite3-dev</code></pre>
+
+        <h2>Step 2: Setup Rbenv</h2>
+        <pre><code lang="bash">git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(~/.rbenv/bin/rbenv init - bash)"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+rbenv init
+type rbenv</code></pre>
+
+        <h2>Step 3: Setup Ruby Build</h2>
+        <pre><code lang="bash">git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build</code></pre>
+
+        <h2>Step 4: Install Ruby</h2>
+        <pre><code lang="bash">RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.7.5
+rbenv rehash
+echo "gem: --no-document" > ~/.gemrc</code></pre>
+
+        <h2>Step 5-8: Install Rails, Puma, Bundler, Node-JS and Yarn</h2>
+        <pre><code lang="bash">gem install rails
+gem install puma
+gem install bundler -v 2.1.4 --no-ri --no-rdoc
+sudo apt-get install nodejs
+sudo apt install yarn</code></pre>
+
+        <h2>Step 9: Install MySQL Dependencies</h2>
+        <pre><code lang="bash">sudo apt-get install libmysqlclient-dev
+gem install mysql2 -v '0.5.0' --source 'https://rubygems.org/'</code></pre>
+
+        <h2>Step 10: SSH Configuration</h2>
+        <pre><code lang="bash">ssh-keygen -o -t rsa -b 4096 -C "ubuntu@13.250.29.89"
+chmod o+x $HOME</code></pre>
+
+        <h2>Step 11: Capistrano Setup</h2>
+        <pre><code lang="ruby">group :development do
+  gem "web-console"
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-puma'
+end</code></pre>
+
+        <h2>Step 12-13: Initialize Capistrano and Database Config</h2>
+        <pre><code lang="bash">cd root-project
+cap install STAGES=production</code></pre>
+
+        <h2>Step 14-16: Service Configuration</h2>
+        <p>Configure Puma service, set secret key, and setup Nginx for your application.</p>
+
+        <h3>Puma Service Configuration</h3>
+        <pre><code lang="ini">[Unit]
+Description=Puma HTTP Server for timetable (production)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/timetable/current
+ExecStart=/home/ubuntu/.rbenv/bin/rbenv exec bundle exec --keep-file-descriptors puma -C /home/ubuntu/timetable/shared/puma.rb
+ExecReload=/bin/kill -USR1 $MAINPID
+StandardOutput=append:/home/ubuntu/timetable/current/log/puma.access.log
+StandardError=append:/home/ubuntu/timetable/current/log/puma.error.log
+
+Restart=always
+RestartSec=1
+
+SyslogIdentifier=puma
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+
+        <h3>Nginx Configuration</h3>
+        <pre><code lang="nginx">upstream timetable_app {
+  server unix:/home/ubuntu/timetable/shared/tmp/sockets/puma.sock fail_timeout=0;
+}
+
+server {
+  listen 80;
+  server_name _;
+  root /home/ubuntu/timetable/current/public;
+
+  location / {
+    try_files $uri/index.html $uri @timetable_app;
+  }
+
+  location @timetable_app {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://timetable_app;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+}</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Ruby</span>
+            <span class="badge">#Rails</span>
+            <span class="badge">#Capistrano</span>
+            <span class="badge">#Ubuntu</span>
+            <span class="badge">#Deployment</span>
+        </div>
+    </div>
+</article>

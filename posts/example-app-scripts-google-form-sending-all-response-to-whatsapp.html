@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to using Google Apps Script to send form responses to WhatsApp">
+    <title>Example App Scripts Google Form: Sending All Response to Whatsapp | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Guide to using Google Apps Script to send form responses to WhatsApp">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Example App Scripts Google Form: Sending All Response to Whatsapp | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Guide to using Google Apps Script to send form responses to WhatsApp">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example App Scripts Google Form: Sending All Response to Whatsapp | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Guide to using Google Apps Script to send form responses to WhatsApp">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Example App Scripts Google Form: Sending All Response to Whatsapp</h1>
+    <div class="meta mb-4">June 3, 2024</div>
+
+    <div class="content">
+        <h2>Script Implementation</h2>
+        <pre><code lang="javascript">function onFormSubmit(e) {
+  record_array = []
+
+  var form = FormApp.openById('1mYTARCa3_WEQU2YqWVjtp5tAlvGv4KW2bixxx'); // Form ID
+  var formResponses = form.getResponses();
+  var formCount = formResponses.length;
+
+  var formResponse = formResponses[formCount - 1];
+  var itemResponses = formResponse.getItemResponses();
+
+  var resultString = '';
+
+  for (var j = 0; j < itemResponses.length; j++) {
+    var itemResponse = itemResponses[j];
+    var title = itemResponse.getItem().getTitle();
+    var answer = itemResponse.getResponse();
+
+    record_array.push(answer);
+    resultString += title + ': ' + answer + '\n';
+  }  
+
+  Logger.log(resultString)
+
+  // Send the resultString to an external API
+  var apiUrl = 'https://apiservice.com/v1/wa/send'; // Replace with your API endpoint
+  var options = {
+    'method': 'post',
+    'contentType': 'application/json',
+    'payload': JSON.stringify({ message: resultString, phone: "628XX250XXXX" })
+  };
+
+  try {
+    var response = UrlFetchApp.fetch(apiUrl, options);
+    Logger.log('Response Code: ' + response.getResponseCode());
+    Logger.log('Response Body: ' + response.getContentText());
+  } catch (error) {
+    Logger.log('Error: ' + error.message);
+  }
+}</code></pre>
+
+        <h2>Setup Instructions</h2>
+        <ol>
+            <li>Open your Google Form</li>
+            <li>Click Tools > Script editor</li>
+            <li>Copy the script above</li>
+            <li>Replace Form ID from your form URL</li>
+            <li>Update WhatsApp API endpoint and phone number</li>
+            <li>Save and deploy</li>
+        </ol>
+
+        <h2>Key Components</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Component</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>onFormSubmit</td>
+                    <td>Trigger function when form is submitted</td>
+                </tr>
+                <tr>
+                    <td>FormApp.openById</td>
+                    <td>Access specific Google Form</td>
+                </tr>
+                <tr>
+                    <td>getResponses</td>
+                    <td>Retrieve form submissions</td>
+                </tr>
+                <tr>
+                    <td>UrlFetchApp</td>
+                    <td>Send data to WhatsApp API</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Features</h2>
+        <ul>
+            <li>Automatic response collection</li>
+            <li>Formatted message creation</li>
+            <li>WhatsApp integration</li>
+            <li>Error handling</li>
+            <li>Response logging</li>
+        </ul>
+
+        <div class="source-reference mt-4">
+            <p>Reference: <a href="https://codewithcurt.com/google-form-using-apps-script-to-populate-google-sheet/" target="_blank">Code with Curt - Google Form Apps Script Tutorial</a></p>
+        </div>
+
+        <div class="tags mt-4">
+            <span class="badge">#GoogleAppsScript</span>
+            <span class="badge">#Forms</span>
+            <span class="badge">#WhatsApp</span>
+            <span class="badge">#Automation</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

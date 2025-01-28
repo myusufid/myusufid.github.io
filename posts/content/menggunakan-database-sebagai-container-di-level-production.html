@@ -1,0 +1,48 @@
+<!--
+title: Menggunakan Database sebagai Container di Level Production
+description: Pertimbangan menggunakan database sebagai container di environment production
+date: 2022-08-07
+tags: database, docker, container, production, deployment
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Menggunakan Database sebagai Container di Level Production</h1>
+    <div class="meta mb-4">August 7, 2022</div>
+
+    <div class="content">
+        <p>Menjadi perhatian ketika ingin mendeploy aplikasi menggunakan docker. Pertanyaan yang muncul diawal adalah, apakah mudah untuk proses backup databasenya, apakah data tidak rentan hilang atau rusak?</p>
+
+        <h2>Tidak Direkomendasikan untuk Production</h2>
+        <p>Setelah mencari tahu ketemu referensi dari stackoverflow. Disitu bisa dibilang, menjadikan database sebagai container di level production tidak direkomendasikan.</p>
+
+        <h2>3 Point Penting</h2>
+        <ol>
+            <li>Updating docker biasanya ada problem dan tidak stabilnya storage drivers di docker</li>
+            <li>Risiko pada kasus power failure atau read errors</li>
+            <li>Database menjadi sulit untuk dimanage</li>
+        </ol>
+
+        <h2>Rekomendasi Penggunaan</h2>
+        <p>Untuk level testing atau staging, menggunakan database sebagai container adalah sangat direkomendasikan.</p>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Gunakan managed database service untuk production</li>
+            <li>Manfaatkan container database untuk development</li>
+            <li>Pastikan backup strategy yang robust</li>
+            <li>Pertimbangkan high availability setup</li>
+        </ul>
+
+        <h2>Reference</h2>
+        <p><a href="https://stackoverflow.com/questions/48515460/is-it-recommended-to-use-database-as-a-container-in-production-environment" target="_blank">StackOverflow Discussion: Database as Container in Production</a></p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Database</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Container</span>
+            <span class="badge">#Production</span>
+            <span class="badge">#Deployment</span>
+        </div>
+    </div>
+</article>

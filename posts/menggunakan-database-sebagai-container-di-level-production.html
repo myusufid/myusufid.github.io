@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pertimbangan menggunakan database sebagai container di environment production">
+    <title>Menggunakan Database sebagai Container di Level Production | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Pertimbangan menggunakan database sebagai container di environment production">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Menggunakan Database sebagai Container di Level Production | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Pertimbangan menggunakan database sebagai container di environment production">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Menggunakan Database sebagai Container di Level Production | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Pertimbangan menggunakan database sebagai container di environment production">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Menggunakan Database sebagai Container di Level Production</h1>
+    <div class="meta mb-4">August 7, 2022</div>
+
+    <div class="content">
+        <p>Menjadi perhatian ketika ingin mendeploy aplikasi menggunakan docker. Pertanyaan yang muncul diawal adalah, apakah mudah untuk proses backup databasenya, apakah data tidak rentan hilang atau rusak?</p>
+
+        <h2>Tidak Direkomendasikan untuk Production</h2>
+        <p>Setelah mencari tahu ketemu referensi dari stackoverflow. Disitu bisa dibilang, menjadikan database sebagai container di level production tidak direkomendasikan.</p>
+
+        <h2>3 Point Penting</h2>
+        <ol>
+            <li>Updating docker biasanya ada problem dan tidak stabilnya storage drivers di docker</li>
+            <li>Risiko pada kasus power failure atau read errors</li>
+            <li>Database menjadi sulit untuk dimanage</li>
+        </ol>
+
+        <h2>Rekomendasi Penggunaan</h2>
+        <p>Untuk level testing atau staging, menggunakan database sebagai container adalah sangat direkomendasikan.</p>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Gunakan managed database service untuk production</li>
+            <li>Manfaatkan container database untuk development</li>
+            <li>Pastikan backup strategy yang robust</li>
+            <li>Pertimbangkan high availability setup</li>
+        </ul>
+
+        <h2>Reference</h2>
+        <p><a href="https://stackoverflow.com/questions/48515460/is-it-recommended-to-use-database-as-a-container-in-production-environment" target="_blank">StackOverflow Discussion: Database as Container in Production</a></p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Database</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Container</span>
+            <span class="badge">#Production</span>
+            <span class="badge">#Deployment</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

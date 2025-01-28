@@ -1,0 +1,98 @@
+<!--
+title: Exploring Public Code Repositories with Sourcegraph
+description: Guide to using Sourcegraph for searching and exploring public code repositories
+date: 2023-12-08
+tags: sourcegraph, code-search, development, tools
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Exploring Public Code Repositories with Sourcegraph</h1>
+    <div class="meta mb-4">December 8, 2023</div>
+
+    <div class="content">
+        <p>Sourcegraph, a powerful code search and intelligence platform, provides developers with a comprehensive tool for exploring and understanding code across various repositories. With its user-friendly interface and advanced search capabilities, Sourcegraph empowers developers to efficiently navigate through extensive codebases, discover patterns, and gain insights into public code repositories.</p>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Advanced code search</li>
+            <li>Cross-repository code navigation</li>
+            <li>Code intelligence</li>
+            <li>Symbol search</li>
+            <li>Regular expression support</li>
+        </ul>
+
+        <h2>Search Capabilities</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Literal Search</td>
+                    <td>Find exact code matches</td>
+                </tr>
+                <tr>
+                    <td>Regex Search</td>
+                    <td>Pattern-based code search</td>
+                </tr>
+                <tr>
+                    <td>Language Filters</td>
+                    <td>Search specific programming languages</td>
+                </tr>
+                <tr>
+                    <td>Repository Filters</td>
+                    <td>Focus on specific repositories</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Search Examples</h2>
+        <pre><code># Find function definitions
+type:symbol function auth
+
+# Search specific file types
+file:\.js$ login
+
+# Search in specific repositories
+repo:^github\.com/org/repo$ config
+
+# Find usage examples
+pattern:useState file:\.tsx$</code></pre>
+
+        <h2>Benefits</h2>
+        <ul>
+            <li>Quick code reference lookup</li>
+            <li>Learning from real-world examples</li>
+            <li>Understanding implementation patterns</li>
+            <li>Discovering best practices</li>
+            <li>Code reuse opportunities</li>
+        </ul>
+
+        <h2>Getting Started</h2>
+        <ol>
+            <li>Visit <a href="https://sourcegraph.com/search" target="_blank">Sourcegraph Search</a></li>
+            <li>Enter your search query</li>
+            <li>Apply relevant filters</li>
+            <li>Explore results</li>
+            <li>Use code navigation features</li>
+        </ol>
+
+        <h2>Pro Tips</h2>
+        <ul>
+            <li>Use quotes for exact matches</li>
+            <li>Combine multiple search filters</li>
+            <li>Save frequent searches</li>
+            <li>Explore similar repositories</li>
+            <li>Check code history</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Sourcegraph</span>
+            <span class="badge">#CodeSearch</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Tools</span>
+        </div>
+    </div>
+</article>

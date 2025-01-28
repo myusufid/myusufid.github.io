@@ -1,0 +1,100 @@
+<!--
+title: Go Two sum array
+description: Implementation of Two Sum problem in Go with array traversal
+date: 2024-01-26
+tags: golang, algorithms, arrays, programming
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Go: Two sum array</h1>
+    <div class="meta mb-4">January 26, 2024</div>
+
+    <div class="content">
+        <div class="image-container text-center my-4">
+            <img src="../../assets/images/2sum-1.0-1024x576-1.png" 
+                 alt="Two Sum Problem Illustration" 
+                 class="img-fluid rounded"
+                 width="1024" 
+                 height="576"
+                 loading="lazy">
+        </div>
+
+        <h2>Implementation</h2>
+        <pre><code lang="golang">package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    var arrayOne = [...]int{9,1,5,4,7}
+    var desiredNumber = 10
+    for i:=0; i < len(arrayOne); i++ {
+        if (i != (len(arrayOne) - 1)) {
+            if((arrayOne[i]+arrayOne[i+1]) == desiredNumber ) {
+                fmt.Printf("Result %d %d",i, i+1)
+            }
+        }
+    }
+}</code></pre>
+            
+            
+            
+            
+
+        <h2>Code Explanation</h2>
+        <ul>
+            <li>Input array: [9,1,5,4,7]</li>
+            <li>Target sum: 10</li>
+            <li>Algorithm traverses array checking adjacent pairs</li>
+            <li>Prints indices when sum equals target</li>
+        </ul>
+
+        <h2>Time Complexity</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Complexity</th>
+                </tr>
+                <tr>
+                    <td>Array Traversal</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Sum Check</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Overall</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Usage Examples</h2>
+        <pre><code lang="golang">// Example inputs:
+array := [...]int{9,1,5,4,7}  // Array
+target := 10                   // Desired sum
+
+// Example outputs:
+// Result 0 1  // For pair (9,1)
+// Result 2 3  // For pair (5,4)</code></pre>
+
+        <h2>Key Points</h2>
+        <ul>
+            <li>Simple linear traversal approach</li>
+            <li>Checks adjacent elements only</li>
+            <li>Handles positive integers</li>
+            <li>Prints index pairs as results</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#Algorithms</span>
+            <span class="badge">#Arrays</span>
+            <span class="badge">#Programming</span>
+        </div>
+    </div>
+</article>

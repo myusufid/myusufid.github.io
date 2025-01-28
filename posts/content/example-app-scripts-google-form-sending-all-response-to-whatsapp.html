@@ -1,0 +1,111 @@
+<!--
+title: Example App Scripts Google Form: Sending All Response to Whatsapp
+description: Guide to using Google Apps Script to send form responses to WhatsApp
+date: 2024-06-03
+tags: google-apps-script, forms, whatsapp, automation
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Example App Scripts Google Form: Sending All Response to Whatsapp</h1>
+    <div class="meta mb-4">June 3, 2024</div>
+
+    <div class="content">
+        <h2>Script Implementation</h2>
+        <pre><code lang="javascript">function onFormSubmit(e) {
+  record_array = []
+
+  var form = FormApp.openById('1mYTARCa3_WEQU2YqWVjtp5tAlvGv4KW2bixxx'); // Form ID
+  var formResponses = form.getResponses();
+  var formCount = formResponses.length;
+
+  var formResponse = formResponses[formCount - 1];
+  var itemResponses = formResponse.getItemResponses();
+
+  var resultString = '';
+
+  for (var j = 0; j < itemResponses.length; j++) {
+    var itemResponse = itemResponses[j];
+    var title = itemResponse.getItem().getTitle();
+    var answer = itemResponse.getResponse();
+
+    record_array.push(answer);
+    resultString += title + ': ' + answer + '\n';
+  }  
+
+  Logger.log(resultString)
+
+  // Send the resultString to an external API
+  var apiUrl = 'https://apiservice.com/v1/wa/send'; // Replace with your API endpoint
+  var options = {
+    'method': 'post',
+    'contentType': 'application/json',
+    'payload': JSON.stringify({ message: resultString, phone: "628XX250XXXX" })
+  };
+
+  try {
+    var response = UrlFetchApp.fetch(apiUrl, options);
+    Logger.log('Response Code: ' + response.getResponseCode());
+    Logger.log('Response Body: ' + response.getContentText());
+  } catch (error) {
+    Logger.log('Error: ' + error.message);
+  }
+}</code></pre>
+
+        <h2>Setup Instructions</h2>
+        <ol>
+            <li>Open your Google Form</li>
+            <li>Click Tools > Script editor</li>
+            <li>Copy the script above</li>
+            <li>Replace Form ID from your form URL</li>
+            <li>Update WhatsApp API endpoint and phone number</li>
+            <li>Save and deploy</li>
+        </ol>
+
+        <h2>Key Components</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Component</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>onFormSubmit</td>
+                    <td>Trigger function when form is submitted</td>
+                </tr>
+                <tr>
+                    <td>FormApp.openById</td>
+                    <td>Access specific Google Form</td>
+                </tr>
+                <tr>
+                    <td>getResponses</td>
+                    <td>Retrieve form submissions</td>
+                </tr>
+                <tr>
+                    <td>UrlFetchApp</td>
+                    <td>Send data to WhatsApp API</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Features</h2>
+        <ul>
+            <li>Automatic response collection</li>
+            <li>Formatted message creation</li>
+            <li>WhatsApp integration</li>
+            <li>Error handling</li>
+            <li>Response logging</li>
+        </ul>
+
+        <div class="source-reference mt-4">
+            <p>Reference: <a href="https://codewithcurt.com/google-form-using-apps-script-to-populate-google-sheet/" target="_blank">Code with Curt - Google Form Apps Script Tutorial</a></p>
+        </div>
+
+        <div class="tags mt-4">
+            <span class="badge">#GoogleAppsScript</span>
+            <span class="badge">#Forms</span>
+            <span class="badge">#WhatsApp</span>
+            <span class="badge">#Automation</span>
+        </div>
+    </div>
+</article>

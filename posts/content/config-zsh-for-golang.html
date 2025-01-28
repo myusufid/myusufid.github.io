@@ -1,0 +1,45 @@
+<!--
+title: Config ZSH for Golang
+description: Setting up ZSH environment variables for Golang development
+date: 2022-04-12
+tags: golang, zsh, configuration, environment
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Config ZSH for Golang</h1>
+    <div class="meta mb-4">April 12, 2022</div>
+
+    <div class="content">
+        <h2>Setting Up Golang Environment Variables</h2>
+        <p>Edit your ZSH configuration file:</p>
+        <pre><code lang="bash">vim ~/.zshrc</code></pre>
+
+        <h2>Add Environment Variables</h2>
+        <p>Add these lines to your .zshrc file:</p>
+        <pre><code lang="bash">export GOPATH=/Users/superlaptop/Web/go
+export GOROOT=/usr/local/opt/go/libexec
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOROOT/bin</code></pre>
+
+        <h2>Apply Changes</h2>
+        <p>Reload your ZSH configuration:</p>
+        <pre><code lang="bash">source ~/.zshrc</code></pre>
+
+        <h2>Environment Variables Explained</h2>
+        <ul>
+            <li><strong>GOPATH</strong>: Your Go workspace location</li>
+            <li><strong>GOROOT</strong>: Go installation directory</li>
+            <li><strong>GOBIN</strong>: Go binary executables location</li>
+            <li><strong>PATH</strong>: System path including Go directories</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#ZSH</span>
+            <span class="badge">#Configuration</span>
+            <span class="badge">#Environment</span>
+        </div>
+    </div>
+</article>

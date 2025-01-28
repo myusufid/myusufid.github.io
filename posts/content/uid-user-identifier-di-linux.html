@@ -1,0 +1,69 @@
+<!--
+title: UID User Identifier di Linux
+description: Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux
+date: 2023-09-27
+tags: linux, system-admin, security, users
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>UID (User Identifier) di Linux</h1>
+    <div class="meta mb-4">September 27, 2023</div>
+
+    <div class="content">
+        <h2>Pengertian UID</h2>
+        <p>UID adalah singkatan dari User Identifier. Ini adalah angka unik yang digunakan oleh sistem Linux untuk mengidentifikasi setiap pengguna dalam sistem. Saat seorang pengguna dibuat, sistem memberikan UID unik kepadanya. UID ini digunakan oleh sistem untuk mengenali pengguna secara internal, dan ini adalah bagian penting dari manajemen hak akses di Linux.</p>
+
+        <h2>Melihat UID Pengguna</h2>
+        <p>Untuk melihat UID pengguna di Linux, Anda dapat menggunakan perintah id:</p>
+        <pre><code lang="bash">id</code></pre>
+
+        <h2>Membuat Pengguna dengan UID Tertentu</h2>
+        <p>Untuk membuat pengguna baru dengan UID tertentu, Anda dapat menggunakan perintah useradd:</p>
+        <pre><code lang="bash">sudo useradd -u 1001 nama_pengguna_baru</code></pre>
+
+        <h2>Range UID di Linux</h2>
+        <ul>
+            <li><strong>0:</strong> Root user</li>
+            <li><strong>1-99:</strong> Predefined users</li>
+            <li><strong>100-999:</strong> System users</li>
+            <li><strong>1000+:</strong> Regular users</li>
+        </ul>
+
+        <h2>Perintah Berguna Terkait UID</h2>
+        <pre><code lang="bash"># Melihat UID pengguna tertentu
+id username
+
+# Melihat daftar semua user dengan UID
+cat /etc/passwd
+
+# Mengubah UID pengguna
+usermod -u new_uid username
+
+# Melihat file yang dimiliki user
+find / -user username</code></pre>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Gunakan UID di atas 1000 untuk pengguna regular</li>
+            <li>Dokumentasikan alokasi UID custom</li>
+            <li>Backup /etc/passwd sebelum modifikasi</li>
+            <li>Verifikasi kepemilikan file setelah mengubah UID</li>
+        </ul>
+
+        <h2>Keamanan</h2>
+        <ul>
+            <li>UID 0 memiliki akses penuh ke sistem</li>
+            <li>Batasi akses ke akun sistem</li>
+            <li>Monitor perubahan UID</li>
+            <li>Audit penggunaan sudo regularly</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#SystemAdmin</span>
+            <span class="badge">#Security</span>
+            <span class="badge">#Users</span>
+        </div>
+    </div>
+</article>

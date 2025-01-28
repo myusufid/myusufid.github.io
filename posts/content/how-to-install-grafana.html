@@ -1,0 +1,79 @@
+<!--
+title: How to Install Grafana
+description: Guide for installing Grafana using APT and Docker methods
+date: 2023-10-09
+tags: grafana, monitoring, docker, ubuntu, installation
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>How to Install Grafana</h1>
+    <div class="meta mb-4">October 9, 2023</div>
+
+    <div class="content">
+        <h2>Method 1: Using APT</h2>
+        <p>Install Grafana on Ubuntu/Debian using APT package manager:</p>
+
+        <pre><code lang="bash">sudo apt-get install -y apt-transport-https
+sudo apt-get install -y software-properties-common wget
+sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key</code></pre>
+
+        <p>Add Grafana repository and install:</p>
+        <pre><code lang="bash">echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+sudo apt-get update
+sudo apt-get install grafana</code></pre>
+
+        <p>Start Grafana service:</p>
+        <pre><code lang="bash">sudo systemctl start grafana-server</code></pre>
+
+        <h2>Method 2: Using Docker</h2>
+        <p>Create a docker-compose.yml file:</p>
+
+        <pre><code lang="yaml">version: '3'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=adminpassword
+    networks:
+      - monitoring
+
+volumes:
+  grafana_data:
+
+networks:
+  monitoring:</code></pre>
+
+        <h2>Configuration Details</h2>
+        <ul>
+            <li><strong>Port:</strong> 3000 (default web interface)</li>
+            <li><strong>Default Credentials:</strong> admin/adminpassword</li>
+            <li><strong>Data Persistence:</strong> Using named volume</li>
+            <li><strong>Network:</strong> Custom bridge network for monitoring</li>
+        </ul>
+
+        <h2>Post-Installation Steps</h2>
+        <ol>
+            <li>Access Grafana at http://localhost:3000</li>
+            <li>Log in with default credentials</li>
+            <li>Change default password</li>
+            <li>Configure data sources</li>
+            <li>Import or create dashboards</li>
+        </ol>
+
+        <div class="tags mt-4">
+            <span class="badge">#Grafana</span>
+            <span class="badge">#Monitoring</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Ubuntu</span>
+            <span class="badge">#Installation</span>
+        </div>
+    </div>
+</article>
