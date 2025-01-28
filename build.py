@@ -147,6 +147,14 @@ def build_site():
     build_search_index(posts_metadata)
     print("Built index.html")
 
+    # Build tags page
+    build_tags_page(
+        posts_metadata,
+        os.path.join(template_dir, 'base.html'),
+        'tags.html'
+    )
+    print("Built tags.html")
+
 def build_search_index(posts_metadata):
     search_index = []
     for meta in posts_metadata:
@@ -160,6 +168,81 @@ def build_search_index(posts_metadata):
     
     with open('search-index.json', 'w', encoding='utf-8') as f:
         json.dump(search_index, f, ensure_ascii=False)
+
+def build_tags_page(posts_metadata, template_file, output_file):
+    tags_dict = {}
+    total_posts = len(posts_metadata)
+    
+    # Group and count posts by tags
+    for post in posts_metadata:
+        for tag in post['tags'].split(','):
+            tag = tag.strip()
+            if tag not in tags_dict:
+                tags_dict[tag] = []
+            tags_dict[tag].append(post)
+    
+    # Calculate weights (1-9 scale)
+    max_count = max(len(posts) for posts in tags_dict.values())
+    weights = {tag: max(1, min(9, round(len(posts) * 9 / max_count))) 
+              for tag, posts in tags_dict.items()}
+    
+    # Generate stats section
+    stats_html = f'''
+        <div class="tag-stats mb-5">
+            <div class="stat-item">
+                <span class="stat-value">{total_posts}</span>
+                <span class="stat-label">Total Posts</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">{len(tags_dict)}</span>
+                <span class="stat-label">Total Tags</span>
+            </div>
+        </div>
+    '''
+    
+    # Generate tag cloud HTML
+    tag_cloud_html = '<ul class="cloud" role="navigation" aria-label="Tags cloud">'
+    for tag, posts in sorted(tags_dict.items()):
+        weight = weights[tag]
+        tag_cloud_html += f'''
+            <li><a href="#tag-{tag}" data-weight="{weight}">#{tag}</a></li>
+        '''
+    tag_cloud_html += '</ul>'
+    
+    # Generate post sections by tag
+    tags_html = []
+    for tag, posts in sorted(tags_dict.items()):
+        posts_html = []
+        for post in sorted(posts, key=lambda x: x['date'], reverse=True):
+            posts_html.append(f'''
+                <article class="post">
+                    <div class="meta">{post['date']}</div>
+                    <h3><a href="posts/{generate_slug(post['title'])}.html">{post['title']}</a></h3>
+                    <p>{post['description']}</p>
+                </article>
+            ''')
+        
+        tags_html.append(f'''
+            <section id="tag-{tag}" class="tag-section mb-5">
+                <h2 class="mb-4">#{tag} <span class="post-count">({len(posts)} posts)</span></h2>
+                {''.join(posts_html)}
+            </section>
+        ''')
+    
+    # Combine all content sections
+    final_content = stats_html + tag_cloud_html + '\n'.join(tags_html)
+    
+    # Read template and create page
+    with open(template_file, 'r', encoding='utf-8') as f:
+        template = f.read()
+    
+    # Replace content and title
+    tags_page = template.replace('<!-- CONTENT -->', final_content)
+    tags_page = tags_page.replace('<!-- TITLE -->', 'Tags')
+    
+    # Write output file
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write(tags_page)
 
 if __name__ == "__main__":
     build_site()
