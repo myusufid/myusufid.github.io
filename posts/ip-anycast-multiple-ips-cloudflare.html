@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about IP Anycast technology and how to implement multiple IPs for a single domain using Cloudflare">
+    <title>IP Anycast and Multiple IPs with Cloudflare | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn about IP Anycast technology and how to implement multiple IPs for a single domain using Cloudflare">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="IP Anycast and Multiple IPs with Cloudflare | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Learn about IP Anycast technology and how to implement multiple IPs for a single domain using Cloudflare">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="IP Anycast and Multiple IPs with Cloudflare | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Learn about IP Anycast technology and how to implement multiple IPs for a single domain using Cloudflare">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Understanding IP Anycast and Multiple IPs for Domains</h1>
+    <div class="meta mb-4">December 20, 2023</div>
+
+    <div class="content">
+        <p>IP Anycast and multiple IP configurations are powerful techniques for improving website availability and performance. Let's explore how they work, especially with Cloudflare.</p>
+
+        <h2>IP Anycast</h2>
+        <p>IP Anycast is a network addressing method where multiple servers share the same IP address. Traffic is automatically routed to the nearest server, providing:</p>
+        <ul>
+            <li>Reduced latency</li>
+            <li>Better load distribution</li>
+            <li>DDoS attack mitigation</li>
+            <li>Improved reliability</li>
+        </ul>
+
+        <h2>Multiple IPs for One Domain</h2>
+        <p>You can assign multiple IP addresses to a single domain through DNS configuration:</p>
+
+        <pre><code lang="dns">example.com.     IN  A     192.0.2.1
+example.com.     IN  A     192.0.2.2
+example.com.     IN  A     192.0.2.3</code></pre>
+
+        <h2>Implementing with Cloudflare</h2>
+        <p>Cloudflare provides Anycast IP addresses automatically when you use their services:</p>
+        <ol>
+            <li>Sign up for Cloudflare</li>
+            <li>Add your domain to Cloudflare</li>
+            <li>Update nameservers to Cloudflare's</li>
+            <li>Configure DNS records in Cloudflare dashboard</li>
+        </ol>
+
+        <h2>Benefits</h2>
+        <ul>
+            <li>Automatic failover</li>
+            <li>Global load balancing</li>
+            <li>Enhanced security</li>
+            <li>Improved performance</li>
+        </ul>
+
+        <h2>References</h2>
+        <ul>
+            <li><a href="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/" target="_blank">Cloudflare - What is Anycast?</a></li>
+            <li><a href="https://www.cloudflare.com/learning/dns/dns-records/" target="_blank">DNS Records Explained</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Networking</span>
+            <span class="badge">#Cloudflare</span>
+            <span class="badge">#DNS</span>
+            <span class="badge">#Anycast</span>
+            <span class="badge">#Infrastructure</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
