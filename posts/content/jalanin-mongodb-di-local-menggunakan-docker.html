@@ -1,0 +1,46 @@
+<!--
+title: Jalanin MongoDB di local menggunakan Docker
+description: Cara mudah menjalankan MongoDB di local environment dengan Docker
+date: 2022-01-20
+tags: mongodb, docker, database, development
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Jalanin MongoDB di local menggunakan Docker</h1>
+    <div class="meta mb-4">January 20, 2022</div>
+
+    <div class="content">
+        <h2>Menjalankan MongoDB Container</h2>
+        <p>Gunakan perintah Docker berikut untuk menjalankan MongoDB:</p>
+        <pre><code lang="bash">docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:latest</code></pre>
+
+        <h2>Penjelasan Command</h2>
+        <ul>
+            <li>-d: run container in detached mode</li>
+            <li>-p: port mapping (host:container)</li>
+            <li>--name: nama container</li>
+            <li>mongo:latest: image yang digunakan</li>
+        </ul>
+
+        <h2>MongoDB Client</h2>
+        <p>Untuk mengelola database MongoDB, anda bisa menggunakan MongoDB GUI client:</p>
+        <ul>
+            <li><a href="https://robomongo.org/" target="_blank">Robo 3T (Robomongo)</a></li>
+        </ul>
+
+        <h2>Default Connection</h2>
+        <ul>
+            <li>Host: localhost</li>
+            <li>Port: 27017</li>
+            <li>No authentication required (default)</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#MongoDB</span>
+            <span class="badge">#Docker</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Development</span>
+        </div>
+    </div>
+</article>

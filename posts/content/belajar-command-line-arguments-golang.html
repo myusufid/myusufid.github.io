@@ -1,0 +1,71 @@
+<!--
+title: Belajar Command Line Arguments Golang
+description: Memahami penggunaan command line arguments di Golang menggunakan package os.Args
+date: 2022-04-11
+tags: golang, cli, programming, tutorial
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Belajar Command Line Arguments Golang</h1>
+    <div class="meta mb-4">April 11, 2022</div>
+
+    <div class="content">
+        <p>Golang punya package called as Args. Args adalah string berbentuk array berisi command line arguments.</p>
+
+        <h2>Examples</h2>
+
+        <h3>The First Argument</h3>
+        <p>Program name selalu menjadi argument pertama:</p>
+
+        <pre><code lang="go">package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // The first argument is always program name
+    myProgramName := os.Args[0]
+    
+    // it will display the program name
+    fmt.Println(myProgramName)
+}</code></pre>
+
+        <p>Output:</p>
+        <img src="../../assets/images/Screen-Shot-2022-04-11-at-08.40.35.png" alt="First Argument Output" class="img-fluid mb-4" />
+
+        <h3>Get All Arguments</h3>
+        <p>Mengambil semua arguments kecuali program name:</p>
+
+        <pre><code lang="go">package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    allArgs := os.Args[1:]
+    fmt.Println(allArgs)
+}</code></pre>
+
+        <p>Output:</p>
+        <img src="../../assets/images/Screen-Shot-2022-04-11-at-08.41.24.png" alt="All Arguments Output" class="img-fluid mb-4" />
+
+        <h2>Key Points</h2>
+        <ul>
+            <li>os.Args[0] berisi nama program</li>
+            <li>os.Args[1:] berisi semua arguments yang diberikan</li>
+            <li>Arguments dipisahkan dengan spasi</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#CLI</span>
+            <span class="badge">#Programming</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>

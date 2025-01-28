@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to implement Least Recently Used (LRU) caching policy with Redis">
+    <title>Implementing an LRU Cache with Redis | M Yusuf - Backend Developer</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="How to implement Least Recently Used (LRU) caching policy with Redis">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Implementing an LRU Cache with Redis | M Yusuf - Backend Developer">
+    <meta property="og:description" content="How to implement Least Recently Used (LRU) caching policy with Redis">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Implementing an LRU Cache with Redis | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="How to implement Least Recently Used (LRU) caching policy with Redis">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Implementing an LRU Cache with Redis</h1>
+    <div class="meta mb-4">February 18, 2022</div>
+
+    <div class="content">
+        <h2>Caching Policy</h2>
+        <p>When using Redis to cache database query results, we need an efficient memory management strategy. Simply storing results indefinitely can lead to excessive RAM usage over time.</p>
+
+        <h2>LRU (Least Recently Used) Solution</h2>
+        <p>LRU caching policy provides an optimal solution by removing the least recently accessed items when memory limits are reached.</p>
+
+        <h2>Redis LRU Implementation</h2>
+        <p>Redis includes built-in LRU functionality. To enable it, configure Redis with two key parameters:</p>
+
+        <pre><code lang="bash">redis-server --maxmemory 10mb --maxmemory-policy allkeys-lru</code></pre>
+
+        <h2>Configuration Parameters</h2>
+        <ul>
+            <li><strong>maxmemory</strong>: Sets memory limit (e.g., 10MB)</li>
+            <li><strong>maxmemory-policy</strong>: Defines eviction policy (allkeys-lru)</li>
+        </ul>
+
+        <h2>Available Memory Policies</h2>
+        <ul>
+            <li><strong>allkeys-lru</strong>: Evict any key using LRU</li>
+            <li><strong>volatile-lru</strong>: Evict keys with expiry using LRU</li>
+            <li><strong>allkeys-random</strong>: Evict random keys</li>
+            <li><strong>volatile-random</strong>: Evict random keys with expiry</li>
+            <li><strong>volatile-ttl</strong>: Evict keys with shortest TTL first</li>
+        </ul>
+
+        <h2>Benefits</h2>
+        <ul>
+            <li>Automatic memory management</li>
+            <li>Improved cache efficiency</li>
+            <li>Better resource utilization</li>
+            <li>No manual cache cleanup required</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Redis</span>
+            <span class="badge">#Cache</span>
+            <span class="badge">#LRU</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Performance</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

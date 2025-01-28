@@ -1,0 +1,56 @@
+<!--
+title: Implementing an LRU Cache with Redis
+description: How to implement Least Recently Used (LRU) caching policy with Redis
+date: 2022-02-18
+tags: redis, cache, lru, database, performance
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Implementing an LRU Cache with Redis</h1>
+    <div class="meta mb-4">February 18, 2022</div>
+
+    <div class="content">
+        <h2>Caching Policy</h2>
+        <p>When using Redis to cache database query results, we need an efficient memory management strategy. Simply storing results indefinitely can lead to excessive RAM usage over time.</p>
+
+        <h2>LRU (Least Recently Used) Solution</h2>
+        <p>LRU caching policy provides an optimal solution by removing the least recently accessed items when memory limits are reached.</p>
+
+        <h2>Redis LRU Implementation</h2>
+        <p>Redis includes built-in LRU functionality. To enable it, configure Redis with two key parameters:</p>
+
+        <pre><code lang="bash">redis-server --maxmemory 10mb --maxmemory-policy allkeys-lru</code></pre>
+
+        <h2>Configuration Parameters</h2>
+        <ul>
+            <li><strong>maxmemory</strong>: Sets memory limit (e.g., 10MB)</li>
+            <li><strong>maxmemory-policy</strong>: Defines eviction policy (allkeys-lru)</li>
+        </ul>
+
+        <h2>Available Memory Policies</h2>
+        <ul>
+            <li><strong>allkeys-lru</strong>: Evict any key using LRU</li>
+            <li><strong>volatile-lru</strong>: Evict keys with expiry using LRU</li>
+            <li><strong>allkeys-random</strong>: Evict random keys</li>
+            <li><strong>volatile-random</strong>: Evict random keys with expiry</li>
+            <li><strong>volatile-ttl</strong>: Evict keys with shortest TTL first</li>
+        </ul>
+
+        <h2>Benefits</h2>
+        <ul>
+            <li>Automatic memory management</li>
+            <li>Improved cache efficiency</li>
+            <li>Better resource utilization</li>
+            <li>No manual cache cleanup required</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Redis</span>
+            <span class="badge">#Cache</span>
+            <span class="badge">#LRU</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Performance</span>
+        </div>
+    </div>
+</article>

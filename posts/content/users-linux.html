@@ -1,0 +1,50 @@
+<!--
+title: Users Linux
+description: Managing Linux users and groups - commands and best practices
+date: 2021-12-11
+tags: linux, users, system, administration
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Users Linux</h1>
+    <div class="meta mb-4">December 11, 2021</div>
+
+    <div class="content">
+        <h2>List Users in Linux</h2>
+        <p>To list all users on a Linux system, use the following command:</p>
+        <pre><code lang="bash">compgen -u</code></pre>
+
+        <h2>Managing User Groups</h2>
+        
+        <h3>Add User to Group</h3>
+        <p>To add an existing user to a secondary group, use the usermod command with -a -G options:</p>
+        <pre><code lang="bash">sudo usermod -a -G groupname username</code></pre>
+
+        <h3>Example: Adding User to Sudo Group</h3>
+        <pre><code lang="bash">sudo usermod -a -G sudo linuxize</code></pre>
+
+        <h2>Important Notes</h2>
+        <ul>
+            <li>Always use the -a flag with -G to append groups</li>
+            <li>Without -a flag, user will be removed from unlisted groups</li>
+            <li>Command runs silently on success</li>
+            <li>Warnings appear only for non-existent users/groups</li>
+        </ul>
+
+        <h2>Additional User Management Commands</h2>
+        <ul>
+            <li>useradd - Create new user</li>
+            <li>userdel - Delete user</li>
+            <li>groups - List user's groups</li>
+            <li>id - Show user and group IDs</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#Users</span>
+            <span class="badge">#System</span>
+            <span class="badge">#Administration</span>
+        </div>
+    </div>
+</article>

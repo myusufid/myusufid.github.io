@@ -1,0 +1,84 @@
+<!--
+title: No Reason to Write OpenAPI By Hand
+description: Exploring modern tools and approaches for API design with focus on Stoplight Studio
+date: 2024-01-20
+tags: api, openapi, stoplight, tools, design
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>There's No Reason to Write OpenAPI By Hand</h1>
+    <div class="meta mb-4">January 20, 2024</div>
+
+    <div class="content">
+        <p>Creating OpenAPI specifications manually can be tedious and error-prone. Let's explore better approaches for API design, with special focus on modern tools like Stoplight Studio.</p>
+
+        <h2>Common API Design Approaches</h2>
+        
+        <h3>1. Manual YAML/JSON Writing</h3>
+        <p>Traditional approach of writing OpenAPI specs by hand:</p>
+        
+        <pre><code lang="yaml">openapi: 3.0.0
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'</code></pre>
+
+        <h3>2. Modern GUI Editors</h3>
+        <p>Tools like Stoplight Studio provide visual editing capabilities with several advantages:</p>
+        <ul>
+            <li>Visual form-based editing</li>
+            <li>Real-time validation</li>
+            <li>Built-in mocking</li>
+            <li>Version control integration</li>
+            <li>Team collaboration features</li>
+        </ul>
+
+        <h2>Why Stoplight Studio?</h2>
+        <p>Stoplight Studio offers several key benefits:</p>
+        <ul>
+            <li>Design Libraries for model reuse</li>
+            <li>Built-in style guide enforcement</li>
+            <li>Git-based workflow</li>
+            <li>Instant preview and documentation</li>
+            <li>HTTP client for testing</li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <p>When designing APIs, consider these approaches:</p>
+        <ul>
+            <li>Use visual editors for faster design iteration</li>
+            <li>Maintain a single source of truth</li>
+            <li>Implement automated validation</li>
+            <li>Leverage version control for API specs</li>
+            <li>Use built-in mocking for early testing</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>Modern tools like Stoplight Studio have made manual OpenAPI specification writing obsolete. They provide a more efficient, collaborative, and error-free approach to API design.</p>
+
+        <h2>References</h2>
+        <ul>
+            <li><a href="https://stoplight.io/studio" target="_blank">Stoplight Studio Official Website</a></li>
+            <li><a href="https://openapi.tools" target="_blank">OpenAPI Tools Directory</a></li>
+            <li><a href="https://swagger.io/specification/" target="_blank">OpenAPI Specification</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#API</span>
+            <span class="badge">#OpenAPI</span>
+            <span class="badge">#Stoplight</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Design</span>
+        </div>
+    </div>
+</article>
