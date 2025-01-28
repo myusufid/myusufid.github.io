@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>Beranda | M Yusuf - Backend Developer</title>
+    <meta name="description" content="Quick guide to batch resize images using ImageMagick on MacOS terminal">
+    <title>Bulk Resize Images on Terminal Mac | M Yusuf - Backend Developer</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<!-- DESCRIPTION -->">
+    <meta name="description" content="Quick guide to batch resize images using ImageMagick on MacOS terminal">
     <meta name="author" content="M Yusuf">
     <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta property="og:description" content="<!-- DESCRIPTION -->">
+    <meta property="og:title" content="Bulk Resize Images on Terminal Mac | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Quick guide to batch resize images using ImageMagick on MacOS terminal">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://myusufid.github.io">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="<!-- DESCRIPTION -->">
+    <meta name="twitter:title" content="Bulk Resize Images on Terminal Mac | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Quick guide to batch resize images using ImageMagick on MacOS terminal">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
@@ -63,56 +63,32 @@
     </header>
 
     <main class="container py-5">
-        
-                <article class="post">
-                    <div class="meta">2021-10-30</div>
-                    <h3>
-                        <a href="posts/database-tips-email-unique-softdeletes.html">Database Tips: Email Unique Softdeletes</a>
-                    </h3>
-                    <p>Solution for handling unique email constraints with soft deletes using partial index</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#tips</span> <span class="badge bg-light text-dark">#softdeletes</span>
-                    </div>
-                </article>
-            
+        <article class="blog-post">
+    <h1>Bulk Resize Images on Terminal Mac</h1>
+    <div class="meta mb-4">November 17, 2021</div>
 
-                <article class="post">
-                    <div class="meta">2021-10-30</div>
-                    <h3>
-                        <a href="posts/using-blade-formatter.html">Using Blade Formatter</a>
-                    </h3>
-                    <p>Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#blade</span> <span class="badge bg-light text-dark">#formatting</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#php</span>
-                    </div>
-                </article>
-            
+    <div class="content">
+        <p>Install ImageMagick using Homebrew:</p>
 
-                <article class="post">
-                    <div class="meta">2021-10-28</div>
-                    <h3>
-                        <a href="posts/import-database-mysql-laradock.html">Import Database MYSQL Laradock</a>
-                    </h3>
-                    <p>Learn how to import MySQL databases in Laradock environment using Docker commands</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#database</span>
-                    </div>
-                </article>
-            
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
-        
-                <li class="page-item ">
-                    <a class="page-link" href="index.html">1</a>
-                </li>
-            
-                <li class="page-item active">
-                    <a class="page-link" href="page2.html">2</a>
-                </li>
-            
-            </ul>
-        </nav>
-        
+        <pre><code>brew install imagemagick</code></pre>
+
+        <p>Resize all images in current directory to 30% of original size:</p>
+
+        <pre><code>magick mogrify -resize 30% *</code></pre>
+
+        <p>Reference:</p>
+        <ul>
+            <li><a href="https://stackoverflow.com/a/60066250/5873994">Stack Overflow - Bulk resize images using ImageMagick</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Mac</span>
+            <span class="badge">#Terminal</span>
+            <span class="badge">#ImageMagick</span>
+            <span class="badge">#Images</span>
+        </div>
+    </div>
+</article>
     </main>
 
     <footer class="footer py-4">

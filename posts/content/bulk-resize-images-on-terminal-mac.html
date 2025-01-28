@@ -1,0 +1,34 @@
+<!--
+title: Bulk Resize Images on Terminal Mac
+description: Quick guide to batch resize images using ImageMagick on MacOS terminal
+date: 2021-11-17
+tags: mac, terminal, imagemagick, images
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Bulk Resize Images on Terminal Mac</h1>
+    <div class="meta mb-4">November 17, 2021</div>
+
+    <div class="content">
+        <p>Install ImageMagick using Homebrew:</p>
+
+        <pre><code>brew install imagemagick</code></pre>
+
+        <p>Resize all images in current directory to 30% of original size:</p>
+
+        <pre><code>magick mogrify -resize 30% *</code></pre>
+
+        <p>Reference:</p>
+        <ul>
+            <li><a href="https://stackoverflow.com/a/60066250/5873994">Stack Overflow - Bulk resize images using ImageMagick</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Mac</span>
+            <span class="badge">#Terminal</span>
+            <span class="badge">#ImageMagick</span>
+            <span class="badge">#Images</span>
+        </div>
+    </div>
+</article>

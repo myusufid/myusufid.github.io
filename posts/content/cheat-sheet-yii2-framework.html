@@ -1,0 +1,59 @@
+<!--
+title: Cheat Sheet YII2 Framework
+description: Quick reference guide for common YII2 Framework commands and configurations
+date: 2021-11-17
+tags: yii2, php, framework, cheatsheet
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Cheat Sheet YII2 Framework</h1>
+    <div class="meta mb-4">November 17, 2021</div>
+
+    <div class="content">
+        <h2>Meta Tags</h2>
+        <pre><code>$this->title = 'Hello View - Demo Meta Tags'; 
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii, framework, php']); 
+$this->registerMetaTag(['name' => 'description', 'content' => 'Belajar yii framework. Dipersembahkan oleh Codepolitan.');</code></pre>
+
+        <h2>Load View</h2>
+        <pre><code>return $this->render('greeting', ['name'=>$name]);</code></pre>
+
+        <h2>Pretty URL Configuration</h2>
+        <pre><code>'urlManager' => [
+    'enablePrettyUrl' => true,
+    'showScriptName' => true,
+    'enableStrictParsing' => false,
+    'rules' => [
+    ],
+]</code></pre>
+
+        <h2>Controller Mapping</h2>
+        <pre><code>'controllerMap' => [
+    'demo' => 'app\controllers\HelloController'
+],</code></pre>
+
+        <h2>Redirect</h2>
+        <pre><code>return $this->redirect('/url');</code></pre>
+
+        <h2>Enable Apache Rewrite</h2>
+        <pre><code>a2enmod rewrite</code></pre>
+
+        <h2>Install CKEditor</h2>
+        <pre><code>composer require 2amigos/yii2-ckeditor-widget</code></pre>
+
+        <p>References:</p>
+        <ul>
+            <li><a href="https://askubuntu.com/questions/48362/how-to-enable-mod-rewrite-in-apache">How to enable mod_rewrite in Apache</a></li>
+            <li><a href="http://www.yiiframework.com/extension/yii2-ckeditor-widget/#hh0">Yii2 CKEditor Widget</a></li>
+            <li><a href="https://stackoverflow.com/questions/30979305/how-to-create-ckeditor-in-yii2">How to create CKEditor in Yii2</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Yii2</span>
+            <span class="badge">#PHP</span>
+            <span class="badge">#Framework</span>
+            <span class="badge">#CheatSheet</span>
+        </div>
+    </div>
+</article>
