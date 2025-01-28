@@ -1,0 +1,52 @@
+<!--
+title: Polymorph Type Int
+description: Learn why and how to use integer types for polymorphic relationships in Laravel for better database performance
+date: 2021-11-04
+tags: laravel, database, performance, polymorphic
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Polymorph Type Using Int in Laravel</h1>
+    <div class="meta mb-4">November 4, 2021</div>
+
+    
+    <div class="content">
+        <img src="../../assets/images/FDR-ODWXMA0MA5L.jpeg" alt="">
+        <p>When using polymorphic relationships in Laravel, the type column is typically stored as a string.</p>
+
+        <p>However, using string types for indexing can reduce database performance significantly.</p>
+
+        <p>As shown in this <a href="https://x.com/aarondfrancis/status/1455927554607570953" target="_blank">Twitter thread</a>, using integers instead of strings for polymorphic types can improve query performance.</p>
+
+        <p>To implement this, you can map your models to integers in your migrations:</p>
+
+        <pre><code>public function up()
+{
+    Schema::create('taggables', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('taggable_id');
+        $table->unsignedTinyInteger('taggable_type'); // Using int instead of string
+        $table->timestamps();
+    });
+}</code></pre>
+
+        <p>And in your model, you can define the mapping:</p>
+
+        <pre><code>protected function getMorphClass()
+{
+    return array_search(static::class, [
+        1 => Post::class,
+        2 => Video::class,
+        3 => Photo::class
+    ]);
+}</code></pre>
+
+        <div class="tags mt-4">
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Performance</span>
+            <span class="badge">#Polymorphic</span>
+        </div>
+    </div>
+</article>
