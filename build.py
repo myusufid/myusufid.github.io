@@ -162,7 +162,7 @@ def build_search_index(posts_metadata):
             'title': meta['title'],
             'description': meta['description'],
             'content': meta['content'],  # You'll need to add content to metadata
-            'url': f"posts/{generate_slug(meta['title'])}.html",
+            'url': f"/posts/{generate_slug(meta['title'])}.html",
             'tags': meta['tags']
         })
     
