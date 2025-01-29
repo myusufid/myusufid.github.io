@@ -1,0 +1,66 @@
+<!--
+title: Linux Tips Using the dig Command for DNS Queries
+description: A guide to using the dig command for DNS lookups and troubleshooting
+date: 2025-11-15
+tags: linux, dns, networking, command-line, tips
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Linux Tips: Using the dig Command for DNS Queries</h1>
+    <div class="meta mb-4">November 15, 2023</div>
+
+    <div class="content">
+        <p>The dig command is a powerful DNS lookup utility that helps you query DNS servers and troubleshoot DNS-related issues.</p>
+
+        <h2>Basic Usage</h2>
+        <p>Here are some common ways to use the dig command:</p>
+
+        <pre><code lang="bash">
+# Basic DNS lookup
+dig example.com
+
+# Query specific record type
+dig example.com MX
+
+# Query specific DNS server
+dig @8.8.8.8 example.com
+
+# Short answer only
+dig example.com +short
+        </code></pre>
+
+        <h2>Useful Options</h2>
+        <p>Some helpful dig command options:</p>
+        <ul>
+            <li>+short - Display brief output</li>
+            <li>+nocomments - Remove comment lines</li>
+            <li>+nocmd - Remove command line from output</li>
+            <li>+nostat - Remove statistics</li>
+        </ul>
+
+        <h2>Common Record Types</h2>
+        <ul>
+            <li>A - IPv4 addresses</li>
+            <li>AAAA - IPv6 addresses</li>
+            <li>MX - Mail servers</li>
+            <li>NS - Nameservers</li>
+            <li>TXT - Text records</li>
+            <li>CNAME - Canonical names</li>
+        </ul>
+
+        <h2>References</h2>
+        <ul>
+            <li><a href="https://linux.die.net/man/1/dig" target="_blank">dig man page</a></li>
+            <li><a href="https://www.cloudflare.com/learning/dns/what-is-dns/" target="_blank">DNS Explained by Cloudflare</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#DNS</span>
+            <span class="badge">#Networking</span>
+            <span class="badge">#CommandLine</span>
+            <span class="badge">#Tips</span>
+        </div>
+    </div>
+</article>

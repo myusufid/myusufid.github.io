@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A guide to using the dig command for DNS lookups and troubleshooting">
+    <title>Linux Tips Using the dig Command for DNS Queries | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A guide to using the dig command for DNS lookups and troubleshooting">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Linux Tips Using the dig Command for DNS Queries | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A guide to using the dig command for DNS lookups and troubleshooting">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Linux Tips Using the dig Command for DNS Queries | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A guide to using the dig command for DNS lookups and troubleshooting">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <article class="blog-post">
+    <h1>Linux Tips: Using the dig Command for DNS Queries</h1>
+    <div class="meta mb-4">November 15, 2023</div>
+
+    <div class="content">
+        <p>The dig command is a powerful DNS lookup utility that helps you query DNS servers and troubleshoot DNS-related issues.</p>
+
+        <h2>Basic Usage</h2>
+        <p>Here are some common ways to use the dig command:</p>
+
+        <pre><code lang="bash">
+# Basic DNS lookup
+dig example.com
+
+# Query specific record type
+dig example.com MX
+
+# Query specific DNS server
+dig @8.8.8.8 example.com
+
+# Short answer only
+dig example.com +short
+        </code></pre>
+
+        <h2>Useful Options</h2>
+        <p>Some helpful dig command options:</p>
+        <ul>
+            <li>+short - Display brief output</li>
+            <li>+nocomments - Remove comment lines</li>
+            <li>+nocmd - Remove command line from output</li>
+            <li>+nostat - Remove statistics</li>
+        </ul>
+
+        <h2>Common Record Types</h2>
+        <ul>
+            <li>A - IPv4 addresses</li>
+            <li>AAAA - IPv6 addresses</li>
+            <li>MX - Mail servers</li>
+            <li>NS - Nameservers</li>
+            <li>TXT - Text records</li>
+            <li>CNAME - Canonical names</li>
+        </ul>
+
+        <h2>References</h2>
+        <ul>
+            <li><a href="https://linux.die.net/man/1/dig" target="_blank">dig man page</a></li>
+            <li><a href="https://www.cloudflare.com/learning/dns/what-is-dns/" target="_blank">DNS Explained by Cloudflare</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#DNS</span>
+            <span class="badge">#Networking</span>
+            <span class="badge">#CommandLine</span>
+            <span class="badge">#Tips</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
