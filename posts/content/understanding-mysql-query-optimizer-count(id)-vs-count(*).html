@@ -1,0 +1,67 @@
+<!--
+title: Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*)
+description: Deep dive into MySQL query optimization comparing COUNT(*) and COUNT(id) performance with practical examples
+date: 2025-01-31
+tags: mysql, performance, database, optimization
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*)</h1>
+    <div class="meta mb-4">January 31, 2025</div>
+
+    <div class="content">
+        <h2>Introduction</h2>
+        <p>When working with MySQL databases, COUNT operations are fundamental for data analysis. Let's explore the performance implications of COUNT(*) versus COUNT(id) using a practical example with a teachers database.</p>
+
+        <h2>MySQL Query Optimizer Overview</h2>
+        <p>The MySQL Query Optimizer is the engine's brain that determines the most efficient execution path for your queries. Understanding how it handles different COUNT operations is crucial for performance optimization.</p>
+
+        <h2>Practical Example: Teachers Table</h2>
+        <p>Let's create a sample teachers table with an indexed column:</p>
+        
+        <pre><code lang="sql">CREATE TABLE teachers (
+    id INT NOT NULL AUTO_INCREMENT,
+    full_name VARCHAR(100) NOT NULL,
+    subject VARCHAR(50) NOT NULL,
+    hire_date DATE NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_subject (subject)
+);</code></pre>
+
+        <h2>Comparing COUNT Operations</h2>
+        <p>Let's analyze these two common counting approaches:</p>
+
+        <pre><code lang="sql">-- Approach 1: Using COUNT(id)
+EXPLAIN SELECT COUNT(id) FROM teachers;
+
+-- Approach 2: Using COUNT(*)
+EXPLAIN SELECT COUNT(*) FROM teachers;</code></pre>
+
+        <h2>Performance Analysis</h2>
+        <p>When we examine the EXPLAIN output, we discover:</p>
+        <ul>
+            <li>Both queries utilize the same index</li>
+            <li>The execution plan is identical</li>
+            <li>Performance metrics show negligible differences</li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <p>Based on the optimizer's behavior:</p>
+        <ul>
+            <li>Use COUNT(*) for counting all rows</li>
+            <li>Reserve COUNT(column) for counting non-NULL values</li>
+            <li>Trust the optimizer to choose the most efficient execution path</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>The MySQL Query Optimizer efficiently handles both COUNT(*) and COUNT(id). While COUNT(*) is the preferred general-purpose solution, understanding when to use each variant helps in writing more efficient queries.</p>
+
+        <div class="tags mt-4">
+            <span class="badge bg-light text-dark">#mysql</span>
+            <span class="badge bg-light text-dark">#performance</span>
+            <span class="badge bg-light text-dark">#database</span>
+            <span class="badge bg-light text-dark">#optimization</span>
+        </div>
+    </div>
+</article>

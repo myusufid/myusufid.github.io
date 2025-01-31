@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>Beranda | M Yusuf - Backend Developer</title>
+    <meta name="description" content="Deep dive into MySQL query optimization comparing COUNT(*) and COUNT(id) performance with practical examples">
+    <title>Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*) | M Yusuf - Backend Developer</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
@@ -14,20 +14,20 @@
     <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<!-- DESCRIPTION -->">
+    <meta name="description" content="Deep dive into MySQL query optimization comparing COUNT(*) and COUNT(id) performance with practical examples">
     <meta name="author" content="M Yusuf">
     <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta property="og:description" content="<!-- DESCRIPTION -->">
+    <meta property="og:title" content="Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*) | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Deep dive into MySQL query optimization comparing COUNT(*) and COUNT(id) performance with practical examples">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://myusufid.github.io">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="<!-- DESCRIPTION -->">
+    <meta name="twitter:title" content="Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*) | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Deep dive into MySQL query optimization comparing COUNT(*) and COUNT(id) performance with practical examples">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
@@ -76,36 +76,65 @@
     </header>
 
     <main class="container py-5">
+        <article class="blog-post">
+    <h1>Understanding MySQL Query Optimizer: COUNT(id) vs COUNT(*)</h1>
+    <div class="meta mb-4">January 20, 2024</div>
+
+    <div class="content">
+        <h2>Introduction</h2>
+        <p>When working with MySQL databases, COUNT operations are fundamental for data analysis. Let's explore the performance implications of COUNT(*) versus COUNT(id) using a practical example with a teachers database.</p>
+
+        <h2>MySQL Query Optimizer Overview</h2>
+        <p>The MySQL Query Optimizer is the engine's brain that determines the most efficient execution path for your queries. Understanding how it handles different COUNT operations is crucial for performance optimization.</p>
+
+        <h2>Practical Example: Teachers Table</h2>
+        <p>Let's create a sample teachers table with an indexed column:</p>
         
-                <article class="post">
-                    <div class="meta">2021-10-28</div>
-                    <h3>
-                        <a href="posts/import-database-mysql-laradock.html">Import Database MYSQL Laradock</a>
-                    </h3>
-                    <p>Learn how to import MySQL databases in Laradock environment using Docker commands</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#database</span>
-                    </div>
-                </article>
-            
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
-        
-                <li class="page-item ">
-                    <a class="page-link" href="index.html">1</a>
-                </li>
-            
-                <li class="page-item ">
-                    <a class="page-link" href="page2.html">2</a>
-                </li>
-            
-                <li class="page-item active">
-                    <a class="page-link" href="page3.html">3</a>
-                </li>
-            
-            </ul>
-        </nav>
-        
+        <pre><code lang="sql">CREATE TABLE teachers (
+    id INT NOT NULL AUTO_INCREMENT,
+    full_name VARCHAR(100) NOT NULL,
+    subject VARCHAR(50) NOT NULL,
+    hire_date DATE NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_subject (subject)
+);</code></pre>
+
+        <h2>Comparing COUNT Operations</h2>
+        <p>Let's analyze these two common counting approaches:</p>
+
+        <pre><code lang="sql">-- Approach 1: Using COUNT(id)
+EXPLAIN SELECT COUNT(id) FROM teachers;
+
+-- Approach 2: Using COUNT(*)
+EXPLAIN SELECT COUNT(*) FROM teachers;</code></pre>
+
+        <h2>Performance Analysis</h2>
+        <p>When we examine the EXPLAIN output, we discover:</p>
+        <ul>
+            <li>Both queries utilize the same index</li>
+            <li>The execution plan is identical</li>
+            <li>Performance metrics show negligible differences</li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <p>Based on the optimizer's behavior:</p>
+        <ul>
+            <li>Use COUNT(*) for counting all rows</li>
+            <li>Reserve COUNT(column) for counting non-NULL values</li>
+            <li>Trust the optimizer to choose the most efficient execution path</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>The MySQL Query Optimizer efficiently handles both COUNT(*) and COUNT(id). While COUNT(*) is the preferred general-purpose solution, understanding when to use each variant helps in writing more efficient queries.</p>
+
+        <div class="tags mt-4">
+            <span class="badge bg-light text-dark">#mysql</span>
+            <span class="badge bg-light text-dark">#performance</span>
+            <span class="badge bg-light text-dark">#database</span>
+            <span class="badge bg-light text-dark">#optimization</span>
+        </div>
+    </div>
+</article>
     </main>
 
     <footer class="footer py-4">
