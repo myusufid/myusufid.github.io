@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>Beranda | M Yusuf - Backend Developer</title>
+    <meta name="description" content="Guide to generating and analyzing images using Google Vertex AI with Python">
+    <title>Image Generation and Analysis with Google Vertex AI | M Yusuf - Backend Developer</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
@@ -14,20 +14,20 @@
     <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<!-- DESCRIPTION -->">
+    <meta name="description" content="Guide to generating and analyzing images using Google Vertex AI with Python">
     <meta name="author" content="M Yusuf">
     <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta property="og:description" content="<!-- DESCRIPTION -->">
+    <meta property="og:title" content="Image Generation and Analysis with Google Vertex AI | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Guide to generating and analyzing images using Google Vertex AI with Python">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://myusufid.github.io">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="<!-- DESCRIPTION -->">
+    <meta name="twitter:title" content="Image Generation and Analysis with Google Vertex AI | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Guide to generating and analyzing images using Google Vertex AI with Python">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
@@ -76,48 +76,83 @@
     </header>
 
     <main class="container py-5">
-        
-                <article class="post">
-                    <div class="meta">2021-10-30</div>
-                    <h3>
-                        <a href="posts/using-blade-formatter.html">Using Blade Formatter</a>
-                    </h3>
-                    <p>Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#blade</span> <span class="badge bg-light text-dark">#formatting</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#php</span>
-                    </div>
-                </article>
-            
+        <article class="blog-post">
+    <h1>Image Generation and Analysis with Google Vertex AI</h1>
+    <div class="meta mb-4">January 20, 2025</div>
 
-                <article class="post">
-                    <div class="meta">2021-10-28</div>
-                    <h3>
-                        <a href="posts/import-database-mysql-laradock.html">Import Database MYSQL Laradock</a>
-                    </h3>
-                    <p>Learn how to import MySQL databases in Laradock environment using Docker commands</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#database</span>
-                    </div>
-                </article>
-            
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
-        
-                <li class="page-item ">
-                    <a class="page-link" href="index.html">1</a>
-                </li>
-            
-                <li class="page-item ">
-                    <a class="page-link" href="page2.html">2</a>
-                </li>
-            
-                <li class="page-item active">
-                    <a class="page-link" href="page3.html">3</a>
-                </li>
-            
-            </ul>
-        </nav>
-        
+    <div class="content">
+        <h2>Setting Up Vertex AI</h2>
+        <p>First, install the required dependencies:</p>
+        <pre><code>pip install google-cloud-aiplatform pillow</code></pre>
+
+        <h2>Image Generation</h2>
+        <p>Using Vertex AI's ImageGenerationModel, we can create custom images from text prompts. Here's how to generate a bouquet image:</p>
+
+        <pre><code>from vertexai.preview.vision_models import ImageGenerationModel
+import vertexai
+
+def generate_bouquet_image(project_id, location, output_file, prompt):
+    vertexai.init(project=project_id, location=location)
+    model = ImageGenerationModel.from_pretrained("imagegeneration@002")
+    
+    images = model.generate_images(
+        prompt=prompt,
+        number_of_images=1,
+        seed=1,
+        add_watermark=False,
+    )
+    images[0].save(location=output_file)</code></pre>
+
+        <h2>Image Analysis with Gemini Pro Vision</h2>
+        <p>After generating the image, we can analyze it using Gemini Pro Vision model:</p>
+
+        <pre><code>from vertexai.generative_models import GenerativeModel, Image
+
+def analyze_bouquet_image(image_path):
+    image = Image.load_from_file(image_path)
+    multimodal_model = GenerativeModel("gemini-pro-vision")
+    
+    prompt = "generate birthday wishes based on the image passed"
+    contents = [image, prompt]
+    responses = multimodal_model.generate_content(contents)
+    return responses</code></pre>
+
+        <h2>Usage Example</h2>
+        <p>Here's how to use both functions together:</p>
+        <pre><code>project_id = "your-project-id"
+location = "us-central1"
+output_file = "image.jpeg"
+prompt = "Create an image containing a bouquet of 2 sunflowers and 3 roses"
+
+# Generate image
+generate_bouquet_image(project_id, location, output_file, prompt)
+
+# Analyze generated image
+result = analyze_bouquet_image(output_file)</code></pre>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Text-to-image generation using Vertex AI</li>
+            <li>Image analysis with Gemini Pro Vision</li>
+            <li>Support for custom prompts and multiple images</li>
+            <li>Local image saving and processing</li>
+            <li>Integration with Google Cloud Platform</li>
+        </ul>
+
+        <p>Reference:</p>
+        <ul>
+            <li><a href="https://cloud.google.com/vertex-ai/docs">Google Vertex AI Documentation</a></li>
+            <li><a href="https://cloud.google.com/vertex-ai/docs/generative-ai/image/image-generation">Image Generation Guide</a></li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#VertexAI</span>
+            <span class="badge">#Python</span>
+            <span class="badge">#MachineLearning</span>
+            <span class="badge">#GoogleCloud</span>
+        </div>
+    </div>
+</article>
     </main>
 
     <footer class="footer py-4">
