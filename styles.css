@@ -530,3 +530,35 @@ pre code {
 .dark-theme .cloud a:hover {
     opacity: 1;
 }
+
+
+.featured-image-container {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto 3rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.featured-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.featured-image:hover {
+    transform: scale(1.02);
+}
+
+.image-credit {
+    font-size: 0.8rem;
+    color: var(--text-secondary-light);
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.dark-theme .image-credit {
+    color: var(--text-secondary-dark);
+}

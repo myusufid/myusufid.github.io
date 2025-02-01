@@ -49,6 +49,20 @@ def build_page(content_file, template_file, output_file):
     # Remove metadata comment from content
     content = re.sub(r'<!--\s*(.*?)\s*-->', '', content, flags=re.DOTALL)
     final_html = final_html.replace('<!-- CONTENT -->', content.strip())
+
+    # Replace image placeholder
+    if metadata.get('image'):
+        featured_image_html = f'''
+        <div class="featured-image-container mb-5">
+            <img src="{metadata['image']}" alt="{metadata['title']}" class="featured-image">
+            <div class="image-credit">Image source: {metadata.get('image_credit', 'Personal collection')}</div>
+        </div>
+        '''
+        final_html = final_html.replace('<!-- FEATURED_IMAGE -->', featured_image_html)
+    else:
+        final_html = final_html.replace('<!-- FEATURED_IMAGE -->', '')
+    
+    
     
     # Write output file
     with open(output_file, 'w', encoding='utf-8') as f:
