@@ -1,0 +1,55 @@
+<!--
+title: Fix Private Repository Access in Golang
+description: How to configure and access private repositories in Golang using SSH and environment variables
+date: 2025-02-19
+tags: golang, git, ssh, configuration, tutorial
+author: Your Name
+-->
+
+<article class="blog-post">
+    <h1>Fix Private Repository Access in Golang</h1>
+    <div class="meta mb-4">February 19, 2025</div>
+
+    <div class="content">
+        <p>When working with private Go repositories, proper configuration is needed for successful access. Here's how to set it up correctly.</p>
+
+        <h2>Configuration Steps</h2>
+
+        <h3>Git Configuration</h3>
+        <p>First, configure Git to use SSH instead of HTTPS:</p>
+
+        <pre><code lang="bash">git config --global url."git@github.com-myusuf_github_company:companyhub/privaterepo.git".insteadOf "https://github.com/companyhub/privaterepo"</code></pre>
+
+        <h3>Go Private Configuration</h3>
+        <p>Configure Go to recognize private repositories:</p>
+
+        <pre><code lang="bash">export GOPRIVATE=github.com/companyhub/*</code></pre>
+
+        <h3>Permanent Configuration</h3>
+        <p>Add to your shell configuration file:</p>
+
+        <pre><code lang="bash">echo "export GOPRIVATE=github.com/companyhub/*" >> ~/.bashrc</code></pre>
+
+        <h3>Clean and Update</h3>
+        <p>Reset your Go modules cache:</p>
+
+        <pre><code lang="bash">go clean -modcache
+go mod tidy</code></pre>
+
+        <h2>Key Points</h2>
+        <ul>
+            <li>SSH configuration must be properly set up</li>
+            <li>GOPRIVATE environment variable tells Go to skip public proxy</li>
+            <li>Git configuration redirects HTTPS to SSH</li>
+            <li>Module cache should be cleaned after configuration</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#Git</span>
+            <span class="badge">#SSH</span>
+            <span class="badge">#Configuration</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>

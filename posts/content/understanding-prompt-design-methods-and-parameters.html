@@ -1,0 +1,80 @@
+<!--
+title: Understanding Prompt Design Methods and Parameters
+description: Learn about zero-shot, one-shot, and few-shot prompting techniques in AI
+date: 2025-06-10
+tags: ai, prompts, llm, vertex-ai
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Understanding Prompt Design Methods and Parameters Vertext AI GCP</h1>
+    <div class="meta mb-4">June 10, 2025</div>
+
+    <div class="content">
+        <h2>Core Prompt Design Methods</h2>
+        <ol>
+            <li>Zero-shot prompting</li>
+            <li>One-shot prompting</li>
+            <li>Few-shot prompting</li>
+        </ol>
+
+        <h2>Detailed Explanation</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Example Use Case</th>
+                </tr>
+                <tr>
+                    <td>Zero-shot</td>
+                    <td>Direct task description without examples</td>
+                    <td>Simple question answering</td>
+                </tr>
+                <tr>
+                    <td>One-shot</td>
+                    <td>Single example with task description</td>
+                    <td>Poetry generation</td>
+                </tr>
+                <tr>
+                    <td>Few-shot</td>
+                    <td>Multiple examples with task description</td>
+                    <td>News article writing</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Key Parameters</h2>
+        <ul>
+            <li>Temperature (0-2 range)
+                <ul>
+                    <li>0: Most predictable output</li>
+                    <li>1: Default balanced setting</li>
+                    <li>2: Maximum creativity</li>
+                </ul>
+            </li>
+            <li>Token Limit
+                <ul>
+                    <li>Controls output length</li>
+                    <li>~4 characters per token</li>
+                    <li>Adjustable based on needs</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Match method to task complexity</li>
+            <li>Use lower temperature for factual responses</li>
+            <li>Increase temperature for creative tasks</li>
+            <li>Monitor token usage for efficiency</li>
+        </ul>
+
+        <div class="tags mt-4">
+            <span class="badge">#AI</span>
+            <span class="badge">#Prompts</span>
+            <span class="badge">#LLM</span>
+            <span class="badge">#VertexAI</span>
+        </div>
+    </div>
+</article>
