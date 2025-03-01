@@ -1,0 +1,64 @@
+<!--
+title: Carbon::parse(null) returns a Carbon object with the current time
+description: Understanding the behavior of Carbon::parse(null) and safer alternatives in PHP date handling
+date: 2025-03-01
+tags: php, carbon, laravel, date
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Carbon::parse(null) returns a Carbon object with the current time</h1>
+    <div class="meta mb-4">Maret 1, 2025</div>
+
+    <div class="content">
+
+        <p>When working with dates in PHP and Laravel, Carbon is the go-to library for manipulation and formatting. However, there's an important behavior to be aware of when parsing null values.</p>
+
+        <h2>The Unexpected Behavior</h2>
+        <p>If you pass null to Carbon::parse(), it will return a Carbon object with the current time instead of null:</p>
+        <pre><code>use Carbon\Carbon;
+
+// This returns a Carbon instance with the current time!
+$date = Carbon::parse(null);
+var_dump($date); // Carbon object with current timestamp</code></pre>
+
+        <p>This can lead to subtle bugs in your application, especially when handling optional date fields that might be null.</p>
+
+        <h2>A Safer Alternative: Carbon::make()</h2>
+        <p>To handle null values more predictably, use Carbon::make() instead:</p>
+        <pre><code>use Carbon\Carbon;
+
+// This correctly returns null
+$date = Carbon::make(null);
+var_dump($date); // null
+
+// For valid dates, it works the same as parse
+$validDate = Carbon::make('2023-09-15 12:34:54');
+var_dump($validDate); // Carbon instance with specified date</code></pre>
+
+        <h2>Real-world Example</h2>
+        <p>Consider a scenario where you're retrieving a potentially null date from a database:</p>
+        <pre><code>// Using parse (problematic)
+$dueDate = Carbon::parse($user->due_date); // If due_date is null, this is now!
+
+// Using make (safer)
+$dueDate = Carbon::make($user->due_date); // If due_date is null, this stays null</code></pre>
+
+        <h2>Why This Matters</h2>
+        <p>This behavior is particularly important when:</p>
+        <ul>
+            <li>Working with optional date fields</li>
+            <li>Handling user input that might be empty</li>
+            <li>Processing data imports with missing date values</li>
+        </ul>
+
+        <p>Always use Carbon::make() instead of Carbon::parse() when the input might be null to avoid unexpected date values in your application.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#PHP</span>
+            <span class="badge">#Carbon</span>
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Date</span>
+        </div>
+    </div>
+</article>
