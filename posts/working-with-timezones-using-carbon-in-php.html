@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Overview of GUI editors for creating OpenAPI/Swagger specifications">
-    <title>GUI Editor for OpenAPI Swagger | M Yusuf - Backend Developer</title>
+    <meta name="description" content="A comprehensive guide to handling timezone conversions with Carbon in PHP applications">
+    <title>Working with Timezones using Carbon in PHP | M Yusuf - Backend Developer</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
@@ -14,20 +14,20 @@
     <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Overview of GUI editors for creating OpenAPI/Swagger specifications">
+    <meta name="description" content="A comprehensive guide to handling timezone conversions with Carbon in PHP applications">
     <meta name="author" content="M Yusuf">
     <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="GUI Editor for OpenAPI Swagger | M Yusuf - Backend Developer">
-    <meta property="og:description" content="Overview of GUI editors for creating OpenAPI/Swagger specifications">
+    <meta property="og:title" content="Working with Timezones using Carbon in PHP | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A comprehensive guide to handling timezone conversions with Carbon in PHP applications">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://myusufid.github.io">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="GUI Editor for OpenAPI Swagger | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="Overview of GUI editors for creating OpenAPI/Swagger specifications">
+    <meta name="twitter:title" content="Working with Timezones using Carbon in PHP | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A comprehensive guide to handling timezone conversions with Carbon in PHP applications">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
@@ -78,88 +78,72 @@
     <main class="container py-5">
         
         <article class="blog-post">
-    <h1>GUI Editor for OpenAPI/Swagger</h1>
-    <div class="meta mb-4">October 10, 2023</div>
+    <h1>Working with Timezones using Carbon in PHP</h1>
+    <div class="meta mb-4">Maret 11, 2025</div>
 
     <div class="content">
-        <p>Untuk membuat spesifikasi API ini dengan cepat dan efisien, Anda memerlukan editor GUI yang dapat memudahkan dengan baik.</p>
 
-        <h2>Rekomendasi Editor</h2>
-        <div class="editors-section">
-            <h3>1. Stoplight Studio</h3>
-            <ul>
-                <li>Fitur canggih</li>
-                <li>Kolaborasi tim yang kuat</li>
-                <li>Version control integration</li>
-                <li>Real-time preview</li>
-            </ul>
+        <p>Handling dates and times across different timezones is a common challenge in web applications. Carbon, the popular PHP datetime library, provides elegant solutions for working with timezones, especially when converting between local time and UTC.</p>
 
-            <h3>2. ApiBldr</h3>
-            <ul>
-                <li>Desain minimalis</li>
-                <li>Kemudahan penggunaan</li>
-                <li>Quick setup</li>
-                <li>Intuitive interface</li>
-            </ul>
-        </div>
-
-        <h2>Fitur Utama</h2>
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <th>Fitur</th>
-                    <th>Stoplight Studio</th>
-                    <th>ApiBldr</th>
-                </tr>
-                <tr>
-                    <td>Visual Editor</td>
-                    <td>✓</td>
-                    <td>✓</td>
-                </tr>
-                <tr>
-                    <td>Team Collaboration</td>
-                    <td>✓</td>
-                    <td>Limited</td>
-                </tr>
-                <tr>
-                    <td>Git Integration</td>
-                    <td>✓</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Mock Servers</td>
-                    <td>✓</td>
-                    <td>✓</td>
-                </tr>
-            </table>
-        </div>
-
-        <h2>Additional Resources</h2>
-        <p>Untuk melihat daftar lengkap GUI Editor lainnya, kunjungi: <a href="https://tools.openapis.org/categories/gui-editors.html" target="_blank">OpenAPI Tools - GUI Editors</a></p>
-
-        <h2>Tips Memilih Editor</h2>
+        <h2>Why Convert to UTC?</h2>
+        <p>UTC (Coordinated Universal Time) serves as the global standard for time reference. Converting to UTC for storage and manipulation offers several benefits:</p>
         <ul>
-            <li>Sesuaikan dengan kebutuhan tim</li>
-            <li>Pertimbangkan fitur kolaborasi</li>
-            <li>Cek kompatibilitas dengan workflow</li>
-            <li>Evaluasi kemudahan penggunaan</li>
-            <li>Perhatikan dukungan format ekspor</li>
+            <li>Consistent storage format across application</li>
+            <li>Eliminates ambiguity with daylight saving time transitions</li>
+            <li>Simplifies comparison between dates from different timezones</li>
+            <li>Provides a foundation for accurate timezone conversions when displaying to users</li>
+        </ul>
+
+        <h2>Converting Local Time to UTC</h2>
+        <p>Carbon makes it straightforward to convert times between timezones. Here's how to convert local time to UTC:</p>
+        <pre><code>use Carbon\Carbon;
+
+// Get today in local timezone and convert to UTC
+$startDate = Carbon::today(getTimezoneLocal())->startOfDay()->setTimezone('UTC');
+$endDate = Carbon::today(getTimezoneLocal())->endOfDay()->setTimezone('UTC');
+
+echo $startDate->toDateTimeString(); // e.g., '2023-11-14 18:00:00' (if local is UTC-6)
+echo $endDate->toDateTimeString();   // e.g., '2023-11-15 17:59:59' (if local is UTC-6)</code></pre>
+
+        <h2>Working with Date Ranges</h2>
+        <p>When processing date ranges, it's common to convert user input dates to UTC for database queries:</p>
+        <pre><code>// Convert input dates to UTC for consistent database queries
+$fromDate = Carbon::parse($fromDate, getTimezoneLocal())->startOfDay()->setTimezone('UTC')->format('Y-m-d');
+$toDate = Carbon::parse($toDate, getTimezoneLocal())->startOfDay()->setTimezone('UTC')->format('Y-m-d');</code></pre>
+
+        <h2>Helper Function for Local Timezone</h2>
+        <p>In the examples above, we used a function called <code>getTimezoneLocal()</code>. Here's a simple implementation:</p>
+        <pre><code>function getTimezoneLocal() {
+    // Return user's timezone or application default
+    return auth()->user()->timezone ?? config('app.timezone', 'UTC');
+}</code></pre>
+
+        <h2>Common Timezone Pitfalls</h2>
+        <p>Be aware of these common issues when working with timezones:</p>
+        <ul>
+            <li><strong>Date boundaries:</strong> The start and end of a day will shift when converted to UTC</li>
+            <li><strong>DST transitions:</strong> Some local days might be 23 or 25 hours long during DST changes</li>
+            <li><strong>Display vs. Storage:</strong> Always store in UTC, but display in the user's local timezone</li>
         </ul>
 
         <h2>Best Practices</h2>
-        <ul>
-            <li>Gunakan version control</li>
-            <li>Dokumentasikan perubahan</li>
-            <li>Validasi spesifikasi secara regular</li>
-            <li>Backup file spesifikasi</li>
-        </ul>
+        <p>Follow these guidelines for robust timezone handling:</p>
+        <ol>
+            <li>Store all dates in UTC in your database</li>
+            <li>Convert to UTC early in your application flow</li>
+            <li>Convert back to local timezone only for display purposes</li>
+            <li>Always specify the source timezone when parsing user input</li>
+            <li>Use <code>->toIso8601String()</code> for API responses</li>
+        </ol>
+
+        <p>By leveraging Carbon's timezone capabilities correctly, you can avoid common timezone-related bugs and ensure your application handles dates consistently across different regions.</p>
 
         <div class="tags mt-4">
-            <span class="badge">#OpenAPI</span>
-            <span class="badge">#Swagger</span>
-            <span class="badge">#API</span>
-            <span class="badge">#Tools</span>
-            <span class="badge">#Development</span>
+            <span class="badge">#PHP</span>
+            <span class="badge">#Carbon</span>
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Timezone</span>
+            <span class="badge">#UTC</span>
         </div>
     </div>
 </article>

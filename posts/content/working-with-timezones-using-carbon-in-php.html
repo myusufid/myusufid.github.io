@@ -1,0 +1,78 @@
+<!--
+title: Working with Timezones using Carbon in PHP
+description: A comprehensive guide to handling timezone conversions with Carbon in PHP applications
+date: 2025-03-11
+tags: php, carbon, laravel, timezone, utc
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Working with Timezones using Carbon in PHP</h1>
+    <div class="meta mb-4">Maret 11, 2025</div>
+
+    <div class="content">
+
+        <p>Handling dates and times across different timezones is a common challenge in web applications. Carbon, the popular PHP datetime library, provides elegant solutions for working with timezones, especially when converting between local time and UTC.</p>
+
+        <h2>Why Convert to UTC?</h2>
+        <p>UTC (Coordinated Universal Time) serves as the global standard for time reference. Converting to UTC for storage and manipulation offers several benefits:</p>
+        <ul>
+            <li>Consistent storage format across application</li>
+            <li>Eliminates ambiguity with daylight saving time transitions</li>
+            <li>Simplifies comparison between dates from different timezones</li>
+            <li>Provides a foundation for accurate timezone conversions when displaying to users</li>
+        </ul>
+
+        <h2>Converting Local Time to UTC</h2>
+        <p>Carbon makes it straightforward to convert times between timezones. Here's how to convert local time to UTC:</p>
+        <pre><code>use Carbon\Carbon;
+
+// Get today in local timezone and convert to UTC
+$startDate = Carbon::today(getTimezoneLocal())->startOfDay()->setTimezone('UTC');
+$endDate = Carbon::today(getTimezoneLocal())->endOfDay()->setTimezone('UTC');
+
+echo $startDate->toDateTimeString(); // e.g., '2023-11-14 18:00:00' (if local is UTC-6)
+echo $endDate->toDateTimeString();   // e.g., '2023-11-15 17:59:59' (if local is UTC-6)</code></pre>
+
+        <h2>Working with Date Ranges</h2>
+        <p>When processing date ranges, it's common to convert user input dates to UTC for database queries:</p>
+        <pre><code>// Convert input dates to UTC for consistent database queries
+$fromDate = Carbon::parse($fromDate, getTimezoneLocal())->startOfDay()->setTimezone('UTC')->format('Y-m-d');
+$toDate = Carbon::parse($toDate, getTimezoneLocal())->startOfDay()->setTimezone('UTC')->format('Y-m-d');</code></pre>
+
+        <h2>Helper Function for Local Timezone</h2>
+        <p>In the examples above, we used a function called <code>getTimezoneLocal()</code>. Here's a simple implementation:</p>
+        <pre><code>function getTimezoneLocal() {
+    // Return user's timezone or application default
+    return auth()->user()->timezone ?? config('app.timezone', 'UTC');
+}</code></pre>
+
+        <h2>Common Timezone Pitfalls</h2>
+        <p>Be aware of these common issues when working with timezones:</p>
+        <ul>
+            <li><strong>Date boundaries:</strong> The start and end of a day will shift when converted to UTC</li>
+            <li><strong>DST transitions:</strong> Some local days might be 23 or 25 hours long during DST changes</li>
+            <li><strong>Display vs. Storage:</strong> Always store in UTC, but display in the user's local timezone</li>
+        </ul>
+
+        <h2>Best Practices</h2>
+        <p>Follow these guidelines for robust timezone handling:</p>
+        <ol>
+            <li>Store all dates in UTC in your database</li>
+            <li>Convert to UTC early in your application flow</li>
+            <li>Convert back to local timezone only for display purposes</li>
+            <li>Always specify the source timezone when parsing user input</li>
+            <li>Use <code>->toIso8601String()</code> for API responses</li>
+        </ol>
+
+        <p>By leveraging Carbon's timezone capabilities correctly, you can avoid common timezone-related bugs and ensure your application handles dates consistently across different regions.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#PHP</span>
+            <span class="badge">#Carbon</span>
+            <span class="badge">#Laravel</span>
+            <span class="badge">#Timezone</span>
+            <span class="badge">#UTC</span>
+        </div>
+    </div>
+</article>
