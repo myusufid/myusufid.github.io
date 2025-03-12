@@ -1,0 +1,91 @@
+<!--
+title: Finding the Largest Files on Your System with the du Command
+description: A tutorial on using the du command with sort and head to identify the largest files and directories on Linux systems
+date: 2025-03-12
+tags: linux, command-line, disk-usage, tutorial, system-administration
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Finding the Largest Files on Your System with the du Command</h1>
+    <div class="meta mb-4">Maret 12, 2025</div>
+
+    <div class="content">
+        <p>When your Linux system is running out of space, identifying the largest files and directories can help you quickly free up space. In this article, we'll explore a powerful command combination that makes this task straightforward.</p>
+
+        <h2>The Command</h2>
+        
+        <pre><code lang="bash">sudo du -ah / | sort -rh | head -20</code></pre>
+
+        <h2>Understanding the Components</h2>
+
+        <h3>The du Command</h3>
+        <p>The <code>du</code> (disk usage) command estimates file space usage. Let's break down the options used:</p>
+        <ul>
+            <li><code>-a</code>: Shows all files, not just directories</li>
+            <li><code>-h</code>: Human-readable output (e.g., 1K, 234M, 2G)</li>
+            <li><code>/</code>: Starts from the root directory</li>
+        </ul>
+
+        <h3>The sort Command</h3>
+        <p>The output is piped to <code>sort</code> with these options:</p>
+        <ul>
+            <li><code>-r</code>: Reverse order (largest first)</li>
+            <li><code>-h</code>: Human-readable numbers (compares 2K and 1M correctly)</li>
+        </ul>
+
+        <h3>The head Command</h3>
+        <p><code>head -20</code> restricts output to the first 20 lines, giving you the 20 largest items.</p>
+
+        <h2>Practical Considerations</h2>
+
+        <h3>Why use sudo?</h3>
+        <p>Running with <code>sudo</code> ensures you have permission to read all files on the system. Without it, you'll get "Permission denied" errors for protected directories.</p>
+
+        <h3>Performance Impact</h3>
+        <p>This command can be resource-intensive when run on the entire filesystem. It will:</p>
+        <ul>
+            <li>Generate significant disk I/O</li>
+            <li>Take a long time on large systems</li>
+            <li>Potentially impact system performance temporarily</li>
+        </ul>
+
+        <h3>Better Alternatives for Large Systems</h3>
+        <p>For production systems, consider these refinements:</p>
+
+        <pre><code lang="bash">sudo du -h --max-depth=2 / | sort -rh | head -20</code></pre>
+
+        <p>This limits the depth of recursion, making the command run faster while still identifying large directories.</p>
+
+        <h2>Safety Precautions</h2>
+        <ul>
+            <li>Run during low-traffic periods if on a production server</li>
+            <li>Consider using <code>nice</code> to reduce CPU priority: <code>nice -n 19 sudo du -ah / | sort -rh | head -20</code></li>
+            <li>Avoid deleting files you don't understand - especially in system directories</li>
+        </ul>
+
+        <h2>Practical Examples</h2>
+        <p>Sample output might look like this:</p>
+
+        <pre><code>16G    /
+14G    /home
+10G    /home/username
+8.5G   /var
+7.2G   /var/lib
+5.4G   /var/lib/docker
+3.2G   /usr
+2.8G   /usr/lib
+2.1G   /opt
+...</code></pre>
+
+        <p>This quickly reveals where your disk space is being consumed, allowing you to take targeted action to reclaim space.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Linux</span>
+            <span class="badge">#CommandLine</span>
+            <span class="badge">#DiskUsage</span>
+            <span class="badge">#SysAdmin</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>
