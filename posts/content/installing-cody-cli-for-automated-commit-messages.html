@@ -1,0 +1,103 @@
+<!--
+title: Installing Cody CLI for Automated Commit Messages
+description: A step-by-step guide on installing and using Sourcegraph Cody CLI to generate AI-powered commit messages following Conventional Commits format
+date: 2025-03-13
+tags: development, git, cli, sourcegraph, automation
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Installing Cody CLI for Automated Commit Messages</h1>
+    <div class="meta mb-4">Maret 13, 2025</div>
+
+    <div class="content">
+        <p>Managing Git commit messages can be tedious, especially when trying to follow consistent formatting conventions. Sourcegraph's Cody CLI offers an elegant solution by generating AI-powered commit message suggestions. This guide walks you through installation and basic usage.</p>
+
+        <h2>Prerequisites</h2>
+        <p>Before installing Cody CLI, ensure you have:</p>
+        <ul>
+            <li>Git installed and configured</li>
+            <li>A Sourcegraph account (free tier works fine)</li>
+            <li>Node.js version manager (nvm) installed</li>
+        </ul>
+
+        <h2>Installation Steps</h2>
+
+        <h3>1. Install Node.js</h3>
+        <p>First, install Node.js version 20 using nvm:</p>
+        <pre><code lang="bash">nvm install node20</code></pre>
+
+        <h3>2. Install Cody CLI</h3>
+        <p>With Node.js installed, you can now install the Sourcegraph Cody CLI:</p>
+        <pre><code lang="bash">npm install -g sourcegraphcody</code></pre>
+
+        <h3>3. Authenticate with Sourcegraph</h3>
+        <p>Authenticate your CLI with your Sourcegraph account:</p>
+        <pre><code lang="bash">cody auth login --web</code></pre>
+        
+        <p>This command opens a browser window where you can authorize the CLI to access your Sourcegraph account.</p>
+
+        <h2>Generating Commit Messages</h2>
+        
+        <p>Once installed and authenticated, you can use Cody to generate commit message suggestions based on your changes:</p>
+
+        <pre><code lang="bash">git diff | cody chat --stdin -m 'Generate 5 different commit messages for this diff following Conventional Commits format. Present them in a numbered list from 1 to 5. Make them concise but descriptive.'</code></pre>
+
+        <h2>Understanding the Command</h2>
+
+        <ul>
+            <li><code>git diff</code>: Shows the changes you've made but not yet committed</li>
+            <li><code>|</code>: Pipes the output to the next command</li>
+            <li><code>cody chat --stdin</code>: Sends the diff as input to Cody</li>
+            <li><code>-m '...'</code>: Provides instructions to Cody about what kind of commit messages to generate</li>
+        </ul>
+
+        <h2>Benefits of Using Cody for Commit Messages</h2>
+
+        <ul>
+            <li><strong>Consistency</strong>: Helps maintain Conventional Commits format</li>
+            <li><strong>Time-saving</strong>: Generates multiple options in seconds</li>
+            <li><strong>Better quality</strong>: Creates descriptive messages that explain the "what" and "why" of changes</li>
+            <li><strong>Team alignment</strong>: Promotes better commit practices across your team</li>
+        </ul>
+
+        <h2>Example Output</h2>
+
+        <p>Running the command might produce output like this:</p>
+
+        <pre><code>1. feat(auth): implement OAuth2 authentication flow
+2. feat(login): add social login providers with proper error handling
+3. fix(security): resolve token validation vulnerability in auth process
+4. refactor(auth): reorganize authentication codebase for better maintainability
+5. feat(user): add remember-me functionality to login form</code></pre>
+
+        <h2>Customizing Prompts</h2>
+
+        <p>You can customize the prompt to get different styles of commit messages:</p>
+
+        <ul>
+            <li>For more detailed messages: Add "Include the motivation for changes"</li>
+            <li>For specific formatting: Specify exactly how you want the output structured</li>
+            <li>For targeted focus: "Focus on the security implications of these changes"</li>
+        </ul>
+
+        <h2>Tips for Best Results</h2>
+
+        <ul>
+            <li>Make focused commits that address a single concern</li>
+            <li>Review suggested messages and adapt as needed</li>
+            <li>Consider creating shell aliases for commonly used prompts</li>
+            <li>Use with pre-commit hooks for a streamlined workflow</li>
+        </ul>
+
+        <p>With Cody CLI, you can significantly improve your Git workflow by generating meaningful, consistent commit messages that make your project history more navigable and useful.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Development</span>
+            <span class="badge">#Git</span>
+            <span class="badge">#CLI</span>
+            <span class="badge">#Sourcegraph</span>
+            <span class="badge">#Automation</span>
+        </div>
+    </div>
+</article>
