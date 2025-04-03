@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to create and manage sequences in existing PostgreSQL tables">
+    <title>Creating Sequences in PostgreSQL | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="How to create and manage sequences in existing PostgreSQL tables">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Creating Sequences in PostgreSQL | M Yusuf - Backend Developer">
+    <meta property="og:description" content="How to create and manage sequences in existing PostgreSQL tables">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Creating Sequences in PostgreSQL | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="How to create and manage sequences in existing PostgreSQL tables">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>Creating Sequences in PostgreSQL</h1>
+    <div class="meta mb-4">April 15, 2025</div>
+
+    <div class="content">
+        <h2>What are Sequences in PostgreSQL?</h2>
+        <p>Sequences in PostgreSQL are special database objects designed to generate unique numeric identifiers automatically. They're commonly used for primary key columns to ensure each row has a unique identifier.</p>
+
+        <h2>Adding a Sequence to an Existing Table</h2>
+        <p>Sometimes you may need to add a sequence to a table that was created without one. Here's how to do it:</p>
+
+        <div class="code-block">
+            <pre><code class="language-sql">-- Step 1: Create the sequence
+CREATE SEQUENCE IF NOT EXISTS objects_id_object_seq;
+
+-- Step 2: Set the sequence value to the current maximum ID
+SELECT setval('objects_id_object_seq', (SELECT max(id_object) FROM objects));
+
+-- Step 3: Alter the table to use the sequence as default
+ALTER TABLE objects ALTER COLUMN id_object SET DEFAULT nextval('objects_id_object_seq');</code></pre>
+        </div>
+
+        <h2>Understanding Each Step</h2>
+        <ol>
+            <li><strong>Creating the sequence</strong>: The <code>IF NOT EXISTS</code> clause prevents errors if the sequence already exists (available in PostgreSQL 9.5+).</li>
+            <li><strong>Setting the initial value</strong>: The <code>setval</code> function sets the sequence's current value to match the highest existing ID in the table.</li>
+            <li><strong>Linking to the table</strong>: The final step configures the column to automatically use the sequence for new rows.</li>
+        </ol>
+
+        <h2>Common Sequence Operations</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Create sequence</td>
+                    <td><code>CREATE SEQUENCE name</code></td>
+                    <td>Creates a new sequence</td>
+                </tr>
+                <tr>
+                    <td>Get next value</td>
+                    <td><code>nextval('sequence_name')</code></td>
+                    <td>Returns the next value from the sequence</td>
+                </tr>
+                <tr>
+                    <td>Get current value</td>
+                    <td><code>currval('sequence_name')</code></td>
+                    <td>Returns the most recently obtained value</td>
+                </tr>
+                <tr>
+                    <td>Set sequence value</td>
+                    <td><code>setval('sequence_name', value)</code></td>
+                    <td>Sets the current value of the sequence</td>
+                </tr>
+                <tr>
+                    <td>Drop sequence</td>
+                    <td><code>DROP SEQUENCE sequence_name</code></td>
+                    <td>Removes the sequence</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Name sequences consistently (table_column_seq is a common pattern)</li>
+            <li>Always check existing maximum values when adding sequences to tables with data</li>
+            <li>Consider using SERIAL or BIGSERIAL data types for new tables (they create sequences automatically)</li>
+            <li>In PostgreSQL 10+, consider using identity columns instead of sequences</li>
+        </ul>
+
+        <h2>Learn More</h2>
+        <p>For more detailed information, visit the <a href="https://www.postgresql.org/docs/current/sql-createsequence.html" target="_blank">PostgreSQL documentation on CREATE SEQUENCE</a>.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#PostgreSQL</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#SQL</span>
+            <span class="badge">#Sequences</span>
+            <span class="badge">#AIGenerated</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

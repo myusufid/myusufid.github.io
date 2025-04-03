@@ -1,0 +1,93 @@
+<!--
+title: Creating Sequences in PostgreSQL
+description: How to create and manage sequences in existing PostgreSQL tables
+date: 2025-04-15
+tags: postgresql, database, sequences, sql, ai-generated
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Creating Sequences in PostgreSQL</h1>
+    <div class="meta mb-4">April 15, 2025</div>
+
+    <div class="content">
+        <h2>What are Sequences in PostgreSQL?</h2>
+        <p>Sequences in PostgreSQL are special database objects designed to generate unique numeric identifiers automatically. They're commonly used for primary key columns to ensure each row has a unique identifier.</p>
+
+        <h2>Adding a Sequence to an Existing Table</h2>
+        <p>Sometimes you may need to add a sequence to a table that was created without one. Here's how to do it:</p>
+
+        <div class="code-block">
+            <pre><code class="language-sql">-- Step 1: Create the sequence
+CREATE SEQUENCE IF NOT EXISTS objects_id_object_seq;
+
+-- Step 2: Set the sequence value to the current maximum ID
+SELECT setval('objects_id_object_seq', (SELECT max(id_object) FROM objects));
+
+-- Step 3: Alter the table to use the sequence as default
+ALTER TABLE objects ALTER COLUMN id_object SET DEFAULT nextval('objects_id_object_seq');</code></pre>
+        </div>
+
+        <h2>Understanding Each Step</h2>
+        <ol>
+            <li><strong>Creating the sequence</strong>: The <code>IF NOT EXISTS</code> clause prevents errors if the sequence already exists (available in PostgreSQL 9.5+).</li>
+            <li><strong>Setting the initial value</strong>: The <code>setval</code> function sets the sequence's current value to match the highest existing ID in the table.</li>
+            <li><strong>Linking to the table</strong>: The final step configures the column to automatically use the sequence for new rows.</li>
+        </ol>
+
+        <h2>Common Sequence Operations</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Create sequence</td>
+                    <td><code>CREATE SEQUENCE name</code></td>
+                    <td>Creates a new sequence</td>
+                </tr>
+                <tr>
+                    <td>Get next value</td>
+                    <td><code>nextval('sequence_name')</code></td>
+                    <td>Returns the next value from the sequence</td>
+                </tr>
+                <tr>
+                    <td>Get current value</td>
+                    <td><code>currval('sequence_name')</code></td>
+                    <td>Returns the most recently obtained value</td>
+                </tr>
+                <tr>
+                    <td>Set sequence value</td>
+                    <td><code>setval('sequence_name', value)</code></td>
+                    <td>Sets the current value of the sequence</td>
+                </tr>
+                <tr>
+                    <td>Drop sequence</td>
+                    <td><code>DROP SEQUENCE sequence_name</code></td>
+                    <td>Removes the sequence</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li>Name sequences consistently (table_column_seq is a common pattern)</li>
+            <li>Always check existing maximum values when adding sequences to tables with data</li>
+            <li>Consider using SERIAL or BIGSERIAL data types for new tables (they create sequences automatically)</li>
+            <li>In PostgreSQL 10+, consider using identity columns instead of sequences</li>
+        </ul>
+
+        <h2>Learn More</h2>
+        <p>For more detailed information, visit the <a href="https://www.postgresql.org/docs/current/sql-createsequence.html" target="_blank">PostgreSQL documentation on CREATE SEQUENCE</a>.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#PostgreSQL</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#SQL</span>
+            <span class="badge">#Sequences</span>
+            <span class="badge">#AIGenerated</span>
+        </div>
+    </div>
+</article>
