@@ -1,0 +1,130 @@
+<!--
+title: Finding High Memory Keys in Redis Cache with Python
+description: A simple Python script to identify and analyze the largest keys in your Redis cache
+date: 2025-05-07
+tags: python, redis, cache, performance, memory, ai-generated
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Finding High Memory Keys in Redis Cache with Python</h1>
+    <div class="meta mb-4">May 07, 2025</div>
+
+    <div class="content">
+        <p class="alert alert-info">Note: This post was generated with the assistance of AI.</p>
+
+        <p>Redis is a popular in-memory data structure store used as a database, cache, and message broker. When working with Redis in production, it's important to monitor memory usage, especially when dealing with large datasets. In this post, I'll share a simple Python script to identify the keys consuming the most memory in your Redis instance.</p>
+
+        <h2>The Problem</h2>
+        <p>As Redis databases grow, certain keys can consume disproportionate amounts of memory. Identifying these "heavy" keys is crucial for:</p>
+        <ul>
+            <li>Preventing out-of-memory errors</li>
+            <li>Optimizing cache efficiency</li>
+            <li>Planning capacity requirements</li>
+            <li>Implementing better data structures or expiration policies</li>
+        </ul>
+
+        <h2>Dependencies</h2>
+        <ol>
+            <li>Python 3.x</li>
+            <li>Redis-py: <code>pip install redis</code></li>
+        </ol>
+
+        <h2>Implementation</h2>
+        <pre><code lang="python">
+from collections import Counter
+import redis
+
+# Connect to Redis
+r = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
+
+# Initialize variables
+cursor = 0
+key_sizes = Counter()
+LIMIT = 500
+
+while True:
+    cursor, keys = r.scan(cursor=cursor, count=1000)
+    for key in keys:
+        # Get memory usage for each key in bytes
+        size = r.memory_usage(key)
+        if size is not None:  # Only add keys with valid size
+            key_sizes[key] = size
+    
+    if cursor == 0:
+        break
+
+# Get top 500 keys by size
+largest_keys = key_sizes.most_common(LIMIT)
+
+# Print results
+print(f"Top {LIMIT} keys by size:")
+print("Size (bytes) | Key")
+print("-" * 50)
+for key, size in largest_keys:
+    print(f"{size:11,d} | {key}")
+
+print(f"\nTotal keys analyzed: {len(key_sizes)}")
+        </code></pre>
+
+        <h2>How It Works</h2>
+        <p>The script performs the following operations:</p>
+        <ol>
+            <li>Connects to a local Redis instance</li>
+            <li>Uses the <code>scan</code> command to iterate through all keys (which is more production-friendly than <code>KEYS *</code>)</li>
+            <li>For each key, gets its memory usage using the <code>MEMORY USAGE</code> Redis command</li>
+            <li>Stores the results in a Counter collection</li>
+            <li>Displays the top 500 keys by memory consumption</li>
+        </ol>
+
+        <h2>Sample Output</h2>
+        <pre><code lang="plaintext">
+Top 500 keys by size:
+Size (bytes) | Key
+--------------------------------------------------
+    1,048,576 | large_hash:user_data
+      524,288 | session:active_users
+      262,144 | cache:product_catalog
+      131,072 | analytics:daily_metrics
+       65,536 | queue:pending_jobs
+       32,768 | cache:homepage
+       16,384 | user:preferences:1001
+        8,192 | config:system_settings
+        4,096 | lock:inventory_update
+        2,048 | counter:daily_visitors
+
+Total keys analyzed: 12,543
+        </code></pre>
+
+        <h2>Optimizations and Considerations</h2>
+        <ul>
+            <li><strong>Performance Impact:</strong> The <code>MEMORY USAGE</code> command can be resource-intensive on busy Redis servers. Consider running this script during off-peak hours.</li>
+            <li><strong>Sampling:</strong> For very large Redis instances, you might want to sample keys rather than analyzing all of them.</li>
+            <li><strong>Authentication:</strong> Add authentication parameters if your Redis instance requires it.</li>
+            <li><strong>Clustering:</strong> For Redis clusters, you'll need to modify the script to connect to each node.</li>
+        </ul>
+
+        <h2>Taking Action</h2>
+        <p>Once you've identified the largest keys, you can:</p>
+        <ul>
+            <li>Set appropriate TTL (Time To Live) values</li>
+            <li>Consider using more efficient data structures</li>
+            <li>Implement key eviction policies</li>
+            <li>Shard large hashes or lists</li>
+            <li>Move infrequently accessed data to disk-based storage</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>Monitoring and managing memory usage in Redis is essential for maintaining a healthy and efficient cache system. This simple script provides a starting point for identifying memory-intensive keys that might need optimization.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Python</span>
+            <span class="badge">#Redis</span>
+            <span class="badge">#Cache</span>
+            <span class="badge">#Performance</span>
+            <span class="badge">#Memory</span>
+            <span class="badge">#AI-Generated</span>
+        </div>
+
+    </div>
+</article>
