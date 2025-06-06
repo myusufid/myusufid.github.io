@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A hilariously practical guide to dependency injection, interface mocking, and testing in Go that won't make you question your career choices">
+    <title>Mastering Dependency Injection and Mocking in Golang (Without Crying) | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A hilariously practical guide to dependency injection, interface mocking, and testing in Go that won't make you question your career choices">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mastering Dependency Injection and Mocking in Golang (Without Crying) | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A hilariously practical guide to dependency injection, interface mocking, and testing in Go that won't make you question your career choices">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mastering Dependency Injection and Mocking in Golang (Without Crying) | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A hilariously practical guide to dependency injection, interface mocking, and testing in Go that won't make you question your career choices">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>Mastering Dependency Injection and Mocking in Golang (Without Crying) 🧪</h1>
+    <div class="meta mb-4">June 15, 2025 • Written while frantically mocking dependencies at 2 AM</div>
+
+    <div class="content">
+        <h2>🎭 Welcome to the Wonderful World of Pretending!</h2>
+        <p>Ah, dependency injection and mocking in Go! It's like playing make-believe, but instead of pretending the floor is lava, you're pretending your database works! Join me on this magical journey where we'll learn to write testable code that won't make your future self want to travel back in time to slap you. 🔮</p>
+
+        <h2>🧩 The "Why Am I Even Doing This?" Section</h2>
+        <p>Before we dive into the "how," let's address the existential "why" of dependency injection and mocking:</p>
+        <ul>
+            <li>🔄 <strong>Testing without internet</strong> (because your tests should work even when your ISP doesn't)</li>
+            <li>🚀 <strong>Testing without a real database</strong> (because who wants to wait 5 seconds per test?)</li>
+            <li>🛡️ <strong>Testing error scenarios</strong> (like "what if the database server is having a midlife crisis?")</li>
+            <li>🧪 <strong>Testing without side effects</strong> (no more "it worked on my machine" excuses)</li>
+            <li>🔧 <strong>Swapping implementations</strong> (PostgreSQL today, MongoDB tomorrow, a series of Post-it notes next week)</li>
+        </ul>
+
+        <h2>🎓 Dependency Inversion: The Fancy Principle with a Simple Idea</h2>
+        <p>Dependency Inversion is like that friend who always insists on driving instead of being driven. It's the "D" in SOLID principles, and it basically says:</p>
+        <blockquote>
+            "High-level modules should not depend on low-level modules. Both should depend on abstractions. Also, abstractions should not depend on details. Details should depend on abstractions." — Some smart person who probably drinks a lot of coffee
+        </blockquote>
+        <p>In normal-human speak: "Don't directly depend on concrete implementations; depend on interfaces instead." It's like dating the idea of a person rather than an actual person. Much less messy! 💔</p>
+
+        <h3>🙅‍♂️ The Wrong Way (AKA "Future Pain")</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// This is how NOT to do it
+type UserService struct {
+    // Direct dependency on PostgreSQL! We're married to it forever!
+    db *postgres.Connection
+}
+
+func (s *UserService) GetUser(id string) (*User, error) {
+    // PostgreSQL-specific code that will haunt your dreams
+    return s.db.Query("SELECT * FROM users WHERE id = $1", id)
+}
+
+// Using it:
+func main() {
+    db := postgres.Connect("localhost:5432")
+    service := UserService{db: db}
+    // Now we're stuck with Postgres until the heat death of the universe
+}</code></pre>
+        </div>
+
+        <h3>🙆‍♂️ The Right Way (AKA "Future You Will Send Thank-You Cards")</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// Define an interface (the abstraction)
+type UserRepository interface {
+    GetUser(id string) (*User, error)
+    SaveUser(user *User) error
+}
+
+// PostgreSQL implementation
+type PostgresUserRepository struct {
+    db *postgres.Connection
+}
+
+func (r *PostgresUserRepository) GetUser(id string) (*User, error) {
+    return r.db.Query("SELECT * FROM users WHERE id = $1", id)
+}
+
+func (r *PostgresUserRepository) SaveUser(user *User) error {
+    // PostgreSQL-specific saving logic
+    return nil
+}
+
+// Our service now depends on the interface, not the implementation
+type UserService struct {
+    repo UserRepository // Look ma, no concrete types!
+}
+
+func (s *UserService) GetUser(id string) (*User, error) {
+    return s.repo.GetUser(id) // We don't care how it's implemented!
+}
+
+// Using it:
+func main() {
+    db := postgres.Connect("localhost:5432")
+    repo := &PostgresUserRepository{db: db}
+    service := UserService{repo: repo}
+    // We can swap out the repo implementation anytime!
+    // It's like having commitment issues, but in a good way!
+}</code></pre>
+        </div>
+
+        <h2>💉 Dependency Injection: Not as Scary as It Sounds</h2>
+        <p>Dependency Injection is just a fancy way of saying "pass stuff in instead of creating it inside." It's like bringing your own snacks to a movie instead of being forced to buy the overpriced theater popcorn. 🍿</p>
+
+        <h3>🌟 Three Ways to Inject Dependencies (From Least to Most Fancy)</h3>
+
+        <h4>1. Constructor Injection (The Classic)</h4>
+        <div class="code-block">
+            <pre><code class="language-go">// Pass dependencies when creating the service
+func NewUserService(repo UserRepository) *UserService {
+    return &UserService{
+        repo: repo,
+    }
+}
+
+// Usage:
+repo := &PostgresUserRepository{db: db}
+service := NewUserService(repo) // Dependency injected! 🎉</code></pre>
+        </div>
+
+        <h4>2. Method Injection (The Occasional Visitor)</h4>
+        <div class="code-block">
+            <pre><code class="language-go">// Pass dependency just for this method call
+func (s *UserService) GetUserWithSpecialRepo(id string, repo UserRepository) (*User, error) {
+    return repo.GetUser(id)
+}
+
+// Usage:
+specialRepo := &VIPUserRepository{}
+user, err := service.GetUserWithSpecialRepo("123", specialRepo)</code></pre>
+        </div>
+
+        <h4>3. Property Injection (The Afterthought)</h4>
+        <div class="code-block">
+            <pre><code class="language-go">// Create first, inject later (like remembering to buy milk after you've already started baking)
+service := &UserService{}
+service.repo = &PostgresUserRepository{db: db}
+// Now we can use it</code></pre>
+        </div>
+
+        <h2>🧪 Let's Build a REST API with Testable Layers!</h2>
+        <p>Time to put theory into practice with a simple REST API for managing... wait for it... tacos! 🌮 Because everything is better with tacos.</p>
+
+        <h3>Step 1: Define Your Domain and Interfaces</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// models.go
+package taco
+
+type Taco struct {
+    ID          string   `json:"id"`
+    Name        string   `json:"name"`
+    Ingredients []string `json:"ingredients"`
+    Spiciness   int      `json:"spiciness"` // 1-5, where 5 means "breathe fire"
+}
+
+// repository.go
+package taco
+
+// TacoRepository defines how we interact with our taco storage
+type TacoRepository interface {
+    GetTaco(id string) (*Taco, error)
+    ListTacos() ([]*Taco, error)
+    SaveTaco(taco *Taco) error
+    DeleteTaco(id string) error
+}
+
+// service.go
+package taco
+
+// TacoService handles taco business logic
+type TacoService interface {
+    GetTaco(id string) (*Taco, error)
+    ListTacos() ([]*Taco, error)
+    CreateTaco(taco *Taco) error
+    UpdateTaco(taco *Taco) error
+    DeleteTaco(id string) error
+}</code></pre>
+        </div>
+
+        <h3>Step 2: Implement the Service Layer</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// service_impl.go
+package taco
+
+import (
+    "errors"
+    "strings"
+)
+
+type tacoService struct {
+    repo TacoRepository
+}
+
+// NewTacoService creates a new taco service with the given repository
+func NewTacoService(repo TacoRepository) TacoService {
+    return &tacoService{
+        repo: repo,
+    }
+}
+
+func (s *tacoService) GetTaco(id string) (*Taco, error) {
+    return s.repo.GetTaco(id)
+}
+
+func (s *tacoService) ListTacos() ([]*Taco, error) {
+    return s.repo.ListTacos()
+}
+
+func (s *tacoService) CreateTaco(taco *Taco) error {
+    // Business logic: Validate taco before saving
+    if taco.Name == "" {
+        return errors.New("taco needs a name, like a sad puppy needs love")
+    }
+    if len(taco.Ingredients) == 0 {
+        return errors.New("a taco without ingredients is just a sad tortilla")
+    }
+    if taco.Spiciness < 1 || taco.Spiciness > 5 {
+        return errors.New("spiciness must be between 1-5, we don't want lawsuits")
+    }
+    
+    return s.repo.SaveTaco(taco)
+}
+
+func (s *tacoService) UpdateTaco(taco *Taco) error {
+    // Check if taco exists first
+    existing, err := s.repo.GetTaco(taco.ID)
+    if err != nil {
+        return err
+    }
+    if existing == nil {
+        return errors.New("cannot update the ghost of a taco past")
+    }
+    
+    return s.repo.SaveTaco(taco)
+}
+
+func (s *tacoService) DeleteTaco(id string) error {
+    return s.repo.DeleteTaco(id)
+}</code></pre>
+        </div>
+
+        <h3>Step 3: Implement a Real Repository</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// postgres_repository.go
+package taco
+
+import (
+    "database/sql"
+    _ "github.com/lib/pq"
+)
+
+type postgresRepository struct {
+    db *sql.DB
+}
+
+// NewPostgresRepository creates a new PostgreSQL-backed taco repository
+func NewPostgresRepository(connectionString string) (TacoRepository, error) {
+    db, err := sql.Open("postgres", connectionString)
+    if err != nil {
+        return nil, err
+    }
+    
+    // Test the connection
+    if err := db.Ping(); err != nil {
+        return nil, err
+    }
+    
+    return &postgresRepository{db: db}, nil
+}
+
+func (r *postgresRepository) GetTaco(id string) (*Taco, error) {
+    // Real database query here
+    // SELECT id, name, ingredients, spiciness FROM tacos WHERE id = $1
+    // ...
+    return &Taco{ID: id, Name: "Database Taco"}, nil // Simplified for brevity
+}
+
+// Other methods implemented similarly...</code></pre>
+        </div>
+
+        <h3>Step 4: Create the REST API Handler</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// handler.go
+package taco
+
+import (
+    "encoding/json"
+    "net/http"
+    "github.com/gorilla/mux"
+)
+
+type TacoHandler struct {
+    service TacoService
+}
+
+func NewTacoHandler(service TacoService) *TacoHandler {
+    return &TacoHandler{
+        service: service,
+    }
+}
+
+func (h *TacoHandler) RegisterRoutes(router *mux.Router) {
+    router.HandleFunc("/tacos", h.ListTacos).Methods("GET")
+    router.HandleFunc("/tacos/{id}", h.GetTaco).Methods("GET")
+    router.HandleFunc("/tacos", h.CreateTaco).Methods("POST")
+    router.HandleFunc("/tacos/{id}", h.UpdateTaco).Methods("PUT")
+    router.HandleFunc("/tacos/{id}", h.DeleteTaco).Methods("DELETE")
+}
+
+func (h *TacoHandler) GetTaco(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id := vars["id"]
+    
+    taco, err := h.service.GetTaco(id)
+    if err != nil {
+        http.Error(w, "Failed to get taco: "+err.Error(), http.StatusInternalServerError)
+        return
+    }
+    
+    if taco == nil {
+        http.Error(w, "Taco not found", http.StatusNotFound)
+        return
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(taco)
+}
+
+// Other handler methods implemented similarly...</code></pre>
+        </div>
+
+        <h3>Step 5: Wire Everything Together</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// main.go
+package main
+
+import (
+    "log"
+    "net/http"
+    "github.com/gorilla/mux"
+    "yourproject/taco"
+)
+
+func main() {
+    // Create the repository
+    repo, err := taco.NewPostgresRepository("postgres://user:pass@localhost/tacos")
+    if err != nil {
+        log.Fatalf("Failed to create repository: %v", err)
+    }
+    
+    // Create the service with the repository
+    service := taco.NewTacoService(repo)
+    
+    // Create the handler with the service
+    handler := taco.NewTacoHandler(service)
+    
+    // Set up the router
+    router := mux.NewRouter()
+    handler.RegisterRoutes(router)
+    
+    // Start the server
+    log.Println("Server starting on :8080")
+    log.Fatal(http.ListenAndServe(":8080", router))
+}</code></pre>
+        </div>
+
+        <h2>🎭 Time to Mock Around and Find Out!</h2>
+        <p>Now for the fun part: testing all this code without touching a real database! It's like practicing karate moves without actually hitting anyone. 🥋</p>
+
+        <h3>Creating a Mock Repository</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// mock_repository.go
+package taco
+
+import "errors"
+
+// MockTacoRepository is a fake implementation for testing
+type MockTacoRepository struct {
+    tacos map[string]*Taco
+    // We can add these to simulate failures
+    ShouldFailOnGet    bool
+    ShouldFailOnList   bool
+    ShouldFailOnSave   bool
+    ShouldFailOnDelete bool
+}
+
+// NewMockTacoRepository creates a new in-memory taco repository
+func NewMockTacoRepository() *MockTacoRepository {
+    return &MockTacoRepository{
+        tacos: make(map[string]*Taco),
+    }
+}
+
+func (r *MockTacoRepository) GetTaco(id string) (*Taco, error) {
+    if r.ShouldFailOnGet {
+        return nil, errors.New("simulated database explosion 💥")
+    }
+    
+    taco, exists := r.tacos[id]
+    if !exists {
+        return nil, nil // Not found, but not an error
+    }
+    return taco, nil
+}
+
+func (r *MockTacoRepository) ListTacos() ([]*Taco, error) {
+    if r.ShouldFailOnList {
+        return nil, errors.New("simulated network outage 🔌")
+    }
+    
+    tacos := make([]*Taco, 0, len(r.tacos))
+    for _, taco := range r.tacos {
+        tacos = append(tacos, taco)
+    }
+    return tacos, nil
+}
+
+func (r *MockTacoRepository) SaveTaco(taco *Taco) error {
+    if r.ShouldFailOnSave {
+        return errors.New("simulated disk full error 💾")
+    }
+    
+    r.tacos[taco.ID] = taco
+    return nil
+}
+
+func (r *MockTacoRepository) DeleteTaco(id string) error {
+    if r.ShouldFailOnDelete {
+        return errors.New("simulated permission denied 🔒")
+    }
+    
+    delete(r.tacos, id)
+    return nil
+}</code></pre>
+        </div>
+
+        <h3>Testing the Service with Mocks</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// service_test.go
+package taco
+
+import (
+    "testing"
+)
+
+func TestCreateTaco(t *testing.T) {
+    // Arrange: Set up our mock and service
+    mockRepo := NewMockTacoRepository()
+    service := NewTacoService(mockRepo)
+    
+    // Act: Try to create a valid taco
+    taco := &Taco{
+        ID:          "taco1",
+        Name:        "Super Taco",
+        Ingredients: []string{"Beef", "Cheese", "Lettuce"},
+        Spiciness:   3,
+    }
+    err := service.CreateTaco(taco)
+    
+    // Assert: Should succeed
+    if err != nil {
+        t.Errorf("Expected no error, got: %v", err)
+    }
+    
+    // Verify the taco was saved in our mock repo
+    savedTaco, _ := mockRepo.GetTaco("taco1")
+    if savedTaco == nil {
+        t.Error("Taco was not saved to repository")
+    }
+}
+
+func TestCreateTacoValidation(t *testing.T) {
+    // Arrange
+    mockRepo := NewMockTacoRepository()
+    service := NewTacoService(mockRepo)
+    
+    // Test cases
+    testCases := []struct {
+        name        string
+        taco        *Taco
+        shouldError bool
+    }{
+        {
+            name: "No name",
+            taco: &Taco{
+                ID:          "taco2",
+                Name:        "", // Invalid: empty name
+                Ingredients: []string{"Beef"},
+                Spiciness:   3,
+            },
+            shouldError: true,
+        },
+        {
+            name: "No ingredients",
+            taco: &Taco{
+                ID:          "taco3",
+                Name:        "Empty Taco",
+                Ingredients: []string{}, // Invalid: no ingredients
+                Spiciness:   3,
+            },
+            shouldError: true,
+        },
+        {
+            name: "Invalid spiciness",
+            taco: &Taco{
+                ID:          "taco4",
+                Name:        "Super Hot",
+                Ingredients: []string{"Ghost Pepper"},
+                Spiciness:   10, // Invalid: too spicy!
+            },
+            shouldError: true,
+        },
+    }
+    
+    // Act & Assert
+    for _, tc := range testCases {
+        t.Run(tc.name, func(t *testing.T) {
+            err := service.CreateTaco(tc.taco)
+            
+            if tc.shouldError && err == nil {
+                t.Error("Expected validation error but got none")
+            }
+            
+            if !tc.shouldError && err != nil {
+                t.Errorf("Expected no error but got: %v", err)
+            }
+        })
+    }
+}
+
+func TestGetTacoWhenRepositoryFails(t *testing.T) {
+    // Arrange: Create a failing mock repository
+    mockRepo := NewMockTacoRepository()
+    mockRepo.ShouldFailOnGet = true // Simulate database failure
+    service := NewTacoService(mockRepo)
+    
+    // Act: Try to get a taco
+    _, err := service.GetTaco("any-id")
+    
+    // Assert: Should return the error from repository
+    if err == nil {
+        t.Error("Expected error from repository failure, got nil")
+    }
+}</code></pre>
+        </div>
+
+        <h3>Testing the HTTP Handler</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// handler_test.go
+package taco
+
+import (
+    "encoding/json"
+    "net/http"
+    "net/http/httptest"
+    "strings"
+    "testing"
+    
+    "github.com/gorilla/mux"
+)
+
+// MockTacoService implements TacoService for testing handlers
+type MockTacoService struct {
+    tacos map[string]*Taco
+    // Control test behavior
+    ShouldFailOnGet    bool
+    ShouldFailOnCreate bool
+}
+
+func NewMockTacoService() *MockTacoService {
+    return &MockTacoService{
+        tacos: make(map[string]*Taco),
+    }
+}
+
+// Implement all TacoService methods...
+func (s *MockTacoService) GetTaco(id string) (*Taco, error) {
+    if s.ShouldFailOnGet {
+        return nil, errors.New("simulated service error")
+    }
+    return s.tacos[id], nil
+}
+
+// Other methods implemented similarly...
+
+func TestGetTacoHandler(t *testing.T) {
+    // Arrange
+    mockService := NewMockTacoService()
+    // Add a test taco
+    mockService.tacos["taco123"] = &Taco{
+        ID:          "taco123",
+        Name:        "Test Taco",
+        Ingredients: []string{"Test Beef", "Test Cheese"},
+        Spiciness:   4,
+    }
+    
+    handler := NewTacoHandler(mockService)
+    
+    // Create a test request
+    req, _ := http.NewRequest("GET", "/tacos/taco123", nil)
+    
+    // Create a response recorder
+    rr := httptest.NewRecorder()
+    
+    // Create the router and register the route
+    router := mux.NewRouter()
+    router.HandleFunc("/tacos/{id}", handler.GetTaco).Methods("GET")
+    
+    // Act: Serve the request
+    router.ServeHTTP(rr, req)
+    
+    // Assert: Check the response
+    if status := rr.Code; status != http.StatusOK {
+        t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusOK)
+    }
+    
+    // Check the response body
+    var responseTaco Taco
+    err := json.Unmarshal(rr.Body.Bytes(), &responseTaco)
+    if err != nil {
+        t.Errorf("Failed to parse response JSON: %v", err)
+    }
+    
+    if responseTaco.ID != "taco123" || responseTaco.Name != "Test Taco" {
+        t.Errorf("Handler returned unexpected taco: %+v", responseTaco)
+    }
+}
+
+func TestGetTacoNotFound(t *testing.T) {
+    // Arrange
+    mockService := NewMockTacoService()
+    handler := NewTacoHandler(mockService)
+    
+    // Create a test request for a non-existent taco
+    req, _ := http.NewRequest("GET", "/tacos/nonexistent", nil)
+    rr := httptest.NewRecorder()
+    
+    router := mux.NewRouter()
+    router.HandleFunc("/tacos/{id}", handler.GetTaco).Methods("GET")
+    
+    // Act
+    router.ServeHTTP(rr, req)
+    
+    // Assert: Should return 404 Not Found
+    if status := rr.Code; status != http.StatusNotFound {
+        t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+    }
+}</code></pre>
+        </div>
+
+        <h2>🏊‍♂️ Testing with a Real Database (For the Brave)</h2>
+        <p>Sometimes you need to test with a real database to make sure your SQL isn't just a creative writing exercise. Here's how to do it without making a mess! 🧹</p>
+
+        <h3>Integration Tests with a Test Database</h3>
+        <div class="code-block">
+            <pre><code class="language-go">// integration_test.go
+package taco
+
+import (
+    "database/sql"
+    "log"
+    "os"
+    "testing"
+    
+    _ "github.com/lib/pq"
+)
+
+var testDB *sql.DB
+
+// Setup function that runs before tests
+func TestMain(m *testing.M) {
+    // Get connection string from environment or use default test DB
+    connStr := os.Getenv("TEST_DB_CONNECTION")
+    if connStr == "" {
+        connStr = "postgres://postgres:postgres@localhost/tacos_test"
+    }
+    
+    var err error
+    testDB, err = sql.Open("postgres", connStr)
+    if err != nil {
+        log.Fatalf("Failed to connect to test database: %v", err)
+    }
+    
+    // Create tables and prepare test database
+    setupTestDB()
+    
+    // Run the tests
+    code := m.Run()
+    
+    // Clean up after tests
+    cleanupTestDB()
+    testDB.Close()
+    
+    os.Exit(code)
+}
+
+func setupTestDB() {
+    // Create tables
+    _, err := testDB.Exec(`
+        CREATE TABLE IF NOT EXISTS tacos (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            ingredients TEXT[] NOT NULL,
+            spiciness INTEGER NOT NULL
+        )
+    `)
+    if err != nil {
+        log.Fatalf("Failed to create test tables: %v", err)
+    }
+}
+
+func cleanupTestDB() {
+    // Clean up all data
+    _, err := testDB.Exec("DELETE FROM tacos")
+    if err != nil {
+        log.Printf("Warning: Failed to clean test database: %v", err)
+    }
+}
+
+// Helper to get a clean repository for each test
+func getTestRepository() TacoRepository {
+    // Clean any existing data first
+    _, err := testDB.Exec("DELETE FROM tacos")
+    if err != nil {
+        log.Fatalf("Failed to clean test data: %v", err)
+    }
+    
+    return &postgresRepository{db: testDB}
+}
+
+func TestRepositorySaveTaco(t *testing.T) {
+    // Skip if we're running short tests
+    if testing.Short() {
+        t.Skip("Skipping integration test in short mode")
+    }
+    
+    // Arrange
+    repo := getTestRepository()
+    taco := &Taco{
+        ID:          "integration1",
+        Name:        "Integration Test Taco",
+        Ingredients: []string{"Database", "SQL", "Integration"},
+        Spiciness:   5,
+    }
+    
+    // Act
+    err := repo.SaveTaco(taco)
+    
+    // Assert
+    if err != nil {
+        t.Fatalf("Failed to save taco: %v", err)
+    }
+    
+    // Verify we can retrieve it
+    retrieved, err := repo.GetTaco("integration1")
+    if err != nil {
+        t.Fatalf("Failed to get saved taco: %v", err)
+    }
+    
+    if retrieved == nil {
+        t.Fatal("Retrieved taco is nil")
+    }
+    
+    if retrieved.Name != "Integration Test Taco" {
+        t.Errorf("Retrieved incorrect taco name: got %s, want %s", 
+                 retrieved.Name, "Integration Test Taco")
+    }
+}</code></pre>
+        </div>
+
+        <h2>🧠 Pro Tips for Dependency Injection and Testing</h2>
+        <ol>
+            <li><strong>Keep interfaces small</strong> - The smaller the interface, the easier to mock. Don't make your interfaces the size of a novel! 📚</li>
+            <li><strong>Use table-driven tests</strong> - Test multiple scenarios without copy-pasting code like a madman. Your future carpal tunnel thanks you! 🙏</li>
+            <li><strong>Test behavior, not implementation</strong> - Don't test that a function calls another function; test that it does what it's supposed to do! 🎯</li>
+            <li><strong>Use constructor injection</strong> - It makes dependencies explicit and impossible to forget. Like putting your keys on a giant keychain! 🔑</li>
+            <li><strong>Consider using a mocking library</strong> - For complex interfaces, libraries like <code>gomock</code> or <code>testify/mock</code> can save you time. Work smarter, not harder! 🧠</li>
+        </ol>
+
+        <h2>🎮 Bonus: Quick Cheat Sheet for Testing</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Testing Goal</th>
+                    <th>Approach</th>
+                    <th>When to Use</th>
+                </tr>
+                <tr>
+                    <td>Test business logic</td>
+                    <td>Unit tests with mocks</td>
+                    <td>Most of the time (80%)</td>
+                </tr>
+                <tr>
+                    <td>Test database queries</td>
+                    <td>Integration tests with test DB</td>
+                    <td>When SQL matters (15%)</td>
+                </tr>
+                <tr>
+                    <td>Test entire system</td>
+                    <td>End-to-end tests</td>
+                    <td>Critical paths only (5%)</td>
+                </tr>
+                <tr>
+                    <td>Test HTTP handlers</td>
+                    <td>httptest package with mock services</td>
+                    <td>For all API endpoints</td>
+                </tr>
+                <tr>
+                    <td>Test error handling</td>
+                    <td>Mocks with forced errors</td>
+                    <td>For every possible failure point</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2>🎭 The Grand Finale: A Complete Testing Example</h2>
+        <p>Let's put it all together with a complete example that shows the full testing lifecycle of our taco service. This is where all our hard work pays off! 🏆</p>
+
+        <div class="code-block">
+            <pre><code class="language-go">// full_test.go
+package taco_test // Note: using _test suffix to test from outside the package
+
+import (
+    "testing"
+    
+    "yourproject/taco" // Import your actual package
+)
+
+func TestFullTacoLifecycle(t *testing.T) {
+    // ===== ARRANGE =====
+    // Create our mock repository
+    mockRepo := taco.NewMockTacoRepository()
+    
+    // Create the service with our mock
+    service := taco.NewTacoService(mockRepo)
+    
+    // ===== ACT & ASSERT: CREATE =====
+    // Create a new taco
+    newTaco := &taco.Taco{
+        ID:          "lifecycle-taco",
+        Name:        "Lifecycle Taco",
+        Ingredients: []string{"Code", "Tests", "Mocks", "Interfaces"},
+        Spiciness:   4,
+    }
+    
+    err := service.CreateTaco(newTaco)
+    if err != nil {
+        t.Fatalf("Failed to create taco: %v", err)
+    }
+    
+    // ===== ACT & ASSERT: RETRIEVE =====
+    // Get the taco we just created
+    retrieved, err := service.GetTaco("lifecycle-taco")
+    if err != nil {
+        t.Fatalf("Failed to get taco: %v", err)
+    }
+    
+    if retrieved == nil {
+        t.Fatal("Retrieved taco is nil")
+    }
+    
+    if retrieved.Name != "Lifecycle Taco" {
+        t.Errorf("Retrieved incorrect name: got %s, want %s", 
+                 retrieved.Name, "Lifecycle Taco")
+    }
+    
+    // ===== ACT & ASSERT: UPDATE =====
+    // Update the taco
+    retrieved.Name = "Updated Lifecycle Taco"
+    retrieved.Spiciness = 5
+    
+    err = service.UpdateTaco(retrieved)
+    if err != nil {
+        t.Fatalf("Failed to update taco: %v", err)
+    }
+    
+    // Get it again to verify the update
+    updated, err := service.GetTaco("lifecycle-taco")
+    if err != nil {
+        t.Fatalf("Failed to get updated taco: %v", err)
+    }
+    
+    if updated.Name != "Updated Lifecycle Taco" {
+        t.Errorf("Update failed: got name %s, want %s", 
+                 updated.Name, "Updated Lifecycle Taco")
+    }
+    
+    if updated.Spiciness != 5 {
+        t.Errorf("Update failed: got spiciness %d, want %d", 
+                 updated.Spiciness, 5)
+    }
+    
+    // ===== ACT & ASSERT: LIST =====
+    // List all tacos
+    tacos, err := service.ListTacos()
+    if err != nil {
+        t.Fatalf("Failed to list tacos: %v", err)
+    }
+    
+    if len(tacos) != 1 {
+        t.Errorf("Expected 1 taco, got %d", len(tacos))
+    }
+    
+    // ===== ACT & ASSERT: DELETE =====
+    // Delete the taco
+    err = service.DeleteTaco("lifecycle-taco")
+    if err != nil {
+        t.Fatalf("Failed to delete taco: %v", err)
+    }
+    
+    // Verify it's gone
+    deleted, err := service.GetTaco("lifecycle-taco")
+    if err != nil {
+        t.Fatalf("Error checking deleted taco: %v", err)
+    }
+    
+    if deleted != nil {
+        t.Error("Taco wasn't deleted properly")
+    }
+    
+    // List again to make sure it's empty
+    tacos, err = service.ListTacos()
+    if err != nil {
+        t.Fatalf("Failed to list tacos after delete: %v", err)
+    }
+    
+    if len(tacos) != 0 {
+        t.Errorf("Expected 0 tacos after delete, got %d", len(tacos))
+    }
+}</code></pre>
+        </div>
+
+        <h2>🧙‍♂️ Testing Error Scenarios Like a Wizard</h2>
+        <p>The true test of a robust system is how it handles failures. Let's see how to test those pesky error cases that keep you up at night! 🌙</p>
+
+        <div class="code-block">
+            <pre><code class="language-go">// error_test.go
+package taco
+
+import (
+    "testing"
+)
+
+func TestErrorScenarios(t *testing.T) {
+    // Create a repository that will fail on command
+    mockRepo := NewMockTacoRepository()
+    service := NewTacoService(mockRepo)
+    
+    // Test cases for different failure scenarios
+    testCases := []struct {
+        name        string
+        setup       func() // Function to set up the failure scenario
+        operation   func() error // The operation to test
+        errorExpected bool
+    }{
+        {
+            name: "GetTaco fails when repository fails",
+            setup: func() {
+                mockRepo.ShouldFailOnGet = true
+            },
+            operation: func() error {
+                _, err := service.GetTaco("any-id")
+                return err
+            },
+            errorExpected: true,
+        },
+        {
+            name: "ListTacos fails when repository fails",
+            setup: func() {
+                mockRepo.ShouldFailOnList = true
+            },
+            operation: func() error {
+                _, err := service.ListTacos()
+                return err
+            },
+            errorExpected: true,
+        },
+        {
+            name: "CreateTaco fails when repository fails",
+            setup: func() {
+                mockRepo.ShouldFailOnSave = true
+            },
+            operation: func() error {
+                taco := &Taco{
+                    ID:          "error-taco",
+                    Name:        "Error Taco",
+                    Ingredients: []string{"Error", "Exception", "Failure"},
+                    Spiciness:   3,
+                }
+                return service.CreateTaco(taco)
+            },
+            errorExpected: true,
+        },
+        {
+            name: "UpdateTaco fails when taco doesn't exist",
+            setup: func() {
+                // Don't add any tacos to the repository
+                mockRepo.ShouldFailOnGet = false
+            },
+            operation: func() error {
+                taco := &Taco{
+                    ID:          "nonexistent",
+                    Name:        "Nonexistent Taco",
+                    Ingredients: []string{"Void", "Emptiness"},
+                    Spiciness:   1,
+                }
+                return service.UpdateTaco(taco)
+            },
+            errorExpected: true,
+        },
+    }
+    
+    // Run all the test cases
+    for _, tc := range testCases {
+        t.Run(tc.name, func(t *testing.T) {
+            // Reset the mock for each test
+            mockRepo.ShouldFailOnGet = false
+            mockRepo.ShouldFailOnList = false
+            mockRepo.ShouldFailOnSave = false
+            mockRepo.ShouldFailOnDelete = false
+            
+            // Set up the specific failure scenario
+            tc.setup()
+            
+            // Run the operation
+            err := tc.operation()
+            
+            // Check if we got the expected error behavior
+            if tc.errorExpected && err == nil {
+                t.Error("Expected an error but got nil")
+            }
+            
+            if !tc.errorExpected && err != nil {
+                t.Errorf("Expected no error but got: %v", err)
+            }
+        })
+    }
+}</code></pre>
+        </div>
+
+        <h2>🎓 Graduation: You're Now a Dependency Injection Master!</h2>
+        <p>Congratulations! You've survived the wild world of dependency injection and mocking in Go! You can now:</p>
+        <ul>
+            <li>🏗️ Design code with proper dependency inversion</li>
+            <li>💉 Inject dependencies like a professional</li>
+            <li>🎭 Create mocks that would make Broadway jealous</li>
+            <li>🧪 Test your code without relying on external systems</li>
+            <li>🔍 Simulate errors without actually breaking things</li>
+            <li>🚀 Build robust, testable REST APIs</li>
+        </ul>
+
+        <h2>🧠 Key Takeaways for the Road</h2>
+        <ol>
+            <li><strong>Interfaces are your friends</strong> - They create the seams that make your code testable.</li>
+                        <li><strong>Interfaces are your friends</strong> - They create the seams that make your code testable.</li>
+            <li><strong>Dependency injection isn't scary</strong> - It's just passing things in instead of creating them inside.</li>
+            <li><strong>Mocks don't have to be complex</strong> - A simple struct that implements your interface is often enough.</li>
+            <li><strong>Test both happy and sad paths</strong> - Make sure your code handles errors gracefully.</li>
+            <li><strong>Integration tests complement unit tests</strong> - They verify that your code works with real dependencies.</li>
+        </ol>
+
+        <h2>🚀 Where to Go From Here</h2>
+        <p>Now that you're a dependency injection and mocking wizard, here are some next steps to level up even further:</p>
+        <ul>
+            <li>Explore mocking libraries like <a href="https://github.com/golang/mock" target="_blank">gomock</a> and <a href="https://github.com/stretchr/testify" target="_blank">testify</a></li>
+            <li>Learn about wire generation with <a href="https://github.com/google/wire" target="_blank">Google's Wire</a></li>
+            <li>Dive into behavior-driven development (BDD) with <a href="https://github.com/onsi/ginkgo" target="_blank">Ginkgo</a></li>
+            <li>Check out dependency injection frameworks like <a href="https://github.com/uber-go/dig" target="_blank">Uber's Dig</a> or <a href="https://github.com/google/wire" target="_blank">Wire</a></li>
+            <li>Practice writing tests first (TDD) for your next project</li>
+        </ul>
+
+        <h2>🎬 Final Thoughts: The Testing Mindset</h2>
+        <p>Remember, the goal isn't just to have tests—it's to have <em>testable code</em>. Dependency injection and good interface design are tools that help you write code that's easier to test, maintain, and extend.</p>
+        
+        <p>When you design with testing in mind from the start, you'll naturally create more modular, decoupled systems. Your future self (and teammates) will thank you when they need to understand, modify, or extend your code.</p>
+        
+        <p>Now go forth and inject dependencies like a pro! 💉✨</p>
+
+        <p><em>P.S. If your tests are still failing after following this guide, have you tried turning your computer off and on again? Works 60% of the time, every time! 😉</em></p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Golang</span>
+            <span class="badge">#Testing</span>
+            <span class="badge">#Mocking</span>
+            <span class="badge">#DependencyInjection</span>
+            <span class="badge">#Interfaces</span>
+            <span class="badge">#RESTAPI</span>
+            <span class="badge">#TDD</span>
+            <span class="badge">#GoTesting</span>
+            <span class="badge">#SolidPrinciples</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
