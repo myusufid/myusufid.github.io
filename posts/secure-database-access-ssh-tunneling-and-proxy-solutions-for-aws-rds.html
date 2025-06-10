@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional guide to securely accessing AWS RDS PostgreSQL databases through SSH tunnels, RDS Proxy, and other enterprise-grade solutions">
+    <title>Secure Database Access: SSH Tunneling and Proxy Solutions for AWS RDS | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional guide to securely accessing AWS RDS PostgreSQL databases through SSH tunnels, RDS Proxy, and other enterprise-grade solutions">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Secure Database Access: SSH Tunneling and Proxy Solutions for AWS RDS | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Professional guide to securely accessing AWS RDS PostgreSQL databases through SSH tunnels, RDS Proxy, and other enterprise-grade solutions">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Secure Database Access: SSH Tunneling and Proxy Solutions for AWS RDS | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Professional guide to securely accessing AWS RDS PostgreSQL databases through SSH tunnels, RDS Proxy, and other enterprise-grade solutions">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>Secure Database Access: SSH Tunneling and Proxy Solutions for AWS RDS</h1>
+    <div class="meta mb-4">June 15, 2025 • Enterprise Database Security Best Practices</div>
+
+    <div class="content">
+        <h2>🎯 Overview</h2>
+        <p>Connecting to AWS RDS PostgreSQL databases securely without exposing endpoints directly is a critical requirement for production environments. This guide covers multiple approaches from SSH tunneling to AWS-native proxy solutions.</p>
+
+        <h2>🏗️ Architecture Considerations</h2>
+        <p>Before implementing any solution, consider your infrastructure requirements:</p>
+        <ul>
+            <li><strong>Security posture:</strong> Private subnets, VPC isolation, minimal exposure</li>
+            <li><strong>Scalability:</strong> Connection pooling, concurrent access patterns</li>
+            <li><strong>Compliance:</strong> Audit trails, encryption in transit</li>
+            <li><strong>Operational overhead:</strong> Maintenance, monitoring, troubleshooting</li>
+        </ul>
+
+        <h2>🛡️ Solution 1: AWS RDS Proxy (Recommended)</h2>
+        <p>AWS RDS Proxy is the native solution designed specifically for secure database access with built-in connection pooling and failover capabilities.</p>
+
+        <h3>Implementation</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create RDS Proxy via AWS CLI
+aws rds create-db-proxy \
+    --db-proxy-name production-rds-proxy \
+    --engine-family postgresql \
+    --target-group-name default \
+    --vpc-subnet-ids subnet-12345678 subnet-87654321 \
+    --vpc-security-group-ids sg-abcdef123456 \
+    --require-tls \
+    --auth AuthScheme=SECRETS,SecretArn=arn:aws:secretsmanager:region:account:secret:rds-credentials</code></pre>
+        </div>
+
+        <h3>Application Configuration</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Environment variables for your application
+DB_HOST=production-rds-proxy.proxy-xyz.us-east-1.rds.amazonaws.com
+DB_PORT=5432
+DB_NAME=production_db
+# Credentials managed through AWS Secrets Manager</code></pre>
+        </div>
+
+        <h3>Benefits</h3>
+        <ul>
+            <li>Built-in connection pooling and management</li>
+            <li>Automatic failover and high availability</li>
+            <li>IAM authentication support</li>
+            <li>CloudWatch monitoring integration</li>
+            <li>No additional infrastructure to manage</li>
+        </ul>
+
+        <h2>🔐 Solution 2: SSH Tunnel Through Bastion Host</h2>
+        <p>For RDS instances in private subnets, SSH tunneling through a bastion host provides secure access while maintaining network isolation.</p>
+
+        <h3>Infrastructure Setup</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Launch bastion host in public subnet
+aws ec2 run-instances \
+    --image-id ami-0abcdef1234567890 \
+    --instance-type t3.micro \
+    --key-name your-key-pair \
+    --security-group-ids sg-bastion-host \
+    --subnet-id subnet-public-12345678 \
+    --associate-public-ip-address</code></pre>
+        </div>
+
+        <h3>Security Group Configuration</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Bastion host security group - SSH access only
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-bastion-host \
+    --protocol tcp \
+    --port 22 \
+    --cidr 203.0.113.0/24  # Your office IP range
+
+# RDS security group - PostgreSQL access from bastion only
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-rds-private \
+    --protocol tcp \
+    --port 5432 \
+    --source-group sg-bastion-host</code></pre>
+        </div>
+
+        <h3>SSH Tunnel Creation</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create SSH tunnel to RDS through bastion host
+ssh -L 5432:your-rds-endpoint.region.rds.amazonaws.com:5432 \
+    -N -f \
+    -o ServerAliveInterval=60 \
+    -o ServerAliveCountMax=3 \
+    ec2-user@bastion-host-public-ip</code></pre>
+        </div>
+
+        <h3>Application Connection</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Your application connects to localhost
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=production_db
+DB_USER=app_user
+DB_PASSWORD=secure_password</code></pre>
+        </div>
+
+        <h2>🔧 Solution 3: AWS Systems Manager Session Manager</h2>
+        <p>Eliminate SSH key management by using AWS Systems Manager for secure tunneling without direct SSH access.</p>
+
+        <h3>Prerequisites</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Install Session Manager plugin
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
+unzip sessionmanager-bundle.zip
+sudo ./sessionmanager-bundle/install -i /usr/local/sessionmanagerplugin -b /usr/local/bin/session-manager-plugin</code></pre>
+        </div>
+
+        <h3>Port Forwarding Session</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create tunnel through SSM (no SSH keys required)
+aws ssm start-session \
+    --target i-1234567890abcdef0 \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters host="your-rds-endpoint.region.rds.amazonaws.com",portNumber="5432",localPortNumber="5432"</code></pre>
+        </div>
+
+        <h3>IAM Policy Requirements</h3>
+        <div class="code-block">
+            <pre><code class="language-json">{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:StartSession"
+            ],
+            "Resource": [
+                "arn:aws:ec2:*:*:instance/i-1234567890abcdef0",
+                "arn:aws:ssm:*:*:document/AWS-StartPortForwardingSessionToRemoteHost"
+            ]
+        }
+    ]
+}</code></pre>
+        </div>
+
+        <h2>🌐 Solution 4: VPC Connectivity Options</h2>
+        <p>For production environments requiring persistent connectivity, establish dedicated network connections.</p>
+
+        <h3>VPC Peering</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create VPC peering connection
+aws ec2 create-vpc-peering-connection \
+    --vpc-id vpc-12345678 \
+    --peer-vpc-id vpc-87654321 \
+    --peer-region us-east-1</code></pre>
+        </div>
+
+        <h3>AWS PrivateLink Endpoint</h3>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create VPC endpoint for RDS
+aws ec2 create-vpc-endpoint \
+    --vpc-id vpc-12345678 \
+    --service-name com.amazonaws.region.rds \
+    --vpc-endpoint-type Interface \
+    --subnet-ids subnet-12345678 \
+    --security-group-ids sg-privatelink</code></pre>
+        </div>
+
+        <h2>⚡ Solution 5: Lambda Database Proxy</h2>
+        <p>Implement a serverless proxy layer for additional security and request processing capabilities.</p>
+
+        <h3>Lambda Function Implementation</h3>
+        <div class="code-block">
+            <pre><code class="language-javascript">// Lambda function for database proxy
+const { Client } = require('pg');
+
+exports.handler = async (event) => {
+    const client = new Client({
+        host: process.env.RDS_ENDPOINT,
+        port: 5432,
+        database: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        ssl: { rejectUnauthorized: false }
+    });
+
+    try {
+        await client.connect();
+        
+        // Execute query based on event parameters
+        const query = event.query;
+        const params = event.parameters || [];
+        
+        const result = await client.query(query, params);
+        
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                success: true,
+                data: result.rows,
+                rowCount: result.rowCount
+            })
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                success: false,
+                error: error.message
+            })
+        };
+    } finally {
+        await client.end();
+    }
+};</code></pre>
+        </div>
+
+        <h2>🔍 DBeaver Configuration Reference</h2>
+        <p>To replicate DBeaver's SSH tunnel configuration in your applications:</p>
+
+        <div class="code-block">
+            <pre><code class="language-bash"># Extract DBeaver connection settings
+# SSH Host: Your EC2/bastion host public IP
+# SSH User: ec2-user (or ubuntu for Ubuntu AMIs)
+# SSH Port: 22
+# Database Host: Internal RDS endpoint
+# Database Port: 5432
+
+# Equivalent SSH command
+ssh -L 5432:internal-rds-endpoint.region.rds.amazonaws.com:5432 \
+    -N -f \
+    ec2-user@bastion-public-ip</code></pre>
+        </div>
+
+        <h2>📊 Solution Comparison Matrix</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Solution</th>
+                        <th>Security</th>
+                        <th>Scalability</th>
+                        <th>Operational Overhead</th>
+                        <th>Cost</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RDS Proxy</td>
+                        <td>High</td>
+                        <td>Excellent</td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>Production applications</td>
+                    </tr>
+                    <tr>
+                        <td>SSH Tunnel</td>
+                        <td>High</td>
+                        <td>Limited</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Development/testing</td>
+                    </tr>
+                    <tr>
+                        <td>SSM Session Manager</td>
+                        <td>Very High</td>
+                        <td>Limited</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>Secure admin access</td>
+                    </tr>
+                    <tr>
+                        <td>VPC Connectivity</td>
+                        <td>Very High</td>
+                        <td>Excellent</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Enterprise environments</td>
+                    </tr>
+                    <tr>
+                        <td>Lambda Proxy</td>
+                        <td>High</td>
+                        <td>Good</td>
+                        <td>Medium</td>
+                        <td>Variable</td>
+                        <td>API-driven access</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>🛡️ Security Best Practices</h2>
+        <ul>
+            <li><strong>Encryption:</strong> Always use SSL/TLS for database connections</li>
+            <li><strong>Authentication:</strong> Implement IAM database authentication where possible</li>
+            <li><strong>Network isolation:</strong> Keep RDS in private subnets</li>
+            <li><strong>Access logging:</strong> Enable CloudTrail and VPC Flow Logs</li>
+            <li><strong>Credential management:</strong> Use AWS Secrets Manager for database credentials</li>
+            <li><strong>Regular rotation:</strong> Implement automated credential rotation</li>
+        </ul>
+
+        <h2>📈 Monitoring and Troubleshooting</h2>
+        <div class="code-block">
+            <pre><code class="language-bash"># Monitor RDS Proxy connections
+aws logs filter-log-events \
+    --log-group-name /aws/rds/proxy/production-rds-proxy \
+    --start-time 1640995200000
+
+# Check SSH tunnel status
+ps aux | grep ssh | grep 5432
+
+# Test database connectivity
+pg_isready -h localhost -p 5432</code></pre>
+        </div>
+
+        <h2>🎯 Recommendations</h2>
+        <p><strong>For Production:</strong> Use AWS RDS Proxy for its native integration, connection pooling, and high availability features.</p>
+        <p><strong>For Development:</strong> SSH tunneling through a bastion host provides a cost-effective solution with good security.</p>
+        <p><strong>For Enterprise:</strong> Implement VPC connectivity solutions for persistent, high-performance access.</p>
+        <p><strong>For Compliance:</strong> AWS Systems Manager Session Manager eliminates SSH key management and provides comprehensive audit trails.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#AWS</span>
+            <span class="badge">#RDS</span>
+            <span class="badge">#PostgreSQL</span>
+            <span class="badge">#SSH-Tunneling</span>
+            <span class="badge">#Database-Security</span>
+            <span class="badge">#Proxy</span>
+            <span class="badge">#DevOps</span>
+            <span class="badge">#Infrastructure</span>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
