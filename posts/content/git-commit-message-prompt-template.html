@@ -1,0 +1,86 @@
+<!--
+title: Git Commit Message Prompt Template
+description: Simple prompt template for generating professional git commit messages using AI assistants
+date: 2025-06-24
+tags: git, prompt, ai, development, tools
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Git Commit Message Prompt Template</h1>
+    <div class="meta mb-4">June 24, 2025</div>
+
+    <div class="content">
+        <h2>Why This Template</h2>
+        <p>Writing good commit messages is hard. This template helps you get consistent, professional messages using AI.</p>
+
+        <h2>The Template</h2>
+        <div class="code-block">
+            <pre><code>Analyze my git repository changes and generate 5 commit message recommendations:
+
+**Instructions:**
+1. Run git status to detect new and modified files
+2. Run git diff to understand what changed in modified files
+3. Read new files to understand their purpose
+4. Generate 5 commit messages in numbered list format
+
+**Requirements:**
+- Use conventional commit format (feat/fix/refactor/test/docs/chore)
+- Focus on business value and user impact
+- Keep messages under 72 characters for title
+- Consider all changes as one cohesive feature/fix
+- Return as numbered list only
+
+**Format each message as:**
+type(scope): brief description
+
+**Analysis should include:**
+- What new functionality was added
+- What existing code was modified and why
+- The overall purpose/goal of these changes</code></pre>
+        </div>
+
+        <h2>How It Works</h2>
+        <ul>
+            <li><strong>Analysis first:</strong> AI examines your actual changes</li>
+            <li><strong>Multiple options:</strong> Get 5 different messages to choose from</li>
+            <li><strong>Conventional format:</strong> Follows industry standards</li>
+            <li><strong>Clear limits:</strong> 72 character limit keeps messages readable</li>
+        </ul>
+
+        <h2>Benefits</h2>
+        <h3>Consistent Format</h3>
+        <p>All messages follow conventional commit standards.</p>
+
+        <h3>Context-Aware</h3>
+        <p>AI reads your actual changes, not just file names.</p>
+
+        <h3>Multiple Options</h3>
+        <p>Pick the message that best captures your intent.</p>
+
+        <h2>Usage Tips</h2>
+        <ul>
+            <li>Run before committing</li>
+            <li>Modify for your team's needs</li>
+            <li>Use scope to indicate project area</li>
+            <li>Focus on "why" not just "what"</li>
+        </ul>
+
+        <h2>Example Output</h2>
+        <div class="code-block">
+            <pre><code>1. feat(auth): add user login validation
+2. fix(api): implement secure authentication flow  
+3. feat(security): add login form with validation
+4. chore(auth): update user authentication system
+5. feat(user): implement login functionality</code></pre>
+        </div>
+
+        <div class="tags mt-4">
+            <span class="badge">#Git</span>
+            <span class="badge">#Prompt</span>
+            <span class="badge">#AI</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Tools</span>
+        </div>
+    </div>
+</article>
