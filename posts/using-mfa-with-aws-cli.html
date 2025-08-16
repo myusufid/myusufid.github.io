@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A step-by-step guide on how to resolve the 'explicit deny in an identity-based policy' error by using MFA with the AWS CLI, including how to get temporary credentials and automate the process with a script.">
+    <title>Using MFA with AWS CLI | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A step-by-step guide on how to resolve the 'explicit deny in an identity-based policy' error by using MFA with the AWS CLI, including how to get temporary credentials and automate the process with a script.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Using MFA with AWS CLI | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A step-by-step guide on how to resolve the 'explicit deny in an identity-based policy' error by using MFA with the AWS CLI, including how to get temporary credentials and automate the process with a script.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Using MFA with AWS CLI | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A step-by-step guide on how to resolve the 'explicit deny in an identity-based policy' error by using MFA with the AWS CLI, including how to get temporary credentials and automate the process with a script.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <div class="featured-image-container mb-5">
+            <img src="/assets/images/Gemini_Generated_Image_xpuvwfxpuvwfxpuv.png" alt="Using MFA with AWS CLI" class="featured-image">
+            <div class="image-credit">Image source: Gemini</div>
+        </div>
+        
+        <article class="blog-post">
+<h1>Using MFA with AWS CLI</h1>
+<div class="meta mb-4">August 16, 2025</div>
+<p>If you've ever encountered an 'explicit deny in an identity-based policy' error when using the AWS CLI, it's likely that your organization's security policies require Multi-Factor Authentication (MFA) for all CLI sessions. This is a common security measure, and here’s a step-by-step guide on how to authenticate with MFA and get back to work.</p>
+
+<h2>The Problem: Explicit Deny</h2>
+<p>The error message 'explicit deny in an identity-based policy' usually means that a policy, such as a ForceMFA policy, is blocking your access because your AWS CLI session has not been authenticated with MFA.</p>
+
+<h2>The Solution: Use MFA with AWS CLI</h2>
+<p>Here’s how to resolve this by creating a temporary, MFA-authenticated session.</p>
+
+<h3>1. Check if You Have an MFA Device Configured</h3>
+<p>First, ensure you have an MFA device associated with your IAM user. You can check this by running:</p>
+<pre><code class="language-bash">aws iam list-mfa-devices --user-name your-user-name</code></pre>
+
+<h3>2. Get Temporary Credentials with MFA</h3>
+<p>Next, you need to get temporary credentials by calling the `sts get-session-token` command. You will need your MFA device's serial number (ARN) and a one-time token from your authenticator app.</p>
+<pre><code class="language-bash"># Replace the SERIAL-NUMBER and TOKEN-CODE with your own
+aws sts get-session-token \
+  --serial-number arn:aws:iam::123456789012:mfa/your-user-name \
+  --token-code 123456 \
+  --duration-seconds 3600
+</code></pre>
+<p>This command will return a set of temporary credentials, including an `AccessKeyId`, `SecretAccessKey`, and `SessionToken`.</p>
+<pre><code class="language-json">{
+    "Credentials": {
+        "AccessKeyId": "ASIA...",
+        "SecretAccessKey": "...",
+        "SessionToken": "...",
+        "Expiration": "..."
+    }
+}
+</code></pre>
+
+<h3>3. Configure a Temporary Profile with the MFA Credentials</h3>
+<p>Now, you can create a new, temporary profile in your AWS configuration with these credentials. This keeps your standard IAM user credentials separate from your temporary, MFA-authenticated session.</p>
+<pre><code class="language-bash"># Replace the credentials with the ones you received
+aws configure set aws_access_key_id ASIA... --profile mfa-session
+aws configure set aws_secret_access_key YOUR_SECRET --profile mfa-session
+aws configure set aws_session_token YOUR_SESSION_TOKEN --profile mfa-session
+aws configure set region us-east-1 --profile mfa-session
+</code></pre>
+
+<h3>4. Use the MFA-Authenticated Profile</h3>
+<p>You can now use this temporary profile for your AWS CLI commands by using the `--profile` flag. This will allow you to bypass the MFA policy block.</p>
+<pre><code class="language-bash"># Retry your S3 command with the new MFA-authenticated profile
+aws s3 cp s3://your-bucket/your-file . --profile mfa-session
+</code></pre>
+
+<h2>Alternative: Create a Script to Automate the Process</h2>
+<p>To make this process faster in the future, you can use a simple shell script to automate getting and setting your temporary credentials.</p>
+<p>Create a file named `mfa-session.sh`:</p>
+<pre><code class="language-bash">#!/bin/bash
+# mfa-session.sh
+
+echo "Enter your MFA token:"
+read mfa_token
+
+# Get session token (replace with your MFA device ARN)
+output=$(aws sts get-session-token \
+  --serial-number arn:aws:iam::123456789012:mfa/your-user-name \
+  --token-code $mfa_token \
+  --duration-seconds 3600 \
+  --output json)
+
+# Extract credentials using jq
+access_key=$(echo $output | jq -r '.Credentials.AccessKeyId')
+secret_key=$(echo $output | jq -r '.Credentials.SecretAccessKey')
+session_token=$(echo $output | jq -r '.Credentials.SessionToken')
+
+# Set environment variables for the current session
+export AWS_ACCESS_KEY_ID=$access_key
+export AWS_SECRET_ACCESS_KEY=$secret_key
+export AWS_SESSION_TOKEN=$session_token
+
+echo "MFA session activated. You can now run AWS CLI commands."
+</code></pre>
+<p>Make the script executable (`chmod +x mfa-session.sh`) and run it (`./mfa-session.sh`) whenever you need to start a new MFA-authenticated session.</p>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

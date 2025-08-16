@@ -1,0 +1,104 @@
+<!--
+title: 6 Easy Ways to Switch Between AWS Profiles
+description: A comprehensive guide to the most common and convenient methods for switching between AWS profiles, from using the --profile flag to third-party tools like aws-vault.
+date: 2025-08-16
+tags: aws, cli, devops, cloud, tutorial
+image: /assets/images/Gemini_Generated_Image_czyavsczyavsczya.png
+image_credit: Gemini
+-->
+<article class="blog-post">
+<h1>6 Easy Ways to Switch Between AWS Profiles</h1>
+<div class="meta mb-4">August 16, 2025</div>
+<p>Managing multiple AWS accounts is a common practice for separating environments like development, staging, and production. Efficiently switching between these profiles is key to a smooth workflow. Here are six easy ways to manage and switch between your AWS profiles.</p>
+
+<h2>1. Using the `--profile` Flag with AWS CLI</h2>
+<p>The most straightforward method for executing a single command with a specific profile is the <code>--profile</code> flag. This is ideal for one-off tasks where you don't want to change your default profile.</p>
+<pre><code class="language-bash"># Use a specific profile for a single command
+aws s3 ls --profile dev
+
+# Run another command with the production profile
+aws ec2 describe-instances --profile production
+</code></pre>
+
+<h2>2. Set the `AWS_PROFILE` Environment Variable</h2>
+<p>For a more persistent session, you can set the <code>AWS_PROFILE</code> environment variable. Once set, all subsequent AWS CLI commands in that terminal session will use the specified profile.</p>
+<pre><code class="language-bash"># Set the profile for the current terminal session
+export AWS_PROFILE=dev
+
+# All subsequent commands will now use the 'dev' profile
+aws s3 ls
+aws iam list-users
+
+# You can also set it for a single command
+AWS_PROFILE=production aws ec2 describe-instances
+</code></pre>
+<p>This method is one of the most convenient for daily work sessions.</p>
+
+<h2>3. Configure Named Profiles in `~/.aws/config` and `~/.aws/credentials`</h2>
+<p>This is the foundational step for making the other methods work. You can define named profiles in your AWS config and credentials files, located in the <code>~/.aws/</code> directory.</p>
+<p>Your <code>~/.aws/config</code> file might look like this:</p>
+<pre><code class="language-ini">[default]
+region = us-east-1
+
+[profile dev]
+region = us-west-2
+output = json
+
+[profile production]
+region = us-east-1
+output = table
+</code></pre>
+<p>And your <code>~/.aws/credentials</code> file would store the corresponding keys:</p>
+<pre><code class="language-ini">[default]
+aws_access_key_id = YOUR_DEFAULT_KEY
+aws_secret_access_key = YOUR_DEFAULT_SECRET
+
+[dev]
+aws_access_key_id = YOUR_DEV_KEY
+aws_secret_access_key = YOUR_DEV_SECRET
+
+[production]
+aws_access_key_id = YOUR_PROD_KEY
+aws_secret_access_key = YOUR_PROD_SECRET
+</code></pre>
+
+<h2>4. Quick Switching with Shell Aliases</h2>
+<p>To make switching even faster, you can create aliases in your shell's configuration file (e.g., <code>.bashrc</code>, <code>.zshrc</code>).</p>
+<pre><code class="language-bash"># Add these aliases to your .bashrc or .zshrc file
+alias aws-dev='export AWS_PROFILE=dev'
+alias aws-prod='export AWS_PROFILE=production'
+alias aws-default='unset AWS_PROFILE'
+</code></pre>
+<p>After adding these and restarting your shell (or sourcing the config file), you can switch profiles with a simple command:</p>
+<pre><code class="language-bash">aws-dev
+aws s3 ls  # This will use the 'dev' profile
+
+aws-prod
+aws ec2 describe-instances # This will use the 'production' profile
+</code></pre>
+
+<h2>5. Use a Third-Party Tool: `aws-vault`</h2>
+<p>For enhanced security, you can use a tool like <code>aws-vault</code>. It securely stores your IAM credentials in your operating system's keystore and generates temporary credentials when you need them.</p>
+<pre><code class="language-bash"># First, install aws-vault (example for macOS)
+brew install aws-vault
+
+# Add your profiles to the vault
+aws-vault add dev
+aws-vault add production
+
+# Execute commands by passing them to aws-vault
+aws-vault exec dev -- aws s3 ls
+aws-vault exec production -- aws ec2 describe-instances
+</code></pre>
+
+<h2>6. Check Your Current Profile</h2>
+<p>If you're ever unsure which profile is active, you can easily check it.</p>
+<pre><code class="language-bash"># Check the environment variable
+echo $AWS_PROFILE
+
+# If the variable is not set, the 'default' profile is used.
+# You can also verify the identity associated with the current profile:
+aws sts get-caller-identity
+</code></pre>
+<p>This command will return the account, user, and ARN of the identity currently in use, which can help you confirm you're using the correct profile.</p>
+</article>

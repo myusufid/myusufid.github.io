@@ -23,3 +23,6 @@ python3 build.py
 - Bootstrap 5
 - Lunr.js (Search)
 - Highlight.js (Code highlighting)
+
+## Security Notes
+- Make sure the contents are safe from security issue
