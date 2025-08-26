@@ -28,7 +28,7 @@ def extract_metadata(content):
     return metadata
 
 def generate_slug(title):
-    return title.lower().replace(' ', '-').replace(':', '').replace(',', '')
+    return title.lower().replace(' ', '-').replace(':', '').replace(',', '').replace('(', '').replace(')', '')
 
 def build_page(content_file, template_file, output_file):
     # Read content and extract metadata

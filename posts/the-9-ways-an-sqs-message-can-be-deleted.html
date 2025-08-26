@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An exploration of the nine ways a message can be removed from an Amazon SQS queue, from successful processing to unexpected edge cases with modern features.">
+    <title>The 9 Ways an SQS Message can be Deleted | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An exploration of the nine ways a message can be removed from an Amazon SQS queue, from successful processing to unexpected edge cases with modern features.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="The 9 Ways an SQS Message can be Deleted | M Yusuf - Backend Developer">
+    <meta property="og:description" content="An exploration of the nine ways a message can be removed from an Amazon SQS queue, from successful processing to unexpected edge cases with modern features.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="The 9 Ways an SQS Message can be Deleted | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="An exploration of the nine ways a message can be removed from an Amazon SQS queue, from successful processing to unexpected edge cases with modern features.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>The 9 Ways an SQS Message can be Deleted</h1>
+    <div class="meta mb-4">2025-08-26</div>
+
+    <p>Amazon Simple Queue Service (SQS) is the oldest AWS service. It was released in beta in 2004, and although the core functionality has remained the same, many features and integrations have been added since. They include Dead Letter Queues, long polling, larger payloads, and Lambda Event Source Mappings. Some of these features introduce new, and sometimes surprising, ways for a message to disappear.</p>
+
+    <p>In this article we will look at nine ways a message can be removed from a queue:</p>
+
+    <ol>
+        <li>Successful processing</li>
+        <li>Maximum Receive Count exceeded</li>
+        <li>Maximum Receive Count set too low</li>
+        <li>Message Retention Period exceeded</li>
+        <li>Delivery Delay exceeds Message Retention Period</li>
+        <li>Batch processing with Event Source Mappings</li>
+        <li>Event Source Mappings with filters</li>
+        <li>Multiple Event Source Mappings</li>
+        <li>Event Source Mappings with mismatching filters</li>
+    </ol>
+
+    <h3>1. Successful processing</h3>
+    <p>The first and most obvious way to remove a message is by deliberately deleting it from the queue. This is usually applied by custom consumers (such as an application running in EC2 or a container) after the message has been successfully processed. Take, for example, a queue filled with S3 object names. Each name refers to an image stored in an S3 Bucket. An SQS consumer fetches a message from the queue using short or long polling. This triggers the SQS message’s visibility timeout, during which the message stays on the queue, but is invisible to other consumers. The SQS consumer downloads the referred object from S3, resizes it, and stores the result in another S3 location. When this process has succeeded, the consumer permanently deletes the message from the queue.</p>
+    <p>Lambda Consumers use Event Source Mappings (ESMs) to fetch messages from an SQS queue. The ESM takes care of receiving and deleting messages, so Lambda Functions using ESMs don’t have to implement this functionality themselves. For more info on ESMs, see topics 6 to 9.</p>
+
+    <h3>2. Maximum Receive Count exceeded</h3>
+    <p>An SQS Queue can be configured with a Redrive Policy. This configuration specifies a Dead Letter Queue (DLQ), which is just another SQS Queue. It also specifies a <code>maxReceiveCount</code> value.</p>
+    <pre><code class="language-json">
+{
+    "deadLetterTargetArn" : "&lt;String&gt;",
+    "maxReceiveCount" : "&lt;Integer&gt;"
+}
+    </code></pre>
+    <p>If a consumer is unable to process a message, for example if the data is corrupted or a timeout occurs, the message is made visible again. In SQS terms, the message is received by the queue again. When the amount of times a message has been received by the source queue exceeds the <code>maxReceiveCount</code> value, it is removed from the source queue and put on the DLQ.</p>
+
+    <h3>3. Maximum Receive Count set too low</h3>
+    <p>The visibility timeout from section 1 protects against unexpected failures, such as network issues or crashing consumer applications. When a message is read from a queue but never successfully processed, it is made visible for other consumers again when the visibility timeout expires (hence the name). Another consumer, or the same one, can then retry processing the message. If the queue is configured with a redrive policy and the <code>maxReceiveCount</code> is set too low (e.g. at one), any network or application fault will move the message to the DLQ immediately, and no retry can occur.</p>
+
+    <h3>4. Message Retention Period exceeded</h3>
+    <p>An SQS Queue can also be configured with a Message Retention Period in seconds. This value specifies how long a message can stay on a queue before it is automatically deleted, regardless of its processing status. The retention period can be set between 60 seconds and 14 days, with the default at 4 days.</p>
+    <p>Please be aware of a DLQ caveat: a message’s retention period is always calculated from the moment a message is put onto the source queue. It is not reset when a message is moved to a DLQ. From the Dead Letter Queue documentation:</p>
+    <blockquote>
+        The expiration of a message is always based on its original enqueue timestamp. When a message is moved to a dead-letter queue, the enqueue timestamp is unchanged... it is a best practice to always set the retention period of a dead-letter queue to be longer than the retention period of the original queue.
+    </blockquote>
+
+    <h3>5. Delivery Delay exceeds Message Retention Period</h3>
+    <p>The Message Retention Period discussed in the previous section is a common, not too complicated mechanism to prevent an SQS Queue from overflowing. However, when it is combined with the SQS Delivery Delay feature, it can lead to unexpected behavior. Delivery Delay allows messages to remain invisible for a set amount of time before they become visible and can be consumed. It can be set between 0 seconds and 15 minutes. This is useful when a source action needs some time to be fully settled before further processing.</p>
+    <p>If the Delivery Delay is set to a higher value than the Message Retention Period, the message will be deleted before it ever became visible. The message will not be moved to the DLQ. The Delivery Delay can be configured for the entire queue, or on a per-message basis.</p>
+
+    <h3>6. Batch processing with Event Source Mappings</h3>
+    <p>Event Source Mappings are an AWS Lambda feature that can poll SQS queues, collect a number of messages, and invoke a Lambda Function when certain thresholds are met. The Event Source Mapping is an SQS consumer like any other, and like any other it will make the SQS messages invisible during processing. By default, if the Lambda Function fails to process any message in its batch, the entire batch – including successfully processed messages – is made visible again, and can thus be reprocessed. If a Redrive Policy has been configured, messages will be moved to the DLQ when the <code>maxReceiveCount</code> threshold is crossed. This way successfully processed messages can end up on the DLQ too. This problem can partially be avoided by using the partial batch response feature, which allows a Lambda Function to notify the Event Source Mapping which messages in a batch failed. When the Event Source Mapping receives a partial batch response it will delete the successful messages from the queue, and make the failed messages visible again. However, if a Lambda Function runs into an exception and is not able to return a partial batch response, the entire batch is reprocessed again.</p>
+
+    <h3>7. Event Source Mappings with filters</h3>
+    <p>Event Source Mappings can also be configured with filters. When filters are applied on Event Source Mappings, they will read all messages on the queue, apply the filters, and pass the messages matching those filters to a Lambda Function. The messages not matching the filter criteria are deleted from the queue immediately. They are not returned to the source queue, they are not put on a DLQ, they are simply deleted as if they were successfully processed. The key takeaway is that SQS has been designed for single consumers. These consumers can be a distributed application consisting of many nodes, but these nodes should be homogeneous – that is, any node processing any message should lead to the same results.</p>
+
+    <h3>8. Multiple Event Source Mappings</h3>
+    <p>An SQS Queue can have multiple Event Source Mappings. For example, you could configure two Lambda Functions to read different messages from the same queue. You might think that if the filters are mutually exclusive, one function would receive one part of the messages, and the other the rest. As described in the previous section, this is not the case. Instead, any of the two Event Source Mappings might receive any message, and depending on its filters, pass the message to its Lambda Function or drop it. The other Event Source Mapping would never even see it. The only solution is to use one consumer – one Lambda Function – per SQS queue. If a message needs to be processed by multiple consumers, use SNS -> SQS or EventBridge -> SQS to fan out a message over multiple queues.</p>
+
+    <h3>9. Event Source Mappings with mismatching filters</h3>
+    <p>The final way a message can be inadvertently dropped also involves Event Source Mapping filters. The filters can be configured to match either plain text or valid JSON. If the inbound message does not match the filter pattern (text to JSON or JSON to text), the message is dropped. From the documentation:</p>
+    <blockquote>
+        Before filtering your messages, Lambda automatically evaluates the format of the incoming message body and of your filter pattern for body. If there is a mismatch, Lambda drops the message.
+    </blockquote>
+    <p>The following table summarizes this evaluation:</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Incoming message body format</th>
+                <th>Filter pattern body format</th>
+                <th>Resulting action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Plain string</td>
+                <td>Plain string</td>
+                <td>Lambda filters based on your filter criteria.</td>
+            </tr>
+            <tr>
+                <td>Plain string</td>
+                <td>No filter pattern for data properties</td>
+                <td>Lambda filters (on the other metadata properties only) based on your filter criteria.</td>
+            </tr>
+            <tr>
+                <td>Plain string</td>
+                <td>Valid JSON</td>
+                <td>Lambda drops the message.</td>
+            </tr>
+            <tr>
+                <td>Valid JSON</td>
+                <td>Plain string</td>
+                <td>Lambda drops the message.</td>
+            </tr>
+            <tr>
+                <td>Valid JSON</td>
+                <td>No filter pattern for data properties</td>
+                <td>Lambda filters (on the other metadata properties only) based on your filter criteria.</td>
+            </tr>
+            <tr>
+                <td>Valid JSON</td>
+                <td>Valid JSON</td>
+                <td>Lambda filters based on your filter criteria.</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>When Lambda drops the message, it is deleted from the source queue and will not be put on a DLQ, even if a Redrive Policy has been configured.</p>
+
+    <h2>Conclusion</h2>
+    <p>Over the years, the Simple Queue Service has gradually become less simple. In this article we’ve seen that Redrive Policies, Message Retention Periods and Event Source Mappings can significantly complicate the way messages behave. It is important to be aware of queue behavior in these edge cases. Event Source Mappings introduce an extra layer of complexity and deserve additional attention in your solution designs.</p>
+
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

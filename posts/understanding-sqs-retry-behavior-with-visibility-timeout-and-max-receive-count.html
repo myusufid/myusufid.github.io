@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A deep dive into how AWS SQS handles message retries using Visibility Timeout and Max Receive Count, with a practical example and log analysis.">
+    <title>Understanding SQS Retry Behavior with Visibility Timeout and Max Receive Count | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A deep dive into how AWS SQS handles message retries using Visibility Timeout and Max Receive Count, with a practical example and log analysis.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Understanding SQS Retry Behavior with Visibility Timeout and Max Receive Count | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A deep dive into how AWS SQS handles message retries using Visibility Timeout and Max Receive Count, with a practical example and log analysis.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Understanding SQS Retry Behavior with Visibility Timeout and Max Receive Count | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A deep dive into how AWS SQS handles message retries using Visibility Timeout and Max Receive Count, with a practical example and log analysis.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>Understanding SQS Retry Behavior with Visibility Timeout and Max Receive Count</h1>
+    <div class="meta mb-4">2025-08-26</div>
+
+    <p>When building resilient, event-driven applications with AWS Simple Queue Service (SQS), understanding and correctly configuring the retry mechanism is crucial. When a consumer fails to process a message, SQS can automatically allow the message to be processed again. This behavior is controlled by two key settings: the <strong>Visibility Timeout</strong> and the <strong>Max Receive Count</strong> (part of the Redrive policy).</p>
+
+    <p>Let's explore how these settings work together to create a robust retry strategy.</p>
+
+    <h2>Core Configuration Settings</h2>
+    <p>Here is an overview of the essential configurations for an SQS queue that dictates its retry behavior.</p>
+
+    <h3>1. Visibility Timeout</h3>
+    <p>The Visibility Timeout is the cornerstone of SQS message processing. When a consumer picks up a message from the queue, that message becomes "invisible" to other consumers for the duration of the visibility timeout. This prevents multiple consumers from processing the same message simultaneously.</p>
+    <ul>
+        <li>If the consumer processes the message successfully, it must delete the message from the queue before the timeout expires.</li>
+        <li>If the consumer fails to process the message and does <em>not</em> delete it, the message will become visible again in the queue for another consumer to pick up once the visibility timeout ends.</li>
+    </ul>
+    <p>In our example, the Visibility Timeout is set to <strong>2 minutes</strong>. This means if a message processing fails, SQS will wait 2 minutes before making it available for another attempt.</p>
+
+    <h3>2. Max Receive Count</h3>
+    <p>The Max Receive Count is part of the queue's "Redrive policy." It defines the maximum number of times a message can be received (i.e., attempted) by consumers. If the receive count for a message exceeds this number, SQS will move the message to a designated Dead-Letter Queue (DLQ).</p>
+    <p>This is a critical safety mechanism to prevent "poison pill" messages (messages that consistently fail to process) from getting stuck in an infinite retry loop, which could clog your queue and waste resources.</p>
+    <p>In this configuration, the Max Receive Count is set to <strong>3</strong>. A message will be attempted a total of three times before being moved to the DLQ.</p>
+
+    <h2>Observing Retry Behavior in Logs</h2>
+    <p>Let's analyze the Lambda execution logs to see these settings in action. The logs show a message being processed three times, with a consistent interval between each attempt.</p>
+
+    <pre><code class="language-json">
+timestamp,message
+1756176908995,START RequestId: 367aa8d0-b575-5a72-8221-c9f79135dcc3 Version: $LATEST
+1756176909833,level=error msg="Error on send mt receive request..."
+1756176910078,{"errorMessage":"failed jobs: [{ItemIdentifier:ece84c9e-5555-4e44-b131-f6d74efa5e53}]","errorType":"errorString"}
+...
+1756177028635,START RequestId: d69a9bf8-c254-50cb-8f13-fadfe6ee4d07 Version: $LATEST
+1756177028820,level=error msg="Error on send mt receive request..."
+1756177028940,{"errorMessage":"failed jobs: [{ItemIdentifier:ece84c9e-5555-4e44-b131-f6d74efa5e53}]","errorType":"errorString"}
+...
+1756177148645,START RequestId: 759f2721-238e-5047-9efc-460606bc5d8b Version: $LATEST
+1756177148823,level=error msg="Error on send mt receive request..."
+1756177148938,{"errorMessage":"failed jobs: [{ItemIdentifier:ece84c9e-5555-4e44-b131-f6d74efa5e53}]","errorType":"errorString"}
+    </code></pre>
+
+    <h3>Log Analysis:</h3>
+    <ul>
+        <li><strong>First Attempt:</strong> The Lambda starts at timestamp <code>1756176908995</code>. It encounters an error and fails to delete the message.</li>
+        <li><strong>Second Attempt:</strong> The Lambda starts again at timestamp <code>1756177028635</code>. The difference is (1756177028635 - 1756176908995) = 119,640 ms, which is approximately <strong>2 minutes</strong>. This matches our Visibility Timeout. The processing fails again.</li>
+        <li><strong>Third Attempt:</strong> The final attempt begins at timestamp <code>1756177148645</code>. The difference is (1756177148645 - 1756177028635) = 120,010 ms, which is exactly <strong>2 minutes</strong>. The processing fails for the third time.</li>
+    </ul>
+    <p>Since the <strong>Max Receive Count</strong> is 3, after this third failed attempt, the message will not be returned to the main queue. Instead, it will be moved to the configured Dead-Letter Queue for inspection and manual intervention.</p>
+
+    <h2>Conclusion</h2>
+    <p>By combining <strong>Visibility Timeout</strong> and <strong>Max Receive Count</strong>, you gain fine-grained control over your message processing and retry strategy. The Visibility Timeout sets the delay between retries, giving transient issues time to resolve, while the Max Receive Count acts as a fail-safe to isolate problematic messages, ensuring the health and stability of your system.</p>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

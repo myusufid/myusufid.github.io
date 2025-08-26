@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A step-by-step tutorial on creating, building, and deploying a Go-based AWS Lambda function to consume and process messages from an SQS queue, including error handling and partial batch failures.">
+    <title>Building a Go Lambda to Process SQS Messages A Complete Guide | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A step-by-step tutorial on creating, building, and deploying a Go-based AWS Lambda function to consume and process messages from an SQS queue, including error handling and partial batch failures.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Building a Go Lambda to Process SQS Messages A Complete Guide | M Yusuf - Backend Developer">
+    <meta property="og:description" content="A step-by-step tutorial on creating, building, and deploying a Go-based AWS Lambda function to consume and process messages from an SQS queue, including error handling and partial batch failures.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building a Go Lambda to Process SQS Messages A Complete Guide | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="A step-by-step tutorial on creating, building, and deploying a Go-based AWS Lambda function to consume and process messages from an SQS queue, including error handling and partial batch failures.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <article class="blog-post">
+    <h1>Building a Go Lambda to Process SQS Messages: A Complete Guide</h1>
+    <div class="meta mb-4">2025-08-26</div>
+
+    <p>This example will cover everything you need to know to get a Go (Golang) Lambda function running that processes messages from an Amazon SQS queue. We'll go through the handler code, project setup, build process, deployment, and testing.</p>
+
+    <h3>1. The Go Code (main.go)</h3>
+    <p>This code defines a Lambda handler that is triggered by an SQS event. It iterates through the messages in the batch, logs the content of each message, and then completes successfully. Create a new directory for your project (e.g., <code>go-sqs-lambda</code>) and place the following code in a file named <code>main.go</code>.</p>
+    <pre><code class="language-go">
+// main.go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    "github.com/aws/aws-lambda-go/events"
+    "github.com/aws/aws-lambda-go/lambda"
+)
+
+// Handler is the main Lambda function handler.
+// It receives an SQS event which can contain one or more messages.
+func Handler(ctx context.Context, sqsEvent events.SQSEvent) error {
+    // An SQS event can contain multiple records (messages) in a single batch.
+    // We should loop through all of them.
+    if len(sqsEvent.Records) == 0 {
+        log.Println("No records found in SQS event. Exiting.")
+        return nil
+    }
+
+    for _, message := range sqsEvent.Records {
+        fmt.Printf("Processing message with ID: %s\n", message.MessageId)
+        fmt.Printf("Message Body: %s\n", message.Body)
+
+        // Here you would add your actual business logic to process the message.
+        // For example, you might parse the JSON body, save data to a database,
+        // or call another API.
+
+        log.Printf("Successfully processed message ID: %s", message.MessageId)
+    }
+
+    // If the handler returns nil, the Lambda service will automatically
+    // delete the successfully processed messages from the SQS queue.
+    // If it returns an error, the messages in the batch will be returned
+    // to the queue for another attempt (based on your queue's configuration).
+    return nil
+}
+
+func main() {
+    // The lambda.Start function is from the aws-lambda-go package.
+    // It takes our handler function and starts the Lambda execution loop.
+    lambda.Start(Handler)
+}
+    </code></pre>
+
+    <h3>2. Project Setup and Dependencies</h3>
+    <p>You need to initialize a Go module and get the necessary AWS Lambda packages. In your terminal, navigate to your project directory and run:</p>
+    <pre><code class="language-bash">
+# Initialize a Go module
+go mod init go-sqs-lambda
+
+# Get the AWS SDK packages for Lambda and SQS events
+go get github.com/aws/aws-lambda-go/lambda
+go get github.com/aws/aws-lambda-go/events
+    </code></pre>
+
+    <h3>3. Build the Deployment Package</h3>
+    <p>AWS Lambda runs on a Linux environment. You need to compile your Go code for a Linux architecture and then zip it into a deployment package.</p>
+    <pre><code class="language-bash">
+# Build the Go binary for Linux
+# The output file 'bootstrap' is the standard name for the executable in the 'provided.al2' runtime.
+GOOS=linux GOARCH=amd64 go build -o bootstrap main.go
+
+# Create a zip file containing the executable
+zip deployment.zip bootstrap
+    </code></pre>
+    <p>You will now have a <code>deployment.zip</code> file ready to be uploaded to AWS Lambda.</p>
+
+    <h3>4. Deployment to AWS</h3>
+    <h4>Step 4.1: Create an IAM Role</h4>
+    <p>Your Lambda function needs permission to interact with other AWS services.</p>
+    <ol>
+        <li>Go to the IAM console in AWS.</li>
+        <li>Navigate to Roles and click <strong>Create role</strong>.</li>
+        <li>For "Trusted entity type", select <strong>AWS service</strong>.</li>
+        <li>For "Use case", select <strong>Lambda</strong>. Click Next.</li>
+        <li>Search for and attach the following managed policy: <code>AWSLambdaSQSQueueExecutionRole</code>. This policy grants permissions to read from SQS and write logs to CloudWatch.</li>
+        <li>Click Next, give your role a name (e.g., <code>LambdaSqsProcessorRole</code>), and click <strong>Create role</strong>.</li>
+    </ol>
+
+    <h4>Step 4.2: Create the SQS Queue</h4>
+    <ol>
+        <li>Go to the Simple Queue Service (SQS) console.</li>
+        <li>Click <strong>Create queue</strong>.</li>
+        <li>Keep the type as <strong>Standard</strong> and give it a name (e.g., <code>my-processing-queue</code>).</li>
+        <li>Leave the default settings for now and click <strong>Create queue</strong>.</li>
+    </ol>
+
+    <h4>Step 4.3: Create the Lambda Function</h4>
+    <ol>
+        <li>Go to the AWS Lambda console and click <strong>Create function</strong>.</li>
+        <li>Select <strong>Author from scratch</strong>.</li>
+        <li><strong>Function name:</strong> <code>my-sqs-processor</code></li>
+        <li><strong>Runtime:</strong> Select <code>Provide your own bootstrap on Amazon Linux 2</code> (this is <code>provided.al2</code>). Go is a compiled language, so we use this custom runtime.</li>
+        <li><strong>Architecture:</strong> <code>x86_64</code></li>
+        <li><strong>Permissions:</strong> Expand "Change default execution role", select <strong>Use an existing role</strong>, and choose the <code>LambdaSqsProcessorRole</code> you created earlier.</li>
+        <li>Click <strong>Create function</strong>.</li>
+    </ol>
+
+    <h4>Step 4.4: Upload Code and Configure Handler</h4>
+    <ol>
+        <li>In the function's "Code source" panel, click <strong>Upload from</strong> and select <strong>.zip file</strong>.</li>
+        <li>Upload the <code>deployment.zip</code> file you created.</li>
+        <li>Go to <strong>Configuration > General configuration > Edit</strong>.</li>
+        <li>Under Runtime settings, ensure the Handler is set to <code>bootstrap</code>. This tells Lambda to execute the file named bootstrap. Click <strong>Save</strong>.</li>
+    </ol>
+
+    <h4>Step 4.5: Add the SQS Trigger</h4>
+    <ol>
+        <li>In your Lambda function's main page, click <strong>Add trigger</strong>.</li>
+        <li>Select <strong>SQS</strong> as the trigger source.</li>
+        <li><strong>SQS queue:</strong> Choose the <code>my-processing-queue</code> you created.</li>
+        <li>You can leave the <strong>Batch size</strong> at its default (10). This means the Lambda will be invoked with up to 10 messages at a time.</li>
+        <li>Click <strong>Add</strong>.</li>
+    </ol>
+
+    <h3>5. Testing the Function</h3>
+    <ol>
+        <li>Navigate to the SQS console and select your queue.</li>
+        <li>Click on <strong>Send and receive messages</strong>.</li>
+        <li>In the "Message body" text box, enter a simple message, like <code>{ "orderId": "12345" }</code>.</li>
+        <li>Click <strong>Send message</strong>.</li>
+        <li>Go back to your Lambda function's page, click the <strong>Monitor</strong> tab, then click <strong>View CloudWatch logs</strong>.</li>
+        <li>You should see a new log stream with output confirming that your message was processed.</li>
+    </ol>
+
+    <h3>What happens if the handler returns an error?</h3>
+    <p>This is a critical aspect of building robust event-driven systems. When your Go Lambda handler returns an error, it signals to the AWS Lambda service that the processing of the incoming batch of messages has failed. The entire batch is considered failed, and the messages will reappear in the queue after the Visibility Timeout expires for an automatic retry. To prevent infinite loops with messages that always fail ("poison pills"), you should always configure a <strong>Dead-Letter Queue (DLQ)</strong> on your source SQS queue.</p>
+
+    <h3>Advanced Solution: Report Batch Item Failures</h3>
+    <p>The "all or nothing" batch behavior can be inefficient. To solve this, AWS provides a feature called "Report batch item failures". When you enable this in your Lambda trigger's configuration, you can change your function's return signature to tell SQS exactly which messages in the batch failed. SQS will then only return the failed messages to the queue for a retry.</p>
+    <pre><code class="language-go">
+// main_with_partial_failure.go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "strings"
+
+    "github.com/aws/aws-lambda-go/events"
+    "github.com/aws/aws-lambda-go/lambda"
+)
+
+// The return type is now events.SQSBatchResponse
+func Handler(ctx context.Context, sqsEvent events.SQSEvent) (events.SQSBatchResponse, error) {
+    var failedMessageIDs []events.SQSBatchItemFailure
+
+    for _, message := range sqsEvent.Records {
+        fmt.Printf("Processing message with ID: %s\n", message.MessageId)
+
+        if strings.Contains(message.Body, "fail") {
+            // Add the ID of the failed message to our list
+            failure := events.SQSBatchItemFailure{ItemIdentifier: message.MessageId}
+            failedMessageIDs = append(failedMessageIDs, failure)
+        } else {
+            // Process the message successfully
+            log.Printf("Successfully processed message ID: %s", message.MessageId)
+        }
+    }
+
+    // Return a response object containing the list of failed message IDs
+    return events.SQSBatchResponse{BatchItemFailures: failedMessageIDs}, nil
+}
+
+func main() {
+    lambda.Start(Handler)
+}
+    </code></pre>
+    <p>To use this, you must update your function code as shown above and enable the <strong>"Report batch item failures"</strong> option in the AWS Lambda Console under your function's SQS trigger configuration. Now, only the messages you explicitly identify will be retried, making your function much more efficient and resilient.</p>
+
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
