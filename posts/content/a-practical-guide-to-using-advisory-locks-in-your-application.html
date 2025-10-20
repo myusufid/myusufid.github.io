@@ -1,0 +1,690 @@
+<!--
+title: A Practical Guide to Using Advisory Locks in Your Application
+description: Learn how to use PostgreSQL advisory locks to manage concurrency in distributed systems. This guide covers implementation, use cases, and practical examples with code.
+date: 2025-10-20
+tags: postgresql, database, concurrency, advisory locks, distributed systems, golang, backend
+author: M Yusuf
+image: /assets/images/Gemini_Generated_Image_g91greg91greg91g.png
+-->
+
+<article class="blog-post">
+    <h1>A Practical Guide to Using Advisory Locks in Your Application</h1>
+    <div class="meta mb-4">October 20, 2025</div>
+
+    <p>Databases like PostgreSQL and MySQL provide various locking mechanisms to control concurrency and to avoid data corruption. In this comprehensive guide, we'll take a deep dive into advisory locks, implement them on the database, and see how they work in practice with Go code examples.</p>
+
+    <h2>What are Advisory Locks and Why are They Special?</h2>
+
+    <p>Advisory locks are locks provided by the database that you can control via your application. They're a utility that helps you manage concurrency when you want to keep your application stateless.</p>
+
+    <p>There are different locks that the database provides out of the box, and most of them are managed by the database until you specify something specific. PostgreSQL provides row level, table level, and page level locks. But these are locks used by the DB and the application doesn't have any control over them. That's where advisory locks come in.</p>
+
+    <h2>Why Do You Need It?</h2>
+
+    <p>Before diving into the nuances of advisory locks, let me explain the problem they solve and the use cases where they're used.</p>
+
+    <p>Imagine a scenario where you have a distributed system talking to a central database. You need to control the access to the data for all the systems or nodes that are communicating with the database, and no two nodes should alter the data at the same time.</p>
+
+    <p>In such a scenario, you can control the flow of the program by using an advisory lock. If a node is able to acquire the lock, you let the node access the data. The rest of the nodes either wait for the node to finish or report back to the application that the lock wasn't acquired.</p>
+
+    <div class="alert alert-info">
+        <strong>Important Note:</strong> Remember that here we are not locking the data itself. If you try to access the data from elsewhere, only the piece of code that you have explicitly enclosed in your application for advisory locks gets affected by the lock.
+    </div>
+
+    <p>Think of it this way: the advisory lock is a gateway for certain pieces of code in your application, while the other pieces of code in your application are free to do whatever they want with the data.</p>
+
+    <h3>Common Use Cases</h3>
+
+    <p>This scenario can arise when you have to send a notification or a report to someone. The data for that resides in a central database. You might have designed the system to run a cron job and send a report or notification every day. But your application logic resides in multiple nodes, and if they all execute at the same time, multiple reports/notifications will be sent out.</p>
+
+    <p>To avoid this, you can have all the nodes try to acquire an advisory lock, and if one of them is able to do that, then execute the logic to send the notification/report.</p>
+
+    <p>Keep in mind that these locks are still managed by the database. If you're using PostgreSQL and you try to list all the locks that are acquired on it, you'll be able to view them (we'll see this shortly).</p>
+
+    <p>Other use cases for advisory locks include scenarios where you want to run a background process that should be executed by only one worker or a node. Advisory locks can be used to ensure you're not wasting your compute power by executing the process more than once.</p>
+
+    <h2>Types of Advisory Locks in PostgreSQL</h2>
+
+    <p>PostgreSQL provides two levels of advisory locks:</p>
+
+    <h3>1. Session-Level Locks</h3>
+    <p>A session-level lock is released when the session ends or when you manually release it.</p>
+
+    <h3>2. Transaction-Level Locks</h3>
+    <p>Just like other locks, if the lock is acquired on a transaction level, the lock is released when the transaction is complete.</p>
+
+    <h3>Blocking vs Non-Blocking Functions</h3>
+
+    <p>You can acquire an advisory lock using either a blocking or a non-blocking function:</p>
+
+    <ul>
+        <li><strong>Non-blocking function:</strong> The process will immediately return with a boolean value stating if the lock is acquired or not.</li>
+        <li><strong>Blocking function:</strong> The process trying to acquire the lock will wait until the lock is acquired.</li>
+    </ul>
+
+    <p>In the use case mentioned above of sending a report or notification where only one node should execute it, a non-blocking function fits well. When each of the nodes tries to access the lock at the same time, only one node is able to acquire it and the rest of them return a false value indicating that they were not able to acquire it.</p>
+
+    <p>A blocking function is useful in scenarios where you need to make sure that a record is getting updated by only a single thread or a node at a time. It will wait for one of the threads or nodes to release the lock and update the records after the previous thread is done updating them, maintaining data consistency.</p>
+
+    <h2>Hands-On: Trying Advisory Locks in PostgreSQL</h2>
+
+    <p>Let's try this out in PostgreSQL. Connect to your PostgreSQL database using any client.</p>
+
+    <h3>Acquiring a Session-Level Advisory Lock</h3>
+
+    <p>Use the <code>pg_try_advisory_lock()</code> function and pass any 64-bit number as an argument:</p>
+
+    <pre><code class="language-sql">SELECT pg_try_advisory_lock(100);</code></pre>
+
+    <p>It will return <code>true</code>. Now you can query the advisory locks on the database:</p>
+
+    <pre><code class="language-sql">SELECT locktype, database, relation,
+       objid AS key1, objsubid AS key2,
+       pid, mode, granted
+FROM pg_locks
+WHERE locktype = 'advisory';</code></pre>
+
+    <h3>Testing Lock Contention</h3>
+
+    <p>Now open a new session in the terminal and connect to the database again. Try to run the command to acquire a lock on the same integer (100):</p>
+
+    <pre><code class="language-sql">SELECT pg_try_advisory_lock(100);</code></pre>
+
+    <p>You will get a <code>false</code> value in return, indicating that you were not able to acquire the lock. Any new session will not be able to acquire this lock until the old one releases it. The new session can, however, acquire a lock on another integer, let's say 101.</p>
+
+    <h3>Blocking Function Example</h3>
+
+    <p>The command we used above (<code>pg_try_advisory_lock</code>) is a non-blocking function. Let's try acquiring the same lock (integer 100) using the blocking function:</p>
+
+    <pre><code class="language-sql">SELECT pg_advisory_lock(100);</code></pre>
+
+    <p>You will see that the query hangs, waiting to acquire the lock. The shell will be waiting with no output or new prompt.</p>
+
+    <h3>Releasing the Lock</h3>
+
+    <p>Now let's release the lock we acquired in the old shell:</p>
+
+    <pre><code class="language-sql">SELECT pg_advisory_unlock(100);</code></pre>
+
+    <p>After releasing the lock in the first session, you'll see the blocking query in the second session complete immediately.</p>
+
+    <h3>Terminating a Process (If Needed)</h3>
+
+    <p>If you need to forcefully terminate a process holding a lock, you can use:</p>
+
+    <pre><code class="language-sql">SELECT pg_terminate_backend(239);</code></pre>
+
+    <p>Replace <code>239</code> with the actual PID from the <code>pg_locks</code> query.</p>
+
+    <div class="alert alert-warning">
+        <strong>Note:</strong> Make sure you have removed all the locks by first querying for all the advisory locks and unlocking them before proceeding.
+    </div>
+
+    <h2>Go Implementation for PostgreSQL</h2>
+
+    <p>The following code snippet demonstrates how to implement advisory locks in Go using the <code>database/sql</code> package with the <code>pgx</code> driver. Please test your application thoroughly before deploying it to production.</p>
+
+    <p>Here we've created a simple function that attempts to acquire an advisory lock and returns a boolean indicating whether it was successful. The function takes an integer as an argument, which will be used as the lock identifier.</p>
+
+    <h3>Basic Implementation</h3>
+
+    <pre><code class="language-go">package advisory
+
+import (
+    "context"
+    "database/sql"
+    "fmt"
+)
+
+type LockManager struct {
+    db *sql.DB
+}
+
+func NewLockManager(db *sql.DB) *LockManager {
+    return &LockManager{db: db}
+}
+
+// TryAcquireLock attempts to acquire a session-level advisory lock
+// Returns true if the lock was acquired, false otherwise
+func (lm *LockManager) TryAcquireLock(ctx context.Context, lockID int64) (bool, error) {
+    var acquired bool
+    query := "SELECT pg_try_advisory_lock($1)"
+
+    err := lm.db.QueryRowContext(ctx, query, lockID).Scan(&acquired)
+    if err != nil {
+        return false, fmt.Errorf("failed to acquire lock: %w", err)
+    }
+
+    return acquired, nil
+}
+
+// ReleaseLock releases a session-level advisory lock
+func (lm *LockManager) ReleaseLock(ctx context.Context, lockID int64) error {
+    var released bool
+    query := "SELECT pg_advisory_unlock($1)"
+
+    err := lm.db.QueryRowContext(ctx, query, lockID).Scan(&released)
+    if err != nil {
+        return fmt.Errorf("failed to release lock: %w", err)
+    }
+
+    if !released {
+        return fmt.Errorf("lock %d was not held", lockID)
+    }
+
+    return nil
+}
+
+// TryAcquireTransactionLock attempts to acquire a transaction-level advisory lock
+// The lock will be automatically released when the transaction commits or rolls back
+func (lm *LockManager) TryAcquireTransactionLock(ctx context.Context, tx *sql.Tx, lockID int64) (bool, error) {
+    var acquired bool
+    query := "SELECT pg_try_advisory_xact_lock($1)"
+
+    err := tx.QueryRowContext(ctx, query, lockID).Scan(&acquired)
+    if err != nil {
+        return false, fmt.Errorf("failed to acquire transaction lock: %w", err)
+    }
+
+    return acquired, nil
+}</code></pre>
+
+    <h3>Usage Example</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "context"
+    "database/sql"
+    "log"
+    "time"
+
+    _ "github.com/jackc/pgx/v5/stdlib"
+)
+
+func main() {
+    // Initialize database connection
+    db, err := sql.Open("pgx", "postgres://user:password@localhost:5432/mydb")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    lockManager := NewLockManager(db)
+    ctx := context.Background()
+
+    // Example 1: Session-level lock
+    const dailyReportLockID = 1001
+
+    acquired, err := lockManager.TryAcquireLock(ctx, dailyReportLockID)
+    if err != nil {
+        log.Printf("Error acquiring lock: %v", err)
+        return
+    }
+
+    if acquired {
+        log.Println("Lock acquired, sending daily report...")
+        // Only one instance will execute this code
+        sendDailyReport()
+
+        // Release the lock when done
+        if err := lockManager.ReleaseLock(ctx, dailyReportLockID); err != nil {
+            log.Printf("Error releasing lock: %v", err)
+        }
+    } else {
+        log.Println("Another instance is processing the daily report")
+    }
+}
+
+func sendDailyReport() {
+    // Your business logic here
+    log.Println("Daily report sent successfully")
+}
+
+// Example 2: Transaction-level lock
+func processDataWithTransactionLock(db *sql.DB, lockManager *LockManager) error {
+    ctx := context.Background()
+
+    // Begin transaction
+    tx, err := db.BeginTx(ctx, nil)
+    if err != nil {
+        return err
+    }
+    defer tx.Rollback()
+
+    // Try to acquire transaction-level lock
+    const dataProcessLockID = 2001
+    acquired, err := lockManager.TryAcquireTransactionLock(ctx, tx, dataProcessLockID)
+    if err != nil {
+        return err
+    }
+
+    if !acquired {
+        log.Println("Another transaction is processing this data")
+        return nil
+    }
+
+    // Process data
+    log.Println("Processing data...")
+    // Your business logic here
+
+    // Commit transaction (lock will be automatically released)
+    return tx.Commit()
+}</code></pre>
+
+    <h3>Using with Goroutines</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "context"
+    "database/sql"
+    "log"
+    "sync"
+    "time"
+)
+
+func simulateConcurrentLocking(db *sql.DB) {
+    lockManager := NewLockManager(db)
+    const sharedLockID = 3001
+
+    var wg sync.WaitGroup
+
+    // Simulate 5 concurrent workers trying to acquire the same lock
+    for i := 1; i <= 5; i++ {
+        wg.Add(1)
+        go func(workerID int) {
+            defer wg.Done()
+
+            ctx := context.Background()
+            acquired, err := lockManager.TryAcquireLock(ctx, sharedLockID)
+            if err != nil {
+                log.Printf("Worker %d: Error - %v", workerID, err)
+                return
+            }
+
+            if acquired {
+                log.Printf("Worker %d: Lock acquired! Processing...", workerID)
+                // Simulate work
+                time.Sleep(2 * time.Second)
+
+                // Release lock
+                if err := lockManager.ReleaseLock(ctx, sharedLockID); err != nil {
+                    log.Printf("Worker %d: Error releasing lock - %v", workerID, err)
+                }
+                log.Printf("Worker %d: Lock released", workerID)
+            } else {
+                log.Printf("Worker %d: Could not acquire lock", workerID)
+            }
+        }(i)
+    }
+
+    wg.Wait()
+}</code></pre>
+
+    <h2>Generating Lock Keys from Email or Phone Numbers</h2>
+
+    <p>In real-world applications, you often need to create locks based on user identifiers like email addresses or phone numbers. Since advisory locks require integer keys, you'll need to convert these strings to integers. Here are practical examples:</p>
+
+    <h3>Using Hash Functions to Generate Keys</h3>
+
+    <pre><code class="language-go">package advisory
+
+import (
+    "crypto/sha256"
+    "encoding/binary"
+    "hash/fnv"
+)
+
+// GenerateLockKeyFromEmail generates a consistent int64 key from an email address
+// Uses FNV-1a hash algorithm which is fast and provides good distribution
+func GenerateLockKeyFromEmail(email string) int64 {
+    h := fnv.New64a()
+    h.Write([]byte(email))
+    return int64(h.Sum64())
+}
+
+// GenerateLockKeyFromPhone generates a consistent int64 key from a phone number
+func GenerateLockKeyFromPhone(phone string) int64 {
+    h := fnv.New64a()
+    h.Write([]byte(phone))
+    return int64(h.Sum64())
+}
+
+// GenerateLockKeyFromString generates a consistent int64 key from any string
+// Alternative using SHA256 for more uniform distribution
+func GenerateLockKeyFromString(s string) int64 {
+    hash := sha256.Sum256([]byte(s))
+    // Take first 8 bytes and convert to int64
+    return int64(binary.BigEndian.Uint64(hash[:8]))
+}</code></pre>
+
+    <h3>Practical Example: Preventing Duplicate User Registration</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "context"
+    "database/sql"
+    "fmt"
+    "log"
+)
+
+type UserService struct {
+    db          *sql.DB
+    lockManager *LockManager
+}
+
+func NewUserService(db *sql.DB) *UserService {
+    return &UserService{
+        db:          db,
+        lockManager: NewLockManager(db),
+    }
+}
+
+// RegisterUser prevents duplicate registration for the same email
+// using advisory locks
+func (us *UserService) RegisterUser(ctx context.Context, email, name string) error {
+    // Generate lock key from email
+    lockKey := GenerateLockKeyFromEmail(email)
+
+    // Begin transaction
+    tx, err := us.db.BeginTx(ctx, nil)
+    if err != nil {
+        return fmt.Errorf("failed to begin transaction: %w", err)
+    }
+    defer tx.Rollback()
+
+    // Try to acquire transaction-level lock
+    acquired, err := us.lockManager.TryAcquireTransactionLock(ctx, tx, lockKey)
+    if err != nil {
+        return fmt.Errorf("failed to acquire lock: %w", err)
+    }
+
+    if !acquired {
+        return fmt.Errorf("another registration is in progress for email: %s", email)
+    }
+
+    // Check if user already exists
+    var exists bool
+    err = tx.QueryRowContext(ctx,
+        "SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)",
+        email,
+    ).Scan(&exists)
+    if err != nil {
+        return fmt.Errorf("failed to check existing user: %w", err)
+    }
+
+    if exists {
+        return fmt.Errorf("user with email %s already exists", email)
+    }
+
+    // Create new user
+    _, err = tx.ExecContext(ctx,
+        "INSERT INTO users (email, name) VALUES ($1, $2)",
+        email, name,
+    )
+    if err != nil {
+        return fmt.Errorf("failed to create user: %w", err)
+    }
+
+    // Commit transaction (lock automatically released)
+    if err := tx.Commit(); err != nil {
+        return fmt.Errorf("failed to commit transaction: %w", err)
+    }
+
+    log.Printf("Successfully registered user: %s", email)
+    return nil
+}</code></pre>
+
+    <h3>Example: Phone Number Verification Lock</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+type SMSService struct {
+    lockManager *LockManager
+}
+
+// SendVerificationCode ensures only one verification code is sent
+// within a time window for the same phone number
+func (s *SMSService) SendVerificationCode(ctx context.Context, phoneNumber string) error {
+    // Generate lock key from phone number
+    lockKey := GenerateLockKeyFromPhone(phoneNumber)
+
+    // Try to acquire session-level lock
+    acquired, err := s.lockManager.TryAcquireLock(ctx, lockKey)
+    if err != nil {
+        return fmt.Errorf("failed to acquire lock: %w", err)
+    }
+
+    if !acquired {
+        return fmt.Errorf("verification code already being processed for: %s", phoneNumber)
+    }
+    defer s.lockManager.ReleaseLock(ctx, lockKey)
+
+    // Check rate limiting
+    lastSent, err := s.getLastVerificationTime(ctx, phoneNumber)
+    if err != nil {
+        return err
+    }
+
+    if time.Since(lastSent) < 1*time.Minute {
+        return fmt.Errorf("please wait before requesting another code")
+    }
+
+    // Send SMS
+    code := generateVerificationCode()
+    if err := s.sendSMS(phoneNumber, code); err != nil {
+        return fmt.Errorf("failed to send SMS: %w", err)
+    }
+
+    // Store verification code
+    if err := s.storeVerificationCode(ctx, phoneNumber, code); err != nil {
+        return fmt.Errorf("failed to store code: %w", err)
+    }
+
+    return nil
+}
+
+func generateVerificationCode() string {
+    // Implementation details...
+    return "123456"
+}
+
+func (s *SMSService) sendSMS(phone, code string) error {
+    // Implementation details...
+    return nil
+}
+
+func (s *SMSService) storeVerificationCode(ctx context.Context, phone, code string) error {
+    // Implementation details...
+    return nil
+}
+
+func (s *SMSService) getLastVerificationTime(ctx context.Context, phone string) (time.Time, error) {
+    // Implementation details...
+    return time.Now().Add(-2 * time.Minute), nil
+}</code></pre>
+
+    <h3>Example: Payment Processing Lock</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "context"
+    "database/sql"
+    "fmt"
+)
+
+type PaymentService struct {
+    db          *sql.DB
+    lockManager *LockManager
+}
+
+// ProcessPayment ensures idempotency using user email + order ID
+func (ps *PaymentService) ProcessPayment(ctx context.Context, userEmail, orderID string, amount float64) error {
+    // Create unique lock key combining email and order ID
+    lockIdentifier := fmt.Sprintf("payment:%s:%s", userEmail, orderID)
+    lockKey := GenerateLockKeyFromString(lockIdentifier)
+
+    tx, err := ps.db.BeginTx(ctx, nil)
+    if err != nil {
+        return err
+    }
+    defer tx.Rollback()
+
+    // Acquire transaction lock
+    acquired, err := ps.lockManager.TryAcquireTransactionLock(ctx, tx, lockKey)
+    if err != nil {
+        return err
+    }
+
+    if !acquired {
+        return fmt.Errorf("payment already being processed for order: %s", orderID)
+    }
+
+    // Check if payment already completed
+    var status string
+    err = tx.QueryRowContext(ctx,
+        "SELECT status FROM payments WHERE order_id = $1",
+        orderID,
+    ).Scan(&status)
+
+    if err == nil && status == "completed" {
+        return fmt.Errorf("payment already completed for order: %s", orderID)
+    }
+
+    // Process payment
+    if err := ps.chargePayment(userEmail, amount); err != nil {
+        return err
+    }
+
+    // Update payment status
+    _, err = tx.ExecContext(ctx,
+        "INSERT INTO payments (order_id, user_email, amount, status) VALUES ($1, $2, $3, $4) "+
+        "ON CONFLICT (order_id) DO UPDATE SET status = $4",
+        orderID, userEmail, amount, "completed",
+    )
+    if err != nil {
+        return err
+    }
+
+    return tx.Commit()
+}
+
+func (ps *PaymentService) chargePayment(email string, amount float64) error {
+    // Payment gateway integration
+    return nil
+}</code></pre>
+
+    <h3>Testing Hash Collisions</h3>
+
+    <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "testing"
+)
+
+func TestLockKeyGeneration(t *testing.T) {
+    testCases := []struct {
+        input    string
+        generate func(string) int64
+    }{
+        {"user@example.com", GenerateLockKeyFromEmail},
+        {"user@example.org", GenerateLockKeyFromEmail},
+        {"+1234567890", GenerateLockKeyFromPhone},
+        {"+9876543210", GenerateLockKeyFromPhone},
+    }
+
+    keys := make(map[int64]string)
+
+    for _, tc := range testCases {
+        key := tc.generate(tc.input)
+
+        // Check for collisions
+        if existingInput, exists := keys[key]; exists {
+            t.Errorf("Hash collision detected: %s and %s generate the same key: %d",
+                existingInput, tc.input, key)
+        }
+
+        keys[key] = tc.input
+
+        // Verify consistency
+        key2 := tc.generate(tc.input)
+        if key != key2 {
+            t.Errorf("Inconsistent key generation for %s: %d vs %d",
+                tc.input, key, key2)
+        }
+
+        fmt.Printf("Input: %-25s -> Key: %d\n", tc.input, key)
+    }
+}</code></pre>
+
+    <h2>Key PostgreSQL Advisory Lock Functions</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Function</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>pg_advisory_lock(key)</code></td>
+                <td>Session, Blocking</td>
+                <td>Acquires lock and waits if unavailable</td>
+            </tr>
+            <tr>
+                <td><code>pg_try_advisory_lock(key)</code></td>
+                <td>Session, Non-blocking</td>
+                <td>Returns true/false immediately</td>
+            </tr>
+            <tr>
+                <td><code>pg_advisory_xact_lock(key)</code></td>
+                <td>Transaction, Blocking</td>
+                <td>Lock released at transaction end</td>
+            </tr>
+            <tr>
+                <td><code>pg_try_advisory_xact_lock(key)</code></td>
+                <td>Transaction, Non-blocking</td>
+                <td>Returns true/false, auto-releases</td>
+            </tr>
+            <tr>
+                <td><code>pg_advisory_unlock(key)</code></td>
+                <td>-</td>
+                <td>Manually releases session lock</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Best Practices</h2>
+
+    <ol>
+        <li><strong>Use Consistent Lock Keys:</strong> Define your lock identifiers as constants in your application to avoid conflicts.</li>
+        <li><strong>Prefer Transaction-Level Locks:</strong> They automatically release when the transaction ends, reducing the risk of deadlocks.</li>
+        <li><strong>Monitor Lock Usage:</strong> Regularly query <code>pg_locks</code> to identify potential issues.</li>
+        <li><strong>Choose the Right Function:</strong> Use non-blocking functions for scenarios where you want immediate feedback, and blocking functions when you need guaranteed sequential execution.</li>
+        <li><strong>Document Your Lock Strategy:</strong> Clearly document which lock IDs are used for which purposes in your application.</li>
+    </ol>
+
+    <h2>Wrapping Up</h2>
+
+    <p>While the concept might have been a bit confusing in the beginning, I hope by now you understand how advisory locks work. We've learned about their use cases and also understood how to use them in practical scenarios.</p>
+
+    <p>The examples provided were for PostgreSQL, but MySQL has its own version of advisory locks. You can check them out in the <a href="https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html" target="_blank" rel="noopener noreferrer">official MySQL documentation</a>.</p>
+
+    <p>Advisory locks are a powerful tool for managing concurrency in distributed systems. By understanding when and how to use them, you can build more robust and efficient applications that handle concurrent operations gracefully.</p>
+
+    <div class="alert alert-success">
+        <strong>Key Takeaway:</strong> Advisory locks provide application-level concurrency control without locking the actual data, making them ideal for coordinating work across distributed nodes while keeping your application stateless.
+    </div>
+</article>
