@@ -1,0 +1,557 @@
+<!--
+title: Understanding PostgreSQL Locks: A Comprehensive Guide
+description: Master PostgreSQL's locking mechanisms including table-level, row-level, page-level, and advisory locks. Learn practical techniques to diagnose lock contention, prevent deadlocks, and optimize database performance.
+date: 2025-10-20
+tags: postgresql, database, locks, concurrency, performance, optimization, backend
+author: M Yusuf
+image: /assets/images/Gemini_Generated_Image_g91greg91greg91g.png
+image_credit: Gemini
+-->
+
+<article class="blog-post">
+    <h1>Understanding PostgreSQL Locks: A Comprehensive Guide</h1>
+    <div class="meta mb-4">October 20, 2025</div>
+
+    <p>PostgreSQL is a powerful database system that uses sophisticated locking mechanisms to maintain data integrity while allowing concurrent access. Understanding how these locks work is essential for database administrators and application developers who want to build high-performance, scalable systems. This comprehensive guide explores PostgreSQL's locking system with practical examples and techniques you can use in production.</p>
+
+    <h2>Introduction to Locking in PostgreSQL</h2>
+
+    <p>Locks in PostgreSQL are fundamental for concurrency control—they prevent multiple sessions from making conflicting changes to the same data. While we typically think of locks in terms of shared locks (reader locks) and exclusive locks (writer locks), PostgreSQL implements a more nuanced approach with various lock modes at different levels.</p>
+
+    <p>Understanding these mechanisms helps in:</p>
+
+    <ul>
+        <li>Diagnosing performance bottlenecks and slowdowns</li>
+        <li>Preventing and resolving deadlocks</li>
+        <li>Designing applications that scale under high concurrency</li>
+        <li>Ensuring data integrity without sacrificing performance</li>
+    </ul>
+
+    <h2>Lock Levels in PostgreSQL</h2>
+
+    <p>PostgreSQL implements locking at four primary levels:</p>
+
+    <ol>
+        <li><strong>Table-level locks</strong> - Affect entire tables</li>
+        <li><strong>Row-level locks</strong> - Target specific rows</li>
+        <li><strong>Page-level locks</strong> - Operate on individual data pages (8KB blocks)</li>
+        <li><strong>Advisory locks</strong> - Application-defined locks that don't correspond to any database object</li>
+    </ol>
+
+    <h2>Setting Up for Lock Observation</h2>
+
+    <p>First, let's create a test environment and helper views to observe lock behavior:</p>
+
+    <pre><code class="language-sql">-- Create test database
+CREATE DATABASE lock_test;
+\c lock_test
+
+-- Create test table
+CREATE TABLE accounts (
+    account_id SERIAL PRIMARY KEY,
+    account_number VARCHAR(20) UNIQUE,
+    balance NUMERIC(15,2) NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert sample data
+INSERT INTO accounts (account_number, balance)
+VALUES
+('ACC-1001', 5000.00),
+('ACC-1002', 7500.00),
+('ACC-1003', 12000.00),
+('ACC-1004', 3200.00),
+('ACC-1005', 9800.00);</code></pre>
+
+    <h3>Creating a Lock Monitoring View</h3>
+
+    <p>PostgreSQL provides <code>pg_locks</code> and <code>pg_stat_activity</code> system views. Let's create a helper view for easier monitoring:</p>
+
+    <pre><code class="language-sql">CREATE OR REPLACE VIEW lock_monitor AS
+SELECT
+    l.locktype,
+    l.relation::regclass AS table_name,
+    l.page,
+    l.tuple,
+    l.virtualxid,
+    l.transactionid::text,
+    l.mode,
+    l.granted,
+    a.application_name,
+    a.query,
+    a.pid,
+    a.usename,
+    a.state,
+    a.xact_start
+FROM pg_locks l
+JOIN pg_stat_activity a ON l.pid = a.pid
+WHERE l.pid <> pg_backend_pid()
+ORDER BY l.pid, l.relation;</code></pre>
+
+    <h2>Table-Level Locks</h2>
+
+    <p>Table-level locks affect an entire table and come in eight different modes, each with different behaviors and conflict patterns.</p>
+
+    <h3>1. ACCESS SHARE Lock</h3>
+
+    <p>This is the least restrictive lock, acquired by <code>SELECT</code> operations. It only conflicts with <code>ACCESS EXCLUSIVE</code> locks.</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT * FROM accounts;
+-- Keep transaction open
+
+-- Terminal 2 - Check locks
+SELECT * FROM lock_monitor WHERE table_name = 'accounts';</code></pre>
+
+    <h3>2. ROW SHARE Lock</h3>
+
+    <p>Acquired by <code>SELECT FOR UPDATE</code> and <code>SELECT FOR SHARE</code>:</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 1 FOR UPDATE;
+
+-- Terminal 2
+SELECT * FROM lock_monitor WHERE table_name = 'accounts';</code></pre>
+
+    <h3>3. ROW EXCLUSIVE Lock</h3>
+
+    <p>Acquired by <code>UPDATE</code>, <code>INSERT</code>, and <code>DELETE</code> operations:</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+UPDATE accounts SET balance = balance + 100 WHERE account_id = 2;
+
+-- Terminal 2
+SELECT * FROM lock_monitor WHERE table_name = 'accounts';</code></pre>
+
+    <h3>4. SHARE UPDATE EXCLUSIVE Lock</h3>
+
+    <p>Acquired by <code>VACUUM</code>, <code>ANALYZE</code>, and <code>CREATE INDEX CONCURRENTLY</code>:</p>
+
+    <pre><code class="language-sql">BEGIN;
+ANALYZE accounts;
+-- Check locks in another session</code></pre>
+
+    <h3>5. SHARE Lock</h3>
+
+    <p>Acquired by <code>CREATE INDEX</code> (non-concurrent):</p>
+
+    <pre><code class="language-sql">BEGIN;
+CREATE INDEX test_index ON accounts(balance);</code></pre>
+
+    <h3>6. SHARE ROW EXCLUSIVE Lock</h3>
+
+    <p>Acquired by <code>CREATE TRIGGER</code> and some forms of <code>ALTER TABLE</code>.</p>
+
+    <h3>7. EXCLUSIVE Lock</h3>
+
+    <p>Acquired by <code>REFRESH MATERIALIZED VIEW CONCURRENTLY</code>.</p>
+
+    <h3>8. ACCESS EXCLUSIVE Lock</h3>
+
+    <p>The most restrictive lock, acquired by <code>DROP TABLE</code>, <code>TRUNCATE</code>, <code>VACUUM FULL</code>, <code>REINDEX</code>, <code>CLUSTER</code>:</p>
+
+    <pre><code class="language-sql">BEGIN;
+TRUNCATE accounts;
+-- This blocks all operations on the table</code></pre>
+
+    <h2>Table-Level Lock Conflict Matrix</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Lock Mode</th>
+                <th>Acquired By</th>
+                <th>Conflicts With</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ACCESS SHARE</td>
+                <td>SELECT</td>
+                <td>ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>ROW SHARE</td>
+                <td>SELECT FOR UPDATE/SHARE</td>
+                <td>EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>ROW EXCLUSIVE</td>
+                <td>UPDATE, DELETE, INSERT</td>
+                <td>SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>SHARE UPDATE EXCLUSIVE</td>
+                <td>VACUUM, ANALYZE</td>
+                <td>SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>SHARE</td>
+                <td>CREATE INDEX</td>
+                <td>ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>SHARE ROW EXCLUSIVE</td>
+                <td>CREATE TRIGGER</td>
+                <td>ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>EXCLUSIVE</td>
+                <td>REFRESH MATERIALIZED VIEW CONCURRENTLY</td>
+                <td>ROW SHARE, ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE</td>
+            </tr>
+            <tr>
+                <td>ACCESS EXCLUSIVE</td>
+                <td>DROP TABLE, TRUNCATE, VACUUM FULL</td>
+                <td>ALL LOCK TYPES</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Row-Level Locks</h2>
+
+    <p>Row-level locks control access to individual rows. PostgreSQL provides four row-level lock modes:</p>
+
+    <h3>FOR UPDATE</h3>
+
+    <p>Most restrictive, blocks any operation that would modify the locked row:</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 1 FOR UPDATE;
+
+-- Terminal 2 - This will wait
+BEGIN;
+UPDATE accounts SET balance = balance + 300 WHERE account_id = 1;</code></pre>
+
+    <h3>FOR NO KEY UPDATE</h3>
+
+    <p>Similar to <code>FOR UPDATE</code> but doesn't block <code>FOR KEY SHARE</code>:</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 2 FOR NO KEY UPDATE;
+
+-- Terminal 2 - This should not wait
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 2 FOR KEY SHARE;</code></pre>
+
+    <h3>FOR SHARE</h3>
+
+    <p>Allows concurrent <code>FOR SHARE</code> but blocks modifications:</p>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 3 FOR SHARE;
+
+-- Terminal 2 - This should not wait
+BEGIN;
+SELECT * FROM accounts WHERE account_id = 3 FOR SHARE;
+
+-- Terminal 3 - This will wait
+BEGIN;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 3;</code></pre>
+
+    <h3>FOR KEY SHARE</h3>
+
+    <p>Least restrictive, only blocks key modifications:</p>
+
+    <pre><code class="language-sql">BEGIN;
+SELECT * FROM accounts WHERE account_id = 4 FOR KEY SHARE;</code></pre>
+
+    <h2>Row-Level Lock Conflict Matrix</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Lock Mode</th>
+                <th>Conflicts With</th>
+                <th>Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FOR KEY SHARE</td>
+                <td>FOR UPDATE</td>
+                <td>Protects rows from having their key values modified</td>
+            </tr>
+            <tr>
+                <td>FOR SHARE</td>
+                <td>FOR UPDATE, FOR NO KEY UPDATE</td>
+                <td>Protects rows from modification</td>
+            </tr>
+            <tr>
+                <td>FOR NO KEY UPDATE</td>
+                <td>FOR UPDATE, FOR NO KEY UPDATE, FOR SHARE</td>
+                <td>Protects rows from modification except key shares</td>
+            </tr>
+            <tr>
+                <td>FOR UPDATE</td>
+                <td>ALL ROW LOCK TYPES</td>
+                <td>Full control over the row</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Detecting and Resolving Deadlocks</h2>
+
+    <p>Deadlocks occur when two or more transactions are waiting for each other to release locks. PostgreSQL automatically detects and resolves deadlocks by aborting one transaction.</p>
+
+    <h3>Creating a Deadlock Scenario</h3>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+UPDATE accounts SET balance = balance + 700 WHERE account_id = 1;
+
+-- Terminal 2
+BEGIN;
+UPDATE accounts SET balance = balance + 800 WHERE account_id = 2;
+-- Now try to update account_id = 1 (locked by Terminal 1)
+UPDATE accounts SET balance = balance + 900 WHERE account_id = 1;
+
+-- Terminal 1 (continuing)
+-- Try to update account_id = 2 (locked by Terminal 2)
+UPDATE accounts SET balance = balance + 1000 WHERE account_id = 2;
+-- Deadlock detected! One transaction will be aborted</code></pre>
+
+    <h3>Monitoring Deadlocks</h3>
+
+    <pre><code class="language-sql">-- View deadlock_timeout setting
+SHOW deadlock_timeout;
+
+-- Check for blocking queries
+SELECT blocked_activity.pid AS blocked_pid,
+       blocked_activity.query AS blocked_query,
+       blocking_activity.pid AS blocking_pid,
+       blocking_activity.query AS blocking_query
+FROM pg_catalog.pg_locks AS blocked_locks
+JOIN pg_catalog.pg_stat_activity AS blocked_activity
+    ON blocked_activity.pid = blocked_locks.pid
+JOIN pg_catalog.pg_locks AS blocking_locks
+    ON blocking_locks.locktype = blocked_locks.locktype
+    AND blocking_locks.pid != blocked_locks.pid
+JOIN pg_catalog.pg_stat_activity AS blocking_activity
+    ON blocking_activity.pid = blocking_locks.pid
+WHERE NOT blocked_locks.granted;</code></pre>
+
+    <h2>Advisory Locks</h2>
+
+    <p>Advisory locks are application-defined locks that don't correspond to any database object. They're perfect for distributed coordination without external tools.</p>
+
+    <p>For a detailed guide on advisory locks with Go implementation examples, check out my article: <a href="/posts/a-practical-guide-to-using-advisory-locks-in-your-application.html">A Practical Guide to Using Advisory Locks in Your Application</a>.</p>
+
+    <h3>Session-Level Advisory Lock</h3>
+
+    <pre><code class="language-sql">-- Terminal 1
+SELECT pg_advisory_lock(1001);
+
+-- Terminal 2 - This will wait
+SELECT pg_advisory_lock(1001);
+
+-- Terminal 1 - Release the lock
+SELECT pg_advisory_unlock(1001);</code></pre>
+
+    <h3>Transaction-Level Advisory Lock</h3>
+
+    <pre><code class="language-sql">-- Terminal 1
+BEGIN;
+SELECT pg_advisory_xact_lock(2001);
+-- Lock released automatically on COMMIT or ROLLBACK
+COMMIT;</code></pre>
+
+    <h2>Practical Applications</h2>
+
+    <h3>1. Monitoring Lock Contention</h3>
+
+    <pre><code class="language-sql">CREATE OR REPLACE VIEW lock_contention AS
+SELECT blocked_locks.pid AS blocked_pid,
+       blocked_activity.usename AS blocked_user,
+       blocking_locks.pid AS blocking_pid,
+       blocking_activity.usename AS blocking_user,
+       blocked_activity.query AS blocked_statement,
+       blocking_activity.query AS blocking_statement,
+       NOW() - blocked_activity.xact_start AS blocked_duration,
+       NOW() - blocking_activity.xact_start AS blocking_duration
+FROM pg_catalog.pg_locks blocked_locks
+JOIN pg_catalog.pg_stat_activity blocked_activity
+    ON blocked_activity.pid = blocked_locks.pid
+JOIN pg_catalog.pg_locks blocking_locks
+    ON blocking_locks.locktype = blocked_locks.locktype
+    AND blocking_locks.pid != blocked_locks.pid
+JOIN pg_catalog.pg_stat_activity blocking_activity
+    ON blocking_activity.pid = blocking_locks.pid
+WHERE NOT blocked_locks.granted;
+
+-- Query the view
+SELECT * FROM lock_contention;</code></pre>
+
+    <h3>2. Finding Long-Running Transactions</h3>
+
+    <pre><code class="language-sql">SELECT pid,
+       usename,
+       application_name,
+       state,
+       query_start,
+       NOW() - query_start AS duration,
+       query
+FROM pg_stat_activity
+WHERE state != 'idle'
+  AND NOW() - query_start > INTERVAL '5 minutes'
+ORDER BY duration DESC;</code></pre>
+
+    <h3>3. Identifying Lock-Heavy Queries</h3>
+
+    <pre><code class="language-sql">SELECT l.relation::regclass AS table_name,
+       l.mode,
+       COUNT(*) AS lock_count,
+       STRING_AGG(DISTINCT a.query, E'\n---\n') AS queries
+FROM pg_locks l
+JOIN pg_stat_activity a ON l.pid = a.pid
+WHERE l.relation IS NOT NULL
+GROUP BY l.relation, l.mode
+ORDER BY lock_count DESC
+LIMIT 10;</code></pre>
+
+    <h2>Best Practices</h2>
+
+    <h3>1. Keep Transactions Short</h3>
+
+    <p>Short transactions reduce lock contention and improve concurrency:</p>
+
+    <pre><code class="language-sql">-- Bad: Long transaction
+BEGIN;
+SELECT * FROM accounts WHERE balance > 1000;
+-- Wait for user input or external process
+UPDATE accounts SET balance = balance * 1.05;
+COMMIT;
+
+-- Good: Quick transaction
+BEGIN;
+UPDATE accounts SET balance = balance * 1.05 WHERE balance > 1000;
+COMMIT;</code></pre>
+
+    <h3>2. Use Appropriate Isolation Levels</h3>
+
+    <pre><code class="language-sql">-- For read-only operations
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+-- For operations needing repeatable reads
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- For full serialization
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</code></pre>
+
+    <h3>3. Use FOR UPDATE SKIP LOCKED for Queue Processing</h3>
+
+    <pre><code class="language-sql">BEGIN;
+-- Get the first unlocked row
+SELECT * FROM task_queue
+WHERE status = 'pending'
+FOR UPDATE SKIP LOCKED
+LIMIT 1;
+
+-- Process the task
+UPDATE task_queue SET status = 'processing'
+WHERE task_id = (
+    SELECT task_id FROM task_queue
+    WHERE status = 'pending'
+    FOR UPDATE SKIP LOCKED
+    LIMIT 1
+);
+COMMIT;</code></pre>
+
+    <h3>4. Monitor VACUUM Operations</h3>
+
+    <pre><code class="language-sql">-- Check if VACUUM is blocked
+SELECT a.query, l.mode, l.granted
+FROM pg_stat_activity a
+JOIN pg_locks l ON a.pid = l.pid
+WHERE a.query LIKE '%VACUUM%'
+ORDER BY l.granted;</code></pre>
+
+    <h3>5. Handle Deadlocks Gracefully in Application Code</h3>
+
+    <p>In Go, you can implement retry logic for deadlock scenarios:</p>
+
+    <pre><code class="language-go">func executeWithRetry(db *sql.DB, maxRetries int, fn func(*sql.Tx) error) error {
+    for attempt := 0; attempt < maxRetries; attempt++ {
+        tx, err := db.Begin()
+        if err != nil {
+            return err
+        }
+
+        err = fn(tx)
+        if err != nil {
+            tx.Rollback()
+
+            // Check if it's a deadlock error
+            if isDeadlockError(err) && attempt < maxRetries-1 {
+                time.Sleep(time.Millisecond * time.Duration(100*(attempt+1)))
+                continue
+            }
+            return err
+        }
+
+        if err := tx.Commit(); err != nil {
+            if isDeadlockError(err) && attempt < maxRetries-1 {
+                time.Sleep(time.Millisecond * time.Duration(100*(attempt+1)))
+                continue
+            }
+            return err
+        }
+
+        return nil
+    }
+    return fmt.Errorf("max retries exceeded")
+}
+
+func isDeadlockError(err error) bool {
+    return strings.Contains(err.Error(), "deadlock detected")
+}</code></pre>
+
+    <h2>Performance Impact and Optimization</h2>
+
+    <h3>CREATE INDEX vs CREATE INDEX CONCURRENTLY</h3>
+
+    <pre><code class="language-sql">-- Standard CREATE INDEX (acquires SHARE lock, blocks writes)
+CREATE INDEX balance_idx ON accounts(balance);
+
+-- Concurrent index creation (acquires SHARE UPDATE EXCLUSIVE lock)
+CREATE INDEX CONCURRENTLY balance_idx ON accounts(balance);</code></pre>
+
+    <h3>VACUUM vs VACUUM FULL</h3>
+
+    <pre><code class="language-sql">-- VACUUM (acquires SHARE UPDATE EXCLUSIVE lock)
+VACUUM accounts;
+
+-- VACUUM FULL (acquires ACCESS EXCLUSIVE lock, blocks all operations)
+VACUUM FULL accounts;</code></pre>
+
+    <h2>Conclusion</h2>
+
+    <p>PostgreSQL's locking mechanisms provide a sophisticated system for maintaining data consistency while maximizing concurrency. Key takeaways:</p>
+
+    <ul>
+        <li>Understand the different lock levels and their conflict patterns</li>
+        <li>Monitor lock contention regularly using system views</li>
+        <li>Keep transactions short to minimize lock duration</li>
+        <li>Use appropriate lock modes for your use case</li>
+        <li>Implement deadlock handling in your application code</li>
+        <li>Consider using advisory locks for distributed coordination</li>
+        <li>Use <code>SKIP LOCKED</code> for queue-like operations</li>
+        <li>Prefer <code>CREATE INDEX CONCURRENTLY</code> for production systems</li>
+    </ul>
+
+    <p>By mastering PostgreSQL's locking system, you can build high-performance applications that handle concurrent operations gracefully while maintaining data integrity.</p>
+
+    <h2>References</h2>
+
+    <ul>
+        <li><a href="https://www.postgresql.org/docs/current/explicit-locking.html" target="_blank" rel="noopener noreferrer">PostgreSQL Official Documentation: Explicit Locking</a></li>
+        <li><a href="https://mohitmishra786.github.io/chessman/2025/03/02/Everything-You-Need-to-Know-About-PostgreSQL-Locks-Practical-Skills-You-Need.html" target="_blank" rel="noopener noreferrer">Everything You Need To Know About PostgreSQL Locks: Practical Skills You Need by Mohit Mishra</a></li>
+        <li><a href="/posts/a-practical-guide-to-using-advisory-locks-in-your-application.html">A Practical Guide to Using Advisory Locks in Your Application</a></li>
+    </ul>
+</article>
