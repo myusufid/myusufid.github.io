@@ -1,0 +1,232 @@
+<!--
+title: Cloudflare Tunnels: A Free ngrok Alternative for Exposing Localhost
+description: Learn how to use Cloudflare tunnels to expose your localhost application to the internet with HTTPS for free, using just two simple commands.
+date: 2025-11-15
+tags: cloudflare, devtools, networking, localhost, tunneling, https
+author: M Yusuf
+image: /assets/images/cloudflare-tunnel.png
+-->
+
+<article class="blog-post">
+  <h1>Cloudflare Tunnels: A Free ngrok Alternative for Exposing Localhost</h1>
+  <div class="meta mb-4">
+    <time datetime="2025-11-15">November 15, 2025</time>
+  </div>
+
+  <p>Need to expose your localhost application to the internet for testing webhooks, sharing demos, or collaborating with teammates? <strong>Cloudflare Tunnels</strong> is an excellent free alternative to ngrok that gives you HTTPS-enabled public URLs with just two commands.</p>
+
+  <h2>Why Cloudflare Tunnels?</h2>
+
+  <p>While ngrok is popular, Cloudflare Tunnels offers several advantages:</p>
+
+  <ul>
+    <li><strong>Completely free</strong> - No time limits or connection restrictions</li>
+    <li><strong>HTTPS by default</strong> - Automatic SSL/TLS encryption</li>
+    <li><strong>No account required</strong> for quick temporary tunnels</li>
+    <li><strong>Built on Cloudflare's global network</strong> - Fast and reliable</li>
+    <li><strong>Simple setup</strong> - Just two commands to get started</li>
+  </ul>
+
+  <h2>Quick Setup</h2>
+
+  <p>Getting started is incredibly simple. Here's how:</p>
+
+  <h3>1. Install cloudflared</h3>
+
+  <p>On macOS using Homebrew:</p>
+
+  <pre><code class="language-bash">brew install cloudflared</code></pre>
+
+  <p>On Linux:</p>
+
+  <pre><code class="language-bash"># Debian/Ubuntu
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i cloudflared-linux-amd64.deb
+
+# Other distributions - download from GitHub releases
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+chmod +x cloudflared
+sudo mv cloudflared /usr/local/bin/</code></pre>
+
+  <p>On Windows:</p>
+
+  <pre><code class="language-powershell"># Using Chocolatey
+choco install cloudflared
+
+# Or download the installer from Cloudflare's GitHub releases</code></pre>
+
+  <h3>2. Start the Tunnel</h3>
+
+  <p>Point it to your local application:</p>
+
+  <pre><code class="language-bash">cloudflared tunnel --url http://localhost:6969</code></pre>
+
+  <p>That's it! You'll see output like this:</p>
+
+  <pre><code class="language-text">2025-11-15T10:30:45Z INF +--------------------------------------------------------------------------------------------+
+2025-11-15T10:30:45Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2025-11-15T10:30:45Z INF |  https://random-words-1234.trycloudflare.com                                               |
+2025-11-15T10:30:45Z INF +--------------------------------------------------------------------------------------------+</code></pre>
+
+  <p>Your application is now accessible from anywhere via the provided HTTPS URL!</p>
+
+  <h2>Common Use Cases</h2>
+
+  <h3>Testing Webhooks</h3>
+
+  <p>Perfect for testing webhooks from services like GitHub, Stripe, or Twilio:</p>
+
+  <pre><code class="language-bash"># Start your webhook receiver locally
+npm run dev  # Running on port 3000
+
+# In another terminal, create the tunnel
+cloudflared tunnel --url http://localhost:3000
+
+# Use the generated URL in your webhook configuration</code></pre>
+
+  <h3>Sharing Development Previews</h3>
+
+  <p>Show your work to clients or teammates without deploying:</p>
+
+  <pre><code class="language-bash"># Your React/Vue/Angular dev server
+npm run dev  # localhost:5173
+
+cloudflared tunnel --url http://localhost:5173</code></pre>
+
+  <h3>Mobile Device Testing</h3>
+
+  <p>Test your web app on real mobile devices without being on the same network:</p>
+
+  <pre><code class="language-bash">cloudflared tunnel --url http://localhost:8080</code></pre>
+
+  <h2>Advanced Features</h2>
+
+  <h3>Custom Domains</h3>
+
+  <p>For persistent tunnels with custom domains, you can authenticate and configure named tunnels:</p>
+
+  <pre><code class="language-bash"># Login to Cloudflare
+cloudflared tunnel login
+
+# Create a named tunnel
+cloudflared tunnel create my-app
+
+# Configure and route traffic
+cloudflared tunnel route dns my-app myapp.example.com
+
+# Run the tunnel
+cloudflared tunnel run my-app</code></pre>
+
+  <h3>Configuration File</h3>
+
+  <p>For more complex setups, create a <code>config.yml</code>:</p>
+
+  <pre><code class="language-yaml">tunnel: my-app-tunnel
+credentials-file: /path/to/credentials.json
+
+ingress:
+  - hostname: api.example.com
+    service: http://localhost:8080
+  - hostname: app.example.com
+    service: http://localhost:3000
+  - service: http_status:404</code></pre>
+
+  <h2>Security Considerations</h2>
+
+  <ul>
+    <li><strong>Temporary URLs are random</strong> - Quick tunnels generate random URLs that are hard to guess</li>
+    <li><strong>Don't expose sensitive data</strong> - Only tunnel applications you're comfortable making public</li>
+    <li><strong>Add authentication</strong> - Consider adding password protection or OAuth to your local app</li>
+    <li><strong>Monitor access logs</strong> - Keep an eye on who's accessing your tunnel</li>
+  </ul>
+
+  <h2>Comparison: Cloudflare vs ngrok</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Cloudflare Tunnels</th>
+        <th>ngrok (Free)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Price</td>
+        <td>Free</td>
+        <td>Free (with limits)</td>
+      </tr>
+      <tr>
+        <td>HTTPS</td>
+        <td>✅ Always</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Custom domains</td>
+        <td>✅ Free with Cloudflare</td>
+        <td>❌ Paid only</td>
+      </tr>
+      <tr>
+        <td>Connection time limit</td>
+        <td>✅ Unlimited</td>
+        <td>⚠️ 2 hour sessions</td>
+      </tr>
+      <tr>
+        <td>Bandwidth limit</td>
+        <td>✅ Unlimited</td>
+        <td>⚠️ Limited on free plan</td>
+      </tr>
+      <tr>
+        <td>Setup complexity</td>
+        <td>Very simple</td>
+        <td>Very simple</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Port Already in Use</h3>
+
+  <p>Make sure your application is actually running on the port you specified:</p>
+
+  <pre><code class="language-bash"># Check what's running on the port
+lsof -i :6969  # macOS/Linux
+netstat -ano | findstr :6969  # Windows</code></pre>
+
+  <h3>Connection Refused</h3>
+
+  <p>Ensure your app accepts connections from all interfaces or at least localhost:</p>
+
+  <pre><code class="language-bash"># Good - listening on all interfaces
+python -m http.server 8000
+
+# Also good - explicit localhost
+node server.js --host localhost --port 3000</code></pre>
+
+  <h3>Slow Performance</h3>
+
+  <p>Cloudflare routes traffic through their nearest data center. Performance is generally excellent, but if you experience issues:</p>
+
+  <ul>
+    <li>Check your local network connection</li>
+    <li>Verify your application performance locally first</li>
+    <li>Consider using a named tunnel for better routing</li>
+  </ul>
+
+  <h2>Conclusion</h2>
+
+  <p>Cloudflare Tunnels is a powerful, free alternative to ngrok that's perfect for developers who need quick, secure access to their localhost applications. With just two commands, you can expose any local service to the internet with HTTPS enabled.</p>
+
+  <p>The best part? It's completely free with no arbitrary time limits or connection restrictions. Whether you're testing webhooks, sharing demos, or debugging on mobile devices, Cloudflare Tunnels has you covered.</p>
+
+  <p>Give it a try next time you need to expose a local service!</p>
+
+  <h2>Resources</h2>
+
+  <ul>
+    <li><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/" target="_blank" rel="noopener">Official Cloudflare Tunnels Documentation</a></li>
+    <li><a href="https://github.com/cloudflare/cloudflared" target="_blank" rel="noopener">cloudflared GitHub Repository</a></li>
+    <li><a href="https://developers.cloudflare.com/cloudflare-one/tutorials/" target="_blank" rel="noopener">Cloudflare Tunnels Tutorials</a></li>
+  </ul>
+</article>
