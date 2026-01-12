@@ -3,6 +3,7 @@ title: Cara Install Laravel Menggunakan Image Docker Composer
 description: Tutorial instalasi Laravel menggunakan Docker Composer image tanpa mengubah PHP versi lokal
 date: 2023-08-21
 tags: laravel, docker, composer, php, installation
+image: /assets/images/laravel-docker-composer-install.png
 author: M Yusuf
 -->
 
@@ -15,10 +16,11 @@ author: M Yusuf
         <p>Malas untuk mengganti versi PHP di local machine</p>
 
         <h2>Solusi</h2>
-        <p>Install laravel menggunakan composer image docker dari <a href="https://hub.docker.com/_/composer" target="_blank">Docker Hub - Composer</a></p>
+        <p>Install laravel menggunakan composer image docker dari <a href="https://hub.docker.com/_/composer"
+                target="_blank">Docker Hub - Composer</a></p>
 
         <h2>Langkah-langkah</h2>
-        
+
         <h3>1. Masuk ke folder aplikasi</h3>
         <pre><code lang="bash">cd /Web/acmilan-app</code></pre>
 
@@ -26,7 +28,8 @@ author: M Yusuf
         <pre><code lang="bash">docker run --rm -v $(pwd):/app composer create-project --prefer-dist laravel/laravel .</code></pre>
 
         <h3>3. Proses Instalasi</h3>
-        <img src="../../assets/images/Screenshot-2023-08-21-at-00.52.12.png" alt="Laravel Installation Process" class="img-fluid mb-4" />
+        <img src="../../assets/images/Screenshot-2023-08-21-at-00.52.12.png" alt="Laravel Installation Process"
+            class="img-fluid mb-4" />
 
         <h2>Penjelasan Command</h2>
         <ul>
