@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An overview of key ISO standards for information security, privacy, and software quality, with examples of implementation in Indonesia.">
+    <title>Understanding ISO Standards: 27001, 27701, and 25010 | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An overview of key ISO standards for information security, privacy, and software quality, with examples of implementation in Indonesia.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Understanding ISO Standards: 27001, 27701, and 25010 | M Yusuf - Backend Developer">
+    <meta property="og:description" content="An overview of key ISO standards for information security, privacy, and software quality, with examples of implementation in Indonesia.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Understanding ISO Standards: 27001, 27701, and 25010 | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="An overview of key ISO standards for information security, privacy, and software quality, with examples of implementation in Indonesia.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <div class="featured-image-container mb-5">
+            <img src="/assets/images/iso-standards-header.png" alt="Understanding ISO Standards: 27001, 27701, and 25010" class="featured-image">
+            <div class="image-credit">Image source: Generated by AI</div>
+        </div>
+        
+        <article class="blog-post">
+    <h1>Understanding ISO Standards: 27001, 27701, and 25010</h1>
+    <div class="meta mb-4">2026-01-12</div>
+
+    <p class="lead">In the rapidly evolving landscape of digital technology, adhering to international standards is
+        crucial for organizations to ensure security, privacy, and quality. Three key standards—ISO 27001, ISO 27701,
+        and ISO 25010—provide robust frameworks for these goals.</p>
+
+    <h2 class="mt-5">ISO 27001: Information Security Management</h2>
+    <p><strong>ISO/IEC 27001</strong> is the leading international standard for Information Security Management Systems
+        (ISMS). It provides a systematic approach to managing sensitive company information so that it remains secure.
+        It includes people, processes, and IT systems by applying a risk management process.</p>
+    <p>The core of ISO 27001 is the <strong>CIA Triad</strong>:</p>
+    <ul>
+        <li><strong>Confidentiality</strong>: Ensuring that information is accessible only to those authorized to have
+            access.</li>
+        <li><strong>Integrity</strong>: Safeguarding the accuracy and completeness of information and processing
+            methods.</li>
+        <li><strong>Availability</strong>: Ensuring that authorized users have access to information and associated
+            assets when required.</li>
+    </ul>
+
+    <h2 class="mt-5">ISO 27701: Privacy Information Management</h2>
+    <p><strong>ISO/IEC 27701</strong> serves as an extension to ISO 27001 and ISO 27002 for privacy management within
+        the context of the organization. It outlines the requirements for establishing, implementing, maintaining, and
+        continually improving a Privacy Information Management System (PIMS).</p>
+    <p>While ISO 27001 focuses on security, ISO 27701 bridges the gap between information security and data privacy. It
+        is designed to help organizations comply with privacy regulations such as the GDPR (General Data Protection
+        Regulation) and various local privacy laws.</p>
+
+    <h2 class="mt-5">ISO 25010: Software Quality Models</h2>
+    <p><strong>ISO/IEC 25010</strong> describes a quality model for computer systems and software products. It defines
+        eight main characteristics of software quality:</p>
+    <ol>
+        <li><strong>Functional Suitability</strong>: Degree to which the product provides functions that meet stated and
+            implied needs.</li>
+        <li><strong>Performance Efficiency</strong>: Relationship between the level of performance and the amount of
+            resources used.</li>
+        <li><strong>Compatibility</strong>: Degree to which a product, system, or component can exchange information
+            with other products.</li>
+        <li><strong>Usability</strong>: Degree to which a product or system is effective, efficient, and satisfactory
+            for specified users.</li>
+        <li><strong>Reliability</strong>: Degree to which a system, product, or component performs specified functions
+            under specified conditions.</li>
+        <li><strong>Security</strong>: Degree to which a product or system protects information and data.</li>
+        <li><strong>Maintainability</strong>: Degree of effectiveness and efficiency with which a product or system can
+            be modified.</li>
+        <li><strong>Portability</strong>: Degree of effectiveness and efficiency with which a system, product, or
+            component can be transferred from one hardware, software, or other operational or usage environment to
+            another.</li>
+    </ol>
+
+    <h2 class="mt-5">Real-World Implementation in Indonesia</h2>
+    <p>Indonesian companies are increasingly adopting these standards to build trust and ensure compliance with global
+        and local regulations.</p>
+
+    <h3 class="mt-4">Credit Bureau Indonesia (CBI)</h3>
+    <p><strong>Credit Bureau Indonesia (CBI)</strong> is a prime example of commitment to these standards. They are the
+        first private credit bureau in Indonesia to achieve <strong>ISO 27701 certification</strong>. This certification
+        complements their existing <strong>ISO 27001 ISMS</strong>, demonstrating a comprehensive approach where
+        security meets privacy—a critical necessity in the financial sector where sensitive personal data is handled
+        daily.</p>
+
+    <h3 class="mt-4">PrivyID</h3>
+    <p><strong>PrivyID (PT Privy Identitas Digital)</strong> was the first Indonesian startup to obtain <strong>ISO/IEC
+            27001:2013</strong> certification. As a digital identity provider, security is their core product offering.
+        Achieving this standard early on helped establish them as a trusted partner for digital signatures and identity
+        verification in Indonesia.</p>
+
+    <h3 class="mt-4">Enterprise Adoption: GoTo, BCA, BRI</h3>
+    <p>Major enterprises like <strong>GoTo (Gojek Tokopedia)</strong>, <strong>Bank Central Asia (BCA)</strong>, and
+        <strong>Bank Rakyat Indonesia (BRI)</strong> have also adopted <strong>ISO 27001</strong>. For these giants,
+        managing the data of resident millions requires a rigid framework to prevent breaches and maintain customer
+        trust. The adoption of ISMS ensures that their massive ecosystems remain resilient against cyber threats.
+    </p>
+
+    <h2 class="mt-5">How to Prove Compliance?</h2>
+    <p>If stakeholders, clients, or partners ask whether your application adheres to these standards, the method of
+        proof varies by standard:</p>
+
+    <h3 class="mt-4">ISO 27001 and ISO 27701 (Process & Management)</h3>
+    <p>The gold standard for proving compliance with ISO 27001 and ISO 27701 is <strong>Formal Certification</strong>.
+    </p>
+    <ul>
+        <li><strong>External Audit</strong>: You must hire an accredited certification body (e.g., BSI, SGS, TÜV) to
+            audit your organization.</li>
+        <li><strong>Certificate</strong>: Upon passing the audit, you receive a formal certificate valid for a specific
+            period (usually 3 years), subject to surveillance audits.</li>
+        <li><strong>Scope Statement</strong>: The certificate defines the "Scope of Registration," detailing exactly
+            which parts of your organization or products are covered.</li>
+    </ul>
+
+    <h3 class="mt-4">ISO 25010 (Product Quality)</h3>
+    <p>ISO 25010 is a quality model for the software product itself, not a management system. Therefore, you typically
+        don't get an "ISO 25010 Certificate" for the company. Proof usually comes in the form of:</p>
+    <ul>
+        <li><strong>Independent Verification & Validation (IV&V) Report</strong>: A third-party testing lab evaluates
+            your software against the ISO 25010 characteristics.</li>
+        <li><strong>Test Reports</strong>: Detailed documentation showing testing methodologies and results for
+            performance, security, usability, etc., mapped to ISO 25010 criteria.</li>
+        <li><strong>Statement of Conformance</strong>: A formal declaration issued by an independent evaluator stating
+            the software meets specific quality requirements defined in the standard.</li>
+    </ul>
+
+    <h2 class="mt-5">Conclusion</h2>
+    <p>Understanding and implementing standards like ISO 27001, 27701, and 25010 is not just about compliance; it's
+        about building a resilient foundation for your technology. Whether it's securing data (27001), protecting
+        privacy (27701), or ensuring robust software quality (25010), these frameworks provide the blueprints for
+        excellence in the digital age.</p>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
