@@ -1,0 +1,111 @@
+<!--
+title: Managing Multiple Git Accounts with SSH Config and InsteadOf
+description: Learn how to manage multiple GitLab and GitHub accounts on a single machine without conflicts using SSH configuration and Git's insteadOf feature.
+date: 2026-01-15
+tags: git, ssh, gitlab, github, productivity
+author: M Yusuf
+image: /assets/images/git-ssh-config.svg
+image_credit: Custom Illustration
+-->
+
+<article class="blog-post">
+    <h1>Managing Multiple Git Accounts with SSH Config and InsteadOf</h1>
+    <div class="meta mb-4">January 15, 2026</div>
+
+    <div class="content">
+        <p>As developers, we often find ourselves juggling multiple Git accounts—perhaps a personal GitHub account for
+            side projects and a professional GitLab account for work. Managing SSH keys for these different accounts can
+            quickly become a headache if not handled correctly. In this post, targetting exactly that problem, I'll show
+            you how to set up your system to seamlessly handle multiple accounts without constantly switching keys.</p>
+
+        <h2>The Scenario</h2>
+        <p>Imagine you have a personal account on GitHub and a work account on GitLab. You want to use different SSH
+            keys for each to keep things isolated and secure. The challenge is that by default, Git (and SSH) will use
+            the same default key for every connection to <code>github.com</code> or <code>gitlab.com</code>.</p>
+
+        <h2>Step 1: Configure SSH (~/.ssh/config)</h2>
+        <p>The first step is to tell SSH which key to use for which "host". We can create aliases in our
+            <code>~/.ssh/config</code> file. Each alias can point to the same actual hostname (like
+            <code>gitlab.com</code>) but use a different identity file.
+        </p>
+
+        <pre><code lang="plaintext">
+# ~/.ssh/config
+
+# Work GitLab Account
+Host gitlab.com-work
+    HostName gitlab.com
+    IdentityFile ~/.ssh/id_rsa_work
+
+# Personal GitHub Account
+Host github.com-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_personal
+
+# Other server configurations...
+Host myserver
+    User ubuntu
+    HostName 1.2.3.4
+    IdentityFile ~/.ssh/id_rsa
+    PreferredAuthentications publickey
+    ForwardAgent yes
+        </code></pre>
+
+        <p>Here, we've created two aliases: <code>gitlab.com-work</code> and
+            <code>github.com-personal</code>. When we connect to these aliases, SSH will actually connect to
+            <code>gitlab.com</code> or <code>github.com</code> but use the specified <code>IdentityFile</code>.
+        </p>
+
+        <h2>Step 2: Automate with Git insteadOf</h2>
+        <p>Using aliases is great, but it means you have to remember to use them every time you clone a repository or
+            add a remote:</p>
+        <pre><code lang="bash">git clone git@gitlab.com-work:username/repo.git</code></pre>
+
+        <p>This is where Git's <code>insteadOf</code> feature comes in. You can configure Git to automatically replace
+            standard URLs with your custom SSH aliases. Add the following to your <code>~/.gitconfig</code>:</p>
+
+        <pre><code lang="ini">
+# ~/.gitconfig
+
+[url "git@gitlab.com-work:your-org/"]
+    insteadOf = https://gitlab.com/your-org/
+
+[url "git@github.com-personal:your-org/example-repo.git"]
+    insteadOf = https://github.com/your-org/example-repo
+
+[url "git@github.com-personal:your-org/another-repo.git"]
+    insteadOf = https://github.com/your-org/another-repo
+        </code></pre>
+
+        <p>With this configuration, whenever you try to interact with a repository at
+            <code>https://github.com/your-org/example-repo</code>, Git will automatically use
+            <code>git@github.com-personal:your-org/example-repo.git</code>. This ensures the correct SSH key is
+            used without any manual intervention!
+        </p>
+
+        <h2>Why This Works</h2>
+        <ol>
+            <li><strong>Isolation:</strong> Each account uses its own dedicated SSH key.</li>
+            <li><strong>Security:</strong> If one key is compromised, the others remain safe.</li>
+            <li><strong>Convenience:</strong> You can continue using standard HTTPS URLs in your documentation or
+                scripts, and Git will handle the translation to the correct SSH host.</li>
+            <li><strong>Flexibility:</strong> You can easily add more accounts or servers by adding new entries to your
+                SSH and Git configs.</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>By combining SSH host aliases with Git's <code>insteadOf</code> mapping, you can create a robust and "set and
+            forget" environment for managing multiple Git identities. No more "Permission denied" errors or accidentally
+            pushing work code with your personal email!</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Git</span>
+            <span class="badge">#SSH</span>
+            <span class="badge">#GitLab</span>
+            <span class="badge">#GitHub</span>
+            <span class="badge">#DevOps</span>
+            <span class="badge">#Productivity</span>
+        </div>
+    </div>
+</article>

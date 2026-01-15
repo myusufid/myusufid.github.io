@@ -1,0 +1,37 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg_grad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg_grad)"/>
+  
+  <!-- Abstract Grid Pattern -->
+  <path d="M0 100H1200 M0 200H1200 M0 300H1200 M0 400H1200 M0 500H1200" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+  <path d="M100 0V630 M200 0V630 M300 0V630 M400 0V630 M500 0V630 M600 0V630 M700 0V630 M800 0V630 M900 0V630 M1000 0V630 M1100 0V630" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+
+  <!-- SSH Key Icon -->
+  <g transform="translate(400, 215)" filter="url(#glow)">
+    <path d="M100 0C66.8629 0 40 26.8629 40 60C40 88.0353 59.1997 111.583 85 118.188V200H115V118.188C140.8 111.583 160 88.0353 160 60C160 26.8629 133.137 0 100 0ZM100 30C116.569 30 130 43.4315 130 60C130 76.5685 116.569 90 100 90C83.4315 90 70 76.5685 70 60C70 43.4315 83.4315 30 100 30Z" fill="#22d3ee"/>
+    <rect x="85" y="140" width="30" height="10" fill="#22d3ee"/>
+    <rect x="85" y="170" width="30" height="10" fill="#22d3ee"/>
+  </g>
+
+  <!-- Git Branch Icon -->
+  <g transform="translate(650, 215)" filter="url(#glow)">
+    <circle cx="50" cy="50" r="15" stroke="#3b82f6" stroke-width="8"/>
+    <circle cx="50" cy="200" r="15" stroke="#3b82f6" stroke-width="8"/>
+    <circle cx="150" cy="125" r="15" stroke="#3b82f6" stroke-width="8"/>
+    <path d="M50 65V185" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+    <path d="M50 125C100 125 100 125 150 125" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Connection Lines -->
+  <path d="M560 315L640 315" stroke="#ffffff" stroke-opacity="0.2" stroke-width="4" stroke-dasharray="10 10"/>
+</svg>
