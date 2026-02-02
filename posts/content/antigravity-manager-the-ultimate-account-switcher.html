@@ -1,0 +1,124 @@
+<!--
+title: Antigravity Manager: The Ultimate Account Switcher
+description: Discover Antigravity Manager, a professional tool for seamless account switching and management for Antigravity tools.
+date: 2026-02-02
+tags: antigravity, tools, python, productivity, account-manager
+image: /assets/images/antigravity-manager-banner.svg
+image_credit: Antigravity Manager GitHub
+-->
+
+<article class="blog-post">
+    <h1>Antigravity Manager: The Ultimate Account Switcher</h1>
+    <div class="meta mb-4">February 2, 2026</div>
+
+    <div class="content">
+        <h2>Introduction</h2>
+        <p>If you keep juggling multiple AI accounts, <strong>Antigravity Manager</strong> is the tool you've been
+            waiting for. Built with Tauri v2 and React (Rust), this professional account manager operates as a seamless
+            gateway for your Antigravity tools, providing one-click account switching and comprehensive management.</p>
+
+        <h2>Key Features</h2>
+
+        <h3>1. 🎛️ Smart Dashboard</h3>
+        <p>The dashboard gives you a global, real-time view of your ecosystem:</p>
+        <ul>
+            <li><strong>Real-time Monitoring:</strong> Instantly see the remaining quotas for Gemini Pro, Gemini Flash,
+                Claude, and Gemini drawing tools.</li>
+            <li><strong>Smart Recommendations:</strong> The system algorithms analyze quota redundancy to recommend the
+                "best account" for your current task, supporting one-click switching.</li>
+            <li><strong>Active Snapshot:</strong> View the specific quota percentage and last sync time of your
+                currently active account.</li>
+        </ul>
+
+        <h3>2. 🔐 Powerful Account Management</h3>
+        <p>Managing credentials has never been easier:</p>
+        <ul>
+            <li><strong>OAuth 2.0 Authorization:</strong> Supports a smooth OAuth flow. Generate a link, authorize in
+                any browser, and the app automatically saves your credentials.</li>
+            <li><strong>Flexible Import:</strong> Import single tokens, batch JSON files (great for backups), or migrate
+                from V1 databases.</li>
+            <li><strong>Health Checks:</strong> Validates accounts and automatically flags/skips those with 403 or
+                permission issues.</li>
+        </ul>
+
+        <h3>3. 🔌 API Proxy & Protocol Conversion</h3>
+        <p>Antigravity Manager acts as a versatile middleware:</p>
+        <ul>
+            <li><strong>Multi-Protocol Support:</strong>
+                <ul>
+                    <li><strong>OpenAI Format:</strong> Provides <code>/v1/chat/completions</code>, compatible with 99%
+                        of AI apps.</li>
+                    <li><strong>Anthropic Format:</strong> Native <code>/v1/messages</code> support, perfect for Claude
+                        Code CLI.</li>
+                    <li><strong>Gemini Format:</strong> Direct support for the Google official SDK.</li>
+                </ul>
+            </li>
+            <li><strong>Auto-Healing:</strong> Automatically retries and rotates accounts on 429 (Too Many Requests) or
+                401 (Expire) errors in milliseconds.</li>
+        </ul>
+
+        <h3>4. 🔀 Model Router</h3>
+        <p>Take control of your request traffic:</p>
+        <ul>
+            <li><strong>Series Mapping:</strong> Route complex model IDs to specific "families" (e.g., all GPT-4
+                requests to <code>gemini-3-pro-high</code>).</li>
+            <li><strong>Tiered Routing:</strong> Automatically prioritizes "High Speed Reset" accounts for
+                high-frequency calls based on account type (Ultra/Pro/Free).</li>
+            <li><strong>Silent Degradation:</strong> Identifies background tasks (like title generation) and routes them
+                to cheaper models (Flash) to save your premium quotas.</li>
+        </ul>
+
+        <h2>Installation</h2>
+
+        <h3>macOS (Homebrew)</h3>
+        <pre><code lang="bash">brew tap lbjlaq/antigravity-manager https://github.com/lbjlaq/Antigravity-Manager
+brew install --cask antigravity-tools</code></pre>
+        <p><em>Note: If you encounter permission issues, add <code>--no-quarantine</code>.</em></p>
+
+        <h3>Docker (NAS/Server)</h3>
+        <p>For containerized environments, use the official Docker image:</p>
+        <pre><code lang="bash">docker run -d --name antigravity-manager \
+  -p 8045:8045 \
+  -e API_KEY=sk-your-api-key \
+  -e WEB_PASSWORD=your-login-password \
+  -v ~/.antigravity_tools:/root/.antigravity_tools \
+  lbjlaq/antigravity-manager:latest</code></pre>
+
+        <h2>Quick Start</h2>
+
+        <h3>Using with Python</h3>
+        <p>Once your manager is running, you can point your OpenAI client to it:</p>
+
+        <pre><code lang="python">import openai
+
+client = openai.OpenAI(
+    api_key="sk-antigravity",
+    base_url="http://127.0.0.1:8045/v1"
+)
+
+response = client.chat.completions.create(
+    model="gemini-3-flash",
+    messages=[{"role": "user", "content": "Hello, introduce yourself!"}]
+)
+
+print(response.choices[0].message.content)</code></pre>
+
+        <h3>Using with Claude Code CLI</h3>
+        <pre><code lang="bash">export ANTHROPIC_API_KEY="sk-antigravity"
+export ANTHROPIC_BASE_URL="http://127.0.0.1:8045"
+claude</code></pre>
+
+        <h2>Conclusion</h2>
+        <p>Antigravity Manager is a robust solution for anyone heavily invested in the Antigravity ecosystem. By
+            abstracting away the complexity of account rotation, quota management, and protocol translation, it lets you
+            focus on building and creating.</p>
+
+        <div class="tags mt-4">
+            <span class="badge bg-light text-dark">#antigravity</span>
+            <span class="badge bg-light text-dark">#tools</span>
+            <span class="badge bg-light text-dark">#python</span>
+            <span class="badge bg-light text-dark">#productivity</span>
+            <span class="badge bg-light text-dark">#account-manager</span>
+        </div>
+    </div>
+</article>
