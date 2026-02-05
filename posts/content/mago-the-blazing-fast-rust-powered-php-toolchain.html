@@ -1,0 +1,80 @@
+<!--
+title: Mago: The Blazing Fast Rust-Powered PHP Toolchain
+description: Discover Mago, the new Oxidized PHP Toolchain written in Rust that offers 90x faster linting, formatting, and static analysis.
+date: 2026-02-05
+tags: php, rust, tooling, static-analysis, performance, mago
+image: /assets/images/mago-php-toolchain.png
+image_credit: AI Generated
+-->
+
+<article class="blog-post">
+    <h1>Mago: The Blazing Fast Rust-Powered PHP Toolchain</h1>
+    <div class="meta mb-4">2026-02-05</div>
+
+    <p>PHP developers have long relied on a suite of excellent tools like PHPStan, Psalm, and PHP-CS-Fixer. These tools
+        are indispensable for maintaining code quality, but as projects grow, so does the execution time. Waiting
+        minutes for CI pipelines to finish or local checks to run can kill momentum.</p>
+
+    <p>Enter <strong>Mago</strong>, the "Oxidized PHP Toolchain." Written in Rust, Mago promises to be a game-changer
+        with blazing fast performance—up to 90x faster than traditional PHP tooling.</p>
+
+    <h2>What is Mago?</h2>
+    <p><a href="https://mago.carthage.software/" target="_blank">Mago</a> is a comprehensive toolchain for PHP that aims
+        to analyze your entire codebase in seconds, not minutes. It combines several critical development tools into a
+        single, high-performance package:</p>
+    <ul>
+        <li><strong>Static Analyzer:</strong> Catches type errors, null pointer exceptions, and logic bugs before they
+            hit production.</li>
+        <li><strong>Code Formatter:</strong> Automatically enforces PER-CS formatting standards, effectively ending
+            style debates.</li>
+        <li><strong>Smart Linter:</strong> Identifies code smells, security issues, and anti-patterns with over 100+
+            built-in rules.</li>
+    </ul>
+
+    <h2>Why Rust?</h2>
+    <p>By leveraging Rust, Mago achieves performance levels that are simply not possible with tools written in PHP
+        itself. While PHP 8.x is fast, Rust's memory safety and zero-cost abstractions make it the perfect candidate for
+        building high-throughput developer tooling. This means you can run full project analysis on every save without
+        noticing a slowdown.</p>
+
+    <h2>Getting Started</h2>
+    <p>Installing Mago is incredibly simple. For macOS, Linux, or WSL, you can use the curl installer:</p>
+
+    <pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://carthage.software/mago.sh | bash</code></pre>
+
+    <p>Alternatively, you can install it via Composer, Homebrew, or Cargo:</p>
+
+    <pre><code class="language-bash"># via Composer
+composer require --dev carthage/mago
+
+# via Homebrew
+brew install carthage-software/tap/mago
+
+# via Cargo
+cargo install mago</code></pre>
+
+    <h2>Usage</h2>
+    <p>Once installed, using Mago is straightforward. Initialize it in your project to let it auto-detect your setup:
+    </p>
+
+    <pre><code class="language-bash">mago init</code></pre>
+
+    <p>Then, you have access to its three main commands:</p>
+
+    <pre><code class="language-bash"># Analyze your code
+mago check
+
+# Lint your code
+mago lint
+
+# Format your code
+mago fmt</code></pre>
+
+    <h2>Conclusion</h2>
+    <p>Mago represents the next generation of PHP tooling. As the ecosystem matures, having tools that prioritize
+        performance will be crucial for maintaining developer velocity in large codebases. If you're tired of waiting
+        for your current static analyzer or linter, give Mago a try and experience the speed for yourself.</p>
+
+    <p>Check out the official <a href="https://mago.carthage.software/" target="_blank">Mago website</a> and <a
+            href="https://github.com/carthage-software/mago" target="_blank">GitHub repository</a> to learn more.</p>
+</article>

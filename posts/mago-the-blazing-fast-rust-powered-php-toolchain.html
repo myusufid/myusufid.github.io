@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover Mago, the new Oxidized PHP Toolchain written in Rust that offers 90x faster linting, formatting, and static analysis.">
+    <title>Mago: The Blazing Fast Rust-Powered PHP Toolchain | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover Mago, the new Oxidized PHP Toolchain written in Rust that offers 90x faster linting, formatting, and static analysis.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mago: The Blazing Fast Rust-Powered PHP Toolchain | M Yusuf - Backend Developer">
+    <meta property="og:description" content="Discover Mago, the new Oxidized PHP Toolchain written in Rust that offers 90x faster linting, formatting, and static analysis.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mago: The Blazing Fast Rust-Powered PHP Toolchain | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="Discover Mago, the new Oxidized PHP Toolchain written in Rust that offers 90x faster linting, formatting, and static analysis.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <div class="featured-image-container mb-5">
+            <img src="/assets/images/mago-php-toolchain.png" alt="Mago: The Blazing Fast Rust-Powered PHP Toolchain" class="featured-image">
+            <div class="image-credit">Image source: AI Generated</div>
+        </div>
+        
+        <article class="blog-post">
+    <h1>Mago: The Blazing Fast Rust-Powered PHP Toolchain</h1>
+    <div class="meta mb-4">2026-02-05</div>
+
+    <p>PHP developers have long relied on a suite of excellent tools like PHPStan, Psalm, and PHP-CS-Fixer. These tools
+        are indispensable for maintaining code quality, but as projects grow, so does the execution time. Waiting
+        minutes for CI pipelines to finish or local checks to run can kill momentum.</p>
+
+    <p>Enter <strong>Mago</strong>, the "Oxidized PHP Toolchain." Written in Rust, Mago promises to be a game-changer
+        with blazing fast performance—up to 90x faster than traditional PHP tooling.</p>
+
+    <h2>What is Mago?</h2>
+    <p><a href="https://mago.carthage.software/" target="_blank">Mago</a> is a comprehensive toolchain for PHP that aims
+        to analyze your entire codebase in seconds, not minutes. It combines several critical development tools into a
+        single, high-performance package:</p>
+    <ul>
+        <li><strong>Static Analyzer:</strong> Catches type errors, null pointer exceptions, and logic bugs before they
+            hit production.</li>
+        <li><strong>Code Formatter:</strong> Automatically enforces PER-CS formatting standards, effectively ending
+            style debates.</li>
+        <li><strong>Smart Linter:</strong> Identifies code smells, security issues, and anti-patterns with over 100+
+            built-in rules.</li>
+    </ul>
+
+    <h2>Why Rust?</h2>
+    <p>By leveraging Rust, Mago achieves performance levels that are simply not possible with tools written in PHP
+        itself. While PHP 8.x is fast, Rust's memory safety and zero-cost abstractions make it the perfect candidate for
+        building high-throughput developer tooling. This means you can run full project analysis on every save without
+        noticing a slowdown.</p>
+
+    <h2>Getting Started</h2>
+    <p>Installing Mago is incredibly simple. For macOS, Linux, or WSL, you can use the curl installer:</p>
+
+    <pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://carthage.software/mago.sh | bash</code></pre>
+
+    <p>Alternatively, you can install it via Composer, Homebrew, or Cargo:</p>
+
+    <pre><code class="language-bash"># via Composer
+composer require --dev carthage/mago
+
+# via Homebrew
+brew install carthage-software/tap/mago
+
+# via Cargo
+cargo install mago</code></pre>
+
+    <h2>Usage</h2>
+    <p>Once installed, using Mago is straightforward. Initialize it in your project to let it auto-detect your setup:
+    </p>
+
+    <pre><code class="language-bash">mago init</code></pre>
+
+    <p>Then, you have access to its three main commands:</p>
+
+    <pre><code class="language-bash"># Analyze your code
+mago check
+
+# Lint your code
+mago lint
+
+# Format your code
+mago fmt</code></pre>
+
+    <h2>Conclusion</h2>
+    <p>Mago represents the next generation of PHP tooling. As the ecosystem matures, having tools that prioritize
+        performance will be crucial for maintaining developer velocity in large codebases. If you're tired of waiting
+        for your current static analyzer or linter, give Mago a try and experience the speed for yourself.</p>
+
+    <p>Check out the official <a href="https://mago.carthage.software/" target="_blank">Mago website</a> and <a
+            href="https://github.com/carthage-software/mago" target="_blank">GitHub repository</a> to learn more.</p>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
