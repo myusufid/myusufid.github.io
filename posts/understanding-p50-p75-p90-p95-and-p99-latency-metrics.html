@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="These terms are typically used to describe latency metrics—how long it takes for a system or service to respond to requests.">
+    <title>Understanding p50 p75 p90 p95 and p99 latency metrics | M Yusuf - Backend Developer</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="These terms are typically used to describe latency metrics—how long it takes for a system or service to respond to requests.">
+    <meta name="author" content="M Yusuf">
+    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Understanding p50 p75 p90 p95 and p99 latency metrics | M Yusuf - Backend Developer">
+    <meta property="og:description" content="These terms are typically used to describe latency metrics—how long it takes for a system or service to respond to requests.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myusufid.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Understanding p50 p75 p90 p95 and p99 latency metrics | M Yusuf - Backend Developer">
+    <meta name="twitter:description" content="These terms are typically used to describe latency metrics—how long it takes for a system or service to respond to requests.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link href="../highlight-theme.css" rel="stylesheet">
+
+   <!-- Add these in the head section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+
+</head>
+<body>
+    <header class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <div class="brand me-3">
+                    <a href="/" class="text-decoration-none">
+                        <h1 class="h4 mb-0">M YUSUF</h1>
+                        <p class="subtitle mb-0">Backend Developer</p>
+                    </a>
+                </div>
+                <nav class="ms-md-auto mt-3 mt-md-0">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
+                        <div id="searchResults" class="search-results" aria-live="polite"></div>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="nav-link btn">
+                                <i class="bi bi-sun-fill light-icon"></i>
+                                <i class="bi bi-moon-fill dark-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        
+        <div class="featured-image-container mb-5">
+            <img src="/assets/images/latency-metrics.png" alt="Understanding p50 p75 p90 p95 and p99 latency metrics" class="featured-image">
+            <div class="image-credit">Image source: Generated by AI</div>
+        </div>
+        
+        <article class="blog-post">
+    <h1>Understanding p50 p75 p90 p95 and p99 latency metrics</h1>
+    <div class="meta mb-4">2026-02-16 | By Rizwan Ahmed</div>
+
+    <p>These terms are typically used to describe latency metrics—how long it takes for a system or service to respond
+        to requests. The numbers like p50, p75, p90, p95, and p99 refer to percentiles, which give you a better sense of
+        how the response times are distributed.</p>
+
+    <p>Let’s break it down using an everyday example.</p>
+
+    <h2>Example: Measuring Latency in a Restaurant</h2>
+    <p>Imagine you’re at a busy restaurant, and you want to know how long it takes for people to receive their food
+        after ordering.</p>
+
+    <p><strong>Latency:</strong> This is the total time from when you place your order to when the food is served.</p>
+
+    <h2>The Percentiles (p50, p75, p90, p95, p99)</h2>
+    <ul>
+        <li><strong>p50 (50th percentile):</strong> This is the median—half the people get their food faster than this,
+            and half the people wait longer. Example: Out of 100 customers, 50 people get their food in less time than
+            this, and the other 50 wait longer. So, if p50 = 15 minutes, it means that half of all the orders are served
+            in 15 minutes or less.</li>
+        <li><strong>p75 (75th percentile):</strong> This is the point where 75% of the people get their food faster than
+            this, and 25% of people have to wait longer. Example: If p75 = 20 minutes, it means that 75% of the people
+            got their food in 20 minutes or less, and 25% waited longer.</li>
+        <li><strong>p90 (90th percentile):</strong> This means 90% of the customers got their food in this time, and 10%
+            waited longer. Example: If p90 = 25 minutes, 90% of customers were served in 25 minutes or less, but 10% had
+            to wait longer.</li>
+        <li><strong>p95 (95th percentile):</strong> This is similar to p90 but for an even higher percentage—95% of the
+            people were served in this time, and 5% waited longer. Example: If p95 = 30 minutes, it means 95% of people
+            got their food in 30 minutes or less, and only 5% waited longer.</li>
+        <li><strong>p99 (99th percentile):</strong> This is the top 1%. It’s the maximum time that still only 1% of
+            people had to wait longer than. Example: If p99 = 40 minutes, it means 99% of the people got their food in
+            40 minutes or less, and only 1% waited longer.</li>
+    </ul>
+
+    <h2>Putting It All Together</h2>
+    <p>Let’s assume the following values for a busy restaurant:</p>
+    <ul>
+        <li>p50 = 15 minutes</li>
+        <li>p75 = 20 minutes</li>
+        <li>p90 = 25 minutes</li>
+        <li>p95 = 30 minutes</li>
+        <li>p99 = 40 minutes</li>
+    </ul>
+
+    <p>These values give you a sense of how most people are being served and how much the slowest people are waiting:
+    </p>
+    <ul>
+        <li>50% of people are being served in 15 minutes or less.</li>
+        <li>75% of people get served in 20 minutes or less.</li>
+        <li>90% of people are served in 25 minutes or less.</li>
+        <li>95% of people are served in 30 minutes or less.</li>
+        <li>Only 1% of the people had to wait longer than 40 minutes.</li>
+    </ul>
+
+    <h2>Why It’s Useful</h2>
+    <p>If you look at p99, you can see that there’s a small group of people who experience much longer wait times. In a
+        tech context, that means a few users might experience much worse latency than most of the others, and you might
+        need to work on improving the system for that small group.</p>
+    <p>p50 (median) and p75 are often used to see how the majority of users are experiencing the service.</p>
+    <p>So, these percentiles help you understand not just the "average" wait time but how the system performs for
+        different parts of the population, especially when there are some outliers (very slow responses).</p>
+
+    <h2>Example Query</h2>
+    <pre><code class="language-sql">fields @timestamp, request_type, duration_ms
+| filter request_type = 'inbound'
+| stats pct(duration_ms, 50) as p50_latency, pct(duration_ms, 95) as p95_latency, pct(duration_ms, 99) as p99_latency by bin(1m)</code></pre>
+
+    <div class="mt-4 mb-4">
+        <img src="/assets/images/cloudwatch-latency-example.png" alt="CloudWatch Latency Graph"
+            class="img-fluid rounded shadow">
+        <p class="text-muted text-center mt-2"><small>Visualization: CloudWatch Logs Insights Graph</small></p>
+    </div>
+
+    <p>This CloudWatch Logs Insights query is producing the graph you're seeing above, which shows latency percentiles
+        for inbound requests over time.</p>
+
+    <h3>The Query Breakdown</h3>
+    <ul>
+        <li><code>fields @timestamp, request_type, duration_ms</code> - Extracts the timestamp, request type, and
+            duration fields</li>
+        <li><code>filter request_type = 'inbound'</code> - Only analyzes inbound requests</li>
+        <li><code>stats pct(...) by bin(1m)</code> - Calculates three percentile metrics grouped into 1-minute intervals
+        </li>
+    </ul>
+
+    <h3>What the Graph Shows</h3>
+    <p>The three lines represent different percentiles of latency:</p>
+    <ul>
+        <li><strong style="color: #007bff">Blue (p50_latency)</strong> - The median: 50% of requests are faster than
+            this</li>
+        <li><strong style="color: #fd7e14">Orange (p95_latency)</strong> - 95% of requests are faster than this</li>
+        <li><strong style="color: #28a745">Green (p99_latency)</strong> - 99% of requests are faster than this (the
+            slowest 1%)</li>
+    </ul>
+
+    <h3>What Your Data Reveals</h3>
+    <p>Looking at the graph, you can see two significant latency spikes:</p>
+    <ul>
+        <li><strong>Around 09:15</strong> - p99 latency spiked to ~3,170ms (over 3 seconds)</li>
+        <li><strong>Around 09:25</strong> - Another p99 spike to similar levels</li>
+        <li><strong>Around 10:00</strong> - A smaller spike to ~1,400ms</li>
+    </ul>
+
+    <p>Notice that:</p>
+    <ul>
+        <li>The <strong>p50 (blue)</strong> stays near zero throughout, meaning most requests remained fast.</li>
+        <li>Only <strong>p99 (green)</strong> spikes dramatically, indicating these were tail latency issues affecting
+            only the slowest 1% of requests.</li>
+        <li><strong>p95 (orange)</strong> barely moves, suggesting less than 5% of requests were impacted.</li>
+    </ul>
+
+    <p>This pattern typically indicates isolated issues (like occasional database slowness, cache misses, or specific
+        expensive queries) rather than systemic performance degradation.</p>
+
+    <h3>Actions to Take by Percentile</h3>
+    <p>When you see spikes in specific percentiles, here is where you should look:</p>
+    <ul>
+        <li><strong>High p50 (Median):</strong> If your median latency is high, your <em>entire</em> system is slow for
+            everyone.
+            <ul>
+                <li><em>Action:</em> Look for global bottlenecks. Upgrade infrastructure (CPU/RAM), optimize core
+                    business logic, check for missing database indexes, or investigate network latency.</li>
+            </ul>
+        </li>
+        <li><strong>High p90 / p95:</strong> Most users are fine, but a significant chunk is suffering.
+            <ul>
+                <li><em>Action:</em> Investigate specific heavy endpoints or distinct user patterns. Implement caching
+                    (Redis/Memcached) for expensive operations. Check for database locking issues or uneven load
+                    balancing.</li>
+            </ul>
+        </li>
+        <li><strong>High p99 (Tail Latency):</strong> Only a few users are affected, but often severely.
+            <ul>
+                <li><em>Action:</em> Look for "outliers" and edge cases. Common culprits include:
+                    <ul>
+                        <li><strong>Cold starts:</strong> (e.g., Serverless/Lambda functions waking up).</li>
+                        <li><strong>Garbage Collection (GC) pauses:</strong> (especially in Java or Go).</li>
+                        <li><strong>External Timeouts:</strong> A 3rd party API call hanging for a specific request.
+                        </li>
+                        <li><strong>Data Skew:</strong> A specific user with 10,000 items in their cart when most have
+                            5.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>The "Long Tail" of Latency</h3>
+    <p>Another way to visualize this concept is through a distribution histogram. Most web requests are fast (the tall
+        bars on the left), but there is a "long tail" of slower requests stretching to the right.</p>
+
+    <div class="mt-4 mb-4">
+        <img src="/assets/images/latency-distribution.png" alt="Latency Distribution Histogram"
+            class="img-fluid rounded shadow">
+        <p class="text-muted text-center mt-2"><small>Visualization: Latency Distribution & The Long Tail</small></p>
+    </div>
+
+    <p>In the histogram above:</p>
+    <ul>
+        <li><strong>The Peak (p50):</strong> Most requests cluster around the left side, representing the typical, fast
+            experience.</li>
+        <li><strong>The Tail (p90 - p99):</strong> As you move right, the bars get shorter but extend far out. This is
+            the "long tail." Even though these bars are short (fewer requests), they represent users waiting
+            significantly longer (10x or 100x the median time). Monitoring p99 ensures you don't ignore this tail end of
+            user experience.</li>
+    </ul>
+</article>
+    </main>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="tech-stack">
+                        <span class="badge">Go</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">K8s</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
