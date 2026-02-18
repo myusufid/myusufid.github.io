@@ -137,21 +137,51 @@ def build_site():
     template_dir = 'templates'
     output_dir = 'posts'
     
-    # Create output directory
+    # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
+    # Clean up old pagination pages in the root directory
+    for filename in os.listdir('.'):
+        if filename.startswith('page') and filename.endswith('.html'):
+            try:
+                os.remove(filename)
+                print(f"Removed old pagination page: {filename}")
+            except Exception as e:
+                print(f"Error removing {filename}: {e}")
+
     # Build all posts and collect metadata
     posts_metadata = []
-    for filename in os.listdir(content_dir):
+    generated_files = set()
+    
+    for filename in sorted(os.listdir(content_dir)):
         if filename.endswith('.html'):
             content_path = os.path.join(content_dir, filename)
             template_path = os.path.join(template_dir, 'base.html')
-            output_path = os.path.join(output_dir, filename)
             
-            metadata = build_page(content_path, template_path, output_path)
+            # Read content to get metadata (specifically title for slug)
+            with open(content_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            metadata = extract_metadata(content)
+            
+            slug = generate_slug(metadata['title'])
+            output_filename = f"{slug}.html"
+            output_path = os.path.join(output_dir, output_filename)
+            
+            # Build the page
+            build_page(content_path, template_path, output_path)
             posts_metadata.append(metadata)
-            print(f"Built {filename}")
+            generated_files.add(output_filename)
+            print(f"Built {output_filename} (from {filename})")
     
+    # Clean up orphaned files in the output directory (files that were not generated this time)
+    for filename in os.listdir(output_dir):
+        if filename.endswith('.html') and filename not in generated_files:
+            try:
+                os.remove(os.path.join(output_dir, filename))
+                print(f"Removed orphaned post: {filename}")
+            except Exception as e:
+                print(f"Error removing {filename}: {e}")
+
     # Build index page
     build_index(
         posts_metadata,
