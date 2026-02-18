@@ -4,119 +4,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
+    <meta name="description" content="Projects and professional contributions of M Yusuf, Backend Developer.">
     <title>My Works | M Yusuf - Backend Developer</title>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
-    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="./assets/images/favicon_io/site.webmanifest">
+    <link rel="shortcut icon" href="./assets/images/favicon_io/favicon.ico">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
         rel="stylesheet">
-    <link href="../styles.css" rel="stylesheet">
-    <link href="../highlight-theme.css" rel="stylesheet">
-
-   <!-- Add these in the head section -->
+    <link href="./styles.css" rel="stylesheet">
+    
+    <!-- Required for script.js theme switching -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-
 
     <style>
-        .project {
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 12px;
-            background: var(--code-bg-light);
-            border: 1px solid var(--border-light);
-            transition: transform 0.2s;
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
         }
 
-        .dark-theme .project {
+        .bento-item {
+            background: var(--code-bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .dark-theme .bento-item {
             background: var(--code-bg-dark);
             border-color: var(--border-dark);
         }
 
-        .project:hover {
-            transform: translateY(-2px);
+        .bento-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+            color: inherit;
         }
 
-        .project h2 {
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
+        /* Large item spans 2 columns */
+        .bento-item.large {
+            grid-column: span 2;
         }
 
-        .project .role {
-            color: var(--text-secondary-light);
+        /* Tall item spans 2 rows */
+        .bento-item.tall {
+            grid-row: span 2;
+        }
+
+        .bento-tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
         }
 
-        .dark-theme .project .role {
+        .bento-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .bento-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary-light);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .dark-theme .bento-desc {
             color: var(--text-secondary-dark);
         }
 
-        .project .description {
-            margin-bottom: 1.5rem;
-        }
-
-        .project .tech-stack {
+        .bento-tech {
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        .project-preview {
-            width: 100%;
-            height: 200px;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            object-fit: cover;
+        .tech-pill {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            color: var(--text-secondary-light);
             border: 1px solid var(--border-light);
         }
 
-        .dark-theme .project-preview {
+        .dark-theme .tech-pill {
+            background: rgba(255, 255, 255, 0.05);
             border-color: var(--border-dark);
+            color: var(--text-secondary-dark);
         }
 
-        .project-preview {
+        .bento-image {
             width: 100%;
-            height: 120px;
-            border-radius: 8px;
+            height: 180px;
             object-fit: cover;
+            border-radius: 10px;
+            margin-top: 1rem;
             border: 1px solid var(--border-light);
-            transition: transform 0.2s;
         }
 
-        .project-preview:hover {
-            transform: scale(1.05);
-        }
-
-        .dark-theme .project-preview {
+        .dark-theme .bento-image {
             border-color: var(--border-dark);
         }
 
-        .project h2 a {
-            color: var(--text-primary-light);
-            text-decoration: none;
+        .section-header {
+            margin-bottom: 2.5rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1.5rem;
         }
 
-        .dark-theme .project h2 a {
-            color: var(--text-primary-dark);
+        @media (max-width: 992px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .project h2 a:hover {
-            color: var(--accent-color);
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            .bento-item.large {
+                grid-column: span 1;
+            }
         }
     </style>
-
 </head>
 
 <body>
@@ -148,127 +183,92 @@
     </header>
 
     <main class="container py-5">
-        <article class="blog-post">
-            <h1>Projects & Contributions</h1>
-            <br><br>
-
-            <div class="content">
-                <h2 class="mb-4">Professional Experience</h2>
-                <p class="lead">These are projects I've contributed to while working as a full-time engineer.</p>
-                <div class="project-list">
-                    <div class="project">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h2><a href="https://pijar.org" target="_blank" class="text-decoration-none">Pijar
-                                        Career Center</a></h2>
-                                <div class="role">Backend Developer & DevOps</div>
-                                <p class="description">Bursa Kerja Online anak SMK</p>
-                                <div class="tech-stack">
-                                    <span class="badge">Laravel</span>
-                                    <span class="badge">MySQL</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061510533.png"
-                                    data-fancybox="gallery" data-caption="Pijar Career Preview">
-                                    <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061510533.png"
-                                        alt="Projek Preview" class="project-preview">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h2><a href="https://www.madusarifoods.com" target="_blank"
-                                        class="text-decoration-none">Madusarifoods Site</a></h2>
-                                <div class="role">Backend</div>
-                                <p class="description">Company Profile</p>
-                                <div class="tech-stack">
-                                    <span class="badge">Laravel</span>
-                                    <span class="badge">MySQL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h2><a href="https://kimbo.id/" target="_blank" class="text-decoration-none">Kimbo
-                                        Site</a></h2>
-                                <div class="role">Backend</div>
-                                <p class="description">Company Profile</p>
-                                <div class="tech-stack">
-                                    <span class="badge">Laravel</span>
-                                    <span class="badge">MySQL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <h2 class="mb-4 mt-5">Freelance Projects</h2>
-                <div class="project-list">
-                    <div class="project">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h2><a href="https://mubaonline.com" target="_blank"
-                                        class="text-decoration-none">Mubaonline.com</a></h2>
-                                <div class="role">Maintainer</div>
-                                <p class="description">News Site Musi Banyuasin</p>
-                                <div class="tech-stack">
-                                    <span class="badge">CodeIgniter</span>
-                                    <span class="badge">MySQL</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061435146.png"
-                                    data-fancybox="gallery" data-caption="Mubaonline.com Preview">
-                                    <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061435146.png"
-                                        alt="Mubaonline.com Preview" class="project-preview">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h2><a href="https://sibesigat.com" target="_blank"
-                                        class="text-decoration-none">Sibesigat</a></h2>
-                                <div class="role">Maintainer</div>
-                                <p class="description">Situs Pendaftaran Seni</p>
-                                <div class="tech-stack">
-                                    <span class="badge">Laravel</span>
-                                    <span class="badge">MySQL</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061702801.png"
-                                    data-fancybox="gallery" data-caption="Sibesigat Preview">
-                                    <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061702801.png"
-                                        alt="Projek Preview" class="project-preview">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
+        <div class="row mb-5">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">My Works</h1>
+                <p class="lead text-secondary">A collection of professional projects, freelance work, and technical contributions.</p>
             </div>
-        </article>
+        </div>
 
+        <div class="section-header">
+            <h2 class="h3 fw-bold mb-1">Professional Experience</h2>
+            <p class="text-secondary">Full-time engineering contributions</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- Pijar Career -->
+            <a href="https://pijar.org" target="_blank" class="bento-item large">
+                <div class="bento-tag">Backend & DevOps</div>
+                <h3 class="bento-title">Pijar Career Center</h3>
+                <p class="bento-desc">Bursa Kerja Online anak SMK. Orchestrated backend services and deployment pipelines.</p>
+                <div class="bento-tech">
+                    <span class="tech-pill">Laravel</span>
+                    <span class="tech-pill">MySQL</span>
+                    <span class="tech-pill">AWS</span>
+                </div>
+                <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061510533.png" alt="Pijar" class="bento-image">
+            </a>
+
+            <!-- Madusarifoods -->
+            <a href="https://www.madusarifoods.com" target="_blank" class="bento-item">
+                <div class="bento-tag">Backend</div>
+                <h3 class="bento-title">Madusarifoods</h3>
+                <p class="bento-desc">Corporate web platform for food industry leader.</p>
+                <div class="bento-tech">
+                    <span class="tech-pill">Laravel</span>
+                    <span class="tech-pill">Architecture</span>
+                </div>
+            </a>
+
+            <!-- Kimbo -->
+            <a href="https://kimbo.id/" target="_blank" class="bento-item">
+                <div class="bento-tag">Backend</div>
+                <h3 class="bento-title">Kimbo Site</h3>
+                <p class="bento-desc">Scalable company profile for Kimbo brand.</p>
+                <div class="bento-tech">
+                    <span class="tech-pill">Laravel</span>
+                    <span class="tech-pill">Optimization</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-header">
+            <h2 class="h3 fw-bold mb-1">Freelance & Maintenance</h2>
+            <p class="text-secondary">Independent projects and ongoing systems support</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- Mubaonline -->
+            <a href="https://mubaonline.com" target="_blank" class="bento-item tall">
+                <div class="bento-tag">Fullstack Maintainer</div>
+                <h3 class="bento-title">Mubaonline.com</h3>
+                <p class="bento-desc">News platform for Musi Banyuasin. Managed high-traffic performance and stability.</p>
+                <div class="bento-tech">
+                    <span class="tech-pill">CodeIgniter</span>
+                    <span class="tech-pill">Performance</span>
+                </div>
+                <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061435146.png" alt="Muba" class="bento-image" style="height: 350px;">
+            </a>
+
+            <!-- Sibesigat -->
+            <a href="https://sibesigat.com" target="_blank" class="bento-item large">
+                <div class="bento-tag">Backend Lead</div>
+                <h3 class="bento-title">Sibesigat</h3>
+                <p class="bento-desc">Arts registration system. Developed secure data handling and user management.</p>
+                <div class="bento-tech">
+                    <span class="tech-pill">Laravel</span>
+                    <span class="tech-pill">Security</span>
+                </div>
+                <img src="https://techbook-yusuf.s3.ap-southeast-1.amazonaws.com/uPic/image-20200420061702801.png" alt="Sibesigat" class="bento-image">
+            </a>
+        </div>
     </main>
 
-    <footer class="footer py-4">
+    <footer class="footer py-5 mt-5 border-top">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <div class="tech-stack">
+                    <div class="d-flex gap-3 tech-stack">
                         <span class="badge">Go</span>
                         <span class="badge">Python</span>
                         <span class="badge">Docker</span>
@@ -285,7 +285,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../script.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
