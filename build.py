@@ -30,6 +30,43 @@ def extract_metadata(content):
 def generate_slug(title):
     return title.lower().replace(' ', '-').replace(':', '').replace(',', '').replace('(', '').replace(')', '').replace('*', '')
 
+import html
+
+def escape_code_blocks(content):
+    # This regex matches <pre><code> blocks, capturing attributes and content
+    # Group 1: <pre ...>
+    # Group 2: <code ...> (attributes)
+    # Group 3: Content inside code
+    # Group 4: </code></pre>
+    pattern = r'(<pre[^>]*>\s*)(<code[^>]*>)(.*?)(</code>\s*</pre>)'
+    
+    def replace_code(match):
+        pre_tag = match.group(1)
+        code_tag = match.group(2)
+        code_content = match.group(3)
+        end_tags = match.group(4)
+        
+        # Convert lang="rust" to class="language-rust" if present
+        if 'lang=' in code_tag and 'class=' not in code_tag:
+            code_tag = re.sub(r'lang=["\']([^"\']+)["\']', r'class="language-\1"', code_tag)
+        elif 'lang=' in code_tag and 'class=' in code_tag:
+             # parsing needed if both exist, but simple replacement might be enough
+             lang_match = re.search(r'lang=["\']([^"\']+)["\']', code_tag)
+             if lang_match:
+                 lang = lang_match.group(1)
+                 # Append to existing class
+                 # Use lambda to access captured group safely in replacement if needed, but \1 works
+                 code_tag = re.sub(r'class=["\']([^"\']+)["\']', f'class="language-{lang} \\1"', code_tag)
+                 # Remove lang attribute
+                 code_tag = re.sub(r'lang=["\']([^"\']+)["\']', '', code_tag)
+
+        # Escape the inner content
+        escaped_content = html.escape(code_content)
+        
+        return f'{pre_tag}{code_tag}{escaped_content}{end_tags}'
+    
+    return re.sub(pattern, replace_code, content, flags=re.DOTALL | re.IGNORECASE)
+
 def build_page(content_file, template_file, output_file):
     # Read content and extract metadata
     with open(content_file, 'r', encoding='utf-8') as f:
@@ -48,14 +85,41 @@ def build_page(content_file, template_file, output_file):
     
     # Remove metadata comment from content
     content = re.sub(r'<!--\s*(.*?)\s*-->', '', content, flags=re.DOTALL)
-    final_html = final_html.replace('<!-- CONTENT -->', content.strip())
+    
+    # Strip redundant article tag, h1, and meta div that might be in the content file
+    content = re.sub(r'<article[^>]*>', '', content)
+    content = re.sub(r'</article>', '', content)
+    content = re.sub(r'<h1>.*?</h1>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<div class="meta[^>]*>.*?</div>', '', content, flags=re.DOTALL)
+    
+    # Create a nice header for the post
+    post_header = f'''
+    <header class="mb-8 space-y-4">
+        <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">{metadata['title']}</h1>
+        <div class="flex items-center space-x-2 text-sm text-muted-foreground font-mono">
+            <span>Published on {metadata['date']}</span>
+            <span>•</span>
+            <span>{metadata['author']}</span>
+        </div>
+    </header>
+    '''
+    
+    # Escape HTML inside code blocks
+    content = escape_code_blocks(content.strip())
+    
+    # Combine header and content
+    final_content = post_header + content
+    
+    final_html = final_html.replace('<!-- CONTENT -->', final_content)
 
     # Replace image placeholder
     if metadata.get('image'):
         featured_image_html = f'''
-        <div class="featured-image-container mb-5">
-            <img src="{metadata['image']}" alt="{metadata['title']}" class="featured-image">
-            <div class="image-credit">Image source: {metadata.get('image_credit', 'Personal collection')}</div>
+        <div class="mb-10 overflow-hidden rounded-xl border bg-muted">
+            <img src="{metadata['image']}" alt="{metadata['title']}" class="aspect-video w-full object-cover transition-all hover:scale-105">
+            <div class="p-2 text-center text-xs text-muted-foreground italic border-t bg-background">
+                Image source: {metadata.get('image_credit', 'Personal collection')}
+            </div>
         </div>
         '''
         final_html = final_html.replace('<!-- FEATURED_IMAGE -->', featured_image_html)
@@ -85,42 +149,43 @@ def build_index(posts_metadata, template_file, output_file, posts_per_page=40):
         
         posts_html = []
         for meta in current_posts:
+            tags_html = ' '.join(f'<span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#{tag.strip()}</span>' for tag in meta['tags'].split(','))
+            
             posts_html.append(f'''
-                <article class="post">
-                    <div class="meta">{meta['date']}</div>
-                    <h3>
-                        <a href="posts/{generate_slug(meta['title'])}.html">{meta['title']}</a>
-                    </h3>
-                    <p>{meta['description']}</p>
-                    <div class="tags">
-                        {' '.join(f'<span class="badge bg-light text-dark">#{tag.strip()}</span>' for tag in meta['tags'].split(','))}
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">{meta['date']}</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/{generate_slug(meta['title'])}.html" class="hover:underline">{meta['title']}</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">{meta['description']}</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        {tags_html}
                     </div>
                 </article>
             ''')
         
-        # Add pagination HTML
+        # Add pagination HTML (shadcn style)
         pagination_html = '''
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
+        <nav class="flex items-center justify-center space-x-2 py-8" aria-label="Pagination">
         '''
         
         for i in range(total_pages):
-            active_class = 'active' if i == page else ''
+            is_active = i == page
+            active_classes = 'bg-primary text-primary-foreground hover:bg-primary/90' if is_active else 'border border-input bg-background hover:bg-accent hover:text-accent-foreground'
+            
             pagination_html += f'''
-                <li class="page-item {active_class}">
-                    <a class="page-link" href="{'index.html' if i == 0 else f'page{i+1}.html'}">{i+1}</a>
-                </li>
+                <a href="{'index.html' if i == 0 else f'page{i+1}.html'}" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring {active_classes}">
+                    {i+1}
+                </a>
             '''
         
-        pagination_html += '''
-            </ul>
-        </nav>
-        '''
+        pagination_html += '</nav>'
         
         with open(template_file, 'r', encoding='utf-8') as f:
             template = f.read()
         
-        index_html = template.replace('<!-- CONTENT -->', '\n'.join(posts_html) + pagination_html)
+        index_html = template.replace('<!-- CONTENT -->', '<div class="space-y-4">' + '\n'.join(posts_html) + '</div>' + pagination_html)
         index_html = index_html.replace('<!-- TITLE -->', 'Beranda')
         
         # Generate output filename
@@ -225,33 +290,29 @@ def build_tags_page(posts_metadata, template_file, output_file):
                 tags_dict[tag] = []
             tags_dict[tag].append(post)
     
-    # Calculate weights (1-9 scale)
-    max_count = max(len(posts) for posts in tags_dict.values())
-    weights = {tag: max(1, min(9, round(len(posts) * 9 / max_count))) 
-              for tag, posts in tags_dict.items()}
-    
-    # Generate stats section
+    # Generate stats section (shadcn card style)
     stats_html = f'''
-        <div class="tag-stats mb-5">
-            <div class="stat-item">
-                <span class="stat-value">{total_posts}</span>
-                <span class="stat-label">Total Posts</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            <div class="rounded-xl border bg-card text-card-foreground shadow px-6 py-4">
+                <div class="text-sm font-medium text-muted-foreground">Total Posts</div>
+                <div class="text-2xl font-bold">{total_posts}</div>
             </div>
-            <div class="stat-item">
-                <span class="stat-value">{len(tags_dict)}</span>
-                <span class="stat-label">Total Tags</span>
+            <div class="rounded-xl border bg-card text-card-foreground shadow px-6 py-4">
+                <div class="text-sm font-medium text-muted-foreground">Total Tags</div>
+                <div class="text-2xl font-bold">{len(tags_dict)}</div>
             </div>
         </div>
     '''
     
     # Generate tag cloud HTML
-    tag_cloud_html = '<ul class="cloud" role="navigation" aria-label="Tags cloud">'
+    tag_cloud_html = '<div class="flex flex-wrap gap-2 mb-12">'
     for tag, posts in sorted(tags_dict.items()):
-        weight = weights[tag]
         tag_cloud_html += f'''
-            <li><a href="#tag-{tag}" data-weight="{weight}">#{tag}</a></li>
+            <a href="#tag-{tag}" class="inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors">
+                #{tag} <span class="ml-1 text-muted-foreground text-xs">{len(posts)}</span>
+            </a>
         '''
-    tag_cloud_html += '</ul>'
+    tag_cloud_html += '</div>'
     
     # Generate post sections by tag
     tags_html = []
@@ -259,17 +320,20 @@ def build_tags_page(posts_metadata, template_file, output_file):
         posts_html = []
         for post in sorted(posts, key=lambda x: x['date'], reverse=True):
             posts_html.append(f'''
-                <article class="post">
-                    <div class="meta">{post['date']}</div>
-                    <h3><a href="posts/{generate_slug(post['title'])}.html">{post['title']}</a></h3>
-                    <p>{post['description']}</p>
+                <article class="group border-l-2 border-muted pl-4 py-2 hover:border-primary transition-colors mb-4">
+                    <div class="text-xs font-mono text-muted-foreground">{post['date']}</div>
+                    <h3 class="text-lg font-semibold"><a href="posts/{generate_slug(post['title'])}.html" class="hover:underline">{post['title']}</a></h3>
                 </article>
             ''')
         
         tags_html.append(f'''
-            <section id="tag-{tag}" class="tag-section mb-5">
-                <h2 class="mb-4">#{tag} <span class="post-count">({len(posts)} posts)</span></h2>
-                {''.join(posts_html)}
+            <section id="tag-{tag}" class="mb-12 scroll-mt-20">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <span class="text-primary">#</span>{tag}
+                </h2>
+                <div class="space-y-2">
+                    {''.join(posts_html)}
+                </div>
             </section>
         ''')
     

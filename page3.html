@@ -1,518 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>Beranda | M Yusuf - Backend Developer</title>
+    <title>Beranda | M Yusuf</title>
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
-    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+    <!-- SEO & Favicon (Relative for build script) -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <meta name="author" content="M Yusuf">
-    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta property="og:description" content="<!-- DESCRIPTION -->">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://myusufid.github.io">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="<!-- DESCRIPTION -->">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="../styles.css" rel="stylesheet">
-    <link href="../highlight-theme.css" rel="stylesheet">
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
 
-   <!-- Add these in the head section -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Add common languages for backend devs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
     <script src="https://unpkg.com/lunr/lunr.js"></script>
-
-
 </head>
-<body>
-    <header class="py-4">
-        <div class="container">
-            <div class="d-flex flex-column flex-md-row align-items-center">
-                <div class="brand me-3">
-                    <a href="/" class="text-decoration-none">
-                        <h1 class="h4 mb-0">M YUSUF</h1>
-                        <p class="subtitle mb-0">Backend Developer</p>
-                    </a>
-                </div>
-                <nav class="ms-md-auto mt-3 mt-md-0">
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
-                        <div id="searchResults" class="search-results" aria-live="polite"></div>
-                    </div>
-                    <ul class="nav">
-                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
-                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
-                        <li class="nav-item">
-                            <button id="themeToggle" class="nav-link btn">
-                                <i class="bi bi-sun-fill light-icon"></i>
-                                <i class="bi bi-moon-fill dark-icon"></i>
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
             </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <main class="container py-5">
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
         <!-- FEATURED_IMAGE -->
+        <article class="prose dark:prose-invert max-w-none">
+            <div class="space-y-4">
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-04-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/belajar-sorting-string-and-write-to-file-with-golang.html" class="hover:underline">Belajar Sorting String and Write to File with Golang</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Tutorial sorting string dari command line arguments dan menulis hasilnya ke file menggunakan Golang</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#sorting</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#file</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#programming</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tutorial</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-02-18</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/implementing-an-lru-cache-with-redis.html" class="hover:underline">Implementing an LRU Cache with Redis</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">How to implement Least Recently Used (LRU) caching policy with Redis</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#redis</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cache</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#lru</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#performance</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-01-20</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/jalanin-mongodb-di-local-menggunakan-docker.html" class="hover:underline">Jalanin MongoDB di local menggunakan Docker</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Cara mudah menjalankan MongoDB di local environment dengan Docker</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mongodb</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-19</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/development-process-of-product.html" class="hover:underline">Development Process of Product</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding product development workflow and engineering team scaling through documentation</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#product</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#engineering</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#documentation</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-19</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/distributed-monolith-vs-true-microservices.html" class="hover:underline">Distributed Monolith vs True Microservices</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the difference between distributed monolith and true microservices architecture</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#microservices</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#architecture</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#distributed-systems</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#domain-driven-design</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-19</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-fix-504-gateway-timeout-using-nginx.html" class="hover:underline">How to Fix 504 Gateway Timeout using Nginx</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to resolve 504 Gateway Timeout errors in Nginx with FastCGI and Proxy configurations</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#nginx</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#server</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#timeout</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php-fpm</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-19</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/run-mysql-docker-m1-intel.html" class="hover:underline">Run MySQL Docker M1 Intel</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to run MySQL container on Docker for both M1 and Intel processors</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mysql</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#m1</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tableplus</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/ip-0-0-0-0.html" class="hover:underline">IP 0-0-0-0</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the wildcard IP address 0.0.0.0 and its uses</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ip</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#server</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tips</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/users-linux.html" class="hover:underline">Users Linux</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Managing Linux users and groups - commands and best practices</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#users</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#system</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#administration</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-10</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/laradock-guzzle-issue-or-curl-issue-connection-refused.html" class="hover:underline">Laradock Guzzle Issue or Curl Issue Connection Refused</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">How to fix connection refused errors in Laradock when using Guzzle or Curl</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laradock</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#nginx</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-04</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/belajar-golang.html" class="hover:underline">Belajar Golang</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Collection of learning resources for Go programming language</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#programming</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#learning</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tutorial</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-04</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/cara-jadi-devops.html" class="hover:underline">Cara jadi DevOps</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Essential skills and requirements to become a DevOps Engineer</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#security</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-12-03</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/belajar-vagrant.html" class="hover:underline">Belajar Vagrant</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Getting started with Vagrant for virtual development environments</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#vagrant</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#virtualization</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ubuntu</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-27</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/centralized-log-menggunakan-elk-stack.html" class="hover:underline">Centralized Log Menggunakan ELK Stack</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Complete guide to setup centralized logging using Elasticsearch, Logstash, and Kibana (ELK Stack)</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#elk</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#elasticsearch</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#logstash</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#kibana</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-27</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/checking-aplikasi-mana-yang-sedang-menggunakan-port.html" class="hover:underline">Checking Aplikasi Mana yang Sedang Menggunakan Port</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">How to check which applications are using specific ports on your system</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#terminal</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ports</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-27</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/export-mysql-rds.html" class="hover:underline">Export MYSQL RDS</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide for exporting MySQL databases using mysqldump including RDS AWS backups</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mysql</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rds</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#aws</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#backup</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-27</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/what-is-websocket.html" class="hover:underline">What is Websocket</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding WebSocket technology and its real-time applications</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#websocket</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#realtime</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#http</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-24</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/mengenal-chunk-dan-cursor-pada-laravel.html" class="hover:underline">Mengenal Chunk dan Cursor pada Laravel</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding Laravel's chunk and cursor methods for handling large datasets efficiently</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#performance</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#optimization</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-22</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/over-fetching-or-under-fetching?.html" class="hover:underline">Over-Fetching or Under-fetching?</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the concepts of over-fetching and under-fetching in API design</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#api</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#performance</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#graphql</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rest</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-22</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/running-gitlab-on-local-with-gitlab-runner.html" class="hover:underline">Running Gitlab on Local with Gitlab Runner</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to setup and run Gitlab Runner locally with Docker integration</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#gitlab</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ci-cd</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#runner</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-21</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/docker-handbook.html" class="hover:underline">Docker Handbook</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Essential Docker guide and resources for containerizing applications</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#containers</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#javascript</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-18</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/backend-development-curriculum.html" class="hover:underline">Backend Development Curriculum</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Comprehensive guide to backend development topics including Golang, databases, APIs, DevOps and security</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#backend</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#security</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-18</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/migrasi-folder-antar-komputer.html" class="hover:underline">Migrasi Folder Antar Komputer</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Tools for transferring folders between computers using AirDrop and Syncthing</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#transfer</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#airdrop</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#syncthing</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#file-sharing</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/bulk-resize-images-on-terminal-mac.html" class="hover:underline">Bulk Resize Images on Terminal Mac</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Quick guide to batch resize images using ImageMagick on MacOS terminal</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mac</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#terminal</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#imagemagick</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#images</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/cheat-sheet-yii2-framework.html" class="hover:underline">Cheat Sheet YII2 Framework</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Quick reference guide for common YII2 Framework commands and configurations</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#yii2</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#framework</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cheatsheet</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/increase-speed-mouse-tracking-magic-mouse-2.html" class="hover:underline">Increase Speed Mouse Tracking Magic Mouse 2</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">How to adjust tracking speed for Apple Magic Mouse 2 using terminal commands</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mac</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mouse</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#terminal</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#settings</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/install-adonisjs-nodejs-framework.html" class="hover:underline">Install AdonisJS NodeJS Framework</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Step by step guide to install and run AdonisJS - A Laravel-style NodeJS framework</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#nodejs</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#adonisjs</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#framework</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#javascript</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/laradock-mkcert-setup.html" class="hover:underline">Laradock mkcert Setup</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to setup SSL certificates with mkcert in Laradock environment</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laradock</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ssl</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mkcert</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-17</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/php-versioning-di-macbook.html" class="hover:underline">PHP Versioning di Macbook</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to manage multiple PHP versions on MacOS using ASDF and PHPBrew</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mac</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#asdf</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#phpbrew</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-14</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/install-envoy-laravel.html" class="hover:underline">Install Envoy Laravel</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Step by step guide to install Laravel Envoy globally on Ubuntu and MacBook</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#envoy</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ubuntu</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#macbook</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-11-04</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/polymorph-type-int.html" class="hover:underline">Polymorph Type Int</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Learn why and how to use integer types for polymorphic relationships in Laravel for better database performance</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#performance</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#polymorphic</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-10-30</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/database-tips-email-unique-softdeletes.html" class="hover:underline">Database Tips: Email Unique Softdeletes</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Solution for handling unique email constraints with soft deletes using partial index</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mysql</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tips</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#softdeletes</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-10-30</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/using-blade-formatter.html" class="hover:underline">Using Blade Formatter</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#blade</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#formatting</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2021-10-28</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/import-database-mysql-laradock.html" class="hover:underline">Import Database MYSQL Laradock</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Learn how to import MySQL databases in Laradock environment using Docker commands</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#mysql</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laradock</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span>
+                    </div>
+                </article>
+            </div>
+        <nav class="flex items-center justify-center space-x-2 py-8" aria-label="Pagination">
         
-                <article class="post">
-                    <div class="meta">2022-02-18</div>
-                    <h3>
-                        <a href="posts/implementing-an-lru-cache-with-redis.html">Implementing an LRU Cache with Redis</a>
-                    </h3>
-                    <p>How to implement Least Recently Used (LRU) caching policy with Redis</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#redis</span> <span class="badge bg-light text-dark">#cache</span> <span class="badge bg-light text-dark">#lru</span> <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#performance</span>
-                    </div>
-                </article>
+                <a href="index.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+                    1
+                </a>
             
-
-                <article class="post">
-                    <div class="meta">2022-01-20</div>
-                    <h3>
-                        <a href="posts/jalanin-mongodb-di-local-menggunakan-docker.html">Jalanin MongoDB di local menggunakan Docker</a>
-                    </h3>
-                    <p>Cara mudah menjalankan MongoDB di local environment dengan Docker</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mongodb</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
+                <a href="page2.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+                    2
+                </a>
             
-
-                <article class="post">
-                    <div class="meta">2021-12-19</div>
-                    <h3>
-                        <a href="posts/development-process-of-product.html">Development Process of Product</a>
-                    </h3>
-                    <p>Understanding product development workflow and engineering team scaling through documentation</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#development</span> <span class="badge bg-light text-dark">#product</span> <span class="badge bg-light text-dark">#engineering</span> <span class="badge bg-light text-dark">#documentation</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-19</div>
-                    <h3>
-                        <a href="posts/distributed-monolith-vs-true-microservices.html">Distributed Monolith vs True Microservices</a>
-                    </h3>
-                    <p>Understanding the difference between distributed monolith and true microservices architecture</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#microservices</span> <span class="badge bg-light text-dark">#architecture</span> <span class="badge bg-light text-dark">#distributed-systems</span> <span class="badge bg-light text-dark">#domain-driven-design</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-19</div>
-                    <h3>
-                        <a href="posts/how-to-fix-504-gateway-timeout-using-nginx.html">How to Fix 504 Gateway Timeout using Nginx</a>
-                    </h3>
-                    <p>Guide to resolve 504 Gateway Timeout errors in Nginx with FastCGI and Proxy configurations</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#nginx</span> <span class="badge bg-light text-dark">#server</span> <span class="badge bg-light text-dark">#timeout</span> <span class="badge bg-light text-dark">#php-fpm</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-19</div>
-                    <h3>
-                        <a href="posts/run-mysql-docker-m1-intel.html">Run MySQL Docker M1 Intel</a>
-                    </h3>
-                    <p>Guide to run MySQL container on Docker for both M1 and Intel processors</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#m1</span> <span class="badge bg-light text-dark">#tableplus</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-11</div>
-                    <h3>
-                        <a href="posts/ip-0-0-0-0.html">IP 0-0-0-0</a>
-                    </h3>
-                    <p>Understanding the wildcard IP address 0.0.0.0 and its uses</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#networking</span> <span class="badge bg-light text-dark">#ip</span> <span class="badge bg-light text-dark">#server</span> <span class="badge bg-light text-dark">#tips</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-11</div>
-                    <h3>
-                        <a href="posts/users-linux.html">Users Linux</a>
-                    </h3>
-                    <p>Managing Linux users and groups - commands and best practices</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#users</span> <span class="badge bg-light text-dark">#system</span> <span class="badge bg-light text-dark">#administration</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-10</div>
-                    <h3>
-                        <a href="posts/laradock-guzzle-issue-or-curl-issue-connection-refused.html">Laradock Guzzle Issue or Curl Issue Connection Refused</a>
-                    </h3>
-                    <p>How to fix connection refused errors in Laradock when using Guzzle or Curl</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#nginx</span> <span class="badge bg-light text-dark">#networking</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-04</div>
-                    <h3>
-                        <a href="posts/belajar-golang.html">Belajar Golang</a>
-                    </h3>
-                    <p>Collection of learning resources for Go programming language</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#programming</span> <span class="badge bg-light text-dark">#learning</span> <span class="badge bg-light text-dark">#tutorial</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-04</div>
-                    <h3>
-                        <a href="posts/cara-jadi-devops.html">Cara jadi DevOps</a>
-                    </h3>
-                    <p>Essential skills and requirements to become a DevOps Engineer</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#networking</span> <span class="badge bg-light text-dark">#security</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-12-03</div>
-                    <h3>
-                        <a href="posts/belajar-vagrant.html">Belajar Vagrant</a>
-                    </h3>
-                    <p>Getting started with Vagrant for virtual development environments</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#vagrant</span> <span class="badge bg-light text-dark">#virtualization</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#ubuntu</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-27</div>
-                    <h3>
-                        <a href="posts/centralized-log-menggunakan-elk-stack.html">Centralized Log Menggunakan ELK Stack</a>
-                    </h3>
-                    <p>Complete guide to setup centralized logging using Elasticsearch, Logstash, and Kibana (ELK Stack)</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#elk</span> <span class="badge bg-light text-dark">#elasticsearch</span> <span class="badge bg-light text-dark">#logstash</span> <span class="badge bg-light text-dark">#kibana</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-27</div>
-                    <h3>
-                        <a href="posts/checking-aplikasi-mana-yang-sedang-menggunakan-port.html">Checking Aplikasi Mana yang Sedang Menggunakan Port</a>
-                    </h3>
-                    <p>How to check which applications are using specific ports on your system</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#terminal</span> <span class="badge bg-light text-dark">#ports</span> <span class="badge bg-light text-dark">#networking</span> <span class="badge bg-light text-dark">#linux</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-27</div>
-                    <h3>
-                        <a href="posts/export-mysql-rds.html">Export MYSQL RDS</a>
-                    </h3>
-                    <p>Guide for exporting MySQL databases using mysqldump including RDS AWS backups</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#rds</span> <span class="badge bg-light text-dark">#aws</span> <span class="badge bg-light text-dark">#backup</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-27</div>
-                    <h3>
-                        <a href="posts/what-is-websocket.html">What is Websocket</a>
-                    </h3>
-                    <p>Understanding WebSocket technology and its real-time applications</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#websocket</span> <span class="badge bg-light text-dark">#realtime</span> <span class="badge bg-light text-dark">#networking</span> <span class="badge bg-light text-dark">#http</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-24</div>
-                    <h3>
-                        <a href="posts/mengenal-chunk-dan-cursor-pada-laravel.html">Mengenal Chunk dan Cursor pada Laravel</a>
-                    </h3>
-                    <p>Understanding Laravel's chunk and cursor methods for handling large datasets efficiently</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#performance</span> <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#optimization</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-22</div>
-                    <h3>
-                        <a href="posts/over-fetching-or-under-fetching?.html">Over-Fetching or Under-fetching?</a>
-                    </h3>
-                    <p>Understanding the concepts of over-fetching and under-fetching in API design</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#api</span> <span class="badge bg-light text-dark">#performance</span> <span class="badge bg-light text-dark">#graphql</span> <span class="badge bg-light text-dark">#rest</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-22</div>
-                    <h3>
-                        <a href="posts/running-gitlab-on-local-with-gitlab-runner.html">Running Gitlab on Local with Gitlab Runner</a>
-                    </h3>
-                    <p>Guide to setup and run Gitlab Runner locally with Docker integration</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#gitlab</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#ci-cd</span> <span class="badge bg-light text-dark">#runner</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-21</div>
-                    <h3>
-                        <a href="posts/docker-handbook.html">Docker Handbook</a>
-                    </h3>
-                    <p>Essential Docker guide and resources for containerizing applications</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#containers</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#javascript</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-18</div>
-                    <h3>
-                        <a href="posts/backend-development-curriculum.html">Backend Development Curriculum</a>
-                    </h3>
-                    <p>Comprehensive guide to backend development topics including Golang, databases, APIs, DevOps and security</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#backend</span> <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#security</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-18</div>
-                    <h3>
-                        <a href="posts/migrasi-folder-antar-komputer.html">Migrasi Folder Antar Komputer</a>
-                    </h3>
-                    <p>Tools for transferring folders between computers using AirDrop and Syncthing</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#transfer</span> <span class="badge bg-light text-dark">#airdrop</span> <span class="badge bg-light text-dark">#syncthing</span> <span class="badge bg-light text-dark">#file-sharing</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/bulk-resize-images-on-terminal-mac.html">Bulk Resize Images on Terminal Mac</a>
-                    </h3>
-                    <p>Quick guide to batch resize images using ImageMagick on MacOS terminal</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mac</span> <span class="badge bg-light text-dark">#terminal</span> <span class="badge bg-light text-dark">#imagemagick</span> <span class="badge bg-light text-dark">#images</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/cheat-sheet-yii2-framework.html">Cheat Sheet YII2 Framework</a>
-                    </h3>
-                    <p>Quick reference guide for common YII2 Framework commands and configurations</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#yii2</span> <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#framework</span> <span class="badge bg-light text-dark">#cheatsheet</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/increase-speed-mouse-tracking-magic-mouse-2.html">Increase Speed Mouse Tracking Magic Mouse 2</a>
-                    </h3>
-                    <p>How to adjust tracking speed for Apple Magic Mouse 2 using terminal commands</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mac</span> <span class="badge bg-light text-dark">#mouse</span> <span class="badge bg-light text-dark">#terminal</span> <span class="badge bg-light text-dark">#settings</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/install-adonisjs-nodejs-framework.html">Install AdonisJS NodeJS Framework</a>
-                    </h3>
-                    <p>Step by step guide to install and run AdonisJS - A Laravel-style NodeJS framework</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#nodejs</span> <span class="badge bg-light text-dark">#adonisjs</span> <span class="badge bg-light text-dark">#framework</span> <span class="badge bg-light text-dark">#javascript</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/laradock-mkcert-setup.html">Laradock mkcert Setup</a>
-                    </h3>
-                    <p>Guide to setup SSL certificates with mkcert in Laradock environment</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#ssl</span> <span class="badge bg-light text-dark">#mkcert</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-17</div>
-                    <h3>
-                        <a href="posts/php-versioning-di-macbook.html">PHP Versioning di Macbook</a>
-                    </h3>
-                    <p>Guide to manage multiple PHP versions on MacOS using ASDF and PHPBrew</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#mac</span> <span class="badge bg-light text-dark">#asdf</span> <span class="badge bg-light text-dark">#phpbrew</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-14</div>
-                    <h3>
-                        <a href="posts/install-envoy-laravel.html">Install Envoy Laravel</a>
-                    </h3>
-                    <p>Step by step guide to install Laravel Envoy globally on Ubuntu and MacBook</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#envoy</span> <span class="badge bg-light text-dark">#ubuntu</span> <span class="badge bg-light text-dark">#macbook</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-11-04</div>
-                    <h3>
-                        <a href="posts/polymorph-type-int.html">Polymorph Type Int</a>
-                    </h3>
-                    <p>Learn why and how to use integer types for polymorphic relationships in Laravel for better database performance</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#performance</span> <span class="badge bg-light text-dark">#polymorphic</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-10-30</div>
-                    <h3>
-                        <a href="posts/database-tips-email-unique-softdeletes.html">Database Tips: Email Unique Softdeletes</a>
-                    </h3>
-                    <p>Solution for handling unique email constraints with soft deletes using partial index</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#tips</span> <span class="badge bg-light text-dark">#softdeletes</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-10-30</div>
-                    <h3>
-                        <a href="posts/using-blade-formatter.html">Using Blade Formatter</a>
-                    </h3>
-                    <p>Learn how to maintain consistent code style in Laravel Blade templates using blade-formatter</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#blade</span> <span class="badge bg-light text-dark">#formatting</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#php</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2021-10-28</div>
-                    <h3>
-                        <a href="posts/import-database-mysql-laradock.html">Import Database MYSQL Laradock</a>
-                    </h3>
-                    <p>Learn how to import MySQL databases in Laradock environment using Docker commands</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#mysql</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#laradock</span> <span class="badge bg-light text-dark">#database</span>
-                    </div>
-                </article>
-            
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
-        
-                <li class="page-item ">
-                    <a class="page-link" href="index.html">1</a>
-                </li>
-            
-                <li class="page-item ">
-                    <a class="page-link" href="page2.html">2</a>
-                </li>
-            
-                <li class="page-item active">
-                    <a class="page-link" href="page3.html">3</a>
-                </li>
-            
-            </ul>
-        </nav>
-        
+                <a href="page3.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90">
+                    3
+                </a>
+            </nav>
+        </article>
     </main>
 
-    <footer class="footer py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="tech-stack">
-                        <span class="badge">Go</span>
-                        <span class="badge">Python</span>
-                        <span class="badge">Docker</span>
-                        <span class="badge">K8s</span>
-                    </div>
-                </div>
-                <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
-                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
-                </div>
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../script.js"></script>
+    <script src="/script.js"></script>
 </body>
+
 </html>

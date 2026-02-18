@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploying Scalable Django APIs on AWS ECS Fargate: A Complete Guide | M Yusuf</title>
+
+    <!-- SEO & Favicon (Relative for build script) -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Add common languages for backend devs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
+        
+        <div class="mb-10 overflow-hidden rounded-xl border bg-muted">
+            <img src="/assets/images/django-aws-ecs-deploy.png" alt="Deploying Scalable Django APIs on AWS ECS Fargate: A Complete Guide" class="aspect-video w-full object-cover transition-all hover:scale-105">
+            <div class="p-2 text-center text-xs text-muted-foreground italic border-t bg-background">
+                Image source: Generated by Antigravity
+            </div>
+        </div>
+        
+        <article class="prose dark:prose-invert max-w-none">
+            <article class="blog-post">
+    <h1>Deploying Scalable Django APIs on AWS ECS Fargate: A Complete Guide</h1>
+    <div class="meta mb-4">2026-02-18</div>
+
+    <img src="/assets/images/django-aws-ecs-deploy.png" alt="Django AWS ECS Architecture"
+        class="img-fluid mb-6 rounded-lg shadow-md w-full object-cover">
+
+    <p class="lead text-xl text-muted-foreground mb-6">Running <code>python manage.py runserver</code> is great for
+        development, but it won't survive five minutes in production. Here is how to build a robust, auto-scaling
+        infrastructure using AWS Fargate.</p>
+
+    <p>Deploying a modern Django application requires more than just a server. It requires a resilient architecture that
+        can handle traffic spikes, recover from failures, and manage resources efficiently. AWS Elastic Container
+        Service (ECS) with Fargate provides a "serverless" container experience, allowing you to run Docker containers
+        without managing the underlying EC2 instances.</p>
+
+    <p>In this guide, we will walk through the entire lifecycle of a production-grade Django deployment:</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+        <div class="p-4 bg-muted rounded-lg border">
+            <h3 class="mt-0">1. Containerization</h3>
+            <p class="mb-0 text-sm">Building a secure, optimized Docker image with Gunicorn tuning.</p>
+        </div>
+        <div class="p-4 bg-muted rounded-lg border">
+            <h3 class="mt-0">2. Registry</h3>
+            <p class="mb-0 text-sm">Pushing versioned artifacts to AWS Elastic Container Registry (ECR).</p>
+        </div>
+        <div class="p-4 bg-muted rounded-lg border">
+            <h3 class="mt-0">3. Orchestration</h3>
+            <p class="mb-0 text-sm">Configuring ECS Tasks, Services, and Fargate for serverless execution.</p>
+        </div>
+        <div class="p-4 bg-muted rounded-lg border">
+            <h3 class="mt-0">4. Networking</h3>
+            <p class="mb-0 text-sm">Setting up Application Load Balancers (ALB) and simple auto-scaling policies.</p>
+        </div>
+    </div>
+
+    <h2>Prerequisites</h2>
+    <p>This guide assumes you have an AWS account with admin access, the AWS CLI installed and configured, and Docker
+        running on your local machine. You should also be comfortable with basic Django concepts.</p>
+
+    <hr class="my-8">
+
+    <h2>Part 1: The Production-Ready Dockerfile</h2>
+    <p>The foundation of any container deployment is a solid <code>Dockerfile</code>. Minimizing image size and
+        optimizing the runtime environment are critical.</p>
+
+    <h3>The Dockerfile</h3>
+    <pre><code class="language-dockerfile"># Build stage
+FROM python:3.11-slim as builder
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
+
+# Final stage
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+
+RUN pip install --no-cache /wheels/*
+
+COPY . .
+
+# Run collectstatic during build (or handling it in entrypoint)
+RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
+
+# We'll override this in the ECS Task Definition, but it's a good default
+CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"]</code></pre>
+
+    <h3>Tuning Gunicorn for Container Limits</h3>
+    <p>In a containerized environment, you must align your Gunicorn worker configuration with the CPU and Memory limits
+        of your Fargate task. A mismatch can lead to poor performance or OOM (Out of Memory) kills.</p>
+
+    <p>For a standard <strong>1 vCPU / 2 GB</strong> Fargate task, the recommended formula is:</p>
+    <div class="bg-secondary p-2 rounded text-center font-mono text-sm my-4">workers = (2 × vCPU) + 1</div>
+
+    <p>So for 1 vCPU, use <strong>3 workers</strong>. If your endpoints are I/O bound (calling external APIs, slow DB
+        queries), consider using Gunicorn threads:</p>
+
+    <pre><code class="language-bash">gunicorn --workers 3 --threads 2 --bind 0.0.0.0:8000 myproject.wsgi:application</code></pre>
+
+    <hr class="my-8">
+
+    <h2>Part 2: Pushing to AWS ECR</h2>
+    <p>AWS Elastic Container Registry (ECR) is where your Docker images will live. It’s secure, private, and integrates
+        natively with ECS.</p>
+
+    <ol class="list-decimal ml-6 space-y-4">
+        <li>
+            <strong>Create the repository:</strong>
+            <pre><code class="language-bash">aws ecr create-repository --repository-name my-django-app</code></pre>
+        </li>
+        <li>
+            <strong>Authenticate Docker to ECR:</strong>
+            <pre><code class="language-bash">aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com</code></pre>
+        </li>
+        <li>
+            <strong>Build and Push:</strong>
+            <pre><code class="language-bash">docker build -t my-django-app .
+docker tag my-django-app:latest <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-django-app:latest
+docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-django-app:latest</code></pre>
+        </li>
+    </ol>
+
+    <hr class="my-8">
+
+    <h2>Part 3: ECS & Fargate Cluster Setup</h2>
+    <p>AWS Fargate removes the need to manage EC2 instances. You just define <em>what</em> to run (CPU/RAM), and AWS
+        finds the capacity.</p>
+
+    <h3>Step 1: Create the Cluster</h3>
+    <p>Navigate to the ECS Console and create a new cluster. Select the <strong>"Networking only"</strong> template
+        (which implies Fargate). Name it <code>django-production-cluster</code>.</p>
+
+    <h3>Step 2: Define the Task</h3>
+    <p>The <strong>Task Definition</strong> is your application blueprint. It tells ECS which Docker image to use and
+        how many resources to allocate.</p>
+
+    <ul class="list-disc ml-6 space-y-2">
+        <li><strong>Launch Type:</strong> Fargate</li>
+        <li><strong>Task Memory:</strong> 2GB (2048)</li>
+        <li><strong>Task CPU:</strong> 1 vCPU (1024)</li>
+        <li><strong>Container Definition:</strong>
+            <ul class="list-none ml-4 mt-2 text-sm text-muted-foreground">
+                <li>Name: <code>web</code></li>
+                <li>Image: Your ECR URI</li>
+                <li>Port Mappings: 8000</li>
+                <li>Environment Variables: <code>DJANGO_SETTINGS_MODULE</code>, <code>DB_HOST</code>, etc.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="p-4 border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 my-4">
+        <strong>Security Tip:</strong> Avoid hardcoding secrets in environment variables. Use AWS Systems Manager
+        Parameter Store or Secrets Manager and reference them in the Task Definition.
+    </div>
+
+    <h3>Step 3: The Service & Load Balancer</h3>
+    <p>The <strong>Service</strong> ensures your desired number of tasks are always running. If a task crashes, the
+        Service starts a new one.</p>
+
+    <p>When creating the Service:</p>
+    <ol class="list-decimal ml-6 space-y-2">
+        <li>Select <strong>Fargate</strong> launch type.</li>
+        <li>Set desired tasks to <strong>2</strong> (for high availability).</li>
+        <li>Under <strong>Load Balancing</strong>, choose "Application Load Balancer".</li>
+        <li>Create a new ALB. Ensure the listener maps port <strong>80</strong> (HTTP) on the ALB to port
+            <strong>8000</strong> on your container.
+        </li>
+    </ol>
+
+    <hr class="my-8">
+
+    <h2>Part 4: Database & Security</h2>
+
+    <h3>RDS (PostgreSQL)</h3>
+    <p>Do not run your database inside a container on Fargate. Use AWS RDS for PostgreSQL. Ensure your ECS Security
+        Group allows outbound traffic to the RDS Security Group on port 5432.</p>
+
+    <h3>Static Files (S3 + WhiteNoise)</h3>
+    <p>In a containerized environment, local storage is ephemeral. You cannot store user uploads or static files on the
+        filesystem.</p>
+    <ul class="list-disc ml-6">
+        <li><strong>Static Files (CSS/JS):</strong> Use <strong>WhiteNoise</strong> to serve them directly from
+            Gunicorn, or run <code>collectstatic</code> to upload them to S3 during the build pipeline.</li>
+        <li><strong>Media Files (User Uploads):</strong> Must utilize <code>django-storages</code> to upload directly to
+            S3.</li>
+    </ul>
+
+    <hr class="my-8">
+
+    <h2>Architecture Diagram</h2>
+    <img src="../assets/images/django-aws-architecture.svg" alt="Django AWS Fargate Architecture Diagram"
+        class="w-full my-8 rounded-lg shadow-lg border bg-white p-4">
+
+    <h2>Conclusion</h2>
+    <p>You now have a scalable, resilient Django application running on AWS. By using Fargate, you've eliminated the
+        need to patch servers or manage OS updates. Your Load Balancer handles traffic distribution, and ECS ensures
+        your containers are always healthy.</p>
+
+    <p>The next steps would be setting up a <strong>CI/CD pipeline</strong> (using GitHub Actions) to automatically
+        build and deploy this infrastructure on every push to main—but that's a topic for another guide.</p>
+</article>
+        </article>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!--
+title: Git Blame for AI: Why Prompts Belong in Version Control
+description: As prompts become the new human interface, we face a critical question: should we treat them as transient artifacts or source code? This article argues for storing prompts in version control, akin to "Git Blame" for AI-generated code.
+date: 2026-02-18
+tags: ai, git, coding, llm, prompt-engineering
+image: ../assets/images/git-blame-for-ai.svg
+image_credit: M Yusuf (Custom SVG)
+-->
+
+<article class="blog-post">
+    <p class="lead text-xl text-muted-foreground mb-6">When you write a program in English and an AI translates it into
+        Python, which one is the true source code?</p>
+
+    <p>In the emerging era of "vibe coding"<sup><a href="#fn1" id="ref1">1</a></sup>, natural language prompts are
+        becoming the primary interface between humans and machines. This shift introduces a new dilemma for software
+        engineering: should we store these prompts alongside the code they generate, or discard them as transient
+        artifacts once the code is written?</p>
+
+    <h2>The Debate: Prompts in Code Review</h2>
+    <p>The developer community is already grappling with this question. A recent poll by Gergely Orosz asked developers
+        if they wanted to see the prompts that generated a pull request. The results were polarizing: nearly half (49%)
+        were enthusiastic about the idea, while a quarter (24%) strongly opposed it. Meanwhile, the industry is moving
+        ahead: tools like Cursor (which acquired Graphite) and internal initiatives at Meta are actively building
+        workflows to publish and review prompts as part of the code.</p>
+    <p>We are in the early days of defining the norms for this AI-assisted reality.</p>
+
+    <h2>Redefining "Source Code"</h2>
+    <p>Traditionally, the distinction was clear: source code is what humans write, and machine code is what computers
+        execute.</p>
+
+    <div class="my-6 p-6 border rounded-xl bg-muted/30 flex flex-col items-center justify-center gap-4">
+        <div class="flex items-center gap-4 text-sm font-mono">
+            <span class="px-3 py-1 rounded bg-background border">Human Code</span>
+            <span>→</span>
+            <span class="px-3 py-1 rounded bg-background border">Build Artifact</span>
+        </div>
+        <p class="text-xs text-center text-muted-foreground max-w-md">For the end user, only the build matters. They
+            download binaries or visit a website. They don't care about the source code, nor should they. Yet, source
+            code is the essential input for development—sufficient to reproduce the build deterministically.</p>
+    </div>
+
+    <p>With vibe coding, the workflow changes. We translate natural language (the prompt) into a programming language
+        (the code). If prompts are the true "source" of our intent, should we commit them instead of the Python,
+        TypeScript, or Rust they generate? It's tempting to cut out the middleman and treat our instructions as the only
+        source of truth. But that approach has significant flaws.</p>
+
+    <p><strong>Building code must be deterministic.</strong> Code that only compiles when the stars align is useless.
+        Modern software engineering relies on reproducibility—pinned dependencies, containerized environments, and CI/CD
+        pipelines ensure that if it builds on my machine, it builds on yours.</p>
+
+    <p>In contrast, generating code from prompts is inherently non-deterministic and difficult to replicate:</p>
+
+    <ul class="list-disc ml-6 space-y-2 mb-6 marker:text-primary">
+        <li><strong>Probabilistic Nature:</strong> Even with <code>temperature=0</code>, most LLM APIs do not guarantee
+            identical outputs for identical inputs across runs. Determinism in large language models remains an unsolved
+            research problem.</li>
+        <li><strong>Transient Models:</strong> Models are updated silently or deprecated entirely. Unlike a specific
+            version of a library in <code>package.json</code>, we cannot rely on "GPT-4-snapshot-2025" existing forever.
+        </li>
+        <li><strong>Context Handling:</strong> LLMs don't just read the prompt; they consume rich context from the
+            IDE—open files, conversation history, memory, and tool outputs. Capturing this entire state for
+            reproducibility is incredibly complex.</li>
+    </ul>
+
+    <p>Even simple tasks yield different results. I ran four parallel instances of Gemini 3 Pro in Cursor with the
+        identical prompt: "Correct grammar in this post." Each instance produced a slightly different variation. In a
+        large codebase, such variance could mean fixing a bug one day and reintroducing it the next.</p>
+
+    <h2>Prompts as Intent, Not Specification</h2>
+    <p>Prompts are best understood as a form of specification, but a fuzzy one. They leave significant room for
+        interpretation.</p>
+
+    <p>Natural language is ambiguous—a feature for human communication, but a bug for precise instruction. Even when
+        prompts are detailed, there is often a gap between what we ask for and what the model delivers<sup><a
+                href="#fn2" id="ref2">2</a></sup>. Current LLMs, while impressive, are far from infallible. They can
+        misinterpret instructions that would be crystal clear to a junior developer.</p>
+
+    <p>Therefore, prompts should be treated as <strong>intentions</strong> and <strong>context notes</strong> from the
+        development process, rather than a reliable build input.</p>
+
+    <h2>The Case for "Git Blame" on Prompts</h2>
+    <p>I believe all AI contributions—both code changes and commit messages—should be clearly attributed. This isn't
+        about devaluing AI work, but about providing essential context for troubleshooting and maintenance. As
+        open-source projects increasingly require disclosure of AI contributions<sup><a href="#fn3"
+                id="ref3">3</a></sup>, this transparency becomes standard practice.</p>
+
+    <p>It is crucial to differentiate between:
+    <ul class="list-disc ml-6 mt-2 marker:text-muted-foreground">
+        <li>What was consciously intended by the developer.</li>
+        <li>What was a specific design decision.</li>
+        <li>What just "happened" because the model hallucinated or took a shortcut.</li>
+    </ul>
+    </p>
+
+    <p>Tracking prompts alongside code commits offers several benefits:</p>
+    <ul class="list-disc ml-6 space-y-2 mb-6 marker:text-primary">
+        <li><strong>Accelerated Learning:</strong> The field of AI coding is moving at breakneck speed. Seeing how peers
+            prompt models allows us to learn new techniques and improve our own workflows—a rising tide lifts all boats.
+        </li>
+        <li><strong>Intent Verification:</strong> When a bug appears, reading the prompt can reveal <em>why</em> the
+            code was written that way. Was the logic flawed, or did the model misunderstand?</li>
+        <li><strong>Efficient Reviewing:</strong> Knowing a commit is AI-generated signals reviewers to look closer at
+            specific areas. For instance, we might trust AI with boilerplate UI code but demand human-level scrutiny for
+            authentication logic.</li>
+    </ul>
+
+    <h2>Challenges and Reservations</h2>
+    <p>Despite the benefits, archiving prompts introduces human friction. Writing prompts is often a messy, creative
+        process:</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="p-4 border rounded-lg bg-card">
+            <h4 class="font-bold mb-2">Technological Hurdles</h4>
+            <ul class="list-disc ml-4 text-sm text-muted-foreground">
+                <li><strong>Dirty Notebooks:</strong> Prompts are often stream-of-consciousness, full of typos and
+                    unfinished thoughts.</li>
+                <li><strong>Privacy Risks:</strong> They might accidentally contain API keys, passwords, or PII.</li>
+            </ul>
+        </div>
+        <div class="p-4 border rounded-lg bg-card">
+            <h4 class="font-bold mb-2">Social Factors</h4>
+            <ul class="list-disc ml-4 text-sm text-muted-foreground">
+                <li><strong>Profanity & Frustration:</strong> We are often less polite to AI than colleagues
+                    (frustration is real!).</li>
+                <li><strong>"Imposter Syndrome":</strong> Using AI can sometimes feel less "earned," leading developers
+                    to hide their usage.</li>
+                <li><strong>Peer Pressure:</strong> Fear of rejection due to "AI Slop" stigma.</li>
+            </ul>
+        </div>
+    </div>
+
+    <p>To address this, we need tooling with redaction and curation capabilities. Just as we squash messy commits before
+        merging to <code>main</code>, we should be able to curate our prompts into a clean, public history.</p>
+
+    <h2>Conclusion</h2>
+    <p>Code reviews are evolving, and the integration of AI is inevitable. We need standards—like MCP and
+        <code>SKILL.md</code>—to govern how we share prompts alongside our git history.
+    </p>
+
+
+
+    <p>In the meantime, start simple: if you use AI to write the code, use AI to write the commit message. And if you're
+        feeling brave, include the prompt that started it all.</p>
+
+    <p class="font-medium mt-4">It is frustrating to see dozens of AI-generated files committed with a lazy <em>"fixed
+            it"</em> message. We deserve better. If a tool allows vibe coding, it must also enable vibe committing.</p>
+
+</article>

@@ -1,30 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize highlighting immediately
     if (typeof hljs !== 'undefined') {
         hljs.highlightAll();
     }
-    
+
     const lightTheme = document.getElementById('light-theme');
     const darkTheme = document.getElementById('dark-theme');
     const themeToggle = document.getElementById('themeToggle');
-    
+
     function setTheme(isDark) {
-        document.body.classList.toggle('dark-theme', isDark);
+        document.documentElement.classList.toggle('dark', isDark);
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        
+
         if (lightTheme) lightTheme.disabled = isDark;
         if (darkTheme) darkTheme.disabled = !isDark;
     }
-    
+
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         setTheme(savedTheme === 'dark');
     } else {
         setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
     }
-    
+
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            setTheme(!document.body.classList.contains('dark-theme'));
+            setTheme(!document.documentElement.classList.contains('dark'));
         });
     }
 
@@ -32,16 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         loadSearchIndex();
-        
+
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value;
             const resultsDiv = document.getElementById('searchResults');
-            
+
             if (query.length < 2) {
                 resultsDiv.style.display = 'none';
                 return;
             }
-            
+
             if (!idx) return;
 
             const results = idx.search(query);
@@ -80,15 +81,15 @@ async function loadSearchIndex() {
     try {
         const response = await fetch('/search-index.json');
         searchIndex = await response.json();
-        
+
         // Build lunr index
         if (typeof lunr !== 'undefined') {
-            idx = lunr(function() {
+            idx = lunr(function () {
                 this.field('title', { boost: 10 });
                 this.field('description', { boost: 5 });
                 this.field('content');
                 this.field('tags', { boost: 5 });
-                
+
                 searchIndex.forEach((doc, i) => {
                     doc.id = i;
                     this.add(doc);

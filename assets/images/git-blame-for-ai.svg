@@ -1,0 +1,74 @@
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg-grad)" />
+  
+  <!-- Git Graph Side (Right) -->
+  <g transform="translate(450, 50)">
+    <line x1="50" y1="50" x2="50" y2="300" stroke="#64748b" stroke-width="4" />
+    <circle cx="50" cy="50" r="10" fill="#3b82f6" />
+    <circle cx="50" cy="120" r="10" fill="#3b82f6" />
+    <circle cx="50" cy="190" r="10" fill="#3b82f6" />
+    
+    <!-- Branch -->
+    <path d="M50 120 C 100 120, 100 160, 100 190" stroke="#64748b" stroke-width="4" fill="none" />
+    <circle cx="100" cy="190" r="10" fill="#10b981" />
+    <circle cx="50" cy="260" r="10" fill="#3b82f6" />
+    
+    <!-- Text Labels -->
+    <text x="70" y="55" font-family="monospace" fill="#94a3b8" font-size="14">init</text>
+    <text x="70" y="125" font-family="monospace" fill="#94a3b8" font-size="14">feat: ai-core</text>
+    <text x="120" y="195" font-family="monospace" fill="#10b981" font-size="14">fix: prompt-v1</text>
+    <text x="70" y="265" font-family="monospace" fill="#3b82f6" font-size="14">merge: vibe-coding</text>
+  </g>
+  
+  <!-- AI/Neural Net Side (Left) -->
+  <g transform="translate(50, 50)" filter="url(#glow)">
+    <!-- Nodes -->
+    <circle cx="100" cy="100" r="6" fill="#a855f7" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="200" cy="80" r="8" fill="#d946ef" opacity="0.6" />
+    <circle cx="150" cy="180" r="7" fill="#8b5cf6" opacity="0.9" />
+    <circle cx="80" cy="220" r="5" fill="#f472b6" opacity="0.7" />
+    <circle cx="250" cy="200" r="9" fill="#a855f7" opacity="0.5" />
+    <circle cx="180" cy="280" r="6" fill="#d946ef" opacity="0.8" />
+    
+    <!-- Connections -->
+    <line x1="100" y1="100" x2="200" y2="80" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="100" y1="100" x2="150" y2="180" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="150" y1="180" x2="80" y2="220" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="150" y1="180" x2="250" y2="200" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="200" y1="80" x2="250" y2="200" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="80" y1="220" x2="180" y2="280" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    <line x1="250" y1="200" x2="180" y2="280" stroke="#a855f7" stroke-width="1" opacity="0.4" />
+    
+    <!-- Floating "Prompt" text -->
+    <text x="50" y="350" font-family="sans-serif" fill="#e879f9" font-size="20" font-weight="bold">
+      Prompt: "Fix bug..."
+    </text>
+  </g>
+  
+  <!-- Connecting Arrow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e2e8f0" />
+    </marker>
+  </defs>
+  <path d="M 300 200 Q 375 200, 420 200" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrowhead)" stroke-dasharray="10,5" />
+  
+  <!-- Title Overly -->
+  <text x="400" y="400" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="24" fill="white">
+    Git Blame for AI
+  </text>
+</svg>

@@ -1,602 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <title>Beranda | M Yusuf - Backend Developer</title>
+    <title>Beranda | M Yusuf</title>
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="../assets/images/favicon_io/site.webmanifest">
-    <link rel="shortcut icon" href="../assets/images/favicon_io/favicon.ico">
+    <!-- SEO & Favicon (Relative for build script) -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="<!-- DESCRIPTION -->">
-    <meta name="author" content="M Yusuf">
-    <meta name="keywords" content="backend developer, software engineer, golang, python, docker, kubernetes, laravel">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta property="og:description" content="<!-- DESCRIPTION -->">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://myusufid.github.io">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Beranda | M Yusuf - Backend Developer">
-    <meta name="twitter:description" content="<!-- DESCRIPTION -->">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="../styles.css" rel="stylesheet">
-    <link href="../highlight-theme.css" rel="stylesheet">
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
 
-   <!-- Add these in the head section -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="light-theme">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css" id="dark-theme">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Add common languages for backend devs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
     <script src="https://unpkg.com/lunr/lunr.js"></script>
-
-
 </head>
-<body>
-    <header class="py-4">
-        <div class="container">
-            <div class="d-flex flex-column flex-md-row align-items-center">
-                <div class="brand me-3">
-                    <a href="/" class="text-decoration-none">
-                        <h1 class="h4 mb-0">M YUSUF</h1>
-                        <p class="subtitle mb-0">Backend Developer</p>
-                    </a>
-                </div>
-                <nav class="ms-md-auto mt-3 mt-md-0">
-                    <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Search posts..." aria-label="Search posts">
-                        <div id="searchResults" class="search-results" aria-live="polite"></div>
-                    </div>
-                    <ul class="nav">
-                        <li class="nav-item"><a href="/" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="/tags.html" class="nav-link">Tags</a></li>
-                        <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="/my_works.html" class="nav-link">My Works</a></li>
-                        <li class="nav-item">
-                            <button id="themeToggle" class="nav-link btn">
-                                <i class="bi bi-sun-fill light-icon"></i>
-                                <i class="bi bi-moon-fill dark-icon"></i>
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
             </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <main class="container py-5">
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
         <!-- FEATURED_IMAGE -->
+        <article class="prose dark:prose-invert max-w-none">
+            <div class="space-y-4">
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-06-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/managing-environment-variables-in-production-with-aws-secrets-manager.html" class="hover:underline">Managing Environment Variables in Production with AWS Secrets Manager</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to managing environment variables securely using AWS Secrets Manager</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#aws</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#security</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#environment-variables</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-06-06</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-delete-aws-acm-certificate-management-from-elb.html" class="hover:underline">How to Delete AWS ACM Certificate Management from ELB</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Step-by-step guide to removing ACM certificates from Elastic Load Balancer</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#aws</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#acm</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#elb</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#certificates</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-06-03</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/example-app-scripts-google-form-sending-all-response-to-whatsapp.html" class="hover:underline">Example App Scripts Google Form: Sending All Response to Whatsapp</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to using Google Apps Script to send form responses to WhatsApp</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#google-apps-script</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#forms</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#whatsapp</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#automation</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/docker-commands-cheat-sheet.html" class="hover:underline">Docker Commands Cheat Sheet</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Essential Docker commands for local development and container management</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#containers</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tips</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/docker-compose-for-rabbitmq-basic-setup.html" class="hover:underline">Docker Compose for RabbitMQ: Basic Setup</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Learn how to set up RabbitMQ locally using Docker Compose with persistent storage, management UI, and secure defaults</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rabbitmq</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#message-queue</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/intercept-traffic-android-apps.html" class="hover:underline">Intercept Traffic Android Apps</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2"></p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#android</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/laravel-envoy-deployment-configuration.html" class="hover:underline">Laravel Envoy Deployment Configuration</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Complete example of Laravel Envoy configuration for automated deployment with staging and production environments</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#envoy</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#deployment</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#automation</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/trigger-job-queue-tinker-laravel.html" class="hover:underline">Trigger job queue tinker laravel</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Learn how to manually trigger Laravel job queues using Tinker for testing and debugging purposes</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#queue</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tips</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#debugging</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-04</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/compress-directory-with-tar.html" class="hover:underline">Compress Directory with Tar</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to compressing and extracting files using tar command</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cli</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#compression</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tar</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-02-01</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/lumen-lifecycle.html" class="hover:underline">Lumen lifecycle</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the request lifecycle in Lumen framework</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#lumen</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#framework</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#architecture</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-01-30</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/example-aws-cloudwatch-agent-config.html" class="hover:underline">Example AWS Cloudwatch Agent Config</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Sample configuration file for AWS CloudWatch Agent with logs and metrics collection</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#aws</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cloudwatch</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#monitoring</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-01-26</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/go-two-sum-array.html" class="hover:underline">Go Two sum array</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Implementation of Two Sum problem in Go with array traversal</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#algorithms</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#arrays</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#programming</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-01-26</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-check-whether-my-user-data-passing-to-ec2-instance-is-working.html" class="hover:underline">How to check whether my user data passing to EC2 instance is working</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to verifying EC2 user data script execution through log files</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#aws</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ec2</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cloud-init</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-01-21</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/why-do-programmers-need-private-offices-with-doors.html" class="hover:underline">Why do programmers need private offices with doors</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Exploring the importance of private offices for programmer productivity and focus</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#workplace</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#productivity</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#programming</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#office-design</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2024-01-20</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/no-reason-to-write-openapi-by-hand.html" class="hover:underline">No Reason to Write OpenAPI By Hand</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Exploring modern tools and approaches for API design with focus on Stoplight Studio</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#api</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#openapi</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#stoplight</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#design</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-12-16</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/using-had-to-talk-about-the-past-in-english.html" class="hover:underline">Using Had to Talk about the Past in English</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Simple guide to using the past tense verb 'had' in English</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#english</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#grammar</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#language</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#learning</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-12-15</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/exploring-standard-domains-for-testing-throwaway-email-addresses.html" class="hover:underline">Exploring Standard Domains for Testing Throwaway Email Addresses</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to using standard domains and disposable email addresses for testing purposes</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#email</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#testing</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#privacy</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#security</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-12-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/golang-blueprint-library.html" class="hover:underline">Golang Blueprint Library</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to using Go Blueprint CLI tool for creating structured Go projects</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cli</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-12-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/tree-command-navigating-directory-structures.html" class="hover:underline">tree Command Navigating Directory Structures</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to using the tree command for visualizing directory structures in Unix-like systems</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cli</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#unix</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#filesystem</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-12-08</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/exploring-public-code-repositories-with-sourcegraph.html" class="hover:underline">Exploring Public Code Repositories with Sourcegraph</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to using Sourcegraph for searching and exploring public code repositories</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#sourcegraph</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#code-search</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-11-09</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/bus-factor.html" class="hover:underline">Bus Factor</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the bus factor concept in software development teams</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#team</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#knowledge-sharing</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#risk-management</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-11-09</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/flaky-tests.html" class="hover:underline">Flaky Tests</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding and dealing with flaky tests in software testing</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#testing</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#quality-assurance</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#best-practices</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-11-06</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/the-easiest-way-to-kill-all-nginx-processes.html" class="hover:underline">The easiest way to kill all nginx processes</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Quick guide for stopping and restarting Nginx processes</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#nginx</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#server</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#commands</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-11-02</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/connect-reconnect-docker-container.html" class="hover:underline">Connect reconnect docker container</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide for managing Docker container network connections</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#networking</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#containers</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#devops</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-10-10</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/awesome-rest-github-repository.html" class="hover:underline">Awesome REST GitHub Repository</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Overview of the valuable Awesome REST GitHub repository for RESTful API development</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rest</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#api</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#github</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#resources</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-10-10</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/gui-editor-for-openapi-swagger.html" class="hover:underline">GUI Editor for OpenAPI Swagger</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Overview of GUI editors for creating OpenAPI/Swagger specifications</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#openapi</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#swagger</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#api</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-10-09</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-install-grafana.html" class="hover:underline">How to Install Grafana</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide for installing Grafana using APT and Docker methods</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#grafana</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#monitoring</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ubuntu</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#installation</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-10-09</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-install-influxdb-using-docker.html" class="hover:underline">How to Install InfluxDB using Docker</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Step-by-step guide for installing InfluxDB and its client using Docker</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#influxdb</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#monitoring</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#timeseries</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-10-09</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/how-to-install-loki-and-promtail-use-docker.html" class="hover:underline">How to Install Loki and Promtail use Docker</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Step-by-step guide for installing Grafana Loki and Promtail using Docker</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#grafana</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#loki</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#promtail</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#monitoring</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-09-27</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/uid-user-identifier-di-linux.html" class="hover:underline">UID User Identifier di Linux</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#system-admin</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#security</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#users</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-09-26</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/the-best-method-to-copy-folders-and-subfolders--linux.html" class="hover:underline">The Best Method to Copy Folders and Subfolders : Linux</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Guide to efficiently copy folders and subfolders in Linux using the cp command</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#linux</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#command-line</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#system-admin</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tutorial</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-09-21</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/what-is-composer.html" class="hover:underline">What Is Composer</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding Composer as PHP's dependency management tool and its key features</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#composer</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#dependency-management</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-09-19</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/free-for-dev-website.html" class="hover:underline">Free for dev Website</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Informasi tentang website free-for.dev yang menyediakan daftar software gratis untuk developer</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#resources</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#free</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-09-03</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/deploy-ruby-on-rails-with-capistrano-and-ubuntu-server.html" class="hover:underline">Deploy Ruby on Rails with Capistrano and Ubuntu Server</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ruby</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rails</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#capistrano</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ubuntu</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#deployment</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-08-21</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/cara-install-laravel-menggunakan-image-docker-composer.html" class="hover:underline">Cara Install Laravel Menggunakan Image Docker Composer</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Tutorial instalasi Laravel menggunakan Docker Composer image tanpa mengubah PHP versi lokal</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#laravel</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#composer</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#php</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#installation</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2023-08-20</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/rake-vs-rails.html" class="hover:underline">Rake vs Rails</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Understanding the differences between Rake and Rails command-line tools in Ruby on Rails</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#ruby</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rails</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#rake</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tools</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#development</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-08-07</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/menggunakan-database-sebagai-container-di-level-production.html" class="hover:underline">Menggunakan Database sebagai Container di Level Production</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Pertimbangan menggunakan database sebagai container di environment production</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#database</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#docker</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#container</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#production</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#deployment</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-04-12</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/config-zsh-for-golang.html" class="hover:underline">Config ZSH for Golang</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Setting up ZSH environment variables for Golang development</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#zsh</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#configuration</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#environment</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-04-12</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/create-vocabulary-english-cli-application-with-golang.html" class="hover:underline">Create Vocabulary English CLI Application with Golang</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Building a CLI application to display random English words with meanings using Golang</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cli</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#english</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#vocabulary</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tutorial</span>
+                    </div>
+                </article>
+            
+
+                <article class="group relative flex flex-col space-y-2 rounded-lg border p-6 hover:bg-muted/50 transition-colors mb-6">
+                    <div class="text-xs font-medium text-muted-foreground font-mono">2022-04-11</div>
+                    <h2 class="text-2xl font-bold tracking-tight">
+                        <a href="posts/belajar-command-line-arguments-golang.html" class="hover:underline">Belajar Command Line Arguments Golang</a>
+                    </h2>
+                    <p class="text-muted-foreground line-clamp-2">Memahami penggunaan command line arguments di Golang menggunakan package os.Args</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#golang</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#cli</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#programming</span> <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground">#tutorial</span>
+                    </div>
+                </article>
+            </div>
+        <nav class="flex items-center justify-center space-x-2 py-8" aria-label="Pagination">
         
-                <article class="post">
-                    <div class="meta">2024-06-06</div>
-                    <h3>
-                        <a href="posts/how-to-delete-aws-acm-certificate-management-from-elb.html">How to Delete AWS ACM Certificate Management from ELB</a>
-                    </h3>
-                    <p>Step-by-step guide to removing ACM certificates from Elastic Load Balancer</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#aws</span> <span class="badge bg-light text-dark">#acm</span> <span class="badge bg-light text-dark">#elb</span> <span class="badge bg-light text-dark">#certificates</span>
-                    </div>
-                </article>
+                <a href="index.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+                    1
+                </a>
             
-
-                <article class="post">
-                    <div class="meta">2024-06-03</div>
-                    <h3>
-                        <a href="posts/example-app-scripts-google-form-sending-all-response-to-whatsapp.html">Example App Scripts Google Form: Sending All Response to Whatsapp</a>
-                    </h3>
-                    <p>Guide to using Google Apps Script to send form responses to WhatsApp</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#google-apps-script</span> <span class="badge bg-light text-dark">#forms</span> <span class="badge bg-light text-dark">#whatsapp</span> <span class="badge bg-light text-dark">#automation</span>
-                    </div>
-                </article>
+                <a href="page2.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90">
+                    2
+                </a>
             
-
-                <article class="post">
-                    <div class="meta">2024-02-16</div>
-                    <h3>
-                        <a href="posts/docker-commands-cheat-sheet.html">Docker Commands Cheat Sheet</a>
-                    </h3>
-                    <p>Essential Docker commands for local development and container management</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#containers</span> <span class="badge bg-light text-dark">#tips</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-16</div>
-                    <h3>
-                        <a href="posts/docker-compose-for-rabbitmq-basic-setup.html">Docker Compose for RabbitMQ: Basic Setup</a>
-                    </h3>
-                    <p>Learn how to set up RabbitMQ locally using Docker Compose with persistent storage, management UI, and secure defaults</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#rabbitmq</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#message-queue</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-16</div>
-                    <h3>
-                        <a href="posts/intercept-traffic-android-apps.html">Intercept Traffic Android Apps</a>
-                    </h3>
-                    <p></p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#android</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-16</div>
-                    <h3>
-                        <a href="posts/laravel-envoy-deployment-configuration.html">Laravel Envoy Deployment Configuration</a>
-                    </h3>
-                    <p>Complete example of Laravel Envoy configuration for automated deployment with staging and production environments</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#envoy</span> <span class="badge bg-light text-dark">#deployment</span> <span class="badge bg-light text-dark">#devops</span> <span class="badge bg-light text-dark">#automation</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-16</div>
-                    <h3>
-                        <a href="posts/trigger-job-queue-tinker-laravel.html">Trigger job queue tinker laravel</a>
-                    </h3>
-                    <p>Learn how to manually trigger Laravel job queues using Tinker for testing and debugging purposes</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#queue</span> <span class="badge bg-light text-dark">#tips</span> <span class="badge bg-light text-dark">#debugging</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-04</div>
-                    <h3>
-                        <a href="posts/compress-directory-with-tar.html">Compress Directory with Tar</a>
-                    </h3>
-                    <p>Guide to compressing and extracting files using tar command</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#cli</span> <span class="badge bg-light text-dark">#compression</span> <span class="badge bg-light text-dark">#tar</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-02-01</div>
-                    <h3>
-                        <a href="posts/lumen-lifecycle.html">Lumen lifecycle</a>
-                    </h3>
-                    <p>Understanding the request lifecycle in Lumen framework</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#lumen</span> <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#framework</span> <span class="badge bg-light text-dark">#architecture</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-01-30</div>
-                    <h3>
-                        <a href="posts/example-aws-cloudwatch-agent-config.html">Example AWS Cloudwatch Agent Config</a>
-                    </h3>
-                    <p>Sample configuration file for AWS CloudWatch Agent with logs and metrics collection</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#aws</span> <span class="badge bg-light text-dark">#cloudwatch</span> <span class="badge bg-light text-dark">#monitoring</span> <span class="badge bg-light text-dark">#devops</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-01-26</div>
-                    <h3>
-                        <a href="posts/go-two-sum-array.html">Go Two sum array</a>
-                    </h3>
-                    <p>Implementation of Two Sum problem in Go with array traversal</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#algorithms</span> <span class="badge bg-light text-dark">#arrays</span> <span class="badge bg-light text-dark">#programming</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-01-26</div>
-                    <h3>
-                        <a href="posts/how-to-check-whether-my-user-data-passing-to-ec2-instance-is-working.html">How to check whether my user data passing to EC2 instance is working</a>
-                    </h3>
-                    <p>Guide to verifying EC2 user data script execution through log files</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#aws</span> <span class="badge bg-light text-dark">#ec2</span> <span class="badge bg-light text-dark">#cloud-init</span> <span class="badge bg-light text-dark">#devops</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-01-21</div>
-                    <h3>
-                        <a href="posts/why-do-programmers-need-private-offices-with-doors.html">Why do programmers need private offices with doors</a>
-                    </h3>
-                    <p>Exploring the importance of private offices for programmer productivity and focus</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#workplace</span> <span class="badge bg-light text-dark">#productivity</span> <span class="badge bg-light text-dark">#programming</span> <span class="badge bg-light text-dark">#office-design</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2024-01-20</div>
-                    <h3>
-                        <a href="posts/no-reason-to-write-openapi-by-hand.html">No Reason to Write OpenAPI By Hand</a>
-                    </h3>
-                    <p>Exploring modern tools and approaches for API design with focus on Stoplight Studio</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#api</span> <span class="badge bg-light text-dark">#openapi</span> <span class="badge bg-light text-dark">#stoplight</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#design</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-12-16</div>
-                    <h3>
-                        <a href="posts/using-had-to-talk-about-the-past-in-english.html">Using Had to Talk about the Past in English</a>
-                    </h3>
-                    <p>Simple guide to using the past tense verb 'had' in English</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#english</span> <span class="badge bg-light text-dark">#grammar</span> <span class="badge bg-light text-dark">#language</span> <span class="badge bg-light text-dark">#learning</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-12-15</div>
-                    <h3>
-                        <a href="posts/exploring-standard-domains-for-testing-throwaway-email-addresses.html">Exploring Standard Domains for Testing Throwaway Email Addresses</a>
-                    </h3>
-                    <p>Guide to using standard domains and disposable email addresses for testing purposes</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#email</span> <span class="badge bg-light text-dark">#testing</span> <span class="badge bg-light text-dark">#privacy</span> <span class="badge bg-light text-dark">#security</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-12-11</div>
-                    <h3>
-                        <a href="posts/golang-blueprint-library.html">Golang Blueprint Library</a>
-                    </h3>
-                    <p>Guide to using Go Blueprint CLI tool for creating structured Go projects</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#cli</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-12-11</div>
-                    <h3>
-                        <a href="posts/tree-command-navigating-directory-structures.html">tree Command Navigating Directory Structures</a>
-                    </h3>
-                    <p>Guide to using the tree command for visualizing directory structures in Unix-like systems</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#cli</span> <span class="badge bg-light text-dark">#unix</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#filesystem</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-12-08</div>
-                    <h3>
-                        <a href="posts/exploring-public-code-repositories-with-sourcegraph.html">Exploring Public Code Repositories with Sourcegraph</a>
-                    </h3>
-                    <p>Guide to using Sourcegraph for searching and exploring public code repositories</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#sourcegraph</span> <span class="badge bg-light text-dark">#code-search</span> <span class="badge bg-light text-dark">#development</span> <span class="badge bg-light text-dark">#tools</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-11-09</div>
-                    <h3>
-                        <a href="posts/bus-factor.html">Bus Factor</a>
-                    </h3>
-                    <p>Understanding the bus factor concept in software development teams</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#development</span> <span class="badge bg-light text-dark">#team</span> <span class="badge bg-light text-dark">#knowledge-sharing</span> <span class="badge bg-light text-dark">#risk-management</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-11-09</div>
-                    <h3>
-                        <a href="posts/flaky-tests.html">Flaky Tests</a>
-                    </h3>
-                    <p>Understanding and dealing with flaky tests in software testing</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#testing</span> <span class="badge bg-light text-dark">#quality-assurance</span> <span class="badge bg-light text-dark">#development</span> <span class="badge bg-light text-dark">#best-practices</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-11-06</div>
-                    <h3>
-                        <a href="posts/the-easiest-way-to-kill-all-nginx-processes.html">The easiest way to kill all nginx processes</a>
-                    </h3>
-                    <p>Quick guide for stopping and restarting Nginx processes</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#nginx</span> <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#server</span> <span class="badge bg-light text-dark">#commands</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-11-02</div>
-                    <h3>
-                        <a href="posts/connect-reconnect-docker-container.html">Connect reconnect docker container</a>
-                    </h3>
-                    <p>Guide for managing Docker container network connections</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#networking</span> <span class="badge bg-light text-dark">#containers</span> <span class="badge bg-light text-dark">#devops</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-10-10</div>
-                    <h3>
-                        <a href="posts/awesome-rest-github-repository.html">Awesome REST GitHub Repository</a>
-                    </h3>
-                    <p>Overview of the valuable Awesome REST GitHub repository for RESTful API development</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#rest</span> <span class="badge bg-light text-dark">#api</span> <span class="badge bg-light text-dark">#github</span> <span class="badge bg-light text-dark">#resources</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-10-10</div>
-                    <h3>
-                        <a href="posts/gui-editor-for-openapi-swagger.html">GUI Editor for OpenAPI Swagger</a>
-                    </h3>
-                    <p>Overview of GUI editors for creating OpenAPI/Swagger specifications</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#openapi</span> <span class="badge bg-light text-dark">#swagger</span> <span class="badge bg-light text-dark">#api</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-10-09</div>
-                    <h3>
-                        <a href="posts/how-to-install-grafana.html">How to Install Grafana</a>
-                    </h3>
-                    <p>Guide for installing Grafana using APT and Docker methods</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#grafana</span> <span class="badge bg-light text-dark">#monitoring</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#ubuntu</span> <span class="badge bg-light text-dark">#installation</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-10-09</div>
-                    <h3>
-                        <a href="posts/how-to-install-influxdb-using-docker.html">How to Install InfluxDB using Docker</a>
-                    </h3>
-                    <p>Step-by-step guide for installing InfluxDB and its client using Docker</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#influxdb</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#monitoring</span> <span class="badge bg-light text-dark">#timeseries</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-10-09</div>
-                    <h3>
-                        <a href="posts/how-to-install-loki-and-promtail-use-docker.html">How to Install Loki and Promtail use Docker</a>
-                    </h3>
-                    <p>Step-by-step guide for installing Grafana Loki and Promtail using Docker</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#grafana</span> <span class="badge bg-light text-dark">#loki</span> <span class="badge bg-light text-dark">#promtail</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#monitoring</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-09-27</div>
-                    <h3>
-                        <a href="posts/uid-user-identifier-di-linux.html">UID User Identifier di Linux</a>
-                    </h3>
-                    <p>Penjelasan tentang User Identifier (UID) dan penggunaannya di sistem Linux</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#system-admin</span> <span class="badge bg-light text-dark">#security</span> <span class="badge bg-light text-dark">#users</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-09-26</div>
-                    <h3>
-                        <a href="posts/the-best-method-to-copy-folders-and-subfolders--linux.html">The Best Method to Copy Folders and Subfolders : Linux</a>
-                    </h3>
-                    <p>Guide to efficiently copy folders and subfolders in Linux using the cp command</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#linux</span> <span class="badge bg-light text-dark">#command-line</span> <span class="badge bg-light text-dark">#system-admin</span> <span class="badge bg-light text-dark">#tutorial</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-09-21</div>
-                    <h3>
-                        <a href="posts/what-is-composer.html">What Is Composer</a>
-                    </h3>
-                    <p>Understanding Composer as PHP's dependency management tool and its key features</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#composer</span> <span class="badge bg-light text-dark">#dependency-management</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-09-19</div>
-                    <h3>
-                        <a href="posts/free-for-dev-website.html">Free for dev Website</a>
-                    </h3>
-                    <p>Informasi tentang website free-for.dev yang menyediakan daftar software gratis untuk developer</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#resources</span> <span class="badge bg-light text-dark">#development</span> <span class="badge bg-light text-dark">#free</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-09-03</div>
-                    <h3>
-                        <a href="posts/deploy-ruby-on-rails-with-capistrano-and-ubuntu-server.html">Deploy Ruby on Rails with Capistrano and Ubuntu Server</a>
-                    </h3>
-                    <p>Complete guide for deploying Ruby on Rails applications using Capistrano on Ubuntu Server</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#ruby</span> <span class="badge bg-light text-dark">#rails</span> <span class="badge bg-light text-dark">#capistrano</span> <span class="badge bg-light text-dark">#ubuntu</span> <span class="badge bg-light text-dark">#deployment</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-08-21</div>
-                    <h3>
-                        <a href="posts/cara-install-laravel-menggunakan-image-docker-composer.html">Cara Install Laravel Menggunakan Image Docker Composer</a>
-                    </h3>
-                    <p>Tutorial instalasi Laravel menggunakan Docker Composer image tanpa mengubah PHP versi lokal</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#laravel</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#composer</span> <span class="badge bg-light text-dark">#php</span> <span class="badge bg-light text-dark">#installation</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2023-08-20</div>
-                    <h3>
-                        <a href="posts/rake-vs-rails.html">Rake vs Rails</a>
-                    </h3>
-                    <p>Understanding the differences between Rake and Rails command-line tools in Ruby on Rails</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#ruby</span> <span class="badge bg-light text-dark">#rails</span> <span class="badge bg-light text-dark">#rake</span> <span class="badge bg-light text-dark">#tools</span> <span class="badge bg-light text-dark">#development</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2022-08-07</div>
-                    <h3>
-                        <a href="posts/menggunakan-database-sebagai-container-di-level-production.html">Menggunakan Database sebagai Container di Level Production</a>
-                    </h3>
-                    <p>Pertimbangan menggunakan database sebagai container di environment production</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#database</span> <span class="badge bg-light text-dark">#docker</span> <span class="badge bg-light text-dark">#container</span> <span class="badge bg-light text-dark">#production</span> <span class="badge bg-light text-dark">#deployment</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2022-04-12</div>
-                    <h3>
-                        <a href="posts/config-zsh-for-golang.html">Config ZSH for Golang</a>
-                    </h3>
-                    <p>Setting up ZSH environment variables for Golang development</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#zsh</span> <span class="badge bg-light text-dark">#configuration</span> <span class="badge bg-light text-dark">#environment</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2022-04-12</div>
-                    <h3>
-                        <a href="posts/create-vocabulary-english-cli-application-with-golang.html">Create Vocabulary English CLI Application with Golang</a>
-                    </h3>
-                    <p>Building a CLI application to display random English words with meanings using Golang</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#cli</span> <span class="badge bg-light text-dark">#english</span> <span class="badge bg-light text-dark">#vocabulary</span> <span class="badge bg-light text-dark">#tutorial</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2022-04-11</div>
-                    <h3>
-                        <a href="posts/belajar-command-line-arguments-golang.html">Belajar Command Line Arguments Golang</a>
-                    </h3>
-                    <p>Memahami penggunaan command line arguments di Golang menggunakan package os.Args</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#cli</span> <span class="badge bg-light text-dark">#programming</span> <span class="badge bg-light text-dark">#tutorial</span>
-                    </div>
-                </article>
-            
-
-                <article class="post">
-                    <div class="meta">2022-04-11</div>
-                    <h3>
-                        <a href="posts/belajar-sorting-string-and-write-to-file-with-golang.html">Belajar Sorting String and Write to File with Golang</a>
-                    </h3>
-                    <p>Tutorial sorting string dari command line arguments dan menulis hasilnya ke file menggunakan Golang</p>
-                    <div class="tags">
-                        <span class="badge bg-light text-dark">#golang</span> <span class="badge bg-light text-dark">#sorting</span> <span class="badge bg-light text-dark">#file</span> <span class="badge bg-light text-dark">#programming</span> <span class="badge bg-light text-dark">#tutorial</span>
-                    </div>
-                </article>
-            
-        <nav class="pagination-wrapper">
-            <ul class="pagination justify-content-center">
-        
-                <li class="page-item ">
-                    <a class="page-link" href="index.html">1</a>
-                </li>
-            
-                <li class="page-item active">
-                    <a class="page-link" href="page2.html">2</a>
-                </li>
-            
-                <li class="page-item ">
-                    <a class="page-link" href="page3.html">3</a>
-                </li>
-            
-            </ul>
-        </nav>
-        
+                <a href="page3.html" 
+                   class="inline-flex items-center justify-center rounded-md w-10 h-10 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+                    3
+                </a>
+            </nav>
+        </article>
     </main>
 
-    <footer class="footer py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="tech-stack">
-                        <span class="badge">Go</span>
-                        <span class="badge">Python</span>
-                        <span class="badge">Docker</span>
-                        <span class="badge">K8s</span>
-                    </div>
-                </div>
-                <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                    <a href="https://github.com/myusufid" class="social-link"><i class="bi bi-github"></i></a>
-                    <a href="https://www.linkedin.com/in/m-yusuf/" class="social-link ms-3"><i class="bi bi-linkedin"></i></a>
-                </div>
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../script.js"></script>
+    <script src="/script.js"></script>
 </body>
+
 </html>

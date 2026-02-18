@@ -16,8 +16,9 @@ pre code[theme="github"] {
     background: #f6f8fa;
 }
 
+
 /* Dark theme */
-.dark-theme pre code[theme="monokai"] {
+.dark pre code[theme="monokai"] {
     background: #272822;
 }
 
