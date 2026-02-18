@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UUID Generator | M Yusuf</title>
+
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <!-- UUID Library (v8.3.2) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" referrerpolicy="no-referrer"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(var(--popover))",
+                            foreground: "hsl(var(--popover-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+
+            <nav class="flex items-center gap-6">
+                <!-- Search hidden on tools page for simplicity -->
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
+        <h1 class="text-3xl font-bold mb-2">UUID Generator</h1>
+        <p class="text-muted-foreground mb-6">Generate UUIDs (Universally Unique Identifiers) in all versions (v1-v8).
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Controls (Left Column) -->
+            <div class="md:col-span-1 space-y-4">
+                <div class="rounded-xl border bg-card text-card-foreground shadow-sm p-4 space-y-4">
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <label class="text-sm font-medium leading-none">UUID Version</label>
+                            <select id="versionSelect"
+                                class="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                                <option value="v4" selected>Version 4 (Random)</option>
+                                <option value="v7">Version 7 (Time-Ordered)</option>
+                                <option value="v1">Version 1 (Time & MAC)</option>
+                                <option value="v6">Version 6 (Reordered v1)</option>
+                                <option value="v3">Version 3 (MD5 Name)</option>
+                                <option value="v5">Version 5 (SHA-1 Name)</option>
+                                <option value="v8">Version 8 (Custom)</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-medium leading-none">Quantity</label>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="quantity" value="1" min="1" max="100"
+                                    class="flex h-9 w-20 rounded-md border border-input bg-background px-3 py-1 text-sm">
+                                <input type="range" id="quantityRange" min="1" max="50" value="1"
+                                    class="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary">
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Inputs -->
+                        <div id="nameInputs" class="space-y-3 pt-2 text-sm hidden">
+                            <div class="space-y-1">
+                                <label class="font-medium">Namespace</label>
+                                <select id="namespaceSelect"
+                                    class="w-full h-9 rounded-md border border-input bg-background px-3 py-1">
+                                    <option value="dns">DNS</option>
+                                    <option value="url">URL</option>
+                                    <option value="oid">OID</option>
+                                    <option value="x500">X500</option>
+                                    <option value="custom">Custom UUID</option>
+                                </select>
+                                <input type="text" id="customNamespace" placeholder="Namespace UUID"
+                                    class="hidden h-9 w-full rounded-md border border-input bg-background px-3 py-1 mt-1 font-mono text-xs">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="font-medium">Name</label>
+                                <input type="text" id="nameValue" placeholder="e.g. example.com"
+                                    class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1">
+                            </div>
+                        </div>
+
+                        <div id="v8Inputs" class="space-y-2 pt-2 text-sm hidden">
+                            <div class="space-y-1">
+                                <label class="font-medium">Custom Data (Hex)</label>
+                                <input type="text" id="v8Data" placeholder="Custom hex string"
+                                    class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 font-mono text-xs">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="refreshBtn"
+                        class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4">
+                        Regenerate UUIDs
+                    </button>
+
+                    <!-- Compact Version Guide -->
+                    <details class="text-xs text-muted-foreground border-t pt-2 cursor-pointer">
+                        <summary class="font-medium hover:text-foreground">About Versions</summary>
+                        <div class="mt-2 space-y-2 pl-2 border-l-2">
+                            <p><strong class="text-foreground">v4 (Random):</strong> Using
+                                <code>crypto.randomUUID</code>. Best for general use.</p>
+                            <p><strong class="text-foreground">v7 (Ordered):</strong> Timestamp + random. Best for DB
+                                keys.</p>
+                            <p><strong class="text-foreground">v3/v5 (Hash):</strong> Deterministic based on name. v5 is
+                                preferred.</p>
+                            <p><strong class="text-foreground">v1/v6:</strong> Legacy time-based formats.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Results (Right Column) -->
+            <div class="md:col-span-2">
+                <div class="rounded-xl border bg-card text-card-foreground shadow-sm h-full flex flex-col">
+                    <div class="p-0 flex-1 flex flex-col">
+                        <textarea id="output" readonly
+                            class="flex min-h-[250px] w-full bg-transparent border-0 px-6 py-6 text-sm md:text-base font-mono focus:ring-0 resize-none leading-relaxed flex-1"
+                            placeholder="Generated UUIDs will appear here..."></textarea>
+                    </div>
+                    <div class="p-4 border-t bg-muted/20 flex justify-end gap-2">
+                        <span id="statusMsg" class="text-xs text-muted-foreground self-center mr-auto pl-2"></span>
+                        <button id="copyBtn"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4">
+                            Copy to Clipboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const versionSelect = document.getElementById('versionSelect');
+            const quantityInput = document.getElementById('quantity');
+            const quantityRange = document.getElementById('quantityRange');
+            const refreshBtn = document.getElementById('refreshBtn');
+            const output = document.getElementById('output');
+            const copyBtn = document.getElementById('copyBtn');
+            const statusMsg = document.getElementById('statusMsg');
+
+            const nameInputs = document.getElementById('nameInputs');
+            const namespaceSelect = document.getElementById('namespaceSelect');
+            const customNamespace = document.getElementById('customNamespace');
+            const nameValue = document.getElementById('nameValue');
+
+            const v8Inputs = document.getElementById('v8Inputs');
+            const v8Data = document.getElementById('v8Data');
+
+            // Sync Inputs
+            quantityRange.addEventListener('input', () => quantityInput.value = quantityRange.value);
+            quantityInput.addEventListener('input', () => quantityRange.value = quantityInput.value);
+
+            // Handle Version Change UI
+            versionSelect.addEventListener('change', () => {
+                const v = versionSelect.value;
+
+                // Toggle inputs
+                if (v === 'v3' || v === 'v5') {
+                    nameInputs.classList.remove('hidden');
+                    v8Inputs.classList.add('hidden');
+                } else if (v === 'v8') {
+                    nameInputs.classList.add('hidden');
+                    v8Inputs.classList.remove('hidden');
+                } else {
+                    nameInputs.classList.add('hidden');
+                    v8Inputs.classList.add('hidden');
+                }
+            });
+
+            namespaceSelect.addEventListener('change', () => {
+                if (namespaceSelect.value === 'custom') {
+                    customNamespace.classList.remove('hidden');
+                } else {
+                    customNamespace.classList.add('hidden');
+                }
+            });
+
+            // Native v4 Fallback
+            function generateV4() {
+                if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    return crypto.randomUUID();
+                }
+                if (typeof uuid !== 'undefined' && uuid.v4) {
+                    return uuid.v4();
+                }
+                // Poor man's fallback if all else fails
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+
+            // Generators for other versions
+            function generateV6() {
+                // Try using library if available, else standard fallback logic
+                if (typeof uuid !== 'undefined' && uuid.v1) {
+                    const v1 = uuid.v1();
+                    // Reorder v1 to v6
+                    const timeLow = v1.substring(0, 8);
+                    const timeMid = v1.substring(9, 13);
+                    const timeHiAndVer = v1.substring(14, 18);
+                    const rest = v1.substring(19);
+
+                    const timeHi = timeHiAndVer.substring(1);
+                    return `${timeHi}${timeMid.substring(0, 1)}-${timeMid.substring(1)}-6${timeLow.substring(1)}-${rest}`;
+                }
+                return "Library failed to load for v6";
+            }
+
+            function generateV7() {
+                const now = Date.now();
+                const tsHex = now.toString(16).padStart(12, '0');
+
+                const randomHex = (bytes) => {
+                    let s = '';
+                    for (let i = 0; i < bytes; i++) s += Math.floor(Math.random() * 16).toString(16);
+                    return s;
+                }
+
+                return `${tsHex.substring(0, 8)}-${tsHex.substring(8, 12)}-7${randomHex(3)}-${['8', '9', 'a', 'b'][Math.floor(Math.random() * 4)]}${randomHex(3)}-${randomHex(12)}`;
+            }
+
+            function generateV8() {
+                const customData = (v8Data.value || '').replace(/[^0-9a-fA-F]/g, '');
+                let hex = customData.padEnd(32, '0').substring(0, 32).toLowerCase();
+
+                const p1 = hex.substring(0, 8);
+                const p2 = hex.substring(8, 12);
+                const p3 = '8' + hex.substring(13, 16);
+                const p4 = ['8', '9', 'a', 'b'][Math.floor(Math.random() * 4)] + hex.substring(17, 20);
+                const p5 = hex.substring(20, 32);
+
+                return `${p1}-${p2}-${p3}-${p4}-${p5}`;
+            }
+
+            async function generate() {
+                const version = versionSelect.value;
+                const count = Math.min(Math.max(parseInt(quantityInput.value) || 1, 1), 100);
+                const results = [];
+
+                try {
+                    statusMsg.textContent = '';
+
+                    for (let i = 0; i < count; i++) {
+                        if (version === 'v4') {
+                            results.push(generateV4());
+                        } else if (version === 'v7') {
+                            results.push(generateV7());
+                        } else if (version === 'v8') {
+                            results.push(generateV8());
+                        } else if (version === 'v6') {
+                            results.push(generateV6());
+                        } else {
+                            // v1, v3, v5 require valid library
+                            if (typeof uuid === 'undefined') {
+                                throw new Error('UUID library not loaded. Please refresh or check connection.');
+                            }
+
+                            if (version === 'v1') {
+                                results.push(uuid.v1());
+                            } else if (version === 'v3' || version === 'v5') {
+                                let ns = namespaceSelect.value;
+                                if (ns === 'custom') {
+                                    ns = customNamespace.value.trim();
+                                    if (!uuid.validate(ns)) throw new Error('Invalid Namespace UUID');
+                                } else {
+                                    // Use constants
+                                    if (ns === 'dns') ns = uuid.v5.DNS; // 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+                                    if (ns === 'url') ns = uuid.v5.URL;
+                                    if (ns === 'oid') ns = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+                                    if (ns === 'x500') ns = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
+
+                                    // Fallback if constants undefined in some builds
+                                    if (!ns && namespaceSelect.value === 'dns') ns = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+                                    if (!ns && namespaceSelect.value === 'url') ns = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+                                }
+
+                                const name = nameValue.value || 'example.com';
+
+                                if (version === 'v3') {
+                                    results.push(uuid.v3(name, ns));
+                                } else {
+                                    results.push(uuid.v5(name, ns));
+                                }
+                            }
+                        }
+                    }
+
+                    output.value = results.join('\n');
+
+                } catch (e) {
+                    console.error(e);
+                    output.value = `Error: ${e.message}`;
+                }
+            }
+
+            refreshBtn.addEventListener('click', generate);
+
+            copyBtn.addEventListener('click', () => {
+                if (!output.value || output.value.startsWith('Error')) return;
+                navigator.clipboard.writeText(output.value);
+                statusMsg.textContent = 'Copied to clipboard!';
+                setTimeout(() => statusMsg.textContent = '', 2000);
+            });
+
+            // Initial generation
+            generate();
+        });
+    </script>
+</body>
+
+</html>
