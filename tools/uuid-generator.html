@@ -191,13 +191,11 @@
                     <details class="text-xs text-muted-foreground border-t pt-2 cursor-pointer">
                         <summary class="font-medium hover:text-foreground">About Versions</summary>
                         <div class="mt-2 space-y-2 pl-2 border-l-2">
-                            <p><strong class="text-foreground">v4 (Random):</strong> Using
-                                <code>crypto.randomUUID</code>. Best for general use.</p>
+                            <p><strong class="text-foreground">v4 (Random):</strong> Ideal for general identifiers.</p>
                             <p><strong class="text-foreground">v7 (Ordered):</strong> Timestamp + random. Best for DB
                                 keys.</p>
-                            <p><strong class="text-foreground">v3/v5 (Hash):</strong> Deterministic based on name. v5 is
-                                preferred.</p>
-                            <p><strong class="text-foreground">v1/v6:</strong> Legacy time-based formats.</p>
+                            <p><strong class="text-foreground">v3/v5 (Hash):</strong> Name-based. v5 (SHA-1) is better
+                                than v3 (MD5).</p>
                         </div>
                     </details>
                 </div>
@@ -299,7 +297,7 @@
                 if (typeof uuid !== 'undefined' && uuid.v4) {
                     return uuid.v4();
                 }
-                // Poor man's fallback if all else fails
+                // Poor man's fallback
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                     return v.toString(16);
@@ -332,6 +330,10 @@
                     for (let i = 0; i < bytes; i++) s += Math.floor(Math.random() * 16).toString(16);
                     return s;
                 }
+                // 48-bit ts | 4-bit ver (7) | 12-bit rand | 2-bit var | 62-bit rand
+                // 12 hex | 1 hex (7) + 3 hex | 1 hex (8-b) + 3 hex | 12 hex
+                // Structure: 8-4-4-4-12
+                // time_high (8) - time_mid (4) - ver(1)rand(3) - var(1)rand(3) - rand(12)
 
                 return `${tsHex.substring(0, 8)}-${tsHex.substring(8, 12)}-7${randomHex(3)}-${['8', '9', 'a', 'b'][Math.floor(Math.random() * 4)]}${randomHex(3)}-${randomHex(12)}`;
             }
@@ -380,15 +382,11 @@
                                     ns = customNamespace.value.trim();
                                     if (!uuid.validate(ns)) throw new Error('Invalid Namespace UUID');
                                 } else {
-                                    // Use constants
-                                    if (ns === 'dns') ns = uuid.v5.DNS; // 6ba7b810-9dad-11d1-80b4-00c04fd430c8
-                                    if (ns === 'url') ns = uuid.v5.URL;
+                                    // Use constants if available, else standard DNS/URL UUIDs
+                                    if (ns === 'dns') ns = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+                                    if (ns === 'url') ns = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
                                     if (ns === 'oid') ns = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
                                     if (ns === 'x500') ns = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
-
-                                    // Fallback if constants undefined in some builds
-                                    if (!ns && namespaceSelect.value === 'dns') ns = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
-                                    if (!ns && namespaceSelect.value === 'url') ns = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
                                 }
 
                                 const name = nameValue.value || 'example.com';

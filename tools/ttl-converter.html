@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTL Time Converter | M Yusuf</title>
+    <meta name="description" content="Convert TTL (Time To Live) seconds into human-readable time units instantly.">
+
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-2xl">
+        <h1 class="text-3xl font-bold mb-2">TTL Time Converter</h1>
+        <p class="text-muted-foreground mb-8">Convert TTL (Time To Live) seconds into human-readable time units.</p>
+
+        <div class="rounded-xl border bg-card text-card-foreground shadow-sm p-6 md:p-8 space-y-6">
+
+            <!-- Input -->
+            <div class="space-y-2">
+                <label for="ttlInput" class="text-sm font-medium">TTL in Seconds</label>
+                <div class="flex gap-3">
+                    <input type="number" id="ttlInput" placeholder="e.g. 86400" min="0"
+                        class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-base font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <button id="convertBtn"
+                        class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6 shrink-0">
+                        Convert
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Values -->
+            <div class="space-y-2">
+                <p class="text-xs text-muted-foreground font-medium uppercase tracking-wider">Quick Values</p>
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="60">1 min</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="300">5 min</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="900">15 min</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="1800">30 min</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="3600">1 hour</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="86400">1 day</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="604800">1 week</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="2592000">30 days</button>
+                    <button
+                        class="quick-btn inline-flex items-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                        data-val="31536000">1 year</button>
+                </div>
+            </div>
+
+            <!-- Result Breakdown -->
+            <div id="resultBox" class="hidden space-y-4">
+                <div class="rounded-lg border bg-muted/40 px-6 py-5 text-center">
+                    <p class="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">Human Readable
+                    </p>
+                    <p id="resultMain" class="text-xl font-semibold text-primary font-mono"></p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="rounded-lg border bg-card p-3 text-center">
+                        <p class="text-2xl font-bold font-mono" id="rDays">—</p>
+                        <p class="text-xs text-muted-foreground mt-1">Days</p>
+                    </div>
+                    <div class="rounded-lg border bg-card p-3 text-center">
+                        <p class="text-2xl font-bold font-mono" id="rHours">—</p>
+                        <p class="text-xs text-muted-foreground mt-1">Hours</p>
+                    </div>
+                    <div class="rounded-lg border bg-card p-3 text-center">
+                        <p class="text-2xl font-bold font-mono" id="rMinutes">—</p>
+                        <p class="text-xs text-muted-foreground mt-1">Minutes</p>
+                    </div>
+                    <div class="rounded-lg border bg-card p-3 text-center">
+                        <p class="text-2xl font-bold font-mono" id="rSeconds">—</p>
+                        <p class="text-xs text-muted-foreground mt-1">Seconds</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="emptyMsg"
+                class="rounded-lg border bg-muted/40 px-6 py-5 text-center text-muted-foreground text-sm">
+                Enter a TTL value in seconds above to see the breakdown.
+            </div>
+        </div>
+
+        <!-- Common TTL Reference -->
+        <div class="mt-8 rounded-xl border bg-card text-card-foreground shadow-sm p-6">
+            <h2 class="text-base font-semibold mb-4">Common TTL Reference</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b text-muted-foreground">
+                            <th class="text-left py-2 pr-4 font-medium">Seconds</th>
+                            <th class="text-left py-2 pr-4 font-medium">Duration</th>
+                            <th class="text-left py-2 font-medium">Common Use</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y text-sm">
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="60">
+                            <td class="py-2 pr-4 font-mono">60</td>
+                            <td class="py-2 pr-4">1 minute</td>
+                            <td class="py-2 text-muted-foreground">Short-lived cache</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="300">
+                            <td class="py-2 pr-4 font-mono">300</td>
+                            <td class="py-2 pr-4">5 minutes</td>
+                            <td class="py-2 text-muted-foreground">DNS TTL (low)</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="3600">
+                            <td class="py-2 pr-4 font-mono">3600</td>
+                            <td class="py-2 pr-4">1 hour</td>
+                            <td class="py-2 text-muted-foreground">Session tokens</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="86400">
+                            <td class="py-2 pr-4 font-mono">86400</td>
+                            <td class="py-2 pr-4">1 day</td>
+                            <td class="py-2 text-muted-foreground">DNS TTL (standard)</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="604800">
+                            <td class="py-2 pr-4 font-mono">604800</td>
+                            <td class="py-2 pr-4">7 days</td>
+                            <td class="py-2 text-muted-foreground">Refresh tokens</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="2592000">
+                            <td class="py-2 pr-4 font-mono">2592000</td>
+                            <td class="py-2 pr-4">30 days</td>
+                            <td class="py-2 text-muted-foreground">Long-lived sessions</td>
+                        </tr>
+                        <tr class="cursor-pointer hover:bg-muted/40 transition-colors ref-row" data-val="31536000">
+                            <td class="py-2 pr-4 font-mono">31536000</td>
+                            <td class="py-2 pr-4">1 year</td>
+                            <td class="py-2 text-muted-foreground">HSTS max-age</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ttlInput = document.getElementById('ttlInput');
+            const resultBox = document.getElementById('resultBox');
+            const emptyMsg = document.getElementById('emptyMsg');
+            const resultMain = document.getElementById('resultMain');
+            const rDays = document.getElementById('rDays');
+            const rHours = document.getElementById('rHours');
+            const rMinutes = document.getElementById('rMinutes');
+            const rSeconds = document.getElementById('rSeconds');
+
+            let debounceTimer;
+
+            function convert(val) {
+                const seconds = parseInt(val);
+                if (isNaN(seconds) || seconds < 0) {
+                    resultBox.classList.add('hidden');
+                    emptyMsg.classList.remove('hidden');
+                    return;
+                }
+
+                const d = Math.floor(seconds / 86400);
+                const h = Math.floor((seconds % 86400) / 3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                const s = seconds % 60;
+
+                const parts = [];
+                if (d > 0) parts.push(`${d} day${d !== 1 ? 's' : ''}`);
+                if (h > 0) parts.push(`${h} hour${h !== 1 ? 's' : ''}`);
+                if (m > 0) parts.push(`${m} minute${m !== 1 ? 's' : ''}`);
+                if (s > 0 || parts.length === 0) parts.push(`${s} second${s !== 1 ? 's' : ''}`);
+
+                resultMain.textContent = parts.join(', ');
+                rDays.textContent = d;
+                rHours.textContent = h;
+                rMinutes.textContent = m;
+                rSeconds.textContent = s;
+
+                resultBox.classList.remove('hidden');
+                emptyMsg.classList.add('hidden');
+            }
+
+            // Input with debounce
+            ttlInput.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => convert(ttlInput.value), 400);
+            });
+
+            ttlInput.addEventListener('keydown', () => clearTimeout(debounceTimer));
+
+            ttlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    clearTimeout(debounceTimer);
+                    convert(ttlInput.value);
+                }
+            });
+
+            document.getElementById('convertBtn').addEventListener('click', () => {
+                clearTimeout(debounceTimer);
+                convert(ttlInput.value);
+            });
+
+            // Quick value buttons
+            document.querySelectorAll('.quick-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    ttlInput.value = btn.dataset.val;
+                    convert(btn.dataset.val);
+                });
+            });
+
+            // Reference table rows
+            document.querySelectorAll('.ref-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    ttlInput.value = row.dataset.val;
+                    convert(row.dataset.val);
+                    ttlInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

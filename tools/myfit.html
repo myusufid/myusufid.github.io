@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFit — Activity Image Generator | M Yusuf</title>
+    <meta name="description"
+        content="Generate beautiful activity summary images from your fitness data. Supports food equivalent, activity stats, and custom stats templates.">
+
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+    <style>
+        #canvas-wrapper {
+            max-width: 100%;
+        }
+
+        #canvas-wrapper canvas:not(.hidden) {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+
+        #canvas-placeholder {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
+        <h1 class="text-3xl font-bold mb-2">MyFit</h1>
+        <p class="text-muted-foreground mb-8">Generate shareable activity summary images from your fitness data.</p>
+
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
+            <!-- Form Panel -->
+            <div class="rounded-xl border bg-card text-card-foreground shadow-sm p-6 space-y-5 min-w-0">
+
+                <!-- Autosave indicator -->
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-muted-foreground" id="save-indicator"></span>
+                </div>
+
+                <!-- Template Selector -->
+                <div class="space-y-2">
+                    <label for="template-select" class="text-sm font-medium">Template</label>
+                    <select id="template-select"
+                        class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                        <option value="food-equivalent">🍔 Food Equivalent</option>
+                        <option value="visual-card">✨ Visual Card</option>
+                        <option value="activity-stats">🏃 Activity Stats</option>
+                        <option value="custom-stats">⚙️ Custom Stats</option>
+                    </select>
+                </div>
+
+                <!-- Food Equivalent Inputs -->
+                <div id="food-equivalent-inputs" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="calories" class="text-sm font-medium">Total Calories Burned</label>
+                        <input type="number" id="calories" placeholder="e.g. 650" min="0"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="km" class="text-sm font-medium">Total Kilometers Run</label>
+                        <input type="number" id="km" placeholder="e.g. 10.5" min="0" step="0.01"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="steps" class="text-sm font-medium">Total Steps Taken</label>
+                        <input type="number" id="steps" placeholder="e.g. 12500" min="0"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                </div>
+
+                <!-- Activity Stats Inputs -->
+                <div id="activity-stats-inputs" class="space-y-4 hidden">
+                    <div class="space-y-2">
+                        <label for="distance" class="text-sm font-medium">Distance (km)</label>
+                        <input type="number" id="distance" placeholder="e.g. 10.5" min="0" step="0.01"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="time" class="text-sm font-medium">Time (hh:mm:ss)</label>
+                        <input type="text" id="time" placeholder="e.g. 01:53:00"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                </div>
+
+                <!-- Custom Stats Inputs -->
+                <div id="custom-stats-inputs" class="space-y-4 hidden">
+                    <div class="space-y-2">
+                        <label for="custom-distance" class="text-sm font-medium">Distance (km)</label>
+                        <input type="number" id="custom-distance" placeholder="e.g. 10.5" min="0" step="0.01"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="custom-time" class="text-sm font-medium">Time (hh:mm:ss)</label>
+                        <input type="text" id="custom-time" placeholder="e.g. 01:53:00"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="custom-steps" class="text-sm font-medium">Total Steps Taken</label>
+                        <input type="number" id="custom-steps" placeholder="e.g. 12500" min="0"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="custom-calories" class="text-sm font-medium">Total Calories Burned</label>
+                        <input type="number" id="custom-calories" placeholder="e.g. 650" min="0"
+                            class="flex h-11 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button id="generate-btn"
+                    class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                        <circle cx="9" cy="9" r="2" />
+                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                    </svg>
+                    Generate Image
+                </button>
+
+                <!-- Error message -->
+                <p id="error-msg" class="text-sm text-red-500 hidden"></p>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="space-y-4 min-w-0">
+                <div id="canvas-wrapper"
+                    class="rounded-xl border bg-card shadow-sm overflow-hidden flex flex-col items-center justify-center min-h-[300px] w-full">
+                    <div id="canvas-placeholder" class="text-center text-muted-foreground p-8 w-full max-w-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="mx-auto mb-3 opacity-40">
+                            <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0" />
+                            <path d="M12 8v4l3 3" />
+                        </svg>
+                        <p class="text-sm">Fill in the form and click<br><strong>Generate Image</strong></p>
+                    </div>
+                    <canvas id="canvas" width="1080" height="1080" class="hidden w-full h-auto"></canvas>
+                </div>
+
+                <!-- Download Button -->
+                <a id="download-btn"
+                    class="hidden inline-flex w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-3 text-sm font-semibold shadow hover:bg-accent hover:text-accent-foreground transition-colors"
+                    download="myfit-activity.png">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" x2="12" y1="15" y2="3" />
+                    </svg>
+                    Download Image
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground">
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+    <script>
+        // ─── Food Data (Indonesian foods with local images) ───────────────────────
+        const equivalentFoods = [
+            // ── Original 12 ──
+            { singular: 'piece of Tempe Goreng', plural: 'pieces of Tempe Goreng', calories: 85, iconUrl: '/tools/myfit-images/tempe-goreng.png' },
+            { singular: 'piece of Tahu Goreng', plural: 'pieces of Tahu Goreng', calories: 75, iconUrl: '/tools/myfit-images/tahu-goreng.png' },
+            { singular: 'pack of Keripik Singkong', plural: 'packs of Keripik Singkong', calories: 120, iconUrl: '/tools/myfit-images/keripik-singkong.png' },
+            { singular: 'Sosis Bakar', plural: 'Sosis Bakar', calories: 150, iconUrl: '/tools/myfit-images/sosis-bakar.png' },
+            { singular: 'piece of Bakwan Goreng', plural: 'pieces of Bakwan Goreng', calories: 95, iconUrl: '/tools/myfit-images/bakwan-goreng.png' },
+            { singular: 'portion of Nasi Uduk', plural: 'portions of Nasi Uduk', calories: 320, iconUrl: '/tools/myfit-images/nasi-uduk.png' },
+            { singular: 'portion of Nasi Padang', plural: 'portions of Nasi Padang', calories: 450, iconUrl: '/tools/myfit-images/nasi-padang.png' },
+            { singular: 'bowl of Bakso', plural: 'bowls of Bakso', calories: 280, iconUrl: '/tools/myfit-images/bakso.png' },
+            { singular: 'bowl of Mie Ayam', plural: 'bowls of Mie Ayam', calories: 350, iconUrl: '/tools/myfit-images/mie-ayam.png' },
+            { singular: 'Donat', plural: 'Donat', calories: 180, iconUrl: '/tools/myfit-images/donat.png' },
+            { singular: 'sachet of Kopi Susu', plural: 'sachets of Kopi Susu', calories: 90, iconUrl: '/tools/myfit-images/sachet-kopi-susu.png' },
+            { singular: 'cup of Starbucks Coffee', plural: 'cups of Starbucks Coffee', calories: 250, iconUrl: '/tools/myfit-images/kopi-starbuck.png' },
+            // ── New additions ──
+            { singular: 'portion of Ayam Geprek', plural: 'portions of Ayam Geprek', calories: 520, iconUrl: '/tools/myfit-images/ayam-geprek.png' },
+            { singular: 'plate of Nasi Goreng', plural: 'plates of Nasi Goreng', calories: 400, iconUrl: '/tools/myfit-images/nasi-goreng.png' },
+            { singular: 'piece of Martabak Manis', plural: 'pieces of Martabak Manis', calories: 380, iconUrl: '/tools/myfit-images/martabak-manis.png' },
+            { singular: 'pack of Indomie Goreng', plural: 'packs of Indomie Goreng', calories: 330, iconUrl: '/tools/myfit-images/indomie-goreng.png' },
+            { singular: 'piece of Pisang Goreng', plural: 'pieces of Pisang Goreng', calories: 130, iconUrl: '/tools/myfit-images/pisang-goreng.png' },
+            { singular: 'skewer of Sate Ayam', plural: 'skewers of Sate Ayam', calories: 70, iconUrl: '/tools/myfit-images/sate-ayam.png' },
+            { singular: 'glass of Es Teh Manis', plural: 'glasses of Es Teh Manis', calories: 80, iconUrl: '/tools/myfit-images/es-teh-manis.png' },
+            { singular: 'bowl of Bubur Ayam', plural: 'bowls of Bubur Ayam', calories: 240, iconUrl: '/tools/myfit-images/bubur-ayam.png' },
+            { singular: 'pack of Kerupuk Udang', plural: 'packs of Kerupuk Udang', calories: 110, iconUrl: '/tools/myfit-images/kerupuk-udang.png' },
+            { singular: 'plate of Gado-Gado', plural: 'plates of Gado-Gado', calories: 290, iconUrl: '/tools/myfit-images/gado-gado.png' },
+        ];
+
+        function getFoodEquivalent(calories) {
+            let eligibleFoods = equivalentFoods.filter(food => food.calories <= calories);
+            let selectedFood;
+            if (eligibleFoods.length > 0) {
+                selectedFood = eligibleFoods[Math.floor(Math.random() * eligibleFoods.length)];
+            } else {
+                selectedFood = equivalentFoods.reduce((prev, curr) => prev.calories < curr.calories ? prev : curr);
+            }
+            const quantity = Math.round(calories / selectedFood.calories);
+            return { food: selectedFood, quantity };
+        }
+
+        // ─── Roasting Messages ────────────────────────────────────────────────────
+        const roastingMessages = [
+            { threshold: 0, message: "Did you even get off the couch? That's a pre-warm-up!" },
+            { threshold: 0, message: "Zero effort detected. Did you blink and call it exercise?" },
+            { threshold: 0, message: "I've seen sloths move with more intensity!" },
+            { threshold: 25, message: "Finally! A pulse of activity. Baby steps, I guess." },
+            { threshold: 25, message: "Is this a warm-up for your warm-up?" },
+            { threshold: 50, message: "Barely a flicker! Is that all you've got?" },
+            { threshold: 50, message: "My grandmother burns more calories knitting!" },
+            { threshold: 75, message: "Okay, I see you trying. Emphasis on 'trying'." },
+            { threshold: 75, message: "Getting warmer! Like lukewarm tea." },
+            { threshold: 100, message: "A gentle simmer. Let's see some real heat!" },
+            { threshold: 100, message: "You've reached 'walking to the fridge' levels!" },
+            { threshold: 150, message: "Warming up, I guess. Don't strain yourself!" },
+            { threshold: 150, message: "You're on fire! Well, more like smoldering." },
+            { threshold: 200, message: "Okay, a little spark. Don't let it fizzle out!" },
+            { threshold: 200, message: "Two hundred! You're practically an athlete now!" },
+            { threshold: 250, message: "Feeling the burn yet? Or is that just indigestion?" },
+            { threshold: 250, message: "Quarter of a thousand! Mathematical magic!" },
+            { threshold: 300, message: "Picking up the pace! Still, not exactly an inferno." },
+            { threshold: 300, message: "Three hundred! The fat is officially concerned!" },
+            { threshold: 350, message: "Decent effort. Your sweat is almost visible!" },
+            { threshold: 350, message: "You're burning! Like a controlled campfire!" },
+            { threshold: 400, message: "Getting there! The calories are starting to feel the heat." },
+            { threshold: 400, message: "Four hundred! You're a calorie-burning machine!" },
+            { threshold: 450, message: "Halfway to a real workout! Don't stop now, you're almost roasted!" },
+            { threshold: 450, message: "You're on fire! The calories are toast!" },
+            { threshold: 500, message: "Now we're talking! The fat cells are crying for mercy." },
+            { threshold: 500, message: "Five hundred! You've reached legend status!" },
+            { threshold: 550, message: "Impressive! You're officially in the calorie-scorching zone." },
+            { threshold: 600, message: "Burning bright! Are you sure you're not a dragon?" },
+            { threshold: 650, message: "Unleashing the beast! The calories don't stand a chance." },
+            { threshold: 700, message: "On fire! You're a human furnace, keep it up!" },
+            { threshold: 750, message: "Seriously hot! The gym floor is probably melting." },
+            { threshold: 800, message: "Incinerating calories! You're a force of nature." },
+            { threshold: 850, message: "Beyond roasted! You're practically charcoal, in a good way!" },
+            { threshold: 900, message: "Legendary burn! The calories are running in fear." },
+            { threshold: 950, message: "Absolute inferno! You've annihilated those calories. Bow down!" },
+            { threshold: 1000, message: "ONE THOUSAND! You've become the workout itself!" },
+            { threshold: 1500, message: "FIFTEEN HUNDRED! You ARE the workout revolution!" },
+        ];
+
+        function getRandomRoastingMessage(calories) {
+            const eligible = roastingMessages.filter(msg => msg.threshold <= calories);
+            if (eligible.length > 0) {
+                return eligible[Math.floor(Math.random() * eligible.length)].message;
+            }
+            return "Still waiting for the spark...";
+        }
+
+        // ─── Canvas Utilities ─────────────────────────────────────────────────────
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                if (context.measureText(testLine).width > maxWidth && n > 0) {
+                    context.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, y);
+        }
+
+        function getResponsiveFontSize(context, text, maxWidth) {
+            let fontSize = 120;
+            context.font = `bold ${fontSize}px Poppins`;
+            while (context.measureText(text).width > maxWidth) {
+                fontSize--;
+                context.font = `bold ${fontSize}px Poppins`;
+            }
+            return fontSize;
+        }
+
+        function parseTime(timeString) {
+            const parts = timeString.split(':');
+            return (parseInt(parts[0], 10) * 3600) + (parseInt(parts[1], 10) * 60) + parseInt(parts[2], 10);
+        }
+
+        function formatPace(paceInSeconds) {
+            const minutes = Math.floor(paceInSeconds / 60);
+            const seconds = Math.round(paceInSeconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // ─── DOM References ───────────────────────────────────────────────────────
+        const templateSelect = document.getElementById('template-select');
+        const feInputs = document.getElementById('food-equivalent-inputs');
+        const asInputs = document.getElementById('activity-stats-inputs');
+        const csInputs = document.getElementById('custom-stats-inputs');
+        const generateBtn = document.getElementById('generate-btn');
+        const errorMsg = document.getElementById('error-msg');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const canvasPlaceholder = document.getElementById('canvas-placeholder');
+        const downloadBtn = document.getElementById('download-btn');
+
+        // ─── Template Switching ───────────────────────────────────────────────────
+        templateSelect.addEventListener('change', () => {
+            feInputs.classList.add('hidden');
+            asInputs.classList.add('hidden');
+            csInputs.classList.add('hidden');
+            const v = templateSelect.value;
+            if (v === 'food-equivalent') feInputs.classList.remove('hidden');
+            else if (v === 'visual-card') feInputs.classList.remove('hidden'); // reuses same inputs
+            else if (v === 'activity-stats') asInputs.classList.remove('hidden');
+            else if (v === 'custom-stats') csInputs.classList.remove('hidden');
+            hideOutput();
+        });
+
+        function hideOutput() {
+            canvas.classList.add('hidden');
+            canvasPlaceholder.classList.remove('hidden');
+            downloadBtn.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+        }
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.classList.remove('hidden');
+        }
+
+        function finalizeCanvas() {
+            canvasPlaceholder.classList.add('hidden');
+            canvas.classList.remove('hidden');
+            downloadBtn.href = canvas.toDataURL('image/png');
+            downloadBtn.classList.remove('hidden');
+        }
+
+        // ─── Image Generators ─────────────────────────────────────────────────────
+
+        function generateFoodEquivalentImage(calories, km, steps) {
+            const { food: selectedFood, quantity } = getFoodEquivalent(calories);
+
+            const icon = new Image();
+            icon.crossOrigin = 'anonymous';
+            icon.src = selectedFood.iconUrl;
+
+            icon.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background
+                ctx.fillStyle = '#282c34';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Food icon
+                ctx.drawImage(icon, canvas.width / 2 - 150, 100, 300, 300);
+
+                // Calories headline
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 72px Poppins';
+                ctx.textAlign = 'center';
+                ctx.fillText(`You burned ${calories} calories!`, canvas.width / 2, 500);
+
+                // Roasting message
+                const roastingMessage = getRandomRoastingMessage(calories);
+                ctx.font = 'italic 36px Poppins';
+                ctx.fillStyle = '#FFD700';
+                wrapText(ctx, roastingMessage, canvas.width / 2, 560, 1000, 40);
+
+                // Food equivalent
+                ctx.font = '54px Poppins';
+                ctx.fillStyle = '#61dafb';
+                const foodText = quantity === 1
+                    ? `That's equivalent to about 1 ${selectedFood.singular}.`
+                    : `That's equivalent to about ${quantity} ${selectedFood.plural}.`;
+                wrapText(ctx, foodText, canvas.width / 2, 640, 1000, 60);
+
+                // Stats
+                ctx.font = '48px Poppins';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(`Kilometers: ${km} km`, canvas.width / 2, 780);
+                ctx.fillText(`Steps: ${steps}`, canvas.width / 2, 880);
+
+                finalizeCanvas();
+            };
+
+            icon.onerror = () => {
+                // Fallback: draw without image
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#282c34';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 72px Poppins';
+                ctx.textAlign = 'center';
+                ctx.fillText(`You burned ${calories} calories!`, canvas.width / 2, 300);
+
+                const roastingMessage = getRandomRoastingMessage(calories);
+                ctx.font = 'italic 36px Poppins';
+                ctx.fillStyle = '#FFD700';
+                wrapText(ctx, roastingMessage, canvas.width / 2, 380, 1000, 40);
+
+                ctx.font = '54px Poppins';
+                ctx.fillStyle = '#61dafb';
+                const foodText = quantity === 1
+                    ? `That's equivalent to about 1 ${selectedFood.singular}.`
+                    : `That's equivalent to about ${quantity} ${selectedFood.plural}.`;
+                wrapText(ctx, foodText, canvas.width / 2, 500, 1000, 60);
+
+                ctx.font = '48px Poppins';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(`Kilometers: ${km} km`, canvas.width / 2, 700);
+                ctx.fillText(`Steps: ${steps}`, canvas.width / 2, 800);
+
+                finalizeCanvas();
+            };
+        }
+
+        function generateActivityStatsImage(distance, time) {
+            const totalSeconds = parseTime(time);
+            const pace = totalSeconds / distance;
+            const formattedPace = formatPace(pace);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'center';
+
+            const maxWidth = 1000;
+
+            // Distance
+            let valueFontSize = getResponsiveFontSize(ctx, `${distance.toFixed(2)} km`, maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Distance', canvas.width / 2, 150);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(`${distance.toFixed(2)} km`, canvas.width / 2, 300);
+
+            // Pace
+            valueFontSize = getResponsiveFontSize(ctx, `${formattedPace} /km`, maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Pace', canvas.width / 2, 450);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(`${formattedPace} /km`, canvas.width / 2, 600);
+
+            // Time
+            valueFontSize = getResponsiveFontSize(ctx, time, maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Time', canvas.width / 2, 750);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(time, canvas.width / 2, 900);
+
+            // Logo
+            ctx.font = 'bold 40px Poppins';
+            ctx.fillText('MyFit', canvas.width / 2, 1020);
+
+            finalizeCanvas();
+        }
+
+        function generateCustomStatsImage(distance, time, steps, calories) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'center';
+
+            const maxWidth = 1000;
+
+            // Distance
+            let valueFontSize = getResponsiveFontSize(ctx, `${distance.toFixed(2)} km`, maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Distance', canvas.width / 2, 100);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(`${distance.toFixed(2)} km`, canvas.width / 2, 220);
+
+            // Time
+            valueFontSize = getResponsiveFontSize(ctx, time, maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Time', canvas.width / 2, 340);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(time, canvas.width / 2, 460);
+
+            // Steps
+            valueFontSize = getResponsiveFontSize(ctx, String(steps), maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Steps', canvas.width / 2, 580);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(String(steps), canvas.width / 2, 700);
+
+            // Calories
+            valueFontSize = getResponsiveFontSize(ctx, String(calories), maxWidth);
+            ctx.font = `bold ${valueFontSize / 2}px Poppins`;
+            ctx.fillText('Calories', canvas.width / 2, 820);
+            ctx.font = `bold ${valueFontSize}px Poppins`;
+            ctx.fillText(String(calories), canvas.width / 2, 940);
+
+            finalizeCanvas();
+        }
+
+        // ─── Visual Card Generator ────────────────────────────────────────────────
+        // Emoji food list (fallback when local images are not used)
+        const EMOJI_FOODS = [
+            // Indonesian
+            { name: 'Nasi Goreng', emoji: '🍳', cal: 400 },
+            { name: 'Bakso', emoji: '🍜', cal: 280 },
+            { name: 'Mie Ayam', emoji: '🍜', cal: 350 },
+            { name: 'Sate Ayam', emoji: '🍢', cal: 70 },
+            { name: 'Pisang Goreng', emoji: '🍌', cal: 130 },
+            { name: 'Martabak', emoji: '🥞', cal: 380 },
+            { name: 'Tempe Goreng', emoji: '🧱', cal: 85 },
+            { name: 'Gado-Gado', emoji: '🥗', cal: 290 },
+            { name: 'Nasi Padang', emoji: '🍛', cal: 450 },
+            { name: 'Indomie', emoji: '🍝', cal: 330 },
+            { name: 'Ayam Geprek', emoji: '🍗', cal: 520 },
+            { name: 'Bubur Ayam', emoji: '🍚', cal: 240 },
+            { name: 'Kerupuk', emoji: '🧀', cal: 110 },
+            { name: 'Es Teh Manis', emoji: '🍵', cal: 80 },
+            { name: 'Kopi Susu', emoji: '☕', cal: 90 },
+            // International
+            { name: 'Banana', emoji: '🍌', cal: 105 },
+            { name: 'Pizza slice', emoji: '🍕', cal: 285 },
+            { name: 'Donut', emoji: '🍩', cal: 250 },
+            { name: 'Burger', emoji: '🍔', cal: 550 },
+            { name: 'Bowl of rice', emoji: '🍚', cal: 200 },
+            { name: 'Can of soda', emoji: '🥤', cal: 150 },
+            { name: 'Chocolate bar', emoji: '🍫', cal: 230 },
+            { name: 'Apple', emoji: '🍎', cal: 95 },
+            { name: 'Fried chicken', emoji: '🍗', cal: 400 },
+            { name: 'Avocado toast', emoji: '🥑', cal: 300 },
+            { name: 'Ice cream', emoji: '🍨', cal: 210 },
+            { name: 'French fries', emoji: '🍟', cal: 365 },
+            { name: 'Hot dog', emoji: '🌭', cal: 290 },
+            { name: 'Taco', emoji: '🌮', cal: 170 },
+            { name: 'Sushi roll', emoji: '🍣', cal: 45 },
+        ];
+
+        function getEmojiFoods(calories) {
+            // Pick 3 foods with best-looking (non-trivial) quantities
+            const scored = EMOJI_FOODS.map(f => ({
+                ...f,
+                count: (calories / f.cal).toFixed(1),
+                score: Math.abs((calories / f.cal) - Math.round(calories / f.cal)),
+            }));
+            scored.sort((a, b) => a.score - b.score);
+            return scored.slice(0, 3);
+        }
+
+        function drawRoundedRect(ctx, x, y, w, h, r, fill) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+            if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+        }
+
+        function drawStatCard(ctx, x, y, w, h, label, value, unit, accent) {
+            drawRoundedRect(ctx, x, y, w, h, 18, 'rgba(255,255,255,0.10)');
+            // accent bar at bottom
+            drawRoundedRect(ctx, x + 16, y + h - 7, w - 32, 5, 3, accent);
+            // label
+            ctx.font = '500 22px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.textAlign = 'center';
+            ctx.fillText(label.toUpperCase(), x + w / 2, y + 34);
+            // value
+            ctx.font = 'bold 52px Inter, sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(value, x + w / 2, y + h / 2 + 14);
+            // unit
+            if (unit) {
+                ctx.font = '500 22px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.60)';
+                ctx.fillText(unit, x + w / 2, y + h / 2 + 44);
+            }
+        }
+
+        function generateVisualCardImage(calories, km, steps) {
+            const W = 1080, H = 1080;
+            canvas.width = W; canvas.height = H;
+
+            // ── Background gradient ──
+            const grad = ctx.createLinearGradient(0, 0, W, H);
+            grad.addColorStop(0, '#1a1a2e');
+            grad.addColorStop(1, '#16213e');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+
+            // Decorative blobs
+            ctx.beginPath(); ctx.arc(880, 160, 280, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,107,107,0.07)'; ctx.fill();
+            ctx.beginPath(); ctx.arc(160, 880, 240, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(78,205,196,0.07)'; ctx.fill();
+
+            // ── Header label ──
+            ctx.font = '600 30px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.45)';
+            ctx.textAlign = 'center';
+            ctx.fillText('🔥  CALORIES BURNED', W / 2, 100);
+
+            // ── Hero calorie number ──
+            ctx.font = 'bold 160px Inter, sans-serif';
+            ctx.fillStyle = '#FF6B6B';
+            ctx.fillText(Number(calories).toLocaleString('en-US'), W / 2, 260);
+
+            ctx.font = '500 38px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.55)';
+            ctx.fillText('kcal', W / 2, 318);
+
+            // ── Divider ──
+            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(80, 360); ctx.lineTo(W - 80, 360); ctx.stroke();
+
+            // ── Stat cards row ──
+            const cW = 280, cH = 155, cY = 390, gap = 20;
+            const startX = (W - (cW * 3 + gap * 2)) / 2;
+            drawStatCard(ctx, startX, cY, cW, cH, 'Distance', parseFloat(km).toFixed(2), 'km', '#4ECDC4');
+            drawStatCard(ctx, startX + cW + gap, cY, cW, cH, 'Steps', Number(steps).toLocaleString('en-US'), 'steps', '#FFE66D');
+            drawStatCard(ctx, startX + (cW + gap) * 2, cY, cW, cH, 'Calories', Number(calories).toLocaleString('en-US'), 'kcal', '#FF6B6B');
+
+            // ── Equivalent to label ──
+            ctx.font = '600 26px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.40)';
+            ctx.textAlign = 'center';
+            ctx.fillText('EQUIVALENT TO', W / 2, 610);
+
+            // ── Emoji food cards ──
+            const foods = getEmojiFoods(parseInt(calories));
+            const fcW = 280, fcH = 200, fcY = 635;
+            const fStartX = (W - (fcW * 3 + gap * 2)) / 2;
+            const accents = ['#FF6B6B', '#FFE66D', '#4ECDC4'];
+
+            foods.forEach((food, i) => {
+                const fx = fStartX + i * (fcW + gap);
+                drawRoundedRect(ctx, fx, fcY, fcW, fcH, 18, 'rgba(255,255,255,0.09)');
+                // emoji
+                ctx.font = '72px serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(food.emoji, fx + fcW / 2, fcY + 82);
+                // count
+                ctx.font = 'bold 34px Inter, sans-serif';
+                ctx.fillStyle = accents[i];
+                ctx.fillText(`×${food.count}`, fx + fcW / 2, fcY + 130);
+                // name
+                ctx.font = '500 20px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.60)';
+                ctx.fillText(food.name, fx + fcW / 2, fcY + 162);
+            });
+
+            // ── Footer ──
+            ctx.font = '400 24px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.25)';
+            ctx.textAlign = 'center';
+            ctx.fillText('myusufid.github.io/tools/myfit', W / 2, H - 48);
+
+            finalizeCanvas();
+        }
+
+        // ─── localStorage Persistence ─────────────────────────────────────────────
+        const STORAGE_KEY = 'myfit_last_input';
+        const saveIndicator = document.getElementById('save-indicator');
+
+        // All tracked field IDs
+        const FIELD_IDS = ['calories', 'km', 'steps', 'distance', 'time',
+            'custom-distance', 'custom-time', 'custom-steps', 'custom-calories'];
+
+        function saveState() {
+            const state = { template: templateSelect.value, savedAt: Date.now() };
+            FIELD_IDS.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) state[id] = el.value;
+            });
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                const d = new Date();
+                const hh = String(d.getHours()).padStart(2, '0');
+                const mm = String(d.getMinutes()).padStart(2, '0');
+                const ss = String(d.getSeconds()).padStart(2, '0');
+                saveIndicator.textContent = `✓ Autosaved at ${hh}:${mm}:${ss}`;
+            } catch (e) { /* storage unavailable */ }
+        }
+
+        function restoreState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const state = JSON.parse(raw);
+
+                // Restore template
+                if (state.template) {
+                    templateSelect.value = state.template;
+                    // Trigger panel visibility
+                    feInputs.classList.add('hidden');
+                    asInputs.classList.add('hidden');
+                    csInputs.classList.add('hidden');
+                    if (state.template === 'food-equivalent') feInputs.classList.remove('hidden');
+                    else if (state.template === 'activity-stats') asInputs.classList.remove('hidden');
+                    else if (state.template === 'custom-stats') csInputs.classList.remove('hidden');
+                }
+
+                // Restore field values
+                FIELD_IDS.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && state[id] !== undefined) el.value = state[id];
+                });
+
+                // Show when it was last saved
+                if (state.savedAt) {
+                    const d = new Date(state.savedAt);
+                    const hh = String(d.getHours()).padStart(2, '0');
+                    const mm = String(d.getMinutes()).padStart(2, '0');
+                    const ss = String(d.getSeconds()).padStart(2, '0');
+                    saveIndicator.textContent = `✓ Restored from ${hh}:${mm}:${ss}`;
+                }
+            } catch (e) { /* corrupted storage, ignore */ }
+        }
+
+        // Save on every field change
+        FIELD_IDS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', saveState);
+        });
+        templateSelect.addEventListener('change', saveState);
+
+        // Restore on load — also fix panel visibility for visual-card
+        restoreState();
+        if (templateSelect.value === 'visual-card') feInputs.classList.remove('hidden');
+
+        // ─── Generate Button ──────────────────────────────────────────────────────
+        generateBtn.addEventListener('click', () => {
+            errorMsg.classList.add('hidden');
+            const tmpl = templateSelect.value;
+
+            if (tmpl === 'food-equivalent') {
+                const cal = parseInt(document.getElementById('calories').value);
+                const km = document.getElementById('km').value;
+                const steps = document.getElementById('steps').value;
+                if (!cal || !km || !steps) { showError('Please fill in all fields.'); return; }
+                generateFoodEquivalentImage(cal, km, steps);
+
+            } else if (tmpl === 'visual-card') {
+                const cal = parseInt(document.getElementById('calories').value);
+                const km = document.getElementById('km').value;
+                const steps = document.getElementById('steps').value;
+                if (!cal || !km || !steps) { showError('Please fill in all fields.'); return; }
+                generateVisualCardImage(cal, km, steps);
+
+            } else if (tmpl === 'activity-stats') {
+                const dist = parseFloat(document.getElementById('distance').value);
+                const time = document.getElementById('time').value.trim();
+                if (!dist || !time) { showError('Please fill in all fields.'); return; }
+                if (!time.match(/^\d{1,2}:\d{2}:\d{2}$/)) { showError('Invalid time format. Use hh:mm:ss'); return; }
+                generateActivityStatsImage(dist, time);
+
+            } else if (tmpl === 'custom-stats') {
+                const dist = parseFloat(document.getElementById('custom-distance').value);
+                const time = document.getElementById('custom-time').value.trim();
+                const steps = document.getElementById('custom-steps').value;
+                const cal = document.getElementById('custom-calories').value;
+                if (!dist || !time || !steps || !cal) { showError('Please fill in all fields.'); return; }
+                if (!time.match(/^\d{1,2}:\d{2}:\d{2}$/)) { showError('Invalid time format. Use hh:mm:ss'); return; }
+                generateCustomStatsImage(dist, time, steps, cal);
+            }
+        });
+    </script>
+</body>
+
+</html>
