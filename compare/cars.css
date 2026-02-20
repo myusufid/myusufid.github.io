@@ -1,0 +1,1079 @@
+/* =====================================================================
+   cars.css — shadcn/ui design system (vanilla CSS port)
+   https://ui.shadcn.com
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap');
+
+/* ── shadcn/ui CSS tokens ── */
+:root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+
+    /* car accent colours (kept vivid for data identity) */
+    --fronx: 24 94% 44%;
+    /* #e05c00 */
+    --xl7: 221 83% 47%;
+    /* #1e50d5 */
+    --veloz: 149 73% 29%;
+    /* #0d8c50 */
+    --fronx-bg: 33 100% 96%;
+    --xl7-bg: 214 100% 97%;
+    --veloz-bg: 143 76% 96%;
+
+    /* layout */
+    --max-w: 1100px;
+}
+
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 57px;
+}
+
+body {
+    font-family: 'Geist', 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    line-height: 1.5;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOPBAR (shadcn site-header) ── */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(0 0% 100% / .97);
+    backdrop-filter: blur(8px);
+}
+
+.topbar-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-shrink: 0;
+}
+
+.brand-dots {
+    display: flex;
+    gap: 3px
+}
+
+.brand-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: block
+}
+
+.brand-dots .d1 {
+    background: hsl(var(--fronx))
+}
+
+.brand-dots .d2 {
+    background: hsl(var(--xl7))
+}
+
+.brand-dots .d3 {
+    background: hsl(var(--veloz))
+}
+
+.brand-text {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: hsl(var(--foreground));
+}
+
+/* shadcn Tabs (navigation list) */
+.tabs {
+    display: inline-flex;
+    gap: .1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: .35rem .75rem;
+    border-radius: calc(var(--radius) - 2px);
+    border: none;
+    background: transparent;
+    font-size: .8rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+
+.tab-btn:hover {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+}
+
+.tab-btn.active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+}
+
+/* ── HERO ── */
+.hero {
+    border-bottom: 1px solid hsl(var(--border));
+    padding: 4rem 1.5rem 3rem;
+    background: hsl(var(--background));
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle dot grid — classic shadcn hero */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: .6;
+    pointer-events: none;
+}
+
+/* fade-out bottom */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(transparent, hsl(var(--background)));
+    pointer-events: none;
+}
+
+.hero-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 9999px;
+    padding: .2rem .75rem;
+    font-size: .72rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 1.25rem;
+    background: hsl(var(--background));
+}
+
+.hero h1 {
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    color: hsl(var(--foreground));
+    margin-bottom: .75rem;
+}
+
+.hero h1 em {
+    font-style: normal;
+    color: hsl(var(--fronx));
+}
+
+.hero-sub {
+    font-size: .95rem;
+    color: hsl(var(--muted-foreground));
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+/* price strip */
+.price-strip {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+}
+
+.price-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .55rem .9rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    transition: box-shadow .15s;
+}
+
+.price-chip:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08)
+}
+
+.price-chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0
+}
+
+.price-chip-dot.fronx {
+    background: hsl(var(--fronx))
+}
+
+.price-chip-dot.xl7 {
+    background: hsl(var(--xl7))
+}
+
+.price-chip-dot.veloz {
+    background: hsl(var(--veloz))
+}
+
+.price-chip-name {
+    font-size: .72rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.2;
+}
+
+.price-chip-val {
+    font-size: .88rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+}
+
+/* ── CAR CARDS (shadcn Card) ── */
+.car-grid {
+    max-width: var(--max-w);
+    margin: 2rem auto 0;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+}
+
+.car-hero-card {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+    overflow: hidden;
+    transition: box-shadow .15s;
+}
+
+.car-hero-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .08)
+}
+
+.car-accent-bar {
+    height: 3px
+}
+
+.car-hero-card.fronx .car-accent-bar {
+    background: hsl(var(--fronx))
+}
+
+.car-hero-card.xl7 .car-accent-bar {
+    background: hsl(var(--xl7))
+}
+
+.car-hero-card.veloz .car-accent-bar {
+    background: hsl(var(--veloz))
+}
+
+.car-img-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: hsl(var(--muted));
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s
+}
+
+.car-hero-card:hover .car-img-wrap img {
+    transform: scale(1.04)
+}
+
+.car-img-placeholder {
+    font-size: 2.5rem;
+    opacity: .25
+}
+
+/* shadcn CardHeader / CardContent */
+.car-card-body {
+    padding: 1rem 1.1rem 1.1rem
+}
+
+/* shadcn Badge */
+.car-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    padding: .1rem .5rem;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: .4rem;
+}
+
+.badge-orange {
+    background: hsl(var(--fronx-bg));
+    color: hsl(var(--fronx));
+    border-color: hsl(var(--fronx) / .2)
+}
+
+.badge-blue {
+    background: hsl(var(--xl7-bg));
+    color: hsl(var(--xl7));
+    border-color: hsl(var(--xl7) / .2)
+}
+
+.badge-green {
+    background: hsl(var(--veloz-bg));
+    color: hsl(var(--veloz));
+    border-color: hsl(var(--veloz) / .2)
+}
+
+.car-card-body h3 {
+    font-size: .95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: .25rem
+}
+
+.price {
+    margin-top: .25rem
+}
+
+.price-val {
+    font-size: 1.1rem;
+    font-weight: 800
+}
+
+.price.orange .price-val {
+    color: hsl(var(--fronx))
+}
+
+.price.blue .price-val {
+    color: hsl(var(--xl7))
+}
+
+.price.green .price-val {
+    color: hsl(var(--veloz))
+}
+
+.price-note {
+    font-size: .68rem;
+    color: hsl(var(--muted-foreground))
+}
+
+/* shadcn Button (outline variant) */
+.car-links {
+    display: flex;
+    gap: .4rem;
+    margin-top: .75rem;
+    flex-wrap: wrap
+}
+
+.car-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    height: 2rem;
+    padding: 0 .65rem;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid hsl(var(--border));
+    background: transparent;
+    font-size: .72rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .12s, border-color .12s;
+}
+
+.car-link-btn:hover {
+    background: hsl(var(--accent));
+    border-color: hsl(var(--border))
+}
+
+/* ── CONTENT AREA ── */
+.content-area {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+}
+
+/* ── SECTION ── */
+section {
+    scroll-margin-top: 57px;
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem 1.5rem;
+}
+
+.section-block {
+    margin-bottom: 0
+}
+
+.section-wrap {
+    /* inherits padding from parent section */
+}
+
+.section-header {
+    margin-bottom: 1.5rem
+}
+
+/* shadcn typography */
+.section-label,
+.section-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: .6rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin-bottom: .3rem
+}
+
+.section-desc {
+    font-size: .875rem;
+    color: hsl(var(--muted-foreground));
+    max-width: 560px
+}
+
+.divider,
+.sep {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+}
+
+/* ── TABLE (shadcn Table) ── */
+.table-wrap {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch
+}
+
+.compare-table {
+    width: 100%;
+    min-width: 540px;
+    border-collapse: collapse;
+    font-size: .84rem;
+}
+
+/* shadcn TableHeader */
+.compare-table thead tr {
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(var(--muted));
+}
+
+.compare-table thead th {
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: .72rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.compare-table thead th:first-child {
+    text-align: left
+}
+
+.compare-table thead th:nth-child(2) {
+    color: hsl(var(--fronx))
+}
+
+.compare-table thead th:nth-child(3) {
+    color: hsl(var(--xl7))
+}
+
+.compare-table thead th:nth-child(4) {
+    color: hsl(var(--veloz))
+}
+
+/* shadcn TableRow */
+.compare-table tbody tr {
+    border-bottom: 1px solid hsl(var(--border));
+    transition: background .1s;
+}
+
+.compare-table tbody tr:last-child {
+    border-bottom: none
+}
+
+.compare-table tbody tr:hover {
+    background: hsl(var(--muted) / .5)
+}
+
+/* shadcn TableCell */
+.compare-table td {
+    padding: .7rem 1rem;
+    vertical-align: middle;
+    text-align: center;
+    color: hsl(var(--foreground));
+}
+
+.compare-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    white-space: nowrap;
+    background: hsl(var(--background));
+}
+
+td.best {
+    color: hsl(var(--veloz));
+    font-weight: 700
+}
+
+/* shadcn Badge inline */
+.tag-winner {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    padding: .05rem .4rem;
+    font-size: .62rem;
+    font-weight: 600;
+    margin-left: .3rem;
+    background: hsl(var(--veloz-bg));
+    color: hsl(var(--veloz));
+    border-color: hsl(var(--veloz) / .2);
+}
+
+.tag-winner.o {
+    background: hsl(var(--fronx-bg));
+    color: hsl(var(--fronx));
+    border-color: hsl(var(--fronx) / .2)
+}
+
+.tag-winner.b {
+    background: hsl(var(--xl7-bg));
+    color: hsl(var(--xl7));
+    border-color: hsl(var(--xl7) / .2)
+}
+
+/* ── BBM (shadcn Card) ── */
+.bbm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem
+}
+
+.bbm-card {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+    padding: 1.1rem;
+}
+
+.bbm-card h4 {
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground))
+}
+
+.bbm-card-name {
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 1rem
+}
+
+.bbm-row {
+    margin-bottom: .85rem
+}
+
+.bbm-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: .76rem;
+    margin-bottom: .3rem
+}
+
+.bbm-label span:first-child {
+    color: hsl(var(--muted-foreground))
+}
+
+.bbm-label span:last-child {
+    font-weight: 600
+}
+
+/* shadcn Progress */
+.bar-track {
+    height: 6px;
+    background: hsl(var(--muted));
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    width: 0;
+    transition: width 1.1s cubic-bezier(.4, 0, .2, 1);
+}
+
+.bar-orange {
+    background: hsl(var(--fronx))
+}
+
+.bar-blue {
+    background: hsl(var(--xl7))
+}
+
+.bar-green {
+    background: hsl(var(--veloz))
+}
+
+/* ── COST, RESALE, PROMO — shared Card pattern ── */
+.cost-grid,
+.resale-grid,
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+}
+
+.cost-card,
+.resale-card,
+.promo-card {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+    overflow: hidden;
+}
+
+/* shadcn CardHeader with coloured top border */
+.cost-card-header,
+.resale-card-header,
+.promo-card-header {
+    padding: .65rem 1rem;
+    font-size: .76rem;
+    font-weight: 600;
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(var(--muted));
+    color: hsl(var(--foreground));
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.cost-card-header::before,
+.resale-card-header::before,
+.promo-card-header::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* fronx = orange, xl7 = blue, veloz = green */
+.cost-card.fronx .cost-card-header::before,
+.resale-card.fronx .resale-card-header::before,
+.promo-card.fronx .promo-card-header::before {
+    background: hsl(var(--fronx))
+}
+
+.cost-card.xl7 .cost-card-header::before,
+.resale-card.xl7 .resale-card-header::before,
+.promo-card.xl7 .promo-card-header::before {
+    background: hsl(var(--xl7))
+}
+
+.cost-card.veloz .cost-card-header::before,
+.resale-card.veloz .resale-card-header::before,
+.promo-card.veloz .promo-card-header::before {
+    background: hsl(var(--veloz))
+}
+
+.cost-card-body,
+.resale-card-body,
+.promo-card-body {
+    padding: .85rem 1rem
+}
+
+.cost-card h4,
+.resale-card h4,
+.promo-card h4 {
+    display: none
+}
+
+/* use header instead */
+
+/* shadcn table-like rows inside cards */
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .45rem 0;
+    border-bottom: 1px solid hsl(var(--border));
+    font-size: .8rem;
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+    padding-top: .65rem;
+    margin-top: .1rem
+}
+
+.cost-item .label {
+    color: hsl(var(--muted-foreground))
+}
+
+.cost-item .val {
+    font-weight: 600
+}
+
+.total-label {
+    font-weight: 600
+}
+
+.total-val {
+    font-size: .9rem;
+    font-weight: 700
+}
+
+.total-val.orange {
+    color: hsl(var(--fronx))
+}
+
+.total-val.blue {
+    color: hsl(var(--xl7))
+}
+
+.total-val.green {
+    color: hsl(var(--veloz))
+}
+
+/* resale rows */
+.resale-row {
+    padding: .5rem 0;
+    border-bottom: 1px solid hsl(var(--border))
+}
+
+.resale-row:last-child {
+    border-bottom: none
+}
+
+.resale-row .year {
+    font-size: .7rem;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: .15rem
+}
+
+.resale-row .amount {
+    font-size: .95rem;
+    font-weight: 700
+}
+
+.resale-row .pct {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    padding: .05rem .4rem;
+    font-size: .64rem;
+    font-weight: 600;
+    margin-top: .15rem;
+}
+
+.pct-orange {
+    background: hsl(var(--fronx-bg));
+    color: hsl(var(--fronx));
+    border-color: hsl(var(--fronx)/.2)
+}
+
+.pct-blue {
+    background: hsl(var(--xl7-bg));
+    color: hsl(var(--xl7));
+    border-color: hsl(var(--xl7)/.2)
+}
+
+.pct-green {
+    background: hsl(var(--veloz-bg));
+    color: hsl(var(--veloz));
+    border-color: hsl(var(--veloz)/.2)
+}
+
+/* promo items */
+.promo-item {
+    display: flex;
+    gap: .55rem;
+    align-items: flex-start;
+    margin-bottom: .65rem;
+    font-size: .8rem
+}
+
+.promo-icon {
+    font-size: .9rem;
+    flex-shrink: 0;
+    margin-top: .05rem
+}
+
+.promo-text strong {
+    display: block;
+    font-weight: 600;
+    font-size: .8rem
+}
+
+.promo-text span {
+    color: hsl(var(--muted-foreground));
+    font-size: .73rem
+}
+
+/* ── VERDICT (shadcn Card) ── */
+.verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem;
+}
+
+.verdict-card {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+    padding: 1rem 1.1rem;
+    transition: box-shadow .15s;
+}
+
+.verdict-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
+}
+
+.verdict-card .v-label {
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: .3rem;
+}
+
+.verdict-card .v-win {
+    font-size: .95rem;
+    font-weight: 700;
+    margin-bottom: .2rem
+}
+
+.verdict-card .v-reason {
+    font-size: .78rem;
+    color: hsl(var(--muted-foreground))
+}
+
+/* ── SEPARATOR (shadcn Separator) ── */
+hr,
+.divider,
+.sep {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+}
+
+/* ── FOOTER ── */
+.page-footer {
+    border-top: 1px solid hsl(var(--border));
+    padding: 2rem 1.5rem 3rem;
+    text-align: center;
+    font-size: .78rem;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--background));
+}
+
+.page-footer a {
+    color: hsl(var(--foreground));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: hsl(var(--border));
+    transition: text-decoration-color .15s;
+}
+
+.page-footer a:hover {
+    text-decoration-color: hsl(var(--foreground))
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.fade-up {
+    animation: fadeUp .4s ease both
+}
+
+.delay-1 {
+    animation-delay: .06s
+}
+
+.delay-2 {
+    animation-delay: .14s
+}
+
+.delay-3 {
+    animation-delay: .22s
+}
+
+/* ── RESPONSIVE: tablet ── */
+@media (max-width: 900px) {
+    .car-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .bbm-grid,
+    .cost-grid,
+    .resale-grid,
+    .promo-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .verdict-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* ── RESPONSIVE: mobile ── */
+@media (max-width: 600px) {
+    .hero {
+        padding: 2.5rem 1rem 2rem
+    }
+
+    .hero h1 {
+        font-size: 1.9rem
+    }
+
+    .price-strip {
+        gap: .4rem
+    }
+
+    .car-grid {
+        grid-template-columns: 1fr;
+        margin-top: 1.5rem
+    }
+
+    .bbm-grid,
+    .cost-grid,
+    .resale-grid,
+    .promo-grid {
+        grid-template-columns: 1fr
+    }
+
+    section {
+        padding: 2rem 1rem
+    }
+
+    .brand-text {
+        display: none
+    }
+
+    /* sticky first col */
+    .compare-table td:first-child,
+    .compare-table th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: hsl(var(--background));
+        border-right: 1px solid hsl(var(--border));
+    }
+
+    .compare-table tbody tr:hover td:first-child {
+        background: hsl(var(--muted) / .5)
+    }
+
+    .car-links {
+        flex-direction: column
+    }
+}
+
+@media (max-width: 420px) {
+    .hero h1 {
+        font-size: 1.6rem
+    }
+
+    .section-title {
+        font-size: 1.25rem
+    }
+}

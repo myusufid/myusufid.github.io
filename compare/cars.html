@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Comparison 2026 | Fronx vs XL7 vs Veloz Hybrid</title>
+    <meta name="description" content="Perbandingan mendalam Suzuki Fronx, XL7 Beta Hybrid, dan Toyota Veloz Hybrid V 2026.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); }
+        .card-shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+        .comparison-table { border-collapse: separate; border-spacing: 0; }
+        .comparison-table th:first-child { border-top-left-radius: 0.5rem; }
+        .comparison-table th:last-child { border-top-right-radius: 0.5rem; }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 text-slate-900 antialiased">
+
+    <!-- ── NAVIGATION ── -->
+    <nav class="sticky top-0 z-50 w-full glass">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 group cursor-pointer">
+                        <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                        </svg>
+                        <span class="text-xl font-bold tracking-tight">Kompare<span class="text-purple-600">Auto</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:flex gap-2">
+                    <button onclick="scrollToSection('overview')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-purple-600 hover:bg-white/50 rounded-lg transition-all">Spesifikasi</button>
+                    <button onclick="scrollToSection('bbm')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-purple-600 hover:bg-white/50 rounded-lg transition-all">BBM</button>
+                    <button onclick="scrollToSection('biaya')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-purple-600 hover:bg-white/50 rounded-lg transition-all">Servis</button>
+                    <button onclick="scrollToSection('resale')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-purple-600 hover:bg-white/50 rounded-lg transition-all">Resale</button>
+                    <button onclick="scrollToSection('promo')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-purple-600 hover:bg-white/50 rounded-lg transition-all">Promo</button>
+                    <button onclick="scrollToSection('verdict')" class="px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-sm hover:shadow-md transition-all">Verdict</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+
+        <!-- ── HERO ── -->
+        <header class="max-w-5xl mx-auto text-center mb-20 space-y-6 fade-in-up">
+            <div class="inline-flex items-center rounded-full bg-white/80 backdrop-blur-sm border border-purple-200 px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                Updated Februari 2026
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-tight">
+                Perbandingan Lengkap<br>
+                <span class="gradient-text">3 SUV/MPV Terpopuler 2026</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                Analisis mendalam: Suzuki Fronx SGX, XL7 Hybrid, dan Toyota Veloz Hybrid V.
+                Dari spesifikasi teknis, efisiensi BBM, biaya perawatan, hingga nilai jual kembali.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 pt-4">
+                <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-slate-700 shadow-sm">💰 Total Cost Analysis</span>
+                <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-slate-700 shadow-sm">⛽ Fuel Efficiency</span>
+                <span class="px-4 py-2 bg-white rounded-full text-sm font-medium text-slate-700 shadow-sm">📈 Resale Value</span>
+            </div>
+        </header>
+
+        <!-- ── CAR CARDS ── -->
+        <div class="grid lg:grid-cols-3 gap-6 mb-24">
+            <!-- FRONX -->
+            <div class="group relative bg-white rounded-2xl p-8 card-shadow hover-lift overflow-hidden border border-slate-200">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-full -mr-16 -mt-16"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700">SUZUKI</span>
+                        <span class="text-xs font-semibold text-slate-500">5 Seater</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Fronx SGX AT</h3>
+                    <p class="text-sm text-slate-500 mb-6">Compact SUV Coupe with Mild Hybrid</p>
+                    <div class="aspect-[16/9] mb-6 flex items-center justify-center bg-gradient-to-br from-orange-50 to-transparent rounded-xl p-4">
+                        <img src="/compare/images/fronx.webp" alt="Suzuki Fronx SGX AT" class="max-h-32 object-contain group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="space-y-3 mb-6 text-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Engine</span>
+                            <span class="font-semibold text-slate-900">1.5L Mild Hybrid</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Power</span>
+                            <span class="font-semibold text-slate-900">100.6 PS</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Transmission</span>
+                            <span class="font-semibold text-slate-900">6-Speed AT</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100">
+                        <div class="flex items-end justify-between mb-4">
+                            <div>
+                                <div class="text-xs text-slate-500 mb-1">Harga OTR Jakarta</div>
+                                <div class="text-3xl font-black text-slate-900">Rp 319,9<span class="text-lg text-slate-500">jt</span></div>
+                            </div>
+                        </div>
+                        <a href="/compare/brochure/fronx.pdf" target="_blank" class="flex items-center justify-center w-full py-2.5 px-4 bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold rounded-lg transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XL7 -->
+            <div class="group relative bg-white rounded-2xl p-8 card-shadow hover-lift overflow-hidden border border-slate-200">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16"></div>
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">SUZUKI</span>
+                        <span class="text-xs font-semibold text-slate-500">7 Seater</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">XL7 Beta Hybrid</h3>
+                    <p class="text-sm text-slate-500 mb-6">Family SUV with Mild Hybrid</p>
+                    <div class="aspect-[16/9] mb-6 flex items-center justify-center bg-gradient-to-br from-blue-50 to-transparent rounded-xl p-4">
+                        <img src="/compare/images/XL7-Hybrid-683x400.png" alt="Suzuki XL7 Beta Hybrid AT" class="max-h-32 object-contain group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="space-y-3 mb-6 text-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Engine</span>
+                            <span class="font-semibold text-slate-900">1.5L Mild Hybrid</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Power</span>
+                            <span class="font-semibold text-slate-900">104.7 PS</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Transmission</span>
+                            <span class="font-semibold text-slate-900">4-Speed AT</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100">
+                        <div class="flex items-end justify-between mb-4">
+                            <div>
+                                <div class="text-xs text-slate-500 mb-1">Harga OTR Jakarta</div>
+                                <div class="text-3xl font-black text-blue-700">Rp 297<span class="text-lg text-slate-500">jt</span></div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded">TERMURAH</span>
+                        </div>
+                        <a href="/compare/brochure/xl7.pdf" target="_blank" class="flex items-center justify-center w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VELOZ -->
+            <div class="group relative bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 card-shadow-lg hover-lift overflow-hidden border-2 border-emerald-200">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full -mr-16 -mt-16"></div>
+                <div class="absolute top-4 right-4">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400 text-yellow-900">⭐ RECOMMENDED</span>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">TOYOTA</span>
+                        <span class="text-xs font-semibold text-slate-500">7 Seater</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Veloz Hybrid V</h3>
+                    <p class="text-sm text-slate-500 mb-6">Premium MPV with Full Hybrid</p>
+                    <div class="aspect-[16/9] mb-6 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-transparent rounded-xl p-4">
+                        <img src="/compare/images/veloz-v.webp" alt="Toyota Veloz Hybrid V 2026" class="max-h-32 object-contain group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="space-y-3 mb-6 text-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Engine</span>
+                            <span class="font-semibold text-emerald-700">1.5L Full Hybrid</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Power</span>
+                            <span class="font-semibold text-emerald-700">111 PS (Combined)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600">Transmission</span>
+                            <span class="font-semibold text-slate-900">e-CVT</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-emerald-100">
+                        <div class="flex items-end justify-between mb-4">
+                            <div>
+                                <div class="text-xs text-slate-500 mb-1">Harga OTR Jakarta</div>
+                                <div class="text-3xl font-black text-emerald-700">Rp 308<span class="text-lg text-slate-500">jt</span></div>
+                            </div>
+                        </div>
+                        <a href="/compare/brochure/veloz.pdf" target="_blank" class="flex items-center justify-center w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── 01. SPECIFICATIONS ── -->
+        <section id="overview" class="mb-24">
+            <div class="mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold uppercase tracking-wider rounded-full">01. Specifications</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">Spesifikasi Teknis Detail</h2>
+                <p class="text-slate-600">Perbandingan lengkap dimensi, mesin, fitur, dan performa</p>
+            </div>
+
+            <!-- Engine & Performance -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 mb-8">
+                <div class="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4">
+                    <h3 class="text-white font-bold text-lg">⚙️ Mesin & Performa</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full comparison-table">
+                        <thead>
+                            <tr class="bg-slate-50">
+                                <th class="p-4 text-left text-sm font-bold text-slate-600 border-b">Parameter</th>
+                                <th class="p-4 text-center text-sm font-bold text-orange-700 border-b bg-orange-50">Fronx SGX</th>
+                                <th class="p-4 text-center text-sm font-bold text-blue-700 border-b bg-blue-50">XL7 Hybrid</th>
+                                <th class="p-4 text-center text-sm font-bold text-emerald-700 border-b bg-emerald-50">Veloz Hybrid V</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Tipe Mesin</td>
+                                <td class="p-4 text-center">K15C SHVS<br><span class="text-xs text-slate-500">Mild Hybrid</span></td>
+                                <td class="p-4 text-center">K15B SHVS<br><span class="text-xs text-slate-500">Mild Hybrid</span></td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">2NR-VEX<br><span class="text-xs text-emerald-600">Full Hybrid EV</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Kapasitas</td>
+                                <td class="p-4 text-center">1462 cc</td>
+                                <td class="p-4 text-center">1462 cc</td>
+                                <td class="p-4 text-center">1496 cc</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Tenaga Maksimal</td>
+                                <td class="p-4 text-center">100.6 PS<br><span class="text-xs text-slate-500">@ 6000 rpm</span></td>
+                                <td class="p-4 text-center">104.7 PS<br><span class="text-xs text-slate-500">@ 6000 rpm</span></td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">111 PS<br><span class="text-xs text-emerald-600">Combined System</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Torsi Maksimal</td>
+                                <td class="p-4 text-center">135 Nm</td>
+                                <td class="p-4 text-center">138 Nm</td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">141 Nm<br><span class="text-xs text-emerald-600">(Electric Motor)</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Transmisi</td>
+                                <td class="p-4 text-center font-semibold text-orange-700">6-Speed AT<br><span class="text-xs text-slate-500">+ Paddle Shift</span></td>
+                                <td class="p-4 text-center">4-Speed AT</td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">e-CVT<br><span class="text-xs text-emerald-600">Electric</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Drive Train</td>
+                                <td class="p-4 text-center">FWD</td>
+                                <td class="p-4 text-center">FWD</td>
+                                <td class="p-4 text-center">FWD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Dimensions -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 mb-8">
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                    <h3 class="text-white font-bold text-lg">📏 Dimensi & Kapasitas</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-slate-50">
+                                <th class="p-4 text-left text-sm font-bold text-slate-600 border-b">Parameter</th>
+                                <th class="p-4 text-center text-sm font-bold text-orange-700 border-b bg-orange-50">Fronx SGX</th>
+                                <th class="p-4 text-center text-sm font-bold text-blue-700 border-b bg-blue-50">XL7 Hybrid</th>
+                                <th class="p-4 text-center text-sm font-bold text-emerald-700 border-b bg-emerald-50">Veloz Hybrid V</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Kapasitas Penumpang</td>
+                                <td class="p-4 text-center">5 Orang</td>
+                                <td class="p-4 text-center font-semibold text-blue-700">7 Orang</td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">7 Orang</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Panjang × Lebar × Tinggi</td>
+                                <td class="p-4 text-center text-sm">3995 × 1765 × 1550 mm</td>
+                                <td class="p-4 text-center text-sm font-semibold text-blue-700">4450 × 1775 × 1710 mm</td>
+                                <td class="p-4 text-center text-sm">4475 × 1750 × 1700 mm</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Wheelbase</td>
+                                <td class="p-4 text-center">2520 mm</td>
+                                <td class="p-4 text-center font-semibold text-blue-700">2740 mm</td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">2750 mm</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Ground Clearance</td>
+                                <td class="p-4 text-center">170 mm</td>
+                                <td class="p-4 text-center font-semibold text-blue-700">200 mm</td>
+                                <td class="p-4 text-center font-semibold text-emerald-700">205 mm</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Turning Radius</td>
+                                <td class="p-4 text-center font-semibold text-orange-700">4.8 m</td>
+                                <td class="p-4 text-center">5.1 m</td>
+                                <td class="p-4 text-center">5.2 m</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Tangki BBM</td>
+                                <td class="p-4 text-center">37 L</td>
+                                <td class="p-4 text-center font-semibold text-blue-700">45 L</td>
+                                <td class="p-4 text-center">43 L</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-700">Bagasi</td>
+                                <td class="p-4 text-center">304 L</td>
+                                <td class="p-4 text-center">153 L / <span class="font-semibold text-blue-700">803 L</span><br><span class="text-xs text-slate-500">(3rd row up/down)</span></td>
+                                <td class="p-4 text-center">216 L</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Safety Features -->
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+                <div class="bg-gradient-to-r from-red-600 to-orange-600 px-6 py-4">
+                    <h3 class="text-white font-bold text-lg">🛡️ Fitur Keselamatan</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="space-y-3">
+                            <div class="font-bold text-orange-700 mb-4 flex items-center">
+                                <span class="w-2 h-2 bg-orange-600 rounded-full mr-2"></span>
+                                Fronx SGX
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700"><strong>6 Airbags</strong> (Front, Side, Curtain)</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">ESP + Hill Hold</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700"><strong>360 View Camera</strong></span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700"><strong>ADAS:</strong> ACC, LKA, BSM, RCTA</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">Dual Sensor Brake Support II</span></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="font-bold text-blue-700 mb-4 flex items-center">
+                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+                                XL7 Hybrid
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">2 Airbags (Dual SRS)</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">ESP + Hill Hold</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">Rear Parking Camera</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">Rear Parking Sensors (2)</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">Security Alarm + Immobilizer</span></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="font-bold text-emerald-700 mb-4 flex items-center">
+                                <span class="w-2 h-2 bg-emerald-600 rounded-full mr-2"></span>
+                                Veloz Hybrid V
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">2 Airbags</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">VSC + HSA</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700"><strong>360 View Camera</strong></span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700"><strong>Toyota Safety Sense</strong> (TSS Lite)</span></div>
+                                <div class="flex items-start"><span class="text-green-600 mr-2">✓</span><span class="text-slate-700">EPB + Auto Brake Hold</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 02. FUEL ── -->
+        <section id="bbm" class="mb-24">
+            <div class="mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider rounded-full">02. Fuel Efficiency</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">Konsumsi BBM & Jarak Tempuh</h2>
+                <p class="text-slate-600">Perbandingan efisiensi bahan bakar dalam kondisi kota, tol, dan kombinasi</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <!-- Fronx -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-orange-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-lg text-slate-900">Fronx SGX</h3>
+                        <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full">Mild Hybrid</span>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-slate-600">
+                                <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                Dalam Kota
+                            </div>
+                            <span class="font-bold text-slate-900">15.2 km/L</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-slate-600">
+                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/></svg>
+                                Highway/Tol
+                            </div>
+                            <span class="font-bold text-orange-700">20.4 km/L</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm font-semibold text-slate-700">
+                                <svg class="w-4 h-4 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                                Kombinasi
+                            </div>
+                            <span class="font-bold text-orange-700 text-lg">17.5 km/L</span>
+                        </div>
+                    </div>
+                    <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden mb-4">
+                        <div class="h-full bg-gradient-to-r from-orange-500 to-orange-600" style="width: 60.5%"></div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-500">Estimasi Biaya per 100km</span>
+                            <span class="font-bold text-slate-900">Rp 85,700</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-500">BBM Direkomendasikan</span>
+                            <span class="font-semibold text-orange-700">Pertamax (RON 92+)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XL7 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-blue-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-lg text-slate-900">XL7 Hybrid</h3>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">Mild Hybrid</span>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-slate-600">
+                                <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                Dalam Kota
+                            </div>
+                            <span class="font-bold text-slate-900">12.8 km/L</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-slate-600">
+                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/></svg>
+                                Highway/Tol
+                            </div>
+                            <span class="font-bold text-blue-700">17.2 km/L</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm font-semibold text-slate-700">
+                                <svg class="w-4 h-4 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                                Kombinasi
+                            </div>
+                            <span class="font-bold text-blue-700 text-lg">14.5 km/L</span>
+                        </div>
+                    </div>
+                    <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden mb-4">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600" style="width: 50.1%"></div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-500">Estimasi Biaya per 100km</span>
+                            <span class="font-bold text-slate-900">Rp 82,800</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-500">BBM Direkomendasikan</span>
+                            <span class="font-semibold text-blue-700">Pertalite / Pertamax</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Veloz -->
+                <div class="bg-gradient-to-br from-emerald-600 to-green-700 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg">Veloz Hybrid V</h3>
+                            <span class="px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">🏆 Best MPG</span>
+                        </div>
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-emerald-100">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                                    Dalam Kota
+                                </div>
+                                <span class="font-bold">22.5 km/L</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-emerald-100">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/></svg>
+                                    Highway/Tol
+                                </div>
+                                <span class="font-bold text-yellow-300">25.1 km/L</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm font-semibold">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                                    Kombinasi
+                                </div>
+                                <span class="font-bold text-2xl">23.8 km/L</span>
+                            </div>
+                        </div>
+                        <div class="h-2 w-full bg-white/20 rounded-full overflow-hidden mb-4">
+                            <div class="h-full bg-yellow-400" style="width: 100%"></div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-lg p-3 mb-4">
+                            <div class="text-xs text-emerald-100 mb-1">Official Test Claim (GridOto)</div>
+                            <div class="text-2xl font-black text-yellow-300">28.9 km/L ⭐</div>
+                        </div>
+                        <div class="pt-4 border-t border-white/20 space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-emerald-100">Estimasi Biaya per 100km</span>
+                                <span class="font-bold text-yellow-300">Rp 63,000</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-emerald-100">BBM Direkomendasikan</span>
+                                <span class="font-semibold">Pertamax (RON 92+)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Comparison -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-lg text-slate-900 mb-4">💰 Estimasi Biaya BBM per Tahun (15.000 km/tahun)</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-4 bg-orange-50 rounded-xl">
+                        <div class="text-sm text-slate-600 mb-2">Fronx SGX</div>
+                        <div class="text-2xl font-black text-orange-700">Rp 12,9 jt</div>
+                        <div class="text-xs text-slate-500 mt-1">@ Pertamax Rp 15.000</div>
+                    </div>
+                    <div class="text-center p-4 bg-blue-50 rounded-xl">
+                        <div class="text-sm text-slate-600 mb-2">XL7 Hybrid</div>
+                        <div class="text-2xl font-black text-blue-700">Rp 12,4 jt</div>
+                        <div class="text-xs text-slate-500 mt-1">@ Pertalite Rp 12.000</div>
+                    </div>
+                    <div class="text-center p-4 bg-emerald-50 rounded-xl border-2 border-emerald-200">
+                        <div class="text-sm text-emerald-600 mb-2 font-semibold">Veloz Hybrid V 🏆</div>
+                        <div class="text-2xl font-black text-emerald-700">Rp 9,5 jt</div>
+                        <div class="text-xs text-emerald-600 mt-1 font-semibold">Hemat Rp 3,4 jt vs Fronx!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 03. SERVICE ── -->
+        <section id="biaya" class="mb-24">
+            <div class="mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider rounded-full">03. Maintenance Cost</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">Biaya Perawatan & Servis</h2>
+                <p class="text-slate-600">Estimasi total biaya service rutin dalam 5 tahun kepemilikan</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <!-- Fronx -->
+                <div class="bg-white rounded-2xl border-2 border-orange-200 shadow-sm overflow-hidden">
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white">
+                        <h3 class="font-bold text-lg mb-1">Fronx SGX AT</h3>
+                        <div class="text-3xl font-black">Rp 4,5 jt</div>
+                        <div class="text-xs text-orange-100 mt-1">Estimasi 5 tahun (50.000 km)</div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 10.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 350rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 20.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 750rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 40.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 1,2 jt</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-slate-600">Rata-rata per Servis</span>
+                            <span class="font-bold text-orange-700">Rp 900rb</span>
+                        </div>
+                        <div class="bg-orange-50 rounded-lg p-3 mt-4">
+                            <div class="text-xs text-slate-600 mb-2">✓ Termasuk:</div>
+                            <ul class="text-xs text-slate-700 space-y-1">
+                                <li>• Oli mesin + filter</li>
+                                <li>• Parts consumables</li>
+                                <li>• Free check 22 points</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XL7 -->
+                <div class="bg-white rounded-2xl border-2 border-blue-200 shadow-sm overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
+                        <h3 class="font-bold text-lg mb-1">XL7 Beta Hybrid</h3>
+                        <div class="text-3xl font-black">Rp 5,0 jt</div>
+                        <div class="text-xs text-blue-100 mt-1">Estimasi 5 tahun (50.000 km)</div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 10.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 370rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 20.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 820rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 40.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 1,3 jt</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-slate-600">Rata-rata per Servis</span>
+                            <span class="font-bold text-blue-700">Rp 1,0 jt</span>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-3 mt-4">
+                            <div class="text-xs text-slate-600 mb-2">✓ Termasuk:</div>
+                            <ul class="text-xs text-slate-700 space-y-1">
+                                <li>• Oli mesin + filter</li>
+                                <li>• Parts consumables</li>
+                                <li>• Free check 22 points</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Veloz -->
+                <div class="bg-white rounded-2xl border-2 border-emerald-200 shadow-sm overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6 text-white">
+                        <h3 class="font-bold text-lg mb-1">Veloz Hybrid V</h3>
+                        <div class="text-3xl font-black">Rp 6,5 jt</div>
+                        <div class="text-xs text-emerald-100 mt-1">Estimasi 5 tahun (50.000 km)</div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 10.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 450rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 20.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 950rb</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                            <span class="text-sm text-slate-600">Servis 40.000 km</span>
+                            <span class="font-bold text-slate-900">Rp 1,5 jt</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <span class="text-sm text-slate-600">Rata-rata per Servis</span>
+                            <span class="font-bold text-emerald-700">Rp 1,3 jt</span>
+                        </div>
+                        <div class="bg-emerald-50 rounded-lg p-3 mt-4">
+                            <div class="text-xs text-slate-600 mb-2">✓ Termasuk:</div>
+                            <ul class="text-xs text-slate-700 space-y-1">
+                                <li>• Oli mesin hybrid + filter</li>
+                                <li>• Hybrid system inspection</li>
+                                <li>• Battery health check</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warranty Comparison -->
+            <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 text-white">
+                <h3 class="text-2xl font-bold mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    Perbandingan Garansi & Service Gratis
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="font-bold text-lg mb-4 text-orange-300">Suzuki Fronx</div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>3x Servis Gratis</strong><br>up to 50.000 km / 30 bulan</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>Garansi 3 tahun</strong><br>atau 100.000 km</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Aksesori senilai ±Rp 3-4 juta</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="font-bold text-lg mb-4 text-blue-300">Suzuki XL7</div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>3x Servis Gratis</strong><br>up to 50.000 km / 30 bulan</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>Garansi 3 tahun</strong><br>atau 100.000 km</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Aksesori senilai ±Rp 3-4 juta</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-500/20 to-green-500/20 backdrop-blur-sm rounded-xl p-6 border-2 border-emerald-400/50">
+                        <div class="font-bold text-lg mb-4 text-emerald-300 flex items-center">
+                            Toyota Veloz
+                            <span class="ml-2 text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full">Best Value</span>
+                        </div>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>5x Servis Gratis</strong> 🏆<br>up to 50.000 km / 30 bulan (T-Care)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>Garansi 3 tahun</strong><br>atau 100.000 km</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span><strong>Garansi Baterai 8 tahun</strong> 🏆<br>atau 160.000 km</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 mr-2 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Free Coaching & Coating</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 04. RESALE ── -->
+        <section id="resale" class="mb-24">
+            <div class="mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold uppercase tracking-wider rounded-full">04. Resale Value</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">Nilai Jual Kembali & Depresiasi</h2>
+                <p class="text-slate-600">Proyeksi harga jual kembali berdasarkan tren pasar mobil bekas Indonesia</p>
+            </div>
+
+            <!-- Resale Value Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-2xl p-8 border-2 border-orange-200 shadow-sm">
+                    <div class="text-sm font-bold text-orange-600 mb-2">SUZUKI FRONX SGX</div>
+                    <div class="flex items-baseline mb-4">
+                        <div class="text-5xl font-black text-slate-900">90<span class="text-2xl">%</span></div>
+                        <div class="ml-3 text-sm text-slate-500">setelah tahun 1</div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Harga Beli</span>
+                            <span class="font-semibold">Rp 319,9 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Estimasi Tahun 1</span>
+                            <span class="font-bold text-orange-700">Rp 287,9 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Depresiasi</span>
+                            <span class="text-red-600 font-semibold">-Rp 32 jt</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100">
+                        <p class="text-xs text-slate-600 leading-relaxed">Penyusutan wajar untuk SUV compact. Fitur ADAS & sunroof membantu mempertahankan nilai.</p>
+                    </div>
+                    <div class="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-orange-500" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 border-2 border-blue-200 shadow-sm">
+                    <div class="text-sm font-bold text-blue-600 mb-2">SUZUKI XL7 HYBRID</div>
+                    <div class="flex items-baseline mb-4">
+                        <div class="text-5xl font-black text-slate-900">89<span class="text-2xl">%</span></div>
+                        <div class="ml-3 text-sm text-slate-500">setelah tahun 1</div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Harga Beli</span>
+                            <span class="font-semibold">Rp 297 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Estimasi Tahun 1</span>
+                            <span class="font-bold text-blue-700">Rp 264,3 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Depresiasi</span>
+                            <span class="text-red-600 font-semibold">-Rp 32,7 jt</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100">
+                        <p class="text-xs text-slate-600 leading-relaxed">Sangat likuid di pasar bekas. Populer sebagai mobil keluarga 7-seater dengan harga terjangkau.</p>
+                    </div>
+                    <div class="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500" style="width: 89%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-8 border-2 border-emerald-300 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-4 right-4">
+                        <span class="inline-flex items-center px-2 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">🏆 BEST</span>
+                    </div>
+                    <div class="text-sm font-bold text-emerald-600 mb-2">TOYOTA VELOZ HYBRID V</div>
+                    <div class="flex items-baseline mb-4">
+                        <div class="text-5xl font-black text-emerald-700">93<span class="text-2xl">%</span></div>
+                        <div class="ml-3 text-sm text-slate-500">setelah tahun 1</div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Harga Beli</span>
+                            <span class="font-semibold">Rp 308 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Estimasi Tahun 1</span>
+                            <span class="font-bold text-emerald-700">Rp 286,4 jt</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-600">Depresiasi</span>
+                            <span class="text-red-600 font-semibold">-Rp 21,6 jt</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-emerald-100">
+                        <p class="text-xs text-slate-600 leading-relaxed"><strong class="text-emerald-700">Pemenang nilai resale!</strong> Brand Toyota + teknologi hybrid + jaringan luas = investasi paling aman.</p>
+                    </div>
+                    <div class="mt-4 h-2 bg-emerald-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-emerald-500 to-green-500" style="width: 93%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5-Year Projection -->
+            <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-xl text-slate-900 mb-6">📊 Proyeksi Nilai 5 Tahun</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-slate-200">
+                                <th class="text-left py-3 px-4 text-sm font-bold text-slate-600">Tahun</th>
+                                <th class="text-center py-3 px-4 text-sm font-bold text-orange-700">Fronx SGX</th>
+                                <th class="text-center py-3 px-4 text-sm font-bold text-blue-700">XL7 Hybrid</th>
+                                <th class="text-center py-3 px-4 text-sm font-bold text-emerald-700">Veloz Hybrid V</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-3 px-4 font-semibold text-slate-700">Tahun 0 (Baru)</td>
+                                <td class="text-center py-3 px-4">Rp 319,9 jt (100%)</td>
+                                <td class="text-center py-3 px-4">Rp 297 jt (100%)</td>
+                                <td class="text-center py-3 px-4">Rp 308 jt (100%)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-3 px-4 font-semibold text-slate-700">Tahun 1</td>
+                                <td class="text-center py-3 px-4 text-orange-700 font-semibold">Rp 287,9 jt (90%)</td>
+                                <td class="text-center py-3 px-4 text-blue-700 font-semibold">Rp 264,3 jt (89%)</td>
+                                <td class="text-center py-3 px-4 text-emerald-700 font-semibold">Rp 286,4 jt (93%)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="py-3 px-4 font-semibold text-slate-700">Tahun 3</td>
+                                <td class="text-center py-3 px-4">Rp 223,9 jt (70%)</td>
+                                <td class="text-center py-3 px-4">Rp 207,9 jt (70%)</td>
+                                <td class="text-center py-3 px-4 font-semibold text-emerald-700">Rp 231,6 jt (75%)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 bg-slate-50">
+                                <td class="py-3 px-4 font-bold text-slate-900">Tahun 5</td>
+                                <td class="text-center py-3 px-4 font-bold">Rp 191,9 jt (60%)</td>
+                                <td class="text-center py-3 px-4 font-bold">Rp 178,2 jt (60%)</td>
+                                <td class="text-center py-3 px-4 font-bold text-emerald-700">Rp 200,2 jt (65%)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 grid md:grid-cols-3 gap-4">
+                    <div class="bg-orange-50 rounded-lg p-4">
+                        <div class="text-xs text-slate-600 mb-1">Total Loss (5 tahun)</div>
+                        <div class="text-lg font-bold text-orange-700">-Rp 128 jt</div>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <div class="text-xs text-slate-600 mb-1">Total Loss (5 tahun)</div>
+                        <div class="text-lg font-bold text-blue-700">-Rp 118,8 jt</div>
+                    </div>
+                    <div class="bg-emerald-50 rounded-lg p-4 border-2 border-emerald-200">
+                        <div class="text-xs text-emerald-600 mb-1 font-semibold">Total Loss (5 tahun) 🏆</div>
+                        <div class="text-lg font-bold text-emerald-700">-Rp 107,8 jt</div>
+                        <div class="text-xs text-emerald-600 mt-1">Hemat Rp 20,2 jt vs Fronx</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 05. PROMO ── -->
+        <section id="promo" class="mb-24">
+            <div class="mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 bg-pink-100 text-pink-700 text-xs font-bold uppercase tracking-wider rounded-full">05. Dealer Benefits</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">Promo & Program Pembiayaan</h2>
+                <p class="text-slate-600">Benefit dealer, program pembiayaan, dan penawaran khusus Februari 2026</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6 mb-8">
+                <!-- Suzuki Program -->
+                <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold">Suzuki Indonesia</h3>
+                        <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                    </div>
+                    <div class="text-sm opacity-90 mb-6">Berlaku untuk Fronx SGX & XL7 Hybrid</div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <div class="text-xs text-blue-100 mb-2">Service Package</div>
+                            <div class="text-lg font-bold mb-1">3x Gratis Service</div>
+                            <div class="text-xs text-blue-100">s/d 50.000 km atau 30 bulan</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <div class="text-xs text-blue-100 mb-2">Warranty</div>
+                            <div class="text-lg font-bold mb-1">3 Tahun</div>
+                            <div class="text-xs text-blue-100">atau 100.000 km</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <div class="text-xs text-blue-100 mb-2">Accessories</div>
+                            <div class="text-lg font-bold mb-1">Rp 3-4 juta</div>
+                            <div class="text-xs text-blue-100">Paket aksesori gratis</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                            <div class="text-xs text-blue-100 mb-2">Financing</div>
+                            <div class="text-lg font-bold mb-1">Bunga 0%</div>
+                            <div class="text-xs text-blue-100">Tenor 1 tahun (syarat berlaku)</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <div class="text-xs text-blue-100 mb-2">💎 Special Promo Februari</div>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start"><span class="mr-2">•</span>DP mulai 10% dengan angsuran ringan</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Trade-in bonus hingga Rp 5 juta</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Asuransi All Risk promo rate</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Toyota Program -->
+                <div class="bg-gradient-to-br from-emerald-600 via-green-600 to-teal-600 rounded-2xl p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold">Toyota Astra</h3>
+                                <span class="inline-flex items-center px-3 py-1 mt-2 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">🏆 Premium Package</span>
+                            </div>
+                            <svg class="w-12 h-12 opacity-20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        </div>
+                        <div class="text-sm text-emerald-100 mb-6">Khusus Veloz Hybrid V 2026 - T-Care Program</div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+                                <div class="text-xs text-emerald-100 mb-2">T-Care Service</div>
+                                <div class="text-xl font-bold mb-1">5x Gratis Service ⭐</div>
+                                <div class="text-xs text-emerald-100">s/d 50.000 km atau 30 bulan</div>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+                                <div class="text-xs text-emerald-100 mb-2">Vehicle Warranty</div>
+                                <div class="text-xl font-bold mb-1">3 Tahun</div>
+                                <div class="text-xs text-emerald-100">atau 100.000 km</div>
+                            </div>
+                            <div class="bg-yellow-400/20 backdrop-blur-sm rounded-xl p-4 border-2 border-yellow-400/50 md:col-span-2">
+                                <div class="text-xs text-yellow-200 mb-2 font-semibold">🔋 Hybrid Battery Warranty</div>
+                                <div class="text-2xl font-black mb-1">8 Tahun / 160.000 km</div>
+                                <div class="text-xs text-yellow-200">Garansi baterai hybrid terpanjang di kelasnya</div>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+                                <div class="text-xs text-emerald-100 mb-2">Detailing Package</div>
+                                <div class="text-lg font-bold mb-1">Free Coating</div>
+                                <div class="text-xs text-emerald-100">Nano coating protection</div>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+                                <div class="text-xs text-emerald-100 mb-2">Eco Driving</div>
+                                <div class="text-lg font-bold mb-1">Free Coaching</div>
+                                <div class="text-xs text-emerald-100">Pelatihan hybrid driving</div>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-white/20 backdrop-blur-sm rounded-xl p-4 border border-white/30">
+                            <div class="text-xs text-emerald-100 mb-2">💎 Special Promo Februari</div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><span class="mr-2">•</span>DP mulai 15% dengan tenor s/d 6 tahun</li>
+                                <li class="flex items-start"><span class="mr-2">•</span>Trade-in bonus program (evaluasi unit lama)</li>
+                                <li class="flex items-start"><span class="mr-2">•</span>Extended warranty available</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financing Comparison -->
+            <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-xl text-slate-900 mb-6">💳 Simulasi Kredit (DP 20%, Tenor 5 Tahun)</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="border-2 border-orange-200 rounded-xl p-6">
+                        <div class="text-sm font-bold text-orange-600 mb-4">FRONX SGX AT</div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Harga OTR</span>
+                                <span class="font-semibold">Rp 319,9 jt</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">DP 20%</span>
+                                <span class="font-semibold">Rp 63,98 jt</span>
+                            </div>
+                            <div class="flex justify-between pt-3 border-t">
+                                <span class="font-semibold text-slate-700">Angsuran/bulan</span>
+                                <span class="font-bold text-orange-700 text-lg">Rp 5,8 jt</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-2 border-blue-200 rounded-xl p-6">
+                        <div class="text-sm font-bold text-blue-600 mb-4">XL7 BETA HYBRID</div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Harga OTR</span>
+                                <span class="font-semibold">Rp 297 jt</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">DP 20%</span>
+                                <span class="font-semibold">Rp 59,4 jt</span>
+                            </div>
+                            <div class="flex justify-between pt-3 border-t">
+                                <span class="font-semibold text-slate-700">Angsuran/bulan</span>
+                                <span class="font-bold text-blue-700 text-lg">Rp 5,4 jt</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-2 border-emerald-300 bg-emerald-50 rounded-xl p-6">
+                        <div class="text-sm font-bold text-emerald-600 mb-4">VELOZ HYBRID V</div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Harga OTR</span>
+                                <span class="font-semibold">Rp 308 jt</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">DP 20%</span>
+                                <span class="font-semibold">Rp 61,6 jt</span>
+                            </div>
+                            <div class="flex justify-between pt-3 border-t border-emerald-200">
+                                <span class="font-semibold text-slate-700">Angsuran/bulan</span>
+                                <span class="font-bold text-emerald-700 text-lg">Rp 5,6 jt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4 text-center">*Estimasi dengan bunga flat 3.99% per tahun. Angsuran aktual dapat bervariasi tergantung leasing dan promo yang berlaku.</p>
+            </div>
+        </section>
+
+        <!-- ── VERDICT ── -->
+        <section id="verdict" class="relative">
+            <div class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl p-8 md:p-16 text-white overflow-hidden relative">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+
+                <div class="relative">
+                    <div class="text-center mb-12">
+                        <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold mb-4">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            Final Verdict
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Rekomendasi Akhir</h2>
+                        <p class="text-slate-300 max-w-2xl mx-auto text-lg">Pilihan terbaik berdasarkan kebutuhan dan prioritas Anda</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-12">
+                        <!-- Fronx -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all">
+                            <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                            </div>
+                            <div class="text-orange-400 font-bold text-xs uppercase tracking-wider mb-2">Best for Style</div>
+                            <h3 class="text-xl font-bold mb-3">Suzuki Fronx SGX</h3>
+                            <p class="text-slate-300 text-sm mb-4 leading-relaxed">Pilihan terbaik untuk Anda yang mengutamakan gaya hidup modern dengan fitur ADAS lengkap dan desain SUV coupe yang unik.</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    6 Airbags + Advanced ADAS
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Sunroof & Premium Features
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    6-Speed AT with Paddle Shift
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- XL7 -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all">
+                            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
+                            </div>
+                            <div class="text-blue-400 font-bold text-xs uppercase tracking-wider mb-2">Best Value</div>
+                            <h3 class="text-xl font-bold mb-3">Suzuki XL7 Hybrid</h3>
+                            <p class="text-slate-300 text-sm mb-4 leading-relaxed">Opsi paling ekonomis untuk keluarga besar dengan kapasitas 7 penumpang. Harga terjangkau dengan ground clearance tertinggi kedua.</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Harga Termurah: Rp 297 juta
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    7 Seater SUV Family
+                                </div>
+                                <div class="flex items-center text-xs text-slate-400">
+                                    <svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Bagasi 803L (seat down)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Veloz - Winner -->
+                        <div class="bg-gradient-to-br from-emerald-500/30 to-green-500/30 backdrop-blur-sm border-2 border-emerald-400/50 rounded-2xl p-6 relative overflow-hidden">
+                            <div class="absolute top-4 right-4">
+                                <span class="inline-flex items-center px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-black rounded-full">🏆 OVERALL WINNER</span>
+                            </div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            </div>
+                            <div class="text-emerald-300 font-bold text-xs uppercase tracking-wider mb-2">Best Overall Package</div>
+                            <h3 class="text-xl font-bold mb-3">Toyota Veloz Hybrid V</h3>
+                            <p class="text-slate-200 text-sm mb-4 leading-relaxed font-medium">Juara keseluruhan dengan efisiensi BBM tertinggi, nilai resale terbaik, garansi baterai 8 tahun, dan 5x service gratis. Investasi terbaik jangka panjang.</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-xs text-emerald-100 font-medium">
+                                    <svg class="w-4 h-4 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Full Hybrid: 23.8 km/L 🏆
+                                </div>
+                                <div class="flex items-center text-xs text-emerald-100 font-medium">
+                                    <svg class="w-4 h-4 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Resale Value 93% 🏆
+                                </div>
+                                <div class="flex items-center text-xs text-emerald-100 font-medium">
+                                    <svg class="w-4 h-4 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    5x Free Service + 8 Yr Battery 🏆
+                                </div>
+                                <div class="flex items-center text-xs text-emerald-100 font-medium">
+                                    <svg class="w-4 h-4 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    Lowest TCO 5 tahun 🏆
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Summary -->
+                    <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center">📝 Ringkasan Total Cost of Ownership (5 Tahun)</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-sm text-slate-400 mb-2">Fronx SGX AT</div>
+                                <div class="text-3xl font-black text-orange-400 mb-2">Rp 465 jt</div>
+                                <div class="text-xs text-slate-400 space-y-1">
+                                    <div>Harga: Rp 319,9 jt</div>
+                                    <div>BBM 5th: Rp 64,5 jt</div>
+                                    <div>Service: Rp 4,5 jt</div>
+                                    <div>Depresiasi: -Rp 128 jt</div>
+                                    <div class="pt-2 border-t border-white/10">Total Loss: Rp 145,1 jt</div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-slate-400 mb-2">XL7 Beta Hybrid</div>
+                                <div class="text-3xl font-black text-blue-400 mb-2">Rp 424 jt</div>
+                                <div class="text-xs text-slate-400 space-y-1">
+                                    <div>Harga: Rp 297 jt</div>
+                                    <div>BBM 5th: Rp 62 jt</div>
+                                    <div>Service: Rp 5,0 jt</div>
+                                    <div>Depresiasi: -Rp 118,8 jt</div>
+                                    <div class="pt-2 border-t border-white/10">Total Loss: Rp 60 jt</div>
+                                </div>
+                            </div>
+                            <div class="text-center bg-emerald-500/20 rounded-xl py-4">
+                                <div class="text-sm text-emerald-300 font-semibold mb-2">Veloz Hybrid V 🏆</div>
+                                <div class="text-3xl font-black text-emerald-300 mb-2">Rp 423 jt</div>
+                                <div class="text-xs text-emerald-100 space-y-1">
+                                    <div>Harga: Rp 308 jt</div>
+                                    <div>BBM 5th: Rp 47,5 jt</div>
+                                    <div>Service: Rp 6,5 jt</div>
+                                    <div>Depresiasi: -Rp 107,8 jt</div>
+                                    <div class="pt-2 border-t border-emerald-300/30 font-semibold">Total Loss: Rp 55,8 jt</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-slate-300"><strong class="text-emerald-300">Veloz Hybrid V menghemat Rp 89,3 juta</strong> dibanding Fronx dalam 5 tahun kepemilikan!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 border-t border-slate-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4">
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                    </svg>
+                    <span class="text-lg font-bold">KompareAuto</span>
+                </div>
+                <p class="text-slate-500 text-sm">Perbandingan mobil berdasarkan data resmi dealer dan estimasi pasar Februari 2026.</p>
+                <p class="text-slate-400 text-xs">Data dapat berubah sewaktu-waktu. Selalu konfirmasi dengan dealer resmi untuk informasi terkini.</p>
+                <div class="pt-4 border-t border-slate-200 mt-6">
+                    <p class="text-slate-400 text-xs uppercase tracking-widest">Made for Automotive Enthusiasts · 2026</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                const navHeight = 64;
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
+        }
+    </script>
+</body>
+
+</html>
