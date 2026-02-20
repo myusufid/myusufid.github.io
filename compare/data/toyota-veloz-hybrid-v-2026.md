@@ -48,10 +48,13 @@
 - ABS + EBD + Brake Assist (BA)
 - Vehicle Stability Control (VSC)
 - Hill Start Assist (HSA)
-- 360 View Camera (All Round View Monitor)
+- Rear Parking Camera (reverse camera only)
 - Rear Clearance Sonar
 - Electronic Parking Brake (EPB) with Auto Brake Hold
-- Toyota Safety Sense (TSS) Lite
+- **Note:** V variant does NOT have Toyota Safety Sense (TSS)
+- **Note:** V variant does NOT have 360° camera (only rear camera)
+- **Note:** V variant does NOT have RCTA
+- **Note:** TSS, RCTA & 360° camera only on Q variants (Rp 335jt+)
 
 ### Interior & Convenience
 - 9-inch Advanced Smartphone Connectivity
@@ -82,6 +85,12 @@
 - **Warranty:** 3 years / 100.000 km
 - **Battery Warranty:** 8 years / 160.000 km
 - **Estimated 5-Year Service Cost:** Rp 6.500.000
+
+## Tax & Ownership
+- **Annual Tax (PKB):** Rp 6.254.000 (V variant, highest trim)
+- **Tax Components:** PKB Pokok Rp 6.111.000 + SWDKLLJ Rp 143.000
+- **Note:** Highest tax among competitors due to premium pricing and Toyota brand value
+- **Variation:** Lower variants may have different tax amounts
 
 ## Investment
 - **Resale Value (Year 1):** ~93% Retained

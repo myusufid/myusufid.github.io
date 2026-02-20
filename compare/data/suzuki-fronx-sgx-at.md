@@ -61,7 +61,6 @@
 - 9-inch Touchscreen Head Unit with Wireless Apple CarPlay & Android Auto
 - Heads-Up Display (HUD)
 - Wireless Charger
-- Sunroof
 - Auto Climate AC with 2nd Row Vents
 - Tilt & Telescopic Steering
 - Cruise Control
@@ -85,6 +84,11 @@
 - **Free Service:** 3 times up to 50.000 km / 30 Months
 - **Warranty:** 3 years / 100.000 km
 - **Estimated 5-Year Service Cost:** Rp 4.500.000
+
+## Tax & Ownership
+- **Annual Tax (PKB):** Rp 4.023.000 (Jakarta, Year 1)
+- **Tax Components:** PKB (2% of NJKB) + SWDKLLJ Rp 143.000
+- **Note:** May vary by region due to local opsen tax policies
 
 ## Investment
 - **Resale Value (Year 1):** ~90% Retained

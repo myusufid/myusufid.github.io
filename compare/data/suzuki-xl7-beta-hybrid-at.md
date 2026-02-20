@@ -53,6 +53,7 @@
 - Rear Parking Camera
 - Rear Parking Sensors (2 Sensors)
 - Security Alarm + Immobilizer
+- **Note:** No ADAS features (No ACC, BSM, RCTA, etc.)
 
 ### Interior & Convenience
 - 8-inch Display Audio
@@ -82,6 +83,12 @@
 - **Free Service:** 3 times up to 50.000 km / 30 Months
 - **Warranty:** 3 years / 100.000 km
 - **Estimated 5-Year Service Cost:** Rp 5.000.000
+
+## Tax & Ownership
+- **Annual Tax (PKB):** Rp 4.326.000 (AT variant)
+- **Year 1 Total:** Rp 4.769.000 (includes STNK Rp 200k + TNKB Rp 100k)
+- **LCEV Benefit:** Eligible for Low Carbon Emission Vehicle tax relief (Permenperin No. 36/2021)
+- **Manual Variant:** Rp 4.187.000
 
 ## Investment
 - **Resale Value (Year 1):** ~89% Retained
