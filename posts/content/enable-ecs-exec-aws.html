@@ -1,0 +1,116 @@
+<!--
+title: Enable ECS Exec on AWS
+description: A comprehensive guide on how to enable ECS Exec on AWS, properly configure IAM role policies, and troubleshoot connection issues using the check-ecs-exec.sh script.
+date: 2026-03-04
+tags: aws, ecs, ecs-exec, troubleshooting, cloud
+image: /assets/images/django-aws-ecs-deploy.png
+image_credit: AWS ECS Architecture
+-->
+
+<article class="blog-post">
+    <h1>Enable ECS Exec on AWS</h1>
+    <div class="meta mb-4">2026-03-04</div>
+
+    <p>Amazon Elastic Container Service (ECS) Exec is an incredibly powerful feature that allows you to interact with
+        your containers securely without needing to manage SSH keys, bastion hosts, or expose any inbound ports. It
+        relies on the AWS Systems Manager (SSM) Session Manager to open a secure channel to your container.</p>
+
+    <p>However, getting ECS Exec working for the first time can be slightly tricky because of the strict IAM permissions
+        and networking requirements. In this article, we'll go through the exact steps to enable it, define the correct
+        IAM policies, and introduce a lifesaver script from AWS that automatically diagnoses any misconfigurations.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>AWS CLI v2 installed and configured.</li>
+        <li>The Session Manager plugin for AWS CLI installed.</li>
+        <li>An existing ECS Cluster and Task Definition.</li>
+    </ul>
+
+    <h2>1. Adding Required IAM Role Policies</h2>
+    <p>The most common reason ECS Exec fails is due to missing permissions. Specifically, your <strong>Task
+            Role</strong> (not the Task Execution Role) needs permissions to communicate with the AWS Systems Manager
+        service.</p>
+
+    <p>Attach the following inline policy to the IAM role that your ECS Task uses (Task Role):</p>
+
+    <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+      ],
+      "Resource": "*"
+    }
+  ]
+}</code></pre>
+
+    <h2>2. Enabling ECS Exec on Your Service/Task</h2>
+    <p>To use ECS Exec, you must explicitly enable it when creating or updating your ECS service or when running a
+        standalone task.</p>
+
+    <p>You can enable it via the AWS CLI when updating your service:</p>
+
+    <pre><code class="language-bash">aws ecs update-service \
+    --cluster your-cluster-name \
+    --service your-service-name \
+    --enable-execute-command \
+    --force-new-deployment</code></pre>
+
+    <p>Wait for your service to redeploy the tasks with the new configuration. You can now try to connect:</p>
+
+    <pre><code class="language-bash">aws ecs execute-command \
+    --cluster your-cluster-name \
+    --task your-task-id \
+    --container your-container-name \
+    --interactive \
+    --command "/bin/sh"</code></pre>
+
+    <h3>Connecting via AWS Management Console</h3>
+    <p>In addition to using the AWS CLI, you can also easily connect to your ECS containers directly from the AWS
+        Management Console once ECS Exec is enabled and the task is running.</p>
+    <ul>
+        <li>Navigate to the <strong>Amazon ECS</strong> service in the AWS Console.</li>
+        <li>Open your <strong>Cluster</strong> and select the <strong>Tasks</strong> tab.</li>
+        <li>Click on the specific Task ID you want to connect to.</li>
+        <li>Switch to the <strong>Containers</strong> tab, select your container, and you will see an <strong>Execute
+                Command</strong> button if it's configured correctly.</li>
+        <li>Clicking the button will prompt you to open a secure terminal session directly in your browser without
+            needing any local CLI setup.</li>
+    </ul>
+
+    <h2>3. Troubleshooting with <code>check-ecs-exec.sh</code></h2>
+    <p>If your <code>execute-command</code> fails and hangs, or you get an error that the container is not configured
+        for execute command, the best way to troubleshoot is by using the official <a
+            href="https://github.com/aws-containers/amazon-ecs-exec-checker/blob/main/check-ecs-exec.sh" target="_blank"
+            rel="noopener noreferrer">amazon-ecs-exec-checker</a> script provided by the AWS Containers team.</p>
+
+    <p>This script checks your cluster, service, task definition, and IAM roles to ensure all requirements are met.</p>
+
+    <h3>Running the script</h3>
+    <p>First, download the script and make it executable:</p>
+
+    <pre><code class="language-bash">curl -O https://raw.githubusercontent.com/aws-containers/amazon-ecs-exec-checker/main/check-ecs-exec.sh
+chmod +x check-ecs-exec.sh</code></pre>
+
+    <p>Then, run it against your cluster and task:</p>
+
+    <pre><code class="language-bash">./check-ecs-exec.sh your-cluster-name your-task-id</code></pre>
+
+    <p>The output will brightly highlight in red any missing configurations, such as:</p>
+    <ul>
+        <li>Missing <code>ssmmessages</code> IAM permissions on the Task Role.</li>
+        <li>Missing <code>ssmmessages</code> VPC Endpoints (if you are on a private subnet).</li>
+        <li>The <code>enableExecuteCommand</code> flag not being true on the task or service.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p>ECS Exec is vital for debugging applications running in Fargate or EC2 ECS instances securely. By ensuring your
+        Task Role has the correct <code>ssmmessages</code> permissions and utilizing the <code>check-ecs-exec.sh</code>
+        script to quickly spot misconfigurations, you can save hours of troubleshooting and get a shell into your
+        containers reliably.</p>
+</article>

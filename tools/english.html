@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Anki | M Yusuf</title>
+
+    <!-- SEO & Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                        success: {
+                            DEFAULT: "#10b981",
+                            foreground: "#ffffff"
+                        },
+                        danger: {
+                            DEFAULT: "#ef4444",
+                            foreground: "#ffffff"
+                        },
+                        warning: {
+                            DEFAULT: "#f59e0b",
+                            foreground: "#ffffff"
+                        }
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+    <style>
+        .anki-card {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flip-enter {
+            animation: flipIn 0.4s ease-out forwards;
+        }
+
+        @keyframes flipIn {
+            0% {
+                transform: rotateX(-90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300 flex flex-col">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl flex-grow">
+        <div class="mb-8">
+            <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">English Vocabulary Anki</h1>
+            <p class="text-xl text-muted-foreground">Spaced repetition system for mastering English vocabulary.</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-2 border-b border-border mb-6">
+            <button onclick="switchTab('study')" id="tab-study"
+                class="px-4 py-2 font-medium text-sm border-b-2 border-primary text-primary transition-colors">Study</button>
+            <button onclick="switchTab('add')" id="tab-add"
+                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors">Add
+                Card</button>
+            <button onclick="switchTab('manage')" id="tab-manage"
+                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors">Manage
+                Cards</button>
+            <button onclick="switchTab('import-export')" id="tab-import-export"
+                class="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors">Import/Export</button>
+        </div>
+
+        <!-- Study Tab -->
+        <div id="view-study" class="block">
+            <div class="max-w-2xl mx-auto text-center" id="study-stats">
+                <p class="text-muted-foreground mb-4 font-medium"><span id="due-count">0</span> cards due today.</p>
+            </div>
+
+            <div id="study-container" class="hidden">
+                <div
+                    class="border rounded-xl bg-card text-card-foreground shadow w-full max-w-2xl mx-auto p-8 mb-6 anki-card relative">
+                    <div id="card-front" class="text-3xl font-bold mb-6 w-full prose dark:prose-invert">Word goes here
+                    </div>
+
+                    <div id="card-divider" class="w-full border-t border-border my-6 hidden"></div>
+
+                    <div id="card-back" class="text-xl w-full hidden flip-enter prose dark:prose-invert">Definition goes
+                        here</div>
+                </div>
+
+                <div id="action-show" class="flex justify-center">
+                    <button onclick="showAnswer()"
+                        class="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-md font-semibold transition-colors shadow-sm">Show
+                        Answer</button>
+                </div>
+
+                <div id="action-rate" class="hidden mt-6 space-y-4 max-w-2xl mx-auto">
+                    <p class="text-center text-sm tracking-wide text-muted-foreground uppercase font-semibold">How easy
+                        was this?</p>
+                    <div class="grid grid-cols-4 gap-4">
+                        <button onclick="rateCard(1)"
+                            class="group flex flex-col items-center justify-center p-4 border border-danger/50 bg-danger/10 hover:bg-danger text-danger hover:text-white rounded-lg transition-colors shadow-sm">
+                            <span class="font-bold mb-1">Again</span>
+                            <span class="text-xs opacity-80" id="int-again">&lt; 1m</span>
+                        </button>
+                        <button onclick="rateCard(2)"
+                            class="group flex flex-col items-center justify-center p-4 border border-warning/50 bg-warning/10 hover:bg-warning text-warning hover:text-white rounded-lg transition-colors shadow-sm">
+                            <span class="font-bold mb-1">Hard</span>
+                            <span class="text-xs opacity-80" id="int-hard">...</span>
+                        </button>
+                        <button onclick="rateCard(3)"
+                            class="group flex flex-col items-center justify-center p-4 border border-success/50 bg-success/10 hover:bg-success text-success hover:text-white rounded-lg transition-colors shadow-sm">
+                            <span class="font-bold mb-1">Good</span>
+                            <span class="text-xs opacity-80" id="int-good">...</span>
+                        </button>
+                        <button onclick="rateCard(4)"
+                            class="group flex flex-col items-center justify-center p-4 border border-primary/50 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg transition-colors shadow-sm">
+                            <span class="font-bold mb-1">Easy</span>
+                            <span class="text-xs opacity-80" id="int-easy">...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="study-done" class="hidden text-center py-20">
+                <div
+                    class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-success/20 text-success mb-6">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold mb-2">You're all caught up!</h2>
+                <p class="text-muted-foreground text-lg">You have no more cards to review today.</p>
+                <p class="mt-8">
+                    <button onclick="switchTab('add')" class="text-primary hover:underline font-medium">Add more
+                        cards</button> or
+                    <button onclick="startStudyPreview()" class="text-primary hover:underline font-medium">Review
+                        ahead</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- Add Card Tab -->
+        <div id="view-add" class="hidden max-w-3xl mx-auto">
+            <div class="border rounded-xl bg-card text-card-foreground shadow p-6">
+                <h2 class="text-2xl font-bold mb-6">Add New Vocabulary Card</h2>
+
+                <form id="add-card-form" onsubmit="addCard(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Front (Word / Phrase)</label>
+                        <textarea id="input-front" required
+                            class="w-full min-h-[100px] p-3 rounded-md border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            placeholder="e.g. Inquisitive"></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Back (Definition / Translation / Example)</label>
+                        <textarea id="input-back" required
+                            class="w-full min-h-[150px] p-3 rounded-md border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            placeholder="e.g. Curious or inquiring.&#10;Example: He was very inquisitive about how the machine worked."></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Tags (Comma-separated, optional)</label>
+                        <input type="text" id="input-tags"
+                            class="w-full p-2 rounded-md border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            placeholder="e.g. adjectives, gre, business">
+                    </div>
+
+                    <!-- Form Status Message -->
+                    <div id="add-status" class="mb-4 text-sm font-medium hidden"></div>
+
+                    <div class="flex justify-end gap-2">
+                        <button type="submit"
+                            class="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-md font-medium transition-colors">Save
+                            Card</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Cards Tab -->
+        <div id="view-manage" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">All Cards (<span id="total-cards">0</span>)</h2>
+                <input type="text" id="filter-cards" placeholder="Filter cards..." oninput="renderCardsList()"
+                    class="h-9 w-64 rounded-md border bg-background px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-primary">
+            </div>
+
+            <div class="border rounded-lg overflow-hidden border-border bg-card">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-muted-foreground uppercase bg-muted/50 border-b">
+                            <tr>
+                                <th class="px-6 py-3 font-medium">Front</th>
+                                <th class="px-6 py-3 font-medium">Back</th>
+                                <th class="px-6 py-3 font-medium">Due</th>
+                                <th class="px-6 py-3 font-medium">Stats</th>
+                                <th class="px-6 py-3 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cards-table-body" class="divide-y divide-border">
+                            <!-- Cards populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="no-cards-msg" class="hidden p-8 text-center text-muted-foreground">
+                    No cards found.
+                </div>
+            </div>
+        </div>
+
+        <!-- Import/Export Tab -->
+        <div id="view-import-export" class="hidden max-w-3xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Export -->
+                <div class="border rounded-xl bg-card text-card-foreground shadow p-6">
+                    <h2 class="text-xl font-bold mb-4">Export Deck</h2>
+                    <p class="text-sm text-muted-foreground mb-4">Download a JSON copy of all your cards and learning
+                        progress.</p>
+                    <button onclick="exportCards()"
+                        class="w-full border border-input bg-background hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md font-medium transition-colors">Export
+                        to JSON</button>
+                </div>
+
+                <!-- Import -->
+                <div class="border rounded-xl bg-card text-card-foreground shadow p-6">
+                    <h2 class="text-xl font-bold mb-4">Import Deck</h2>
+                    <p class="text-sm text-muted-foreground mb-4">Upload a JSON backup file to restore or add cards.</p>
+                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importCards(event)">
+                    <label for="import-file"
+                        class="w-full flex justify-center items-center border border-input bg-background hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md font-medium transition-colors cursor-pointer">
+                        Choose JSON File
+                    </label>
+                    <p class="text-xs text-muted-foreground mt-2 text-center" id="import-status"></p>
+                </div>
+            </div>
+
+            <div class="mt-8 border border-danger/20 bg-danger/5 rounded-xl p-6">
+                <h3 class="text-lg font-bold text-danger mb-2">Danger Zone</h3>
+                <p class="text-sm text-muted-foreground mb-4">Warning: This action cannot be undone. All your cards and
+                    learning progress will be permanently deleted.</p>
+                <button onclick="clearAllData()"
+                    class="bg-danger text-white hover:bg-danger/90 px-4 py-2 rounded-md font-medium transition-colors">Clear
+                    All Local Data</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center overflow-y-auto bg-black/50 p-4 backdrop-blur-sm">
+        <div class="relative w-full max-w-2xl rounded-xl border bg-card text-card-foreground shadow-lg">
+            <div class="flex items-center justify-between border-b p-6">
+                <h3 class="text-lg font-bold">Edit Card</h3>
+                <button onclick="closeEditModal()" class="text-muted-foreground hover:text-foreground">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <input type="hidden" id="edit-id">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Front</label>
+                    <textarea id="edit-front"
+                        class="w-full min-h-[100px] p-3 rounded-md border bg-background focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Back</label>
+                    <textarea id="edit-back"
+                        class="w-full min-h-[150px] p-3 rounded-md border bg-background focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Tags</label>
+                    <input type="text" id="edit-tags"
+                        class="w-full p-2 rounded-md border bg-background focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                <!-- Reset Progress Checkbox -->
+                <div class="mb-6 flex items-center">
+                    <input type="checkbox" id="edit-reset-progress"
+                        class="h-4 w-4 rounded border-input bg-background text-primary">
+                    <label for="edit-reset-progress" class="ml-2 text-sm text-muted-foreground">Reset learning progress
+                        for this card to review as new</label>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-2 border-t p-6">
+                <button onclick="closeEditModal()"
+                    class="border px-4 py-2 rounded-md font-medium hover:bg-accent transition-colors">Cancel</button>
+                <button onclick="saveEdit()"
+                    class="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-medium transition-colors">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t py-8 mt-auto mt-12 bg-muted/20">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground">GitHub</a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+    <script>
+        // --- Anki Logic & State ---
+
+        // Data Structure
+        /*
+        Card: {
+            id: string,
+            front: string,
+            back: string,
+            tags: string,
+            repetition: number,
+            interval: number,
+            efactor: number,
+            dueDate: number, // timestamp
+            createdAt: number
+        }
+        */
+
+        const STORAGE_KEY = 'anki_english_cards';
+        let cards = [];
+        let dueCards = [];
+        let currentCardIndex = 0;
+        let previewMode = false;
+
+        // Initialize
+        function init() {
+            loadCards();
+            switchTab('study');
+        }
+
+        let cardsLoaded = false;
+
+        async function fetchDictionary() {
+            try {
+                // Fetch dictionary file from path /assets/english-vocab.json
+                const response = await fetch('/assets/english-vocab.json');
+                if (!response.ok) throw new Error("Failed to load generic vocabulary.");
+                let dictData = await response.json();
+
+                // Read progress from LocalStorage
+                let userProgress = {};
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    try {
+                        userProgress = JSON.parse(stored);
+                    } catch (e) {
+                        console.error("Failed to parse progress", e);
+                    }
+                }
+
+                // If user doesn't have custom cards/progress stored, initialize with empty
+                let allCards = [];
+
+                // Load custom created cards from localStorage (custom cards start with card_)
+                let customCards = Object.values(userProgress).filter(c => String(c.id).startsWith("card_"));
+                allCards.push(...customCards);
+
+                // Add dictionary cards
+                // Because memory issues with 100k+ elements rendering, we'll only pull what's strictly needed
+                // But JS can handle arrays of 100k easily. Let's map over dictData to merge progress.
+                dictData.forEach(dc => {
+                    const prog = userProgress[dc.id];
+                    if (prog) {
+                        // User has studied this card
+                        allCards.push({
+                            ...dc,
+                            ...prog
+                        });
+                    } else {
+                        // New card
+                        allCards.push({
+                            ...dc,
+                            repetition: 0,
+                            interval: 0,
+                            efactor: 2.5,
+                            dueDate: Date.now(),
+                            createdAt: Date.now()
+                        });
+                    }
+                });
+
+                cards = allCards;
+                cardsLoaded = true;
+                updateStudyStats();
+                startStudy();
+
+                // If manage tab is open, render it
+                if (!document.getElementById('view-manage').classList.contains('hidden')) {
+                    renderCardsList();
+                }
+            } catch (err) {
+                console.error("Error fetching dictionary:", err);
+                alert("Failed to load vocabulary list.");
+            }
+        }
+
+        function loadCards() {
+            // Because reading huge dict via JSON fetch is async, we start it here.
+            // When done, it will trigger startStudy()
+            fetchDictionary();
+        }
+
+        function saveCards() {
+            if (!cardsLoaded) return; // don't overwrite with empty
+
+            // To prevent LocalStorage from blowing up to 30MB over 5MB limit, 
+            // we ONLY save the progress of cards that have been interacted with, or custom added.
+            let userProgress = {};
+            cards.forEach(c => {
+                // Save if it's a custom card OR if it has been studied (repetition > 0)
+                if (c.id.startsWith("card_") || c.repetition > 0) {
+                    userProgress[c.id] = {
+                        id: c.id,
+                        front: c.front, // need to save custom fronts
+                        back: c.back,   // need to save custom backs
+                        tags: c.tags,
+                        repetition: c.repetition,
+                        interval: c.interval,
+                        efactor: c.efactor,
+                        dueDate: c.dueDate,
+                        createdAt: c.createdAt
+                    };
+                }
+            });
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userProgress));
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    alert("Local storage is full! Progress could not be fully saved.");
+                } else {
+                    console.error("Local storage error:", e);
+                }
+            }
+            updateStudyStats();
+        }
+
+        // --- Tabs Logic ---
+        function switchTab(tabId) {
+            // Hide all views
+            ['study', 'add', 'manage', 'import-export'].forEach(id => {
+                document.getElementById('view-' + id).classList.add('hidden');
+                document.getElementById('tab-' + id).className = "px-4 py-2 font-medium text-sm border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors";
+            });
+
+            // Show active view
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).className = "px-4 py-2 font-medium text-sm border-b-2 border-primary text-primary transition-colors";
+
+            if (tabId === 'study') {
+                previewMode = false;
+                startStudy();
+            } else if (tabId === 'manage') {
+                renderCardsList();
+            }
+        }
+
+        // --- SuperMemo-2 Algorithm Implementation ---
+        // rating: 1(again/blackout), 2(hard), 3(good), 4(easy)
+        function calcSM2(card, rating) {
+            let nextCard = { ...card };
+
+            // Map 1-4 logic to SM-2 0-5 logic approximately
+            // 1 -> 0 (Blackout) or 1 (Incorrect)
+            // 2 -> 3 (Hard)
+            // 3 -> 4 (Good)
+            // 4 -> 5 (Easy)
+            let q = 0;
+            if (rating === 1) q = 1;      // Again
+            else if (rating === 2) q = 3;  // Hard
+            else if (rating === 3) q = 4;  // Good
+            else if (rating === 4) q = 5;  // Easy
+
+            if (q < 3) {
+                // Incorrect response
+                nextCard.repetition = 0;
+                nextCard.interval = 1;
+            } else {
+                // Correct response
+                if (nextCard.repetition === 0) {
+                    nextCard.interval = 1;
+                } else if (nextCard.repetition === 1) {
+                    nextCard.interval = 6;
+                } else {
+                    nextCard.interval = Math.round(nextCard.interval * nextCard.efactor);
+                }
+                nextCard.repetition += 1;
+            }
+
+            // Update EF
+            nextCard.efactor = nextCard.efactor + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+            if (nextCard.efactor < 1.3) nextCard.efactor = 1.3;
+
+            // Set next due date
+            const oneDay = 24 * 60 * 60 * 1000;
+            // Again -> review very soon (simulated by due date now, but technically we push it forward slightly or just 1 day)
+            if (rating === 1) {
+                nextCard.dueDate = Date.now() + (5 * 60 * 1000); // 5 minutes
+            } else {
+                nextCard.dueDate = Date.now() + (nextCard.interval * oneDay);
+            }
+
+            return nextCard;
+        }
+
+        // Estimate next intervals for display
+        function getEstimatedIntervals(card) {
+            let res = {};
+            for (let i = 1; i <= 4; i++) {
+                let sim = calcSM2(card, i);
+                if (i === 1) res[i] = "< 5m"; // Assuming again is < 5m
+                else res[i] = formatInterval(sim.interval);
+            }
+            return res;
+        }
+
+        function formatInterval(days) {
+            if (days < 1) return "< 1d";
+            if (days === 1) return "1d";
+            if (days < 30) return days + "d";
+            if (days < 365) return Math.round(days / 30) + "m";
+            return (days / 365).toFixed(1) + "y";
+        }
+
+        // --- Study Logic ---
+        function updateStudyStats() {
+            const now = Date.now();
+            const dueCount = cards.filter(c => c.dueDate <= now).length;
+            document.getElementById('due-count').innerText = dueCount;
+        }
+
+        function startStudy() {
+            const now = Date.now();
+            dueCards = cards.filter(c => c.dueDate <= now);
+            // Sort due cards: prioritize older due dates or new cards
+            dueCards.sort((a, b) => a.dueDate - b.dueDate);
+
+            updateStudyStats();
+
+            if (dueCards.length === 0 && !previewMode) {
+                document.getElementById('study-container').classList.add('hidden');
+                document.getElementById('study-done').classList.remove('hidden');
+            } else {
+                document.getElementById('study-container').classList.remove('hidden');
+                document.getElementById('study-done').classList.add('hidden');
+                currentCardIndex = 0;
+                showCard();
+            }
+        }
+
+        function startStudyPreview() {
+            previewMode = true;
+            // Review any 20 cards randomly or oldest sorted
+            dueCards = [...cards].sort((a, b) => a.dueDate - b.dueDate).slice(0, 20);
+            if (dueCards.length === 0) {
+                alert("You have no cards in your collection. Add some first!");
+                return;
+            }
+            document.getElementById('study-container').classList.remove('hidden');
+            document.getElementById('study-done').classList.add('hidden');
+            currentCardIndex = 0;
+            showCard();
+        }
+
+        function showCard() {
+            if (currentCardIndex >= dueCards.length) {
+                startStudy(); // Re-eval to check if there are 5-min repeats, else done
+                return;
+            }
+
+            const card = dueCards[currentCardIndex];
+
+            // Render front, support basic linebreaks
+            document.getElementById('card-front').innerHTML = escapeHTML(card.front).replace(/\n/g, '<br>');
+
+            // Reset state
+            document.getElementById('card-divider').classList.add('hidden');
+            const backEl = document.getElementById('card-back');
+            backEl.classList.add('hidden');
+            backEl.classList.remove('flip-enter');
+
+            document.getElementById('action-show').classList.remove('hidden');
+            document.getElementById('action-rate').classList.add('hidden');
+        }
+
+        function showAnswer() {
+            const card = dueCards[currentCardIndex];
+
+            // Render back
+            document.getElementById('card-divider').classList.remove('hidden');
+            const backEl = document.getElementById('card-back');
+            backEl.innerHTML = escapeHTML(card.back).replace(/\n/g, '<br>');
+            backEl.classList.remove('hidden');
+
+            // Trigger animation trick
+            void backEl.offsetWidth;
+            backEl.classList.add('flip-enter');
+
+            // Hide/Show controls
+            document.getElementById('action-show').classList.add('hidden');
+            document.getElementById('action-rate').classList.remove('hidden');
+
+            // Set estimated intervals
+            const est = getEstimatedIntervals(card);
+            document.getElementById('int-hard').innerText = est[2];
+            document.getElementById('int-good').innerText = est[3];
+            document.getElementById('int-easy').innerText = est[4];
+        }
+
+        function rateCard(rating) {
+            let currentDueCard = dueCards[currentCardIndex];
+
+            // Find in main array and update
+            const globalIndex = cards.findIndex(c => c.id === currentDueCard.id);
+            if (globalIndex !== -1) {
+                cards[globalIndex] = calcSM2(cards[globalIndex], rating);
+            }
+
+            saveCards();
+
+            // Progress to next card
+            currentCardIndex++;
+            showCard();
+        }
+
+        // --- Add Card Logic ---
+        function addCard(e) {
+            e.preventDefault();
+
+            const front = document.getElementById('input-front').value.trim();
+            const back = document.getElementById('input-back').value.trim();
+            const tags = document.getElementById('input-tags').value.trim();
+
+            if (!front || !back) return;
+
+            const newCard = {
+                id: 'card_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                front: front,
+                back: back,
+                tags: tags,
+                repetition: 0,
+                interval: 0,
+                efactor: 2.5,
+                dueDate: Date.now(), // Due immediately
+                createdAt: Date.now()
+            };
+
+            cards.push(newCard);
+            saveCards();
+
+            // Reset Form and show success
+            document.getElementById('input-front').value = '';
+            document.getElementById('input-back').value = '';
+            // keep tags usually
+
+            const statusEl = document.getElementById('add-status');
+            statusEl.innerText = "Card added successfully!";
+            statusEl.className = "mb-4 text-sm font-medium text-success";
+            statusEl.classList.remove('hidden');
+
+            // Clear message
+            setTimeout(() => {
+                statusEl.classList.add('hidden');
+            }, 3000);
+
+            // Give focus back to front input for rapid input
+            document.getElementById('input-front').focus();
+        }
+
+        // --- Manage Cards Logic ---
+        function renderCardsList() {
+            const tbody = document.getElementById('cards-table-body');
+            const filter = document.getElementById('filter-cards').value.toLowerCase();
+            const noCardsMsg = document.getElementById('no-cards-msg');
+
+            tbody.innerHTML = '';
+
+            document.getElementById('total-cards').innerText = cards.length;
+
+            const filtered = cards.filter(c =>
+                c.front.toLowerCase().includes(filter) ||
+                c.back.toLowerCase().includes(filter) ||
+                (c.tags && c.tags.toLowerCase().includes(filter))
+            );
+
+            if (filtered.length === 0) {
+                noCardsMsg.classList.remove('hidden');
+            } else {
+                noCardsMsg.classList.add('hidden');
+
+                filtered.forEach(card => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-muted/30 transition-colors";
+
+                    const isDue = card.dueDate <= Date.now();
+                    const dueStr = isDue ? '<span class="text-warning font-semibold">Due Now</span>' : new Date(card.dueDate).toLocaleDateString();
+
+                    tr.innerHTML = `
+                        <td class="px-6 py-4">
+                            <div class="font-medium text-foreground line-clamp-2">${escapeHTML(card.front)}</div>
+                            <div class="text-xs text-muted-foreground mt-1">${card.tags ? escapeHTML(card.tags).split(',').map(t => `<span class="mr-1 opacity-70">#${t.trim()}</span>`).join('') : ''}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-muted-foreground line-clamp-2 break-words">${escapeHTML(card.back)}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-xs">
+                            ${dueStr}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-xs text-muted-foreground font-mono">
+                            EF: ${card.efactor.toFixed(2)}<br>
+                            Rep: ${card.repetition}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <button onclick="openEditModal('${card.id}')" class="text-primary hover:underline px-2 py-1 text-xs outline-none">Edit</button>
+                            <button onclick="deleteCard('${card.id}')" class="text-danger hover:underline px-2 py-1 text-xs outline-none">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function deleteCard(id) {
+            if (confirm("Are you sure you want to delete this card?")) {
+                cards = cards.filter(c => c.id !== id);
+                saveCards();
+                renderCardsList(); // refresh table
+            }
+        }
+
+        // --- Edit Modal Logic ---
+        function openEditModal(id) {
+            const card = cards.find(c => c.id === id);
+            if (!card) return;
+
+            document.getElementById('edit-id').value = card.id;
+            document.getElementById('edit-front').value = card.front;
+            document.getElementById('edit-back').value = card.back;
+            document.getElementById('edit-tags').value = card.tags || '';
+            document.getElementById('edit-reset-progress').checked = false;
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+            document.getElementById('edit-modal').classList.add('flex');
+
+            // disable scroll on body
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+            document.getElementById('edit-modal').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        function saveEdit() {
+            const id = document.getElementById('edit-id').value;
+            const front = document.getElementById('edit-front').value.trim();
+            const back = document.getElementById('edit-back').value.trim();
+            const tags = document.getElementById('edit-tags').value.trim();
+            const resetProg = document.getElementById('edit-reset-progress').checked;
+
+            if (!front || !back) {
+                alert("Front and Back cannot be empty.");
+                return;
+            }
+
+            const index = cards.findIndex(c => c.id === id);
+            if (index !== -1) {
+                cards[index].front = front;
+                cards[index].back = back;
+                cards[index].tags = tags;
+
+                if (resetProg) {
+                    cards[index].repetition = 0;
+                    cards[index].interval = 0;
+                    cards[index].efactor = 2.5;
+                    cards[index].dueDate = Date.now();
+                }
+
+                saveCards();
+                closeEditModal();
+                renderCardsList();
+            }
+        }
+
+        // --- Import / Export ---
+        function exportCards() {
+            const dataStr = JSON.stringify(cards, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+            const exportFileDefaultName = 'm_yusuf_anki_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function importCards(event) {
+            const file = event.target.files[0];
+            const statusEl = document.getElementById('import-status');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        const importedCards = JSON.parse(e.target.result);
+                        if (!Array.isArray(importedCards)) throw new Error("File must contain a list of cards.");
+
+                        // Validate minimum viable card and skip invalid
+                        let validCount = 0;
+                        importedCards.forEach(ic => {
+                            if (ic.front && ic.back) {
+                                // assign new ID to avoid collisions if we're merging identical decks
+                                const idExists = cards.find(c => c.id === ic.id);
+                                if (!idExists) {
+                                    cards.push({
+                                        id: ic.id || ('card_' + Date.now() + '_' + Math.random()),
+                                        front: ic.front,
+                                        back: ic.back,
+                                        tags: ic.tags || '',
+                                        repetition: typeof ic.repetition === 'number' ? ic.repetition : 0,
+                                        interval: typeof ic.interval === 'number' ? ic.interval : 0,
+                                        efactor: typeof ic.efactor === 'number' ? ic.efactor : 2.5,
+                                        dueDate: typeof ic.dueDate === 'number' ? ic.dueDate : Date.now(),
+                                        createdAt: typeof ic.createdAt === 'number' ? ic.createdAt : Date.now()
+                                    });
+                                    validCount++;
+                                }
+                            }
+                        });
+
+                        saveCards();
+                        statusEl.innerText = `Successfully imported ${validCount} valid new cards.`;
+                        statusEl.className = "text-xs mt-2 text-center text-success";
+
+                    } catch (err) {
+                        statusEl.innerText = `Error importing file: ${err.message}`;
+                        statusEl.className = "text-xs mt-2 text-center text-danger";
+                    }
+
+                    // reset input
+                    event.target.value = '';
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function clearAllData() {
+            if (confirm("Are you ABSOLUTELY SURE you want to delete ALL cards? This cannot be undone!")) {
+                const check = prompt("Type 'DELETE' to confirm.");
+                if (check === 'DELETE') {
+                    cards = [];
+                    saveCards();
+                    alert("All local data has been cleared.");
+                    location.reload();
+                } else {
+                    alert("Operation cancelled.");
+                }
+            }
+        }
+
+        // Utility
+        function escapeHTML(str) {
+            const p = document.createElement('p');
+            p.appendChild(document.createTextNode(str));
+            return p.innerHTML;
+        }
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+
+</html>
