@@ -285,7 +285,7 @@
         <div id="view-manage" class="hidden">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">All Cards (<span id="total-cards">0</span>)</h2>
-                <input type="text" id="filter-cards" placeholder="Filter cards..." oninput="renderCardsList()"
+                <input type="text" id="filter-cards" placeholder="Filter cards..." oninput="debouncedRenderCardsList()"
                     class="h-9 w-64 rounded-md border bg-background px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-primary">
             </div>
 
@@ -467,26 +467,20 @@
                 allCards.push(...customCards);
 
                 // Add dictionary cards
-                // Because memory issues with 100k+ elements rendering, we'll only pull what's strictly needed
-                // But JS can handle arrays of 100k easily. Let's map over dictData to merge progress.
+                const now = Date.now();
                 dictData.forEach(dc => {
                     const prog = userProgress[dc.id];
                     if (prog) {
                         // User has studied this card
-                        allCards.push({
-                            ...dc,
-                            ...prog
-                        });
+                        allCards.push(Object.assign(dc, prog));
                     } else {
                         // New card
-                        allCards.push({
-                            ...dc,
-                            repetition: 0,
-                            interval: 0,
-                            efactor: 2.5,
-                            dueDate: Date.now(),
-                            createdAt: Date.now()
-                        });
+                        dc.repetition = 0;
+                        dc.interval = 0;
+                        dc.efactor = 2.5;
+                        dc.dueDate = now;
+                        dc.createdAt = now;
+                        allCards.push(dc);
                     }
                 });
 
@@ -777,54 +771,73 @@
             document.getElementById('input-front').focus();
         }
 
+        // Debounce mechanism for input
+        let filterTimeout = null;
+        function debouncedRenderCardsList() {
+            if (filterTimeout) clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                renderCardsList();
+            }, 300);
+        }
+
         // --- Manage Cards Logic ---
         function renderCardsList() {
             const tbody = document.getElementById('cards-table-body');
-            const filter = document.getElementById('filter-cards').value.toLowerCase();
+            const filter = document.getElementById('filter-cards').value.toLowerCase().trim();
             const noCardsMsg = document.getElementById('no-cards-msg');
-
-            tbody.innerHTML = '';
 
             document.getElementById('total-cards').innerText = cards.length;
 
-            const filtered = cards.filter(c =>
-                c.front.toLowerCase().includes(filter) ||
-                c.back.toLowerCase().includes(filter) ||
-                (c.tags && c.tags.toLowerCase().includes(filter))
-            );
-
+            let matched = [];
             const maxRender = 100;
-            const toRender = filtered.slice(0, maxRender);
 
-            if (toRender.length === 0) {
-                noCardsMsg.classList.remove('hidden');
+            if (!filter) {
+                // If no filter, just take the first maxRender items
+                matched = cards.slice(0, maxRender);
             } else {
-                noCardsMsg.classList.add('hidden');
-
-                if (filtered.length > maxRender) {
-                    const infoRow = document.createElement('tr');
-                    infoRow.innerHTML = `<td colspan="5" class="px-6 py-3 text-center text-xs text-muted-foreground bg-muted/20">Showing top ${maxRender} results out of ${filtered.length}. Use the filter to find specific cards.</td>`;
-                    tbody.appendChild(infoRow);
+                // If filter exists, search until we find enough or exhaust the list
+                for (let i = 0; i < cards.length; i++) {
+                    const c = cards[i];
+                    if ((c.front && c.front.toLowerCase().includes(filter)) ||
+                        (c.back && c.back.toLowerCase().includes(filter)) ||
+                        (c.tags && c.tags.toLowerCase().includes(filter))) {
+                        matched.push(c);
+                        if (matched.length >= maxRender) break; // Optimization: stop once we have enough for display
+                    }
                 }
+            }
 
-                toRender.forEach(card => {
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-muted/30 transition-colors";
+            if (matched.length === 0) {
+                tbody.innerHTML = '';
+                noCardsMsg.classList.remove('hidden');
+                return;
+            }
 
-                    const isDue = card.dueDate <= Date.now();
-                    const dueStr = isDue ? '<span class="text-warning font-semibold">Due Now</span>' : new Date(card.dueDate).toLocaleDateString();
+            noCardsMsg.classList.add('hidden');
+            let html = '';
 
-                    tr.innerHTML = `
+            if (!filter && cards.length > maxRender) {
+                html += `<tr><td colspan="5" class="px-6 py-3 text-center text-xs text-muted-foreground bg-muted/20">Showing top ${maxRender} results out of ${cards.length}. Use the filter to search your entire deck.</td></tr>`;
+            } else if (filter && matched.length >= maxRender) {
+                html += `<tr><td colspan="5" class="px-6 py-3 text-center text-xs text-muted-foreground bg-muted/20">Showing top ${maxRender} matching results. Keep typing to refine your search.</td></tr>`;
+            }
+
+            const now = Date.now();
+            matched.forEach(card => {
+                const isDue = card.dueDate <= now;
+                const dueStr = isDue ? '<span class="text-warning font-semibold">Due Now</span>' : new Date(card.dueDate).toLocaleDateString();
+                const tagsHtml = card.tags ? escapeHTML(card.tags).split(',').map(t => `<span class="mr-1 opacity-70">#${t.trim()}</span>`).join('') : '';
+
+                html += `
+                    <tr class="hover:bg-muted/30 transition-colors">
                         <td class="px-6 py-4">
                             <div class="font-medium text-foreground line-clamp-2">${escapeHTML(card.front)}</div>
-                            <div class="text-xs text-muted-foreground mt-1">${card.tags ? escapeHTML(card.tags).split(',').map(t => `<span class="mr-1 opacity-70">#${t.trim()}</span>`).join('') : ''}</div>
+                            <div class="text-xs text-muted-foreground mt-1">${tagsHtml}</div>
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-muted-foreground line-clamp-2 break-words">${escapeHTML(card.back)}</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-xs">
-                            ${dueStr}
-                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-xs">${dueStr}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-xs text-muted-foreground font-mono">
                             EF: ${(card.efactor || 2.5).toFixed(2)}<br>
                             Rep: ${card.repetition || 0}
@@ -833,10 +846,11 @@
                             <button onclick="openEditModal('${card.id}')" class="text-primary hover:underline px-2 py-1 text-xs outline-none">Edit</button>
                             <button onclick="deleteCard('${card.id}')" class="text-danger hover:underline px-2 py-1 text-xs outline-none">Delete</button>
                         </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
         }
 
         function deleteCard(id) {
@@ -981,9 +995,12 @@
 
         // Utility
         function escapeHTML(str) {
-            const p = document.createElement('p');
-            p.appendChild(document.createTextNode(str));
-            return p.innerHTML;
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
 
         // Boot
