@@ -793,12 +793,21 @@
                 (c.tags && c.tags.toLowerCase().includes(filter))
             );
 
-            if (filtered.length === 0) {
+            const maxRender = 100;
+            const toRender = filtered.slice(0, maxRender);
+
+            if (toRender.length === 0) {
                 noCardsMsg.classList.remove('hidden');
             } else {
                 noCardsMsg.classList.add('hidden');
 
-                filtered.forEach(card => {
+                if (filtered.length > maxRender) {
+                    const infoRow = document.createElement('tr');
+                    infoRow.innerHTML = `<td colspan="5" class="px-6 py-3 text-center text-xs text-muted-foreground bg-muted/20">Showing top ${maxRender} results out of ${filtered.length}. Use the filter to find specific cards.</td>`;
+                    tbody.appendChild(infoRow);
+                }
+
+                toRender.forEach(card => {
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-muted/30 transition-colors";
 
@@ -817,8 +826,8 @@
                             ${dueStr}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-xs text-muted-foreground font-mono">
-                            EF: ${card.efactor.toFixed(2)}<br>
-                            Rep: ${card.repetition}
+                            EF: ${(card.efactor || 2.5).toFixed(2)}<br>
+                            Rep: ${card.repetition || 0}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
                             <button onclick="openEditModal('${card.id}')" class="text-primary hover:underline px-2 py-1 text-xs outline-none">Edit</button>
