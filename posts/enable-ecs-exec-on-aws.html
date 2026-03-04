@@ -167,6 +167,25 @@
         "ssmmessages:OpenDataChannel"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "ExecuteCommandSessionManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:DescribeSessions"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ExecuteCommand",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:StartSession"
+      ],
+      "Resource": [
+        "arn:aws:ecs:*:*:task/*",
+        "arn:aws:ssm:*:*:document/AmazonECS-ExecuteInteractiveCommand"
+      ]
     }
   ]
 }</code></pre>
@@ -183,7 +202,19 @@
     --enable-execute-command \
     --force-new-deployment</code></pre>
 
-    <p>Wait for your service to redeploy the tasks with the new configuration. You can now try to connect:</p>
+    <p>After you have enabled ECS Exec for a task, it's a good practice to confirm the task is ready to be used. You can
+        check the <code>ExecuteCommandAgent</code> status by running:</p>
+
+    <pre><code class="language-bash">aws ecs describe-tasks \
+    --region your-region \
+    --cluster your-cluster-name \
+    --tasks your-task-id</code></pre>
+
+    <p>If the <code>lastStatus</code> property of the <code>ExecuteCommandAgent</code> is listed as <code>RUNNING</code>
+        and the <code>enableExecuteCommand</code> property is set to <code>true</code>, then your task is ready to
+        receive commands.</p>
+
+    <p>You can now try to connect and open an interactive shell:</p>
 
     <pre><code class="language-bash">aws ecs execute-command \
     --cluster your-cluster-name \
