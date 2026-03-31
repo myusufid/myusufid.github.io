@@ -124,72 +124,225 @@
         <article class="prose dark:prose-invert max-w-none">
             <article class="blog-post">
     <h1>Git Commit Message Prompt Template</h1>
-    <div class="meta mb-4">June 24, 2025</div>
+    <div class="meta mb-4">April 01, 2026</div>
 
     <div class="content">
         <h2>Why This Template</h2>
-        <p>Writing good commit messages is hard. This template helps you get consistent, professional messages using AI.</p>
+        <p>Writing good commit messages is hard. This template helps you get consistent, professional messages using AI with built-in code quality and security analysis.</p>
 
-        <h2>The Template</h2>
+        <h2>Quick Setup</h2>
+        <p>Add these aliases to your shell configuration (<code>~/.bashrc</code> or <code>~/.zshrc</code>):</p>
+
+        <h3>1. aicommit - Commit Message Generator with Issue Scanning</h3>
         <div class="code-block">
-            <pre><code>Analyze my git repository changes and generate 5 commit message recommendations:
+            <pre><code>alias aicommit="gemini --yolo -p 'Analyze my git repository changes and generate 5 commit message recommendations WITH comprehensive issue review:
 
-**Instructions:**
+Instructions:
 1. Run git status to detect new and modified files
 2. Run git diff to understand what changed in modified files
-3. Read new files to understand their purpose
-4. Generate 5 commit messages in numbered list format
+3. For new files, only read them if they are critical to understanding the overall change
+4. Prioritize analyzing modifications over new file contents
+5. Perform SonarQube-style code quality and security analysis
+6. Generate 5 commit messages in numbered list format
+7. Skip git log --oneline -5
 
-**Requirements:**
+Requirements:
 - Use conventional commit format (feat/fix/refactor/test/docs/chore)
-- Focus on business value and user impact
-- Keep messages under 72 characters for title
-- Consider all changes as one cohesive feature/fix
+- Focus primarily on what was modified and why
+- Emphasize the nature of changes in existing code
+- Consider modified files as the primary source of truth for the change intent
 - Return as numbered list only
 
-**Format each message as:**
+Format each message as:
 type(scope): brief description
 
-**Analysis should include:**
-- What new functionality was added
-- What existing code was modified and why
-- The overall purpose/goal of these changes</code></pre>
+Analysis should prioritize:
+- What existing functionality was changed and how
+- Why the modifications were made (bug fix, refactor, enhancement)
+- The impact of changes on existing behavior
+- Secondary consideration for new files only if they are essential context
+
+ISSUE SCANNING (SonarQube-style):
+
+🔴 BLOCKER (Must fix before commit):
+- Security hotspots (hardcoded credentials, SQL injection, XSS, CSRF)
+- Critical bugs (null pointer, unhandled exceptions, resource leaks)
+- Data corruption risks
+
+🟠 CRITICAL (Should fix before commit):
+- Major security vulnerabilities (weak crypto, auth issues)
+- Breaking API changes without versioning
+- Memory leaks, deadlocks
+- Missing error handling in critical paths
+
+🟡 MAJOR (Review recommended):
+- Code smells (high complexity, duplicate code >10 lines)
+- Performance issues (N+1 queries, inefficient algorithms)
+- Maintainability issues (god classes, long methods >50 lines)
+- Missing tests for new logic
+- TODO/FIXME comments in production code
+
+🔵 MINOR (Nice to fix):
+- Convention violations (naming, formatting)
+- Missing documentation
+- Unused imports/variables
+- Magic numbers without constants
+
+Output Format:
+1. Issue Summary Section:
+   - \"⚠️ [SEVERITY] ISSUES DETECTED\" or \"✓ No critical issues detected\"
+   - List issues by severity with file:line location
+   - Include SonarQube-like quality gate status (PASSED/FAILED)
+
+2. Commit Messages Section:
+   - If blocker issues: Prefix messages with \"⚠️ BLOCKED: \"
+   - If critical issues: Prefix with \"⚠️ REVIEW REQUIRED: \"
+   - If only minor issues: Proceed with normal messages
+   - Provide 5 conventional commit messages'"</code></pre>
+        </div>
+
+        <h3>2. aibranch - Branch Name & Commit Message Generator</h3>
+        <div class="code-block">
+            <pre><code>alias aibranch="gemini --yolo -p 'Analyze my git repository changes and generate 5 branch recommendations and corresponding commit messages WITH comprehensive issue review:
+
+Instructions:
+1. Run git status to detect new and modified files
+2. Run git diff to understand what changed in modified files
+3. For new files, only read them if they are critical to understanding the overall change
+4. Prioritize analyzing modifications over new file contents
+5. Perform SonarQube-style code quality and security analysis
+6. Generate 5 branch recommendations in numbered list format
+7. Provide 5 matching commit message recommendations for the changes
+8. Skip git log --oneline -5
+
+Requirements:
+- Use conventional branch naming (feature/fix/refactor/hotfix/chore)
+- Use conventional commit format (feat/fix/refactor/test/docs/chore)
+- Focus primarily on what was modified and why
+- Emphasize the nature of changes in existing code
+- Consider modified files as the primary source of truth for the change intent
+
+ISSUE SCANNING (SonarQube-style):
+
+🔴 BLOCKER (Must fix before commit):
+- Security hotspots (hardcoded credentials, SQL injection, XSS, CSRF)
+- Critical bugs (null pointer, unhandled exceptions, resource leaks)
+- Data corruption risks
+
+🟠 CRITICAL (Should fix before commit):
+- Major security vulnerabilities (weak crypto, auth issues)
+- Breaking API changes without versioning
+- Memory leaks, deadlocks
+- Missing error handling in critical paths
+
+🟡 MAJOR (Review recommended):
+- Code smells (high complexity, duplicate code >10 lines)
+- Performance issues (N+1 queries, inefficient algorithms)
+- Maintainability issues (god classes, long methods >50 lines)
+- Missing tests for new logic
+- TODO/FIXME comments in production code
+
+🔵 MINOR (Nice to fix):
+- Convention violations (naming, formatting)
+- Missing documentation
+- Unused imports/variables
+- Magic numbers without constants
+
+Output Format:
+
+1. Issue Summary Section:
+   - \"⚠️ [SEVERITY] ISSUES DETECTED\" or \"✓ No critical issues detected\"
+   - List issues by severity with file:line location
+   - Include SonarQube-like quality gate status (PASSED/FAILED)
+
+2. Branch Recommendations Section:
+   Format: category/short-description
+   Examples: feature/user-auth, fix/memory-leak, refactor/api-cleanup
+   - If blocker issues: Prefix with \"⚠️ BLOCKED: \"
+   - If critical issues: Prefix with \"⚠️ REVIEW REQUIRED: \"
+
+3. Commit Messages Section:
+   Format: type(scope): brief description
+   - Match each branch recommendation
+   - Include issue severity prefix if applicable
+   - Provide 5 conventional commit messages paired with branches'"</code></pre>
         </div>
 
         <h2>How It Works</h2>
         <ul>
-            <li><strong>Analysis first:</strong> AI examines your actual changes</li>
-            <li><strong>Multiple options:</strong> Get 5 different messages to choose from</li>
-            <li><strong>Conventional format:</strong> Follows industry standards</li>
-            <li><strong>Clear limits:</strong> 72 character limit keeps messages readable</li>
+            <li><strong>Comprehensive Analysis:</strong> AI examines your actual changes with focus on modifications</li>
+            <li><strong>Multiple Options:</strong> Get 5 different messages to choose from</li>
+            <li><strong>Conventional Format:</strong> Follows industry standards for commits and branches</li>
+            <li><strong>Built-in Code Review:</strong> SonarQube-style quality and security scanning</li>
+            <li><strong>Severity-based Warnings:</strong> Blocks or warns about critical issues before commit</li>
         </ul>
 
-        <h2>Benefits</h2>
-        <h3>Consistent Format</h3>
-        <p>All messages follow conventional commit standards.</p>
+        <h2>Key Features</h2>
+        <h3>Smart File Analysis</h3>
+        <p>Prioritizes analyzing modified files over new ones, focusing on what actually changed and why.</p>
 
-        <h3>Context-Aware</h3>
-        <p>AI reads your actual changes, not just file names.</p>
-
-        <h3>Multiple Options</h3>
-        <p>Pick the message that best captures your intent.</p>
-
-        <h2>Usage Tips</h2>
+        <h3>Security & Quality Gates</h3>
+        <p>Four severity levels (Blocker, Critical, Major, Minor) with automatic detection of:</p>
         <ul>
-            <li>Run before committing</li>
-            <li>Modify for your team's needs</li>
-            <li>Use scope to indicate project area</li>
-            <li>Focus on "why" not just "what"</li>
+            <li>Security vulnerabilities (SQL injection, XSS, CSRF, hardcoded credentials)</li>
+            <li>Critical bugs (null pointers, unhandled exceptions, resource leaks)</li>
+            <li>Code smells (complexity, duplication, god classes)</li>
+            <li>Performance issues (N+1 queries, inefficient algorithms)</li>
         </ul>
+
+        <h3>Context-Aware Recommendations</h3>
+        <p>AI reads your actual changes and provides commit messages that reflect the true intent and impact.</p>
+
+        <h2>Usage</h2>
+        <div class="code-block">
+            <pre><code># Generate commit messages with issue scanning
+aicommit
+
+# Generate branch names + commit messages
+aibranch</code></pre>
+        </div>
 
         <h2>Example Output</h2>
+        <h3>Clean Codebase (No Issues)</h3>
         <div class="code-block">
-            <pre><code>1. feat(auth): add user login validation
-2. fix(api): implement secure authentication flow  
+            <pre><code>✓ No critical issues detected
+Quality Gate: PASSED
+
+1. feat(auth): add user login validation
+2. fix(api): implement secure authentication flow
 3. feat(security): add login form with validation
 4. chore(auth): update user authentication system
 5. feat(user): implement login functionality</code></pre>
         </div>
+
+        <h3>With Issues Detected</h3>
+        <div class="code-block">
+            <pre><code>⚠️ CRITICAL ISSUES DETECTED
+Quality Gate: FAILED
+
+🟠 CRITICAL:
+- auth.js:42 - Hardcoded API key in source code
+- login.js:15 - Missing input sanitization (XSS risk)
+
+🟡 MAJOR:
+- utils.js:87 - High cyclomatic complexity (score: 15)
+- api.js:120 - Missing error handling for async operation
+
+1. ⚠️ REVIEW REQUIRED: feat(auth): add user login validation
+2. ⚠️ REVIEW REQUIRED: fix(security): implement authentication with input validation
+3. ⚠️ REVIEW REQUIRED: feat(api): add login endpoint with security fixes
+4. ⚠️ REVIEW REQUIRED: chore(auth): update authentication system and remove hardcoded credentials
+5. ⚠️ REVIEW REQUIRED: fix(critical): implement secure login with sanitization</code></pre>
+        </div>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li><strong>Run before committing:</strong> Catch issues early in development</li>
+            <li><strong>Address blocker issues:</strong> Never commit code with blocker-level problems</li>
+            <li><strong>Review critical warnings:</strong> Assess impact before merging</li>
+            <li><strong>Use scopes wisely:</strong> Indicate project area for better tracking</li>
+            <li><strong>Customize for your team:</strong> Adjust severity levels and rules as needed</li>
+        </ul>
 
         <div class="tags mt-4">
             <span class="badge">#Git</span>
