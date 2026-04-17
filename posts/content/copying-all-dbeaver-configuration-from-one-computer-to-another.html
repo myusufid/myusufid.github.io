@@ -1,0 +1,73 @@
+<!--
+title: Copying all DBeaver configuration from one computer to another
+description: Step-by-step guide to transfer your DBeaver connections, drivers, and scripts to a new computer without starting from scratch
+date: 2026-04-17
+tags: dbeaver, database, tools, productivity, tips
+author: M Yusuf
+image: /assets/images/Screenshot 2026-04-17 at 18.06.47.png
+-->
+
+<article class="blog-post">
+    <h1>Copying all DBeaver configuration from one computer to another</h1>
+    <div class="meta mb-4">April 17, 2026</div>
+
+    <div class="content">
+        <p>This article explains how to copy your current DBeaver connection from one computer to another.</p>
+
+        <p>Instead of installing all drivers again and instead of creating your connections from scratch, it is actually very simple to copy the DBeaver configuration from one computer to another.</p>
+
+        <h2>Step 1: Find Your Workspace Path</h2>
+        <p>First, discover where the configuration is stored on the source computer. You can check this easily in the Preferences:</p>
+        <p><strong>Menu → Preferences → Workspace</strong></p>
+        <p>Check the path shown at "Show full workspace path":</p>
+
+        <img src="/assets/images/Screenshot 2026-04-17 at 18.06.47.png" alt="DBeaver Workspace Preferences" class="img-fluid my-3">
+
+        <h2>Step 2: Copy the General Directory</h2>
+        <p>Check this path in your filesystem. You will see a <code>General</code> directory. This directory contains:</p>
+        <ul>
+            <li>JSON files with all your connections</li>
+            <li>Folders with your scripts</li>
+            <li>Driver .jar files</li>
+        </ul>
+
+        <p>Copy this <code>General</code> directory to your pendrive, cloud folder, or any transfer medium.</p>
+
+        <h2>Step 3: Restore on Target Computer</h2>
+        <p>On the target computer, repeat the same steps to discover the "full workspace path":</p>
+        <ol>
+            <li>Open DBeaver</li>
+            <li>Go to <strong>Menu → Preferences → Workspace</strong></li>
+            <li>Note the workspace path</li>
+            <li><strong>Close DBeaver</strong></li>
+            <li>Overwrite the <code>General</code> folder with the one you copied from the source computer</li>
+        </ol>
+
+        <p>Open DBeaver again. Voilà! Everything appears as it was on your source computer.</p>
+
+        <h2>Alternative Method: Export/Import Individual Connections</h2>
+        <p>You may also use the commands at <strong>File → Export</strong> and <strong>File → Import</strong> to transfer connections individually.</p>
+
+        <h2>Quick Reference: Configuration Locations</h2>
+        <p>For quick access, here are the default workspace paths by operating system:</p>
+
+        <h3>macOS</h3>
+        <pre><code>/Users/yourusername/Library/DBeaverData/workspace6/General/.dbeaver/data-sources.json</code></pre>
+
+        <h3>Windows</h3>
+        <pre><code>C:\Users\yourusername\AppData\Roaming\DBeaverData\workspace6\General\.dbeaver\data-sources.json</code></pre>
+
+        <h3>Linux</h3>
+        <pre><code>/home/yourusername/.local/share/DBeaverData/workspace6/General/.dbeaver/data-sources.json</code></pre>
+
+        <p>This method saves you significant time when setting up DBeaver on a new machine or when migrating between computers!</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#DBeaver</span>
+            <span class="badge">#Database</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Productivity</span>
+            <span class="badge">#Tips</span>
+        </div>
+    </div>
+</article>
