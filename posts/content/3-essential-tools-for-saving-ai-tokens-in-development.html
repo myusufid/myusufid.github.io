@@ -1,0 +1,210 @@
+<!--
+title: 3 Essential Tools for Saving AI Tokens in Development
+description: Discover RTK, Tilth, and Serena - three powerful tools that can reduce your AI token consumption by 60-90% while improving code accuracy
+date: 2026-04-17
+tags: ai, tools, productivity, tokens, optimization, development
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>3 Essential Tools for Saving AI Tokens in Development</h1>
+    <div class="meta mb-4">April 17, 2026</div>
+
+    <div class="content">
+        <p>When working with AI coding assistants like Claude Code, GitHub Copilot, or Cursor, token consumption can quickly become a significant cost factor. Every command output, file read, and code snippet sent to the AI model consumes tokens—and those costs add up fast.</p>
+
+        <p>I've been using three game-changing tools that dramatically reduce token usage while maintaining (or even improving) AI accuracy. These tools have helped me save 60-90% on token costs across my development workflow.</p>
+
+        <h2>1. RTK (Rust Token Killer) - The CLI Output Optimizer</h2>
+
+        <p><strong>GitHub:</strong> <a href="https://github.com/rtk-ai/rtk" target="_blank">https://github.com/rtk-ai/rtk</a></p>
+
+        <h3>What It Does</h3>
+        <p>RTK is a high-performance CLI proxy that filters and compresses command outputs before they reach your AI assistant. It achieves <strong>60-90% token savings</strong> on common development operations through smart filtering, grouping, truncation, and deduplication.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Smart Output Filtering:</strong> Removes noise like comments and unnecessary whitespace</li>
+            <li><strong>Intelligent Grouping:</strong> Organizes files by directory, errors by type</li>
+            <li><strong>Context Preservation:</strong> Truncates while keeping relevant information</li>
+            <li><strong>Deduplication:</strong> Collapses repeated log lines with occurrence counts</li>
+            <li><strong>Wide Command Support:</strong> Git, Docker, testing frameworks, build tools, AWS CLI, and more</li>
+        </ul>
+
+        <h3>Installation</h3>
+        <pre><code># Homebrew (Recommended)
+brew install rtk
+
+# Quick Install (Linux/macOS)
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+
+# Cargo
+cargo install --git https://github.com/rtk-ai/rtk</code></pre>
+
+        <h3>Setup</h3>
+        <pre><code># Initialize for your AI tool
+rtk init -g              # Claude Code / Copilot (default)
+rtk init -g --gemini     # Gemini CLI
+rtk init --agent cursor  # Cursor</code></pre>
+
+        <p>After setup, RTK automatically rewrites your commands. For example, <code>git status</code> becomes <code>rtk git status</code> transparently.</p>
+
+        <h3>Real-World Impact</h3>
+        <p>In a typical 30-minute coding session, RTK reduces approximately <strong>118,000 tokens to 23,900 tokens</strong>—an 80% reduction! Individual operations show even higher savings:</p>
+        <ul>
+            <li><code>cargo test</code>: 90% token reduction</li>
+            <li><code>git add/commit/push</code>: 92% token reduction</li>
+        </ul>
+
+        <h3>Check Your Savings</h3>
+        <pre><code># Show token savings analytics
+rtk gain
+
+# Show command usage history with savings
+rtk gain --history
+
+# Analyze missed optimization opportunities
+rtk discover</code></pre>
+
+        <h2>2. Tilth - Smart Code Reading for AI Agents</h2>
+
+        <p><strong>GitHub:</strong> <a href="https://github.com/jahala/tilth" target="_blank">https://github.com/jahala/tilth</a></p>
+
+        <h3>What It Does</h3>
+        <p>Tilth is a structural code navigation tool that combines ripgrep, tree-sitter, and intelligent content filtering to deliver only relevant code context to your AI assistant. It reduces token consumption while improving accuracy by providing precise, definition-first results.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Structural Search:</strong> Uses tree-sitter AST parsing to find where symbols are actually defined</li>
+            <li><strong>Smart Content Filtering:</strong> Shows full files under ~6000 tokens, generates structural outlines for larger files</li>
+            <li><strong>Callee Resolution:</strong> Includes resolved function calls with file locations and signatures</li>
+            <li><strong>Structural Diff:</strong> Function-level change detection for AI-driven code reviews</li>
+            <li><strong>Multi-Language Support:</strong> Supports 14 programming languages including Rust, TypeScript, Python, Go, Java, and C++</li>
+        </ul>
+
+        <h3>Performance Metrics</h3>
+        <p>Benchmarks across 160 test runs show impressive results:</p>
+        <ul>
+            <li><strong>44% cost reduction</strong> on Claude Sonnet (84% → 94% accuracy)</li>
+            <li><strong>39% cost reduction</strong> on Claude Opus</li>
+            <li><strong>38% cost reduction</strong> on Claude Haiku (54% → 73% accuracy)</li>
+        </ul>
+
+        <h3>Installation</h3>
+        <pre><code># Binary Installation
+cargo install tilth
+
+# NPX (no installation required)
+npx tilth</code></pre>
+
+        <h3>MCP Server Setup</h3>
+        <pre><code># Install as MCP server for your IDE
+tilth install claude-code      # Claude Desktop
+tilth install cursor           # Cursor IDE
+tilth install vscode          # VS Code
+
+# Add --edit flag for hash-anchored file editing
+tilth install claude-code --edit</code></pre>
+
+        <h3>Use Cases</h3>
+        <ul>
+            <li><strong>Code Navigation:</strong> Retrieve specific functions without reading entire files</li>
+            <li><strong>Symbol Tracing:</strong> Find definitions, usages, and callers across codebases</li>
+            <li><strong>Diff Review:</strong> Analyze function-level changes in pull requests</li>
+            <li><strong>Context Engineering:</strong> Provide AI agents precise code snippets, reducing token waste</li>
+        </ul>
+
+        <h2>3. Serena - AI-Powered Code IDE Toolkit</h2>
+
+        <p><strong>GitHub:</strong> <a href="https://github.com/oraios/serena" target="_blank">https://github.com/oraios/serena</a></p>
+
+        <h3>What It Does</h3>
+        <p>Serena functions as an integrated development environment for AI coding agents, providing semantic code retrieval, editing, and refactoring capabilities via the Model Context Protocol (MCP). It replaces manual, error-prone text operations with atomic, IDE-like operations.</p>
+
+        <h3>Core Features</h3>
+
+        <h4>Retrieval & Navigation</h4>
+        <ul>
+            <li>Symbol-level code discovery across large codebases</li>
+            <li>File outlines and cross-reference finding</li>
+            <li>Dependency analysis</li>
+        </ul>
+
+        <h4>Refactoring Tools</h4>
+        <ul>
+            <li>Precise renaming operations (symbols, files, directories)</li>
+            <li>Safe deletion with unused code detection</li>
+            <li>Inline refactoring capabilities</li>
+        </ul>
+
+        <h4>Editing Functions</h4>
+        <ul>
+            <li>Symbol body replacement</li>
+            <li>Strategic insertion before/after symbols</li>
+            <li>Regex-based content searching and replacement</li>
+        </ul>
+
+        <h3>Token Efficiency</h3>
+        <p>Serena dramatically reduces token consumption by collapsing complex multi-step operations into single atomic calls. Tasks that would normally cost "8–12 careful, error-prone steps" become one efficient operation.</p>
+
+        <p>Rather than reading entire files or performing fragile search-and-replace operations, AI agents leverage IDE-like semantic understanding to make precise, contextual changes efficiently.</p>
+
+        <h3>Installation</h3>
+        <pre><code>uv tool install -p 3.13 serena-agent@latest --prerelease=allow
+serena init</code></pre>
+
+        <p>Configuration requires connecting to your MCP client (Claude Code, Codex, Claude Desktop, or compatible IDEs).</p>
+
+        <h3>Use Cases</h3>
+        <ul>
+            <li>Large codebase refactoring and maintenance</li>
+            <li>Cross-file symbol renaming and moving</li>
+            <li>Monorepo navigation and dependency management</li>
+            <li>Long-lived agent workflows requiring consistent code understanding</li>
+        </ul>
+
+        <h2>How These Tools Work Together</h2>
+
+        <p>The beauty of these tools is how they complement each other:</p>
+
+        <ul>
+            <li><strong>RTK</strong> optimizes the output of every CLI command, reducing the tokens needed to communicate terminal results to your AI assistant</li>
+            <li><strong>Tilth</strong> provides smart code reading capabilities, ensuring the AI only sees relevant code context instead of entire files</li>
+            <li><strong>Serena</strong> enables semantic code operations, replacing multi-step manual editing with single atomic operations</li>
+        </ul>
+
+        <p>Together, they create a highly optimized workflow that can reduce your AI token costs by 60-90% while actually <em>improving</em> the accuracy and reliability of AI-generated code.</p>
+
+        <h2>My Personal Experience</h2>
+
+        <p>Since adopting these tools in my development workflow, I've noticed:</p>
+
+        <ul>
+            <li><strong>Significant cost savings:</strong> My monthly AI token costs have dropped by approximately 70%</li>
+            <li><strong>Faster iterations:</strong> Less token overhead means faster response times</li>
+            <li><strong>Better accuracy:</strong> Focused context leads to more accurate AI suggestions</li>
+            <li><strong>Cleaner interactions:</strong> Less noise in the AI context window means clearer communication</li>
+        </ul>
+
+        <h2>Getting Started</h2>
+
+        <p>If you're new to these tools, I recommend starting with RTK first—it's the easiest to set up and provides immediate, measurable savings. Once you're comfortable with RTK, add Tilth for improved code reading, and finally integrate Serena for advanced refactoring workflows.</p>
+
+        <p>All three tools are open source, actively maintained, and integrate seamlessly with popular AI coding assistants like Claude Code, GitHub Copilot, and Cursor.</p>
+
+        <h2>Conclusion</h2>
+
+        <p>As AI coding assistants become more central to our development workflows, optimizing token usage isn't just about saving money—it's about building more efficient, sustainable development practices. RTK, Tilth, and Serena represent the cutting edge of AI token optimization, and they're tools that every serious developer using AI assistance should consider.</p>
+
+        <p>Give them a try and watch your token costs drop while your productivity soars!</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#AI</span>
+            <span class="badge">#Tools</span>
+            <span class="badge">#Productivity</span>
+            <span class="badge">#Tokens</span>
+            <span class="badge">#Optimization</span>
+            <span class="badge">#Development</span>
+        </div>
+    </div>
+</article>
