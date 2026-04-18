@@ -291,6 +291,130 @@ serena init</code></pre>
 
         <p>Together, they create a highly optimized workflow that can reduce your AI token costs by 60-90% while actually <em>improving</em> the accuracy and reliability of AI-generated code.</p>
 
+        <h2>Real-World Configuration: My Claude Code Setup</h2>
+
+        <p>To show you how these tools work together in practice, here's my actual Claude Code <code>settings.json</code> configuration that integrates RTK, Tilth, and Serena:</p>
+
+        <pre><code class="language-json">{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(diff:*)",
+      "Bash(echo:*)",
+      "Bash(find:*)",
+      "Bash(gh:*)",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(tail:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(php-cs-fixer:*)",
+      "Bash(php:*)",
+      "Bash(phpstan:*)",
+      "Bash(phpunit:*)",
+      "Bash(symfony:*)",
+      "Bash(rtk:*)",
+      "mcp__serena__*",
+      "mcp__tilth__*"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./config/secrets/.*)",
+      "Read(./secrets/**)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+
+        <h3>Configuration Breakdown</h3>
+
+        <h4>1. Permissions Setup</h4>
+        <p>The <code>permissions.allow</code> section explicitly whitelists the tools I use:</p>
+        <ul>
+            <li><strong>Standard Bash Commands:</strong> Common Unix utilities like <code>cat</code>, <code>grep</code>, <code>git</code>, etc.</li>
+            <li><strong>RTK Integration:</strong> <code>Bash(rtk:*)</code> allows RTK to proxy all commands</li>
+            <li><strong>MCP Servers:</strong> <code>mcp__serena__*</code> and <code>mcp__tilth__*</code> enable Serena and Tilth operations</li>
+            <li><strong>Language Tools:</strong> PHP, Symfony, and Go-specific tooling for my projects</li>
+        </ul>
+
+        <h4>2. Security Boundaries</h4>
+        <p>The <code>permissions.deny</code> section protects sensitive files:</p>
+        <ul>
+            <li>Blocks destructive <code>rm</code> commands</li>
+            <li>Prevents reading <code>.env</code> files and secrets directories</li>
+            <li>Ensures Claude can't accidentally expose credentials</li>
+        </ul>
+
+        <h4>3. RTK Hook Integration</h4>
+        <p>The most critical part is the <code>hooks</code> section:</p>
+        <pre><code class="language-json">"hooks": {
+  "PreToolUse": [
+    {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "rtk hook claude"
+        }
+      ]
+    }
+  ]
+}</code></pre>
+
+        <p>This configuration tells Claude Code to run <code>rtk hook claude</code> before every Bash command. RTK intercepts the command, optimizes its output, and returns the filtered result—achieving 60-90% token savings automatically.</p>
+
+        <h4>4. Enhanced Features</h4>
+        <ul>
+            <li><strong>alwaysThinkingEnabled:</strong> Shows Claude's reasoning process</li>
+            <li><strong>defaultMode: "acceptEdits":</strong> Automatically accepts file edits (adjust based on your trust level)</li>
+            <li><strong>enabledPlugins:</strong> Activates language-specific plugins like <code>gopls-lsp</code> for better Go support</li>
+        </ul>
+
+        <h3>Setting Up Your Own Configuration</h3>
+
+        <p>To create a similar setup:</p>
+
+        <ol>
+            <li>Locate your Claude Code settings file (usually at <code>~/.config/claude-code/settings.json</code>)</li>
+            <li>Install RTK, Tilth, and Serena using the installation commands above</li>
+            <li>Add MCP server permissions: <code>mcp__serena__*</code> and <code>mcp__tilth__*</code></li>
+            <li>Configure the RTK pre-hook to intercept all Bash commands</li>
+            <li>Customize the <code>allow</code> and <code>deny</code> lists for your security requirements</li>
+        </ol>
+
+        <p>This configuration creates a seamless, token-optimized workflow where:</p>
+        <ul>
+            <li>Every CLI command is automatically filtered by RTK</li>
+            <li>Code reading operations use Tilth's structural navigation</li>
+            <li>Refactoring operations leverage Serena's semantic tools</li>
+            <li>Sensitive files remain protected</li>
+        </ul>
+
         <h2>My Personal Experience</h2>
 
         <p>Since adopting these tools in my development workflow, I've noticed:</p>
