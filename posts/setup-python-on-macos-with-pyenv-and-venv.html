@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Python on macOS with pyenv and venv | M Yusuf</title>
+
+    <!-- SEO & Favicon (Relative for build script) -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Add common languages for backend devs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
+        
+        <article class="prose dark:prose-invert max-w-none">
+            <article class="blog-post">
+    <h1>Setup Python on macOS with pyenv and venv</h1>
+    <div class="meta mb-4">April 19, 2026</div>
+
+    <div class="content">
+        <h2>Why pyenv + venv?</h2>
+        <p>If you're already familiar with <code>venv</code> for creating virtual environments, combining it with <code>pyenv</code> is the natural upgrade path. This setup gives you the best of both worlds:</p>
+        <ul>
+            <li><strong>pyenv</strong> handles which Python version to use system-wide or per-project</li>
+            <li><strong>venv</strong> manages isolated environments for your project dependencies (as you already do)</li>
+        </ul>
+        <p>This approach is more flexible than using the system Python and safer than modifying <code>/usr/bin/python3</code> (which you should <strong>never delete</strong> as it's an Apple stub used by macOS and tools like Homebrew).</p>
+
+        <h2>Installation</h2>
+        <p>Installing pyenv on macOS is straightforward with Homebrew:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">brew install pyenv</code></pre>
+        </div>
+
+        <h2>Configuration</h2>
+        <p>After installation, you need to add pyenv to your shell configuration. Add the following lines to your <code>~/.zshrc</code> file:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">eval "$(pyenv init --path)"
+eval "$(pyenv init -)"</code></pre>
+        </div>
+        <p>Then reload your shell configuration:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">source ~/.zshrc</code></pre>
+        </div>
+
+        <h2>Common Commands</h2>
+
+        <h3>Install a Python Version</h3>
+        <p>To install a specific Python version (e.g., Python 3.12.9):</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv install 3.12.9</code></pre>
+        </div>
+
+        <h3>List Installed Versions</h3>
+        <p>To see all Python versions you have installed:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv versions</code></pre>
+        </div>
+
+        <h3>Set Global Default Version</h3>
+        <p>To set a Python version as your system-wide default:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv global 3.12.9</code></pre>
+        </div>
+
+        <h3>Set Local Version for a Project</h3>
+        <p>To pin a specific Python version for your current project:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">cd /path/to/your/project
+pyenv local 3.11.8</code></pre>
+        </div>
+        <p>This creates a <code>.python-version</code> file in your project directory. When you <code>cd</code> into this directory, pyenv automatically switches to the specified Python version.</p>
+
+        <h2>Using venv (As Usual)</h2>
+        <p>Once pyenv is configured and you've set your desired Python version, you can use <code>venv</code> exactly as you're used to:</p>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create a virtual environment
+python -m venv .venv
+
+# Activate it
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Deactivate when done
+deactivate</code></pre>
+        </div>
+
+        <h2>Complete Workflow Example</h2>
+        <p>Here's a typical workflow for starting a new Python project:</p>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create project directory
+mkdir my-new-project
+cd my-new-project
+
+# Set Python version for this project
+pyenv local 3.12.9
+
+# Verify the Python version
+python --version
+# Output: Python 3.12.9
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install packages
+pip install requests flask
+
+# Generate requirements file
+pip freeze > requirements.txt
+
+# Your Python environment is ready!
+python app.py</code></pre>
+        </div>
+
+        <h2>Important Safety Note</h2>
+        <div class="alert alert-warning">
+            <strong>⚠️ Warning:</strong> Never delete <code>/usr/bin/python3</code>! This is an Apple-provided stub that macOS and Homebrew rely on. pyenv works alongside the system Python, not as a replacement for it.
+        </div>
+
+        <h2>Quick Reference Table</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Install pyenv</td>
+                        <td><code>brew install pyenv</code></td>
+                    </tr>
+                    <tr>
+                        <td>Install Python version</td>
+                        <td><code>pyenv install 3.12.9</code></td>
+                    </tr>
+                    <tr>
+                        <td>List installed versions</td>
+                        <td><code>pyenv versions</code></td>
+                    </tr>
+                    <tr>
+                        <td>Set global Python</td>
+                        <td><code>pyenv global 3.12.9</code></td>
+                    </tr>
+                    <tr>
+                        <td>Set project Python</td>
+                        <td><code>pyenv local 3.11.8</code></td>
+                    </tr>
+                    <tr>
+                        <td>Create virtual environment</td>
+                        <td><code>python -m venv .venv</code></td>
+                    </tr>
+                    <tr>
+                        <td>Activate virtual environment</td>
+                        <td><code>source .venv/bin/activate</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Command Not Found: pyenv</h3>
+        <p>If you get "command not found" after installing pyenv, make sure you've:</p>
+        <ol>
+            <li>Added the initialization lines to your <code>~/.zshrc</code></li>
+            <li>Reloaded your shell with <code>source ~/.zshrc</code></li>
+        </ol>
+
+        <h3>Python Version Not Changing</h3>
+        <p>If the Python version doesn't change after running <code>pyenv local</code> or <code>pyenv global</code>:</p>
+        <ol>
+            <li>Check that pyenv is properly initialized in your shell</li>
+            <li>Verify the version is installed with <code>pyenv versions</code></li>
+            <li>Try opening a new terminal window</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>The combination of pyenv and venv gives you professional-grade Python version management while keeping your familiar venv workflow. You get:</p>
+        <ul>
+            <li>Multiple Python versions installed side-by-side</li>
+            <li>Easy switching between versions globally or per-project</li>
+            <li>Isolated project dependencies with venv</li>
+            <li>No interference with system Python</li>
+        </ul>
+        <p>This setup scales from small scripts to large production applications, making it the go-to choice for Python development on macOS.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Python</span>
+            <span class="badge">#pyenv</span>
+            <span class="badge">#venv</span>
+            <span class="badge">#macOS</span>
+            <span class="badge">#Homebrew</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>
+        </article>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

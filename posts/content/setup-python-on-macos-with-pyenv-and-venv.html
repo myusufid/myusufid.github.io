@@ -1,0 +1,197 @@
+<!--
+title: Setup Python on macOS with pyenv and venv
+description: A comprehensive guide to managing multiple Python versions on macOS using pyenv combined with venv for virtual environments - the natural upgrade path for Python developers
+date: 2026-04-19
+tags: python, pyenv, venv, macos, homebrew, development, tutorial, virtual-environment
+author: M Yusuf
+-->
+
+<article class="blog-post">
+    <h1>Setup Python on macOS with pyenv and venv</h1>
+    <div class="meta mb-4">April 19, 2026</div>
+
+    <div class="content">
+        <h2>Why pyenv + venv?</h2>
+        <p>If you're already familiar with <code>venv</code> for creating virtual environments, combining it with <code>pyenv</code> is the natural upgrade path. This setup gives you the best of both worlds:</p>
+        <ul>
+            <li><strong>pyenv</strong> handles which Python version to use system-wide or per-project</li>
+            <li><strong>venv</strong> manages isolated environments for your project dependencies (as you already do)</li>
+        </ul>
+        <p>This approach is more flexible than using the system Python and safer than modifying <code>/usr/bin/python3</code> (which you should <strong>never delete</strong> as it's an Apple stub used by macOS and tools like Homebrew).</p>
+
+        <h2>Installation</h2>
+        <p>Installing pyenv on macOS is straightforward with Homebrew:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">brew install pyenv</code></pre>
+        </div>
+
+        <h2>Configuration</h2>
+        <p>After installation, you need to add pyenv to your shell configuration. Add the following lines to your <code>~/.zshrc</code> file:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">eval "$(pyenv init --path)"
+eval "$(pyenv init -)"</code></pre>
+        </div>
+        <p>Then reload your shell configuration:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">source ~/.zshrc</code></pre>
+        </div>
+
+        <h2>Common Commands</h2>
+
+        <h3>Install a Python Version</h3>
+        <p>To install a specific Python version (e.g., Python 3.12.9):</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv install 3.12.9</code></pre>
+        </div>
+
+        <h3>List Installed Versions</h3>
+        <p>To see all Python versions you have installed:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv versions</code></pre>
+        </div>
+
+        <h3>Set Global Default Version</h3>
+        <p>To set a Python version as your system-wide default:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">pyenv global 3.12.9</code></pre>
+        </div>
+
+        <h3>Set Local Version for a Project</h3>
+        <p>To pin a specific Python version for your current project:</p>
+        <div class="code-block">
+            <pre><code class="language-bash">cd /path/to/your/project
+pyenv local 3.11.8</code></pre>
+        </div>
+        <p>This creates a <code>.python-version</code> file in your project directory. When you <code>cd</code> into this directory, pyenv automatically switches to the specified Python version.</p>
+
+        <h2>Using venv (As Usual)</h2>
+        <p>Once pyenv is configured and you've set your desired Python version, you can use <code>venv</code> exactly as you're used to:</p>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create a virtual environment
+python -m venv .venv
+
+# Activate it
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Deactivate when done
+deactivate</code></pre>
+        </div>
+
+        <h2>Complete Workflow Example</h2>
+        <p>Here's a typical workflow for starting a new Python project:</p>
+        <div class="code-block">
+            <pre><code class="language-bash"># Create project directory
+mkdir my-new-project
+cd my-new-project
+
+# Set Python version for this project
+pyenv local 3.12.9
+
+# Verify the Python version
+python --version
+# Output: Python 3.12.9
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install packages
+pip install requests flask
+
+# Generate requirements file
+pip freeze > requirements.txt
+
+# Your Python environment is ready!
+python app.py</code></pre>
+        </div>
+
+        <h2>Important Safety Note</h2>
+        <div class="alert alert-warning">
+            <strong>⚠️ Warning:</strong> Never delete <code>/usr/bin/python3</code>! This is an Apple-provided stub that macOS and Homebrew rely on. pyenv works alongside the system Python, not as a replacement for it.
+        </div>
+
+        <h2>Quick Reference Table</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Command</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Install pyenv</td>
+                        <td><code>brew install pyenv</code></td>
+                    </tr>
+                    <tr>
+                        <td>Install Python version</td>
+                        <td><code>pyenv install 3.12.9</code></td>
+                    </tr>
+                    <tr>
+                        <td>List installed versions</td>
+                        <td><code>pyenv versions</code></td>
+                    </tr>
+                    <tr>
+                        <td>Set global Python</td>
+                        <td><code>pyenv global 3.12.9</code></td>
+                    </tr>
+                    <tr>
+                        <td>Set project Python</td>
+                        <td><code>pyenv local 3.11.8</code></td>
+                    </tr>
+                    <tr>
+                        <td>Create virtual environment</td>
+                        <td><code>python -m venv .venv</code></td>
+                    </tr>
+                    <tr>
+                        <td>Activate virtual environment</td>
+                        <td><code>source .venv/bin/activate</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Command Not Found: pyenv</h3>
+        <p>If you get "command not found" after installing pyenv, make sure you've:</p>
+        <ol>
+            <li>Added the initialization lines to your <code>~/.zshrc</code></li>
+            <li>Reloaded your shell with <code>source ~/.zshrc</code></li>
+        </ol>
+
+        <h3>Python Version Not Changing</h3>
+        <p>If the Python version doesn't change after running <code>pyenv local</code> or <code>pyenv global</code>:</p>
+        <ol>
+            <li>Check that pyenv is properly initialized in your shell</li>
+            <li>Verify the version is installed with <code>pyenv versions</code></li>
+            <li>Try opening a new terminal window</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>The combination of pyenv and venv gives you professional-grade Python version management while keeping your familiar venv workflow. You get:</p>
+        <ul>
+            <li>Multiple Python versions installed side-by-side</li>
+            <li>Easy switching between versions globally or per-project</li>
+            <li>Isolated project dependencies with venv</li>
+            <li>No interference with system Python</li>
+        </ul>
+        <p>This setup scales from small scripts to large production applications, making it the go-to choice for Python development on macOS.</p>
+
+        <div class="tags mt-4">
+            <span class="badge">#Python</span>
+            <span class="badge">#pyenv</span>
+            <span class="badge">#venv</span>
+            <span class="badge">#macOS</span>
+            <span class="badge">#Homebrew</span>
+            <span class="badge">#Development</span>
+            <span class="badge">#Tutorial</span>
+        </div>
+    </div>
+</article>
