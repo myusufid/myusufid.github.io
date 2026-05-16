@@ -1,0 +1,1089 @@
+{
+  "id": "tiu-padanan-kata",
+  "title": "TIU — Padanan Kata (Sinonim)",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KARTEL",
+      "options": {
+        "A": "Tempat air",
+        "B": "Warung telepon",
+        "C": "Badan usaha besar",
+        "D": "Kertas tebal",
+        "E": "Ketapel"
+      },
+      "answer": "C",
+      "explanation": "Kartel = persekutuan beberapa perusahaan/produsen yang bersepakat mengatur harga dan produksi untuk mengurangi persaingan. Padanan terdekat: badan usaha besar."
+    },
+    {
+      "id": 2,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SELEBRASI",
+      "options": {
+        "A": "Menghibur",
+        "B": "Perayaan",
+        "C": "Bergaya",
+        "D": "Berakting",
+        "E": "Melompat"
+      },
+      "answer": "B",
+      "explanation": "Selebrasi berasal dari kata celebration (Inggris) = perayaan, pesta syukur atas suatu keberhasilan atau momen penting."
+    },
+    {
+      "id": 3,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: GLOSARIUM",
+      "options": {
+        "A": "Indeks",
+        "B": "Intisari",
+        "C": "Kamus ringkas",
+        "D": "Lampiran",
+        "E": "Tempat ikan"
+      },
+      "answer": "C",
+      "explanation": "Glosarium = daftar istilah beserta definisi/penjelasan singkatnya, biasanya di bagian akhir buku. Padanan terdekat: kamus ringkas."
+    },
+    {
+      "id": 4,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TENDENSI",
+      "options": {
+        "A": "Urat",
+        "B": "Tekanan",
+        "C": "Otot",
+        "D": "Maksud",
+        "E": "Cenderung"
+      },
+      "answer": "E",
+      "explanation": "Tendensi = kecenderungan ke arah tertentu, arah yang menuju ke suatu tujuan. Berasal dari kata tendency (Inggris)."
+    },
+    {
+      "id": 5,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KISI-KISI",
+      "options": {
+        "A": "Alat hitung",
+        "B": "Terali",
+        "C": "Tabel",
+        "D": "Alat menangkap ikan",
+        "E": "Pola kerja"
+      },
+      "answer": "B",
+      "explanation": "Kisi-kisi = susunan jeruji/batang silang yang membentuk jaring, dipasang di jendela atau ventilasi. Padanan terdekat: terali (jeruji)."
+    },
+    {
+      "id": 6,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AMBIGUITAS",
+      "options": {
+        "A": "Pengertian",
+        "B": "Penyimpangan",
+        "C": "Ketidakjelasan",
+        "D": "Kebingungan",
+        "E": "Pola"
+      },
+      "answer": "C",
+      "explanation": "Ambiguitas = keadaan yang memiliki makna lebih dari satu atau bermakna ganda sehingga menimbulkan ketidakjelasan. Berasal dari ambiguity (Inggris)."
+    },
+    {
+      "id": 7,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: CITRA",
+      "options": {
+        "A": "Gambaran",
+        "B": "Anggapan",
+        "C": "Pendapat",
+        "D": "Diam",
+        "E": "Imaginasi"
+      },
+      "answer": "A",
+      "explanation": "Citra = gambaran/kesan yang terbentuk tentang seseorang, lembaga, atau produk di benak publik. Berasal dari image (Inggris)."
+    },
+    {
+      "id": 8,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: VIRTUAL",
+      "options": {
+        "A": "Hiponema",
+        "B": "Maya",
+        "C": "Nyata",
+        "D": "Virgin",
+        "E": "Impian"
+      },
+      "answer": "B",
+      "explanation": "Virtual = sesuatu yang ada secara digital/simulasi, tidak berwujud fisik. Padanan dalam bahasa Indonesia: maya (dunia maya, pertemuan maya)."
+    },
+    {
+      "id": 9,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DEPORTASI",
+      "options": {
+        "A": "Perhubungan",
+        "B": "Pengusiran",
+        "C": "Pengangkatan",
+        "D": "Pengawasan",
+        "E": "Penurunan"
+      },
+      "answer": "B",
+      "explanation": "Deportasi = tindakan mengusir/memulangkan warga negara asing dari suatu negara secara paksa karena melanggar hukum atau izin tinggal."
+    },
+    {
+      "id": 10,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KORELASI",
+      "options": {
+        "A": "Identifikasi",
+        "B": "Gambaran",
+        "C": "Sublimasi",
+        "D": "Harapan",
+        "E": "Hubungan"
+      },
+      "answer": "E",
+      "explanation": "Korelasi = hubungan atau keterkaitan antara dua hal/variabel. Berasal dari correlation (Inggris)."
+    },
+    {
+      "id": 11,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: INTUISI",
+      "options": {
+        "A": "Laki-laki",
+        "B": "Kalbu",
+        "C": "Bisikan hati",
+        "D": "Alat",
+        "E": "Pikiran"
+      },
+      "answer": "C",
+      "explanation": "Intuisi = perasaan/dorongan batin yang muncul tanpa melalui proses berpikir logis. Padanan terdekat: bisikan hati."
+    },
+    {
+      "id": 12,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TAPAL",
+      "options": {
+        "A": "Sepatu kuda",
+        "B": "Sepatu banteng",
+        "C": "Batas",
+        "D": "Sepatu manusia",
+        "E": "Perahu"
+      },
+      "answer": "C",
+      "explanation": "Tapal = batas wilayah. Kata 'tapal batas' memiliki arti batas perbatasan suatu wilayah. Jebakan: tapal mirip dengan ladam (sepatu kuda), tapi padanan katanya adalah batas."
+    },
+    {
+      "id": 13,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EVOKASI",
+      "options": {
+        "A": "Pengungsian",
+        "B": "Penilaian",
+        "C": "Perubahan",
+        "D": "Penggugah rasa",
+        "E": "Izin menetap"
+      },
+      "answer": "D",
+      "explanation": "Evokasi = kemampuan membangkitkan perasaan, kenangan, atau imajinasi tertentu. Padanan terdekat: penggugah rasa. Jebakan: jangan disamakan dengan evakuasi (pengungsian)."
+    },
+    {
+      "id": 14,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: IMPLAN",
+      "options": {
+        "A": "Menambal",
+        "B": "Memotong",
+        "C": "Suntik",
+        "D": "Mengelupas",
+        "E": "Merencanakan"
+      },
+      "answer": "C",
+      "explanation": "Implan = benda/materi yang ditanamkan ke dalam jaringan tubuh melalui prosedur medis. Padanan prosedur terdekat: suntik (injeksi/penanaman melalui prosedur medis)."
+    },
+    {
+      "id": 15,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DIKOTOMI",
+      "options": {
+        "A": "Dibagi dua",
+        "B": "Dua kepala",
+        "C": "Kembar dua",
+        "D": "Dua kekuatan",
+        "E": "Dwi fungsi"
+      },
+      "answer": "A",
+      "explanation": "Dikotomi = pembagian menjadi dua kelompok yang berlawanan atau bertentangan. Berasal dari dichotomy (Inggris) = dibagi dua."
+    },
+    {
+      "id": 16,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RESIDU",
+      "options": {
+        "A": "Reduksi",
+        "B": "Remisi",
+        "C": "Sisa",
+        "D": "Ampas",
+        "E": "Hasil"
+      },
+      "answer": "C",
+      "explanation": "Residu = sisa zat/endapan yang tertinggal setelah suatu proses kimia atau reaksi. Padanan terdekat: sisa."
+    },
+    {
+      "id": 17,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SANITASI",
+      "options": {
+        "A": "Koper",
+        "B": "Sehat",
+        "C": "Penyaringan",
+        "D": "Iritasi",
+        "E": "Kotor"
+      },
+      "answer": "C",
+      "explanation": "Sanitasi = upaya pemeliharaan kebersihan lingkungan, terutama pengelolaan air bersih dan limbah. Penyaringan (filtrasi) adalah proses inti dalam sistem sanitasi air."
+    },
+    {
+      "id": 18,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: HIPERBOLA",
+      "options": {
+        "A": "Antena",
+        "B": "Kalimat berlebihan",
+        "C": "Alat peraga",
+        "D": "Sindiran halus",
+        "E": "Bola berjumlah banyak"
+      },
+      "answer": "B",
+      "explanation": "Hiperbola = majas/gaya bahasa yang melebih-lebihkan sesuatu dari kenyataan untuk memberikan efek penekanan. Padanan terdekat: kalimat berlebihan."
+    },
+    {
+      "id": 19,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: WAHANA",
+      "options": {
+        "A": "Sarana",
+        "B": "Dunia",
+        "C": "Pandangan",
+        "D": "Planet",
+        "E": "Ide"
+      },
+      "answer": "A",
+      "explanation": "Wahana = sarana/media yang digunakan untuk mencapai suatu tujuan. Contoh: wahana pendidikan = sarana pendidikan."
+    },
+    {
+      "id": 20,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DOGMA",
+      "options": {
+        "A": "Agama",
+        "B": "Ideologi",
+        "C": "Ajaran",
+        "D": "Keyakinan",
+        "E": "Kendaraan"
+      },
+      "answer": "D",
+      "explanation": "Dogma = keyakinan atau ajaran yang dianggap mutlak benar dan tidak boleh dipertanyakan. Padanan terdekat: keyakinan (yang bersifat mutlak)."
+    },
+    {
+      "id": 21,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RELATIF",
+      "options": {
+        "A": "Nisbi",
+        "B": "Ukuran",
+        "C": "Khayal",
+        "D": "Tasbih",
+        "E": "Huruf"
+      },
+      "answer": "A",
+      "explanation": "Relatif = nisbi, tidak mutlak, bergantung pada sudut pandang atau kondisi tertentu. Lawan kata: absolut/mutlak."
+    },
+    {
+      "id": 22,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RANCU",
+      "options": {
+        "A": "Canggung",
+        "B": "Jorok",
+        "C": "Kacau",
+        "D": "Tidak wajar",
+        "E": "Semu"
+      },
+      "answer": "C",
+      "explanation": "Rancu = kacau, tidak runtut, campur aduk (terutama pada penggunaan bahasa atau susunan kalimat). Contoh: kalimat rancu = kalimat yang susunannya kacau."
+    },
+    {
+      "id": 23,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: FRONTAL",
+      "options": {
+        "A": "Tegak lurus",
+        "B": "Serangan",
+        "C": "Tak berbatas",
+        "D": "Garis",
+        "E": "Depan"
+      },
+      "answer": "E",
+      "explanation": "Frontal = berhadapan langsung dari depan, terang-terangan. Padanan terdekat: depan (dari arah depan secara langsung)."
+    },
+    {
+      "id": 24,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: HIBRIDASI",
+      "options": {
+        "A": "Penyilangan",
+        "B": "Penjaringan",
+        "C": "Pemurnian",
+        "D": "Pengelompokan",
+        "E": "Pemuliaan"
+      },
+      "answer": "A",
+      "explanation": "Hibridasi = proses perkawinan silang antara dua jenis/varietas yang berbeda untuk menghasilkan keturunan baru. Berasal dari hybridization (Inggris) = penyilangan."
+    },
+    {
+      "id": 25,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EKUILIBRIUM",
+      "options": {
+        "A": "Kesempurnaan",
+        "B": "Keseimbangan",
+        "C": "Kesederhanaan",
+        "D": "Kesamaan",
+        "E": "Kesesatan"
+      },
+      "answer": "B",
+      "explanation": "Ekuilibrium = keseimbangan, keadaan yang seimbang antara dua kekuatan atau lebih. Berasal dari equilibrium (Inggris/Latin)."
+    },
+    {
+      "id": 26,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SIKLUS",
+      "options": {
+        "A": "Baur",
+        "B": "Tingkatan",
+        "C": "Daur",
+        "D": "Proses",
+        "E": "Kelas"
+      },
+      "answer": "C",
+      "explanation": "Siklus = daur, rangkaian kejadian yang berulang secara teratur dan kembali ke titik awal. Contoh: siklus air = daur air."
+    },
+    {
+      "id": 27,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SUPREMASI",
+      "options": {
+        "A": "Melebihi jangkauan",
+        "B": "Bersifat komplek",
+        "C": "Kekuasaan tertinggi",
+        "D": "Hal pengangkatan",
+        "E": "Tambahan"
+      },
+      "answer": "C",
+      "explanation": "Supremasi = kekuasaan tertinggi, kedudukan atau posisi yang paling tinggi dan dominan. Berasal dari supremacy (Inggris). Contoh: supremasi hukum."
+    },
+    {
+      "id": 28,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KONTEMPORER",
+      "options": {
+        "A": "Aneh",
+        "B": "Kuno",
+        "C": "Pada masa kini",
+        "D": "Abstrak",
+        "E": "Tidak beraturan"
+      },
+      "answer": "C",
+      "explanation": "Kontemporer = masa kini, zaman sekarang, bersifat kekinian. Berasal dari contemporary (Inggris). Jebakan: jangan disamakan dengan 'kuno' yang merupakan antonimnya."
+    },
+    {
+      "id": 29,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: NANAR",
+      "options": {
+        "A": "Kosong",
+        "B": "Luka",
+        "C": "Tajam",
+        "D": "Berani",
+        "E": "Bingung"
+      },
+      "answer": "E",
+      "explanation": "Nanar = pandangan yang tidak berketentuan karena bingung, mabuk, atau pengaruh emosi kuat. KBBI: tidak berketentuan (karena bingung, mabuk, dsb). Padanan terdekat: bingung."
+    },
+    {
+      "id": 30,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DINAMIS",
+      "options": {
+        "A": "Tetap",
+        "B": "Konstan",
+        "C": "Bergerak terus",
+        "D": "Diam",
+        "E": "Turun"
+      },
+      "answer": "C",
+      "explanation": "Dinamis = selalu bergerak dan berkembang, penuh semangat dan tenaga. Berasal dari dynamic (Inggris). Lawan kata: statis (tetap/diam)."
+    },
+    {
+      "id": 31,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PARAS",
+      "options": {
+        "A": "Ganti",
+        "B": "Cukur",
+        "C": "Wajah",
+        "D": "Salah",
+        "E": "Payah"
+      },
+      "answer": "C",
+      "explanation": "Paras = wajah, muka, rupa seseorang. Contoh: parasnya cantik = wajahnya cantik."
+    },
+    {
+      "id": 32,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: OMNIVORA",
+      "options": {
+        "A": "Pemakan daging",
+        "B": "Pemakan tumbuhan",
+        "C": "Pemakan daging dan tumbuhan",
+        "D": "Pemakan rumput",
+        "E": "Pemakan buah-buahan"
+      },
+      "answer": "C",
+      "explanation": "Omnivora = hewan atau makhluk yang memakan segala jenis makanan, baik daging (hewani) maupun tumbuhan (nabati). Manusia termasuk omnivora."
+    },
+    {
+      "id": 33,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RESHUFFLE",
+      "options": {
+        "A": "Pengangkatan",
+        "B": "Pemberhentian",
+        "C": "Penggantian",
+        "D": "Peresmian",
+        "E": "Penawaran"
+      },
+      "answer": "C",
+      "explanation": "Reshuffle = perombakan/pergantian susunan kabinet atau kepengurusan organisasi. Padanan terdekat: penggantian (posisi/jabatan)."
+    },
+    {
+      "id": 34,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PROTEKSI",
+      "options": {
+        "A": "Pengawalan",
+        "B": "Perlindungan",
+        "C": "Pengawasan",
+        "D": "Pengamanan",
+        "E": "Penjagaan"
+      },
+      "answer": "B",
+      "explanation": "Proteksi = perlindungan, tindakan melindungi dari bahaya atau kerugian. Berasal dari protection (Inggris). Lebih luas dari sekadar pengawalan atau penjagaan."
+    },
+    {
+      "id": 35,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PURBAWISESA",
+      "options": {
+        "A": "Selesai",
+        "B": "Acara",
+        "C": "Bergelombang",
+        "D": "Hubungan",
+        "E": "Kekuasaan sepenuh-penuhnya"
+      },
+      "answer": "E",
+      "explanation": "Purbawisesa = kekuasaan tertinggi yang penuh dan mutlak, kedaulatan penuh. Berasal dari bahasa Jawa/Kawi: purba (tertinggi/kuno) + wisesa (kuasa penuh)."
+    },
+    {
+      "id": 36,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MOBILITAS",
+      "options": {
+        "A": "Angka kematian",
+        "B": "Sebangsa hewan",
+        "C": "Gerak",
+        "D": "Dorongan",
+        "E": "Pukulan"
+      },
+      "answer": "C",
+      "explanation": "Mobilitas = kemampuan atau kecepatan bergerak, perpindahan dari satu tempat/posisi ke tempat lain. Berasal dari mobility (Inggris)."
+    },
+    {
+      "id": 37,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AFEKSI",
+      "options": {
+        "A": "Tak berakibat",
+        "B": "Kasih sayang",
+        "C": "Tanpa luka",
+        "D": "Ternyata",
+        "E": "Terluka"
+      },
+      "answer": "B",
+      "explanation": "Afeksi = kasih sayang, perasaan cinta dan rasa peduli terhadap seseorang. Berasal dari affection (Inggris)."
+    },
+    {
+      "id": 38,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EMBARGO",
+      "options": {
+        "A": "Penguasaan",
+        "B": "Pengiriman",
+        "C": "Permusuhan",
+        "D": "Pengeluaran",
+        "E": "Perintah larangan"
+      },
+      "answer": "E",
+      "explanation": "Embargo = perintah pemerintah yang melarang perdagangan dengan negara tertentu atau melarang keluar masuknya barang. Padanan terdekat: perintah larangan."
+    },
+    {
+      "id": 39,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AROGAN",
+      "options": {
+        "A": "Rendah hati",
+        "B": "Murah senyum",
+        "C": "Mudah marah",
+        "D": "Sombong",
+        "E": "Kasar"
+      },
+      "answer": "D",
+      "explanation": "Arogan = sombong, angkuh, merasa diri paling benar atau paling hebat. Berasal dari arrogant (Inggris). Jebakan: 'rendah hati' adalah antonimnya."
+    },
+    {
+      "id": 40,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SEREBRUM",
+      "options": {
+        "A": "Otak kecil",
+        "B": "Otak besar",
+        "C": "Selebritis",
+        "D": "Balneum",
+        "E": "Upacara"
+      },
+      "answer": "B",
+      "explanation": "Serebrum = cerebrum (Latin/Inggris) = otak besar, bagian utama otak yang mengatur fungsi berpikir, berbicara, dan gerakan sadar. Jebakan: otak kecil = serebelum (cerebellum), bukan serebrum."
+    },
+    {
+      "id": 41,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KLEPTOFOBIA",
+      "options": {
+        "A": "Takut kecurian",
+        "B": "Penyakit suka mencuri",
+        "C": "Tergila-gila",
+        "D": "Terbayang-bayang",
+        "E": "Berlebihan"
+      },
+      "answer": "A",
+      "explanation": "Kleptofobia = rasa takut yang berlebihan terhadap pencurian atau kecurian. Berasal dari klepto (mencuri) + fobia (ketakutan). Jebakan: penyakit suka mencuri = kleptomania, bukan kleptofobia."
+    },
+    {
+      "id": 42,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SUKSESI",
+      "options": {
+        "A": "Keberhasilan",
+        "B": "Pergantian pemimpin",
+        "C": "Kemenangan",
+        "D": "Merebut kekuasaan",
+        "E": "Pengamanan"
+      },
+      "answer": "B",
+      "explanation": "Suksesi = pergantian kepemimpinan atau kekuasaan secara sah dan teratur. Berasal dari succession (Inggris). Jebakan: jangan disamakan dengan 'sukses' (keberhasilan) — keduanya berbeda makna."
+    },
+    {
+      "id": 43,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: IMUN",
+      "options": {
+        "A": "Minuman",
+        "B": "Suntik",
+        "C": "Sayuran",
+        "D": "Program",
+        "E": "Kebal"
+      },
+      "answer": "E",
+      "explanation": "Imun = immune (Inggris) = kebal, tahan terhadap penyakit atau serangan. Jebakan: suntik adalah cara pemberian vaksin, bukan makna imun itu sendiri."
+    },
+    {
+      "id": 44,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PROMINEN",
+      "options": {
+        "A": "Terkemuka",
+        "B": "Pendukung",
+        "C": "Setuju",
+        "D": "Pelapor",
+        "E": "Biasa"
+      },
+      "answer": "A",
+      "explanation": "Prominen = prominent (Inggris) = terkemuka, menonjol, terkenal, berkedudukan tinggi. Jebakan: 'biasa' adalah antonimnya."
+    },
+    {
+      "id": 45,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PARAMETER",
+      "options": {
+        "A": "Pasukan cadangan",
+        "B": "Standar ukuran",
+        "C": "Tidak dapat diukur",
+        "D": "Tidak berukuran",
+        "E": "Kecepatan"
+      },
+      "answer": "B",
+      "explanation": "Parameter = ukuran atau patokan yang digunakan sebagai acuan dalam suatu pengukuran atau penilaian. Padanan terdekat: standar ukuran."
+    },
+    {
+      "id": 46,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PREMI",
+      "options": {
+        "A": "Partikelir",
+        "B": "Uang iuran",
+        "C": "Rendah",
+        "D": "Uang hadiah",
+        "E": "Swasta"
+      },
+      "answer": "D",
+      "explanation": "Premi dalam KBBI berarti hadiah atau bonus yang diberikan sebagai penghargaan atas prestasi. Meski dalam konteks asuransi premi = uang iuran, makna utama dalam KBBI adalah uang hadiah/bonus."
+    },
+    {
+      "id": 47,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EKSEKUSI",
+      "options": {
+        "A": "Bekas diskusi",
+        "B": "Pelaksanaan hukuman",
+        "C": "Alat musik",
+        "D": "Potongan hukuman",
+        "E": "Hubungan"
+      },
+      "answer": "B",
+      "explanation": "Eksekusi = pelaksanaan putusan hukum, terutama hukuman mati. Berasal dari execution (Inggris). Dalam konteks hukum: eksekusi = pelaksanaan hukuman."
+    },
+    {
+      "id": 48,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ILUSI",
+      "options": {
+        "A": "Bayangan",
+        "B": "Pandangan",
+        "C": "Mimpi",
+        "D": "Anggapan",
+        "E": "Khayalan"
+      },
+      "answer": "E",
+      "explanation": "Ilusi = khayalan, persepsi yang tidak sesuai dengan kenyataan, gambaran yang menyesatkan. Berasal dari illusion (Inggris). Padanan terdekat: khayalan."
+    },
+    {
+      "id": 49,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ABRASI",
+      "options": {
+        "A": "Erosi",
+        "B": "Kelupas",
+        "C": "Kikis",
+        "D": "Keduk",
+        "E": "Hancur"
+      },
+      "answer": "A",
+      "explanation": "Abrasi = pengikisan pantai oleh tenaga gelombang laut dan arus laut. Padanan ilmiah terdekat: erosi (pengikisan permukaan oleh air, angin, atau es)."
+    },
+    {
+      "id": 50,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TRANSEDENTAL",
+      "options": {
+        "A": "Bergerak",
+        "B": "Berpindah",
+        "C": "Kesinambungan",
+        "D": "Abstrak",
+        "E": "Tembus pandang"
+      },
+      "answer": "D",
+      "explanation": "Transendental = sesuatu yang melampaui batas pengalaman indrawi manusia, bersifat abstrak dan tidak terikat pada hal-hal fisik. Padanan terdekat: abstrak."
+    },
+    {
+      "id": 51,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DELUSI",
+      "options": {
+        "A": "Kekecewaan",
+        "B": "Khawatir",
+        "C": "Ilusi",
+        "D": "Friksi",
+        "E": "Nyata"
+      },
+      "answer": "C",
+      "explanation": "Delusi = kepercayaan atau keyakinan yang salah terhadap kenyataan, tidak sesuai dengan fakta. Padanan terdekat: ilusi (gambaran yang tidak sesuai kenyataan)."
+    },
+    {
+      "id": 52,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MEMANGKAS",
+      "options": {
+        "A": "Memotong",
+        "B": "Mati",
+        "C": "Menderita",
+        "D": "Pohon",
+        "E": "Ganjil"
+      },
+      "answer": "A",
+      "explanation": "Memangkas = memotong bagian tertentu dari tanaman atau rambut untuk merapikannya. Padanan terdekat: memotong."
+    },
+    {
+      "id": 53,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MISTIFIKASI",
+      "options": {"A": "Pengeboran", "B": "Perlubangan", "C": "Pengampunan", "D": "Pengecohan", "E": "Perlambangan"},
+      "answer": "D",
+      "explanation": "Mistifikasi = tindakan membuat sesuatu tampak misterius atau membingungkan untuk menyesatkan. Padanan terdekat: pengecohan."
+    },
+    {
+      "id": 54,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: LEGALITAS",
+      "options": {"A": "Keabsahan", "B": "Masalah hukum", "C": "Tanda setuju", "D": "Tidak sah", "E": "Persetujuan"},
+      "answer": "A",
+      "explanation": "Legalitas = keabsahan secara hukum, status sah menurut peraturan yang berlaku. Berasal dari legality (Inggris)."
+    },
+    {
+      "id": 55,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DIKOTOMI",
+      "options": {"A": "Dualitas", "B": "Dua kepala", "C": "Kembar dua", "D": "Dua kekuatan", "E": "Dwi Fungsi"},
+      "answer": "A",
+      "explanation": "Dikotomi = pembagian atas dua kelompok yang saling berlawanan. Di antara pilihan, dualitas (sifat dua bagian berbeda/berlawanan) adalah padanan terdekat."
+    },
+    {
+      "id": 56,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ANDAL",
+      "options": {"A": "Kredibel", "B": "Terbelakang", "C": "Bebal", "D": "Kuat", "E": "Dampak"},
+      "answer": "A",
+      "explanation": "Andal (handal) = mampu, terampil, dan dapat diandalkan. Padanan: kredibel (dapat dipercaya/diandalkan)."
+    },
+    {
+      "id": 57,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TANUR",
+      "options": {"A": "Perapian", "B": "Pucuk daun kelapa", "C": "Tempat bersemedi", "D": "Tempat memasak", "E": "Perlambang"},
+      "answer": "A",
+      "explanation": "Tanur = tungku besar untuk melebur logam atau membakar benda. Padanan: perapian (tungku/tempat api menyala)."
+    },
+    {
+      "id": 58,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EKSTENSI",
+      "options": {"A": "Penyempitan", "B": "Tepat guna", "C": "Penggabungan", "D": "Perluasan", "E": "Keberadaan"},
+      "answer": "D",
+      "explanation": "Ekstensi = extension (Inggris) = perluasan, penambahan cakupan. Padanan: perluasan."
+    },
+    {
+      "id": 59,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: GENERIK",
+      "options": {"A": "Jenis", "B": "Murah", "C": "Obat", "D": "Spesial", "E": "Umum"},
+      "answer": "E",
+      "explanation": "Generik = generic (Inggris) = bersifat umum, tidak bermerek/spesifik. Padanan: umum. Jebakan: jangan terjebak pada 'obat' meski obat generik paling dikenal."
+    },
+    {
+      "id": 60,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: INJEKSI",
+      "options": {"A": "Suntik", "B": "Sedot", "C": "Terapi", "D": "Tarik", "E": "Tembus"},
+      "answer": "A",
+      "explanation": "Injeksi = injection (Inggris) = penyuntikan, memasukkan cairan ke dalam tubuh dengan jarum. Padanan: suntik."
+    },
+    {
+      "id": 61,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KAPITAL",
+      "options": {"A": "Modal", "B": "Menara", "C": "Kapten", "D": "Tentara", "E": "Restoran"},
+      "answer": "A",
+      "explanation": "Kapital = capital (Inggris/ekonomi) = modal, kekayaan yang digunakan untuk produksi. Padanan: modal."
+    },
+    {
+      "id": 62,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AGRESI",
+      "options": {"A": "Permintaan", "B": "Pertemuan", "C": "Pertikaian", "D": "Pemasukan", "E": "Penyerangan"},
+      "answer": "E",
+      "explanation": "Agresi = aggression (Inggris) = serangan/tindakan menyerang. Padanan: penyerangan."
+    },
+    {
+      "id": 63,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: BUKTI DIRI",
+      "options": {"A": "Identitas", "B": "Nama", "C": "Jati Diri", "D": "Tanda", "E": "Ciri"},
+      "answer": "C",
+      "explanation": "Bukti diri = sesuatu yang membuktikan identitas/jati diri seseorang. Padanan terdekat: jati diri (identitas asli seseorang)."
+    },
+    {
+      "id": 64,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RAPUH",
+      "options": {"A": "Kuda", "B": "Ringkih", "C": "Tinju", "D": "Suara", "E": "Kuat"},
+      "answer": "B",
+      "explanation": "Rapuh = mudah pecah/retak, lemah. Padanan: ringkih (lemah, tidak kuat). Jebakan: 'kuat' adalah antonimnya."
+    },
+    {
+      "id": 65,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PINGSAN",
+      "options": {"A": "Sakit", "B": "Nyeri", "C": "Kelenger", "D": "Marah", "E": "Kurus"},
+      "answer": "C",
+      "explanation": "Pingsan = kehilangan kesadaran sementara. Padanan: kelenger (tidak sadarkan diri — dari bahasa Jawa)."
+    },
+    {
+      "id": 66,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KONDUSIF",
+      "options": {"A": "Konflik", "B": "Kontribusi", "C": "Menghambat", "D": "Aman", "E": "Kontributif"},
+      "answer": "D",
+      "explanation": "Kondusif = keadaan yang mendukung/menguntungkan suatu tujuan, tenang dan aman. Padanan terdekat: aman."
+    },
+    {
+      "id": 67,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KONKAF",
+      "options": {"A": "Cembung", "B": "Konveks", "C": "Penghubung", "D": "Cekung", "E": "Konklusi"},
+      "answer": "D",
+      "explanation": "Konkaf = concave (Inggris) = cekung, melengkung ke dalam. Padanan: cekung. Jebakan: konveks = cembung (kebalikannya)."
+    },
+    {
+      "id": 68,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DEDUKSI",
+      "options": {"A": "Induksi", "B": "Awal", "C": "Konklusi", "D": "Konduksi", "E": "Nyata"},
+      "answer": "C",
+      "explanation": "Deduksi = penyimpulan dari hal umum ke hal khusus. Konklusi = simpulan/kesimpulan yang dihasilkan. Padanan terdekat: konklusi. Jebakan: induksi adalah kebalikannya."
+    },
+    {
+      "id": 69,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KAWAN",
+      "options": {"A": "Lawan", "B": "Piala", "C": "Sahabat", "D": "Mitra", "E": "Saingan"},
+      "answer": "C",
+      "explanation": "Kawan = teman, sahabat, orang yang sering bersama. Padanan: sahabat. Jebakan: 'lawan' dan 'saingan' adalah antonimnya."
+    },
+    {
+      "id": 70,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KEBERANGKATAN",
+      "options": {"A": "Kepergian", "B": "Ketinggalan", "C": "Kedatangan", "D": "Kepulangan", "E": "Embarkasi"},
+      "answer": "A",
+      "explanation": "Keberangkatan = proses/saat seseorang meninggalkan suatu tempat. Padanan: kepergian. Jebakan: 'kedatangan' dan 'kepulangan' berlawanan arah."
+    },
+    {
+      "id": 71,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ABSOLUT",
+      "options": {"A": "Nyata", "B": "Benar", "C": "Mutlak", "D": "Harus", "E": "Pasti"},
+      "answer": "C",
+      "explanation": "Absolut = absolute (Inggris) = mutlak, tidak terbatas, tidak relatif. Padanan: mutlak. Lawan kata: relatif/nisbi."
+    },
+    {
+      "id": 72,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PEDAGOGI",
+      "options": {"A": "Pelajaran", "B": "Silabus", "C": "Kurikulum", "D": "Pengajaran", "E": "Perkuliahan"},
+      "answer": "D",
+      "explanation": "Pedagogi = ilmu/seni mengajar dan mendidik. Padanan: pengajaran (kegiatan menyampaikan ilmu)."
+    },
+    {
+      "id": 73,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EPILOG",
+      "options": {"A": "Monolog", "B": "Dialog", "C": "Pembukaan", "D": "Prolog", "E": "Penutup"},
+      "answer": "E",
+      "explanation": "Epilog = epilogue (Inggris) = bagian penutup dari sebuah karya sastra/drama. Padanan: penutup. Jebakan: prolog = pembukaan (kebalikannya)."
+    },
+    {
+      "id": 74,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TENDENSI",
+      "options": {"A": "Lurus", "B": "Kesamaan", "C": "Kecenderungan", "D": "Tensi", "E": "Tekanan"},
+      "answer": "C",
+      "explanation": "Tendensi = tendency (Inggris) = kecenderungan ke arah tertentu. Padanan: kecenderungan. Jebakan: 'tensi' mirip bunyi tapi artinya tekanan darah."
+    },
+    {
+      "id": 75,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DERIVASI",
+      "options": {"A": "Afiksasi", "B": "Kedatangan", "C": "Muncul", "D": "Pengurangan", "E": "Kesalahan"},
+      "answer": "A",
+      "explanation": "Derivasi = proses pembentukan kata baru dari kata dasar dengan menambahkan afiks (imbuhan). Padanan: afiksasi."
+    },
+    {
+      "id": 76,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: FUTURISTIS",
+      "options": {"A": "Teknologi tinggi", "B": "Canggih", "C": "Nyaman", "D": "Indah dan nyaman", "E": "Menuju masa depan"},
+      "answer": "B",
+      "explanation": "Futuristis = futuristic (Inggris) = berorientasi masa depan, modern, menggunakan teknologi mutakhir. Padanan terdekat: canggih."
+    },
+    {
+      "id": 77,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EVOKASI",
+      "options": {"A": "Pengungsian", "B": "Menggugah rasa", "C": "Penilaian", "D": "Hasrat", "E": "Menyaingi"},
+      "answer": "B",
+      "explanation": "Evokasi = kemampuan membangkitkan perasaan, kenangan, atau imajinasi. Padanan: menggugah rasa. Jebakan: jangan disamakan dengan evakuasi (pengungsian)."
+    },
+    {
+      "id": 78,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: VANDALISME",
+      "options": {"A": "Produktif", "B": "Konstruktif", "C": "Validitas", "D": "Destruksi", "E": "Instruktif"},
+      "answer": "D",
+      "explanation": "Vandalisme = tindakan merusak/menghancurkan fasilitas umum atau milik orang lain. Padanan: destruksi (penghancuran/perusakan)."
+    },
+    {
+      "id": 79,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DIVESTASI",
+      "options": {"A": "Keragaman", "B": "Divergen", "C": "Bagian", "D": "Pelepasan", "E": "Sektor"},
+      "answer": "D",
+      "explanation": "Divestasi = divestiture (Inggris) = pelepasan/penjualan sebagian aset atau kepemilikan saham. Padanan: pelepasan."
+    },
+    {
+      "id": 80,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KONSTAN",
+      "options": {"A": "Berubah", "B": "Inkonsisten", "C": "Kontinu", "D": "Tatanan", "E": "Kontak"},
+      "answer": "C",
+      "explanation": "Konstan = constant (Inggris) = tetap, tidak berubah, berlangsung terus. Padanan terdekat: kontinu (berlangsung terus tanpa perubahan)."
+    },
+    {
+      "id": 81,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: INOVASI",
+      "options": {"A": "Penemuan", "B": "Serangan", "C": "Perpindahan", "D": "Evaluasi", "E": "Situasi"},
+      "answer": "A",
+      "explanation": "Inovasi = innovation (Inggris) = penemuan/pembaruan sesuatu yang baru dan berguna. Padanan: penemuan."
+    },
+    {
+      "id": 82,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KEDAP",
+      "options": {"A": "Rapat", "B": "Keras", "C": "Menembus", "D": "Kurap", "E": "Tetap"},
+      "answer": "A",
+      "explanation": "Kedap = tidak tembus (suara, air, udara), rapat. Padanan: rapat (tertutup sehingga tidak bisa ditembus). Contoh: kedap air = rapat sehingga air tidak masuk."
+    },
+    {
+      "id": 83,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: REFERENSI",
+      "options": {"A": "Surat Sakit", "B": "Surat Akta", "C": "Surat Keterangan", "D": "Surat Menyurat", "E": "Surat Kuasa"},
+      "answer": "C",
+      "explanation": "Referensi = reference (Inggris) = surat keterangan atau acuan yang menunjukkan identitas/kemampuan seseorang. Padanan: surat keterangan."
+    },
+    {
+      "id": 84,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TRANSENDENTAL",
+      "options": {"A": "Berpindah", "B": "Abstrak", "C": "Tembus pandang", "D": "Kesinambungan", "E": "Bergerak"},
+      "answer": "B",
+      "explanation": "Transendental = melampaui batas pengalaman indrawi manusia, bersifat abstrak/spiritual. Padanan: abstrak."
+    },
+    {
+      "id": 85,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AKSELERASI",
+      "options": {"A": "Pertikaian", "B": "Percepatan", "C": "Penentuan", "D": "Perlindungan", "E": "Kendaraan"},
+      "answer": "B",
+      "explanation": "Akselerasi = acceleration (Inggris) = percepatan, peningkatan kecepatan. Padanan: percepatan."
+    },
+    {
+      "id": 86,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MUTILASI",
+      "options": {"A": "Pemotongan", "B": "Penggabungan", "C": "Pemeliharaan", "D": "Perdamaian", "E": "Perencanaan"},
+      "answer": "A",
+      "explanation": "Mutilasi = mutilation (Inggris) = pemotongan/pemisahan bagian tubuh. Padanan: pemotongan."
+    },
+    {
+      "id": 87,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: API",
+      "options": {"A": "Bisul", "B": "Curiga", "C": "Rawat", "D": "Ayah", "E": "Bara"},
+      "answer": "E",
+      "explanation": "Api = nyala/panas dari pembakaran. Padanan terdekat: bara (benda/abu yang masih membara dari sisa pembakaran)."
+    },
+    {
+      "id": 88,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: BENCANA",
+      "options": {"A": "Bantuan", "B": "Lawan", "C": "Rapat sekali", "D": "Kawan", "E": "Bala"},
+      "answer": "E",
+      "explanation": "Bencana = musibah, malapetaka. Padanan: bala (malapetaka/bencana — dari bahasa Melayu/Arab)."
+    },
+    {
+      "id": 89,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DISPENSASI",
+      "options": {"A": "Pembebasan", "B": "Pengecualian", "C": "Persetujuan", "D": "Penyimpangan", "E": "Kesenjangan"},
+      "answer": "B",
+      "explanation": "Dispensasi = dispensation (Inggris) = pengecualian dari aturan yang berlaku, izin khusus. Padanan: pengecualian."
+    },
+    {
+      "id": 90,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MUTAKHIR",
+      "options": {"A": "Insidental", "B": "Kontemporer", "C": "Permanen", "D": "Pergantian", "E": "Rumit"},
+      "answer": "B",
+      "explanation": "Mutakhir = terbaru, paling modern, masa kini. Padanan: kontemporer (bersifat masa kini/zaman sekarang)."
+    },
+    {
+      "id": 91,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: MILITAN",
+      "options": {"A": "Anti penindasan", "B": "Ideologi", "C": "Agresif", "D": "Brutal", "E": "Penggolongan"},
+      "answer": "C",
+      "explanation": "Militan = militant (Inggris) = bersemangat kuat dan agresif dalam memperjuangkan sesuatu. Padanan: agresif."
+    },
+    {
+      "id": 92,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EKSKAVASI",
+      "options": {"A": "Penggalian", "B": "Pertolongan", "C": "Pengangkutan", "D": "Pelaku", "E": "Pelaksana"},
+      "answer": "A",
+      "explanation": "Ekskavasi = excavation (Inggris) = penggalian (tanah/situs arkeologi). Padanan: penggalian."
+    },
+    {
+      "id": 93,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PARADOKSAL",
+      "options": {"A": "Sejalan", "B": "Seiring", "C": "Ideal", "D": "Kontras", "E": "Konsisten"},
+      "answer": "D",
+      "explanation": "Paradoksal = bersifat paradoks, tampak bertentangan namun mengandung kebenaran. Padanan terdekat: kontras (bertentangan/berbeda tajam)."
+    },
+    {
+      "id": 94,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: PEMBATASAN",
+      "options": {"A": "Wanita", "B": "Halus", "C": "Damu", "D": "Restriksi", "E": "Alim"},
+      "answer": "D",
+      "explanation": "Pembatasan = tindakan membatasi, pengenaan batas/larangan. Padanan: restriksi (restriction — pembatasan/larangan)."
+    },
+    {
+      "id": 95,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: HARTA BENDA",
+      "options": {"A": "Maal", "B": "Bencana", "C": "Zakat", "D": "Warisan", "E": "Sedekah"},
+      "answer": "A",
+      "explanation": "Harta benda = kekayaan, segala sesuatu yang dimiliki. Padanan: maal (dari Arab مال = harta/kekayaan)."
+    },
+    {
+      "id": 96,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: CIRI",
+      "options": {"A": "Watak", "B": "Jiwa", "C": "Karakteristik", "D": "Tabiat", "E": "Akhlak"},
+      "answer": "C",
+      "explanation": "Ciri = tanda khas yang membedakan sesuatu dari yang lain. Padanan: karakteristik (characteristic — ciri khas)."
+    },
+    {
+      "id": 97,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: EVOKASI",
+      "options": {"A": "Pengungsian", "B": "Izin menetap", "C": "Penggugah rasa", "D": "Penilaian", "E": "Perubahan"},
+      "answer": "C",
+      "explanation": "Evokasi = kemampuan membangkitkan perasaan, kenangan, atau imajinasi. Padanan: penggugah rasa. Jebakan: jangan disamakan dengan evakuasi (pengungsian) atau emigrasi (izin menetap)."
+    },
+    {
+      "id": 98,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DAUR",
+      "options": {"A": "Siklus", "B": "Baur", "C": "Produk", "D": "Tingkatan", "E": "Proses"},
+      "answer": "A",
+      "explanation": "Daur = rangkaian kejadian yang berulang secara teratur. Padanan: siklus (cycle — daur/putaran berulang)."
+    },
+    {
+      "id": 99,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: SINTESIS",
+      "options": {"A": "Disertasi", "B": "Praduga", "C": "Thesis", "D": "Hipotesis", "E": "Buatan"},
+      "answer": "E",
+      "explanation": "Sintesis = proses pembuatan/penggabungan berbagai unsur menjadi satu kesatuan baru. Dalam kimia: sintesis = pembuatan senyawa dari unsur-unsurnya. Padanan terdekat: buatan."
+    },
+    {
+      "id": 100,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: DESKRIPTIF",
+      "options": {"A": "Puisi", "B": "Prosa", "C": "Naratif", "D": "Deduktif", "E": "Gambaran"},
+      "answer": "E",
+      "explanation": "Deskriptif = bersifat deskripsi, menggambarkan/melukiskan sesuatu secara rinci. Padanan: gambaran."
+    },
+    {
+      "id": 101,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: GAMBARAN",
+      "options": {"A": "Dimensi", "B": "Imajinasi", "C": "Harapan", "D": "Anggapan", "E": "Citra"},
+      "answer": "E",
+      "explanation": "Gambaran = kesan/representasi visual atau konseptual tentang sesuatu. Padanan: citra (image — gambaran/kesan yang terbentuk)."
+    },
+    {
+      "id": 102,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: TEMPAT",
+      "options": {"A": "Piringan hitam", "B": "Loka", "C": "Kebun", "D": "Bulan", "E": "Tanggal"},
+      "answer": "B",
+      "explanation": "Tempat = lokasi, ruang, atau wilayah. Padanan: loka (dari Sansekerta = tempat/lokasi). Contoh: lokakarya = workshop (karya di suatu tempat)."
+    },
+    {
+      "id": 103,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: NABATI",
+      "options": {"A": "Hewani", "B": "Kodrati", "C": "Botani", "D": "Hayati", "E": "Insani"},
+      "answer": "C",
+      "explanation": "Nabati = bersifat/berasal dari tumbuhan (dari Arab: نبات = tanaman). Padanan: botani (botanical — berkaitan dengan tumbuhan). Jebakan: hewani = kebalikannya (dari hewan)."
+    },
+    {
+      "id": 104,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ITERASI",
+      "options": {"A": "Interaksi", "B": "Hubungan", "C": "Perulangan", "D": "Korelasi", "E": "Kedekatan"},
+      "answer": "C",
+      "explanation": "Iterasi = iteration (Inggris) = perulangan proses secara berulang-ulang. Padanan: perulangan."
+    },
+    {
+      "id": 105,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: BAKU",
+      "options": {"A": "Standar", "B": "Khusus", "C": "Normal", "D": "Asli", "E": "Perkiraan"},
+      "answer": "A",
+      "explanation": "Baku = standar, sudah ditetapkan sebagai patokan. Contoh: bahasa baku = bahasa standar. Padanan: standar."
+    },
+    {
+      "id": 106,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: KAMPIUN",
+      "options": {"A": "Juara", "B": "Sejarah", "C": "Penerima", "D": "Ahli", "E": "Penggagas"},
+      "answer": "A",
+      "explanation": "Kampiun = champion (Belanda/Inggris) = juara, orang yang memenangkan kompetisi. Padanan: juara."
+    },
+    {
+      "id": 107,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: AMBIGUITAS",
+      "options": {"A": "Bermakna ganda", "B": "Hasrat yang kuat", "C": "Ambisi", "D": "Perlawanan", "E": "Serakah"},
+      "answer": "A",
+      "explanation": "Ambiguitas = ambiguity (Inggris) = keadaan yang bermakna ganda atau tidak jelas. Padanan: bermakna ganda. Jebakan: jangan disamakan dengan 'ambisi' (hasrat kuat) — berbeda asal dan makna."
+    },
+    {
+      "id": 108,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: INSINUASI",
+      "options": {"A": "Sindiran", "B": "Perasaan halus", "C": "Keadaan", "D": "Kesempatan", "E": "Lembaga"},
+      "answer": "A",
+      "explanation": "Insinuasi = insinuation (Inggris) = sindiran halus, pernyataan yang menyiratkan sesuatu secara tidak langsung. Padanan: sindiran."
+    },
+    {
+      "id": 109,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: ANULIR",
+      "options": {"A": "Pemberatan", "B": "Abolisi", "C": "Regresi", "D": "Penambahan", "E": "Analisa"},
+      "answer": "B",
+      "explanation": "Anulir = membatalkan/menggugurkan keputusan atau perjanjian. Padanan: abolisi (penghapusan/pembatalan secara resmi)."
+    },
+    {
+      "id": 110,
+      "question": "Pilihlah kata yang memiliki kesamaan makna paling tepat dengan kata berikut: RELATIF",
+      "options": {"A": "Biasa", "B": "Statis", "C": "Pasti", "D": "Nisbi", "E": "Ukuran"},
+      "answer": "D",
+      "explanation": "Relatif = relative (Inggris) = nisbi, tidak mutlak, bergantung pada kondisi atau sudut pandang. Padanan: nisbi. Lawan kata: absolut/mutlak."
+    }
+  ]
+}

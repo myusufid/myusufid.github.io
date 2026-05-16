@@ -1,0 +1,657 @@
+{
+  "id": "tiu-analogi",
+  "title": "TIU — Analogi",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "PEMERINTAH : PERPU = ....",
+      "options": {
+        "A": "Buruh : Demokrasi",
+        "B": "Makan : Kenyang",
+        "C": "MPR : UU",
+        "D": "Hakim : Jaksa",
+        "E": "Menteri : Kepres"
+      },
+      "answer": "C",
+      "explanation": "Pemerintah membuat/mengeluarkan PERPU. MPR membuat/mengesahkan UU. Hubungan: lembaga → produk perundangan yang dihasilkan."
+    },
+    {
+      "id": 2,
+      "question": "OTONOMI : MANDIRI = ....",
+      "options": {
+        "A": "Hardisk : VGA card",
+        "B": "Sabun : Mandi",
+        "C": "Cerdas : Banyak akal",
+        "D": "Bensin : Mesin",
+        "E": "Rakyat : Masyarakat"
+      },
+      "answer": "C",
+      "explanation": "Otonomi = mandiri (sinonim). Cerdas = banyak akal (sinonim). Hubungan: sinonim."
+    },
+    {
+      "id": 3,
+      "question": "GURU : MURID = .... : ....",
+      "options": {
+        "A": "Mengaji : Uztad",
+        "B": "Bapak : Ibu",
+        "C": "Orang tua : Anak",
+        "D": "Arsitek : Taman",
+        "E": "Dokter : Pasien"
+      },
+      "answer": "E",
+      "explanation": "Guru mengajar/melayani murid. Dokter mengobati/melayani pasien. Hubungan: profesi → pihak yang dilayani."
+    },
+    {
+      "id": 4,
+      "question": "HEWAN : .... = MAKANAN : SATE",
+      "options": {
+        "A": "Lapar",
+        "B": "Air",
+        "C": "Waktu makan",
+        "D": "Kenyang",
+        "E": "Kambing"
+      },
+      "answer": "E",
+      "explanation": "Sate dibuat dari hewan, dan hewan yang paling identik dengan sate adalah kambing. HEWAN : KAMBING = MAKANAN : SATE. Hubungan: kategori → contoh spesifik."
+    },
+    {
+      "id": 5,
+      "question": "HARI : MINGGU : BULAN = ....",
+      "options": {
+        "A": "Guru : Kelas : Murid",
+        "B": "Rokok : Asap : Mengepul",
+        "C": "Detik : Menit : Jam",
+        "D": "Birokrat : Birokrasi : Karir",
+        "E": "Senin : Selasa : Rabu"
+      },
+      "answer": "C",
+      "explanation": "Hari → Minggu → Bulan: satuan waktu dari terkecil ke terbesar secara berurutan. Detik → Menit → Jam: satuan waktu dari terkecil ke terbesar secara berurutan. Hubungan: urutan satuan waktu."
+    },
+    {
+      "id": 6,
+      "question": "KAYU : .... = BERAS : NASI GORENG",
+      "options": {
+        "A": "Kursi tamu",
+        "B": "Pasak",
+        "C": "Gelondongan",
+        "D": "Papan",
+        "E": "Tripleks"
+      },
+      "answer": "D",
+      "explanation": "Beras diolah menjadi nasi goreng. Kayu diolah/digergaji menjadi papan. Hubungan: bahan mentah → produk olahan langsung."
+    },
+    {
+      "id": 7,
+      "question": "BUTA : WARNA = TULI : ....",
+      "options": {
+        "A": "Telinga",
+        "B": "Nada",
+        "C": "Kata",
+        "D": "Mendengar",
+        "E": "Pendengar"
+      },
+      "answer": "B",
+      "explanation": "Buta warna = tidak dapat membedakan warna. Tuli nada = tidak dapat membedakan nada. Hubungan: gangguan indera → hal yang tidak bisa dibedakan/dirasakan."
+    },
+    {
+      "id": 8,
+      "question": "KHAYALAN : DONGENG = PERISTIWA : ....",
+      "options": {
+        "A": "Rekaan",
+        "B": "Dugaan",
+        "C": "Palsu",
+        "D": "Fakta",
+        "E": "Estimasi"
+      },
+      "answer": "D",
+      "explanation": "Dongeng berisi khayalan (tidak nyata). Fakta berisi peristiwa (kejadian nyata). Hubungan: isi → wadah/jenisnya."
+    },
+    {
+      "id": 9,
+      "question": "ROKOK : ASBAK = AIR : ....",
+      "options": {
+        "A": "Pancur",
+        "B": "Selokan",
+        "C": "Ember",
+        "D": "Selang",
+        "E": "Keran"
+      },
+      "answer": "C",
+      "explanation": "Asbak adalah tempat menampung sisa/abu rokok. Ember adalah tempat menampung air. Hubungan: benda → wadah penampungnya."
+    },
+    {
+      "id": 10,
+      "question": "1 MINGGU : 7 HARI = 1 HARI : ....",
+      "options": {
+        "A": "3.600 menit",
+        "B": "60 detik",
+        "C": "68.400 detik",
+        "D": "1.440 menit",
+        "E": "365 Hari"
+      },
+      "answer": "D",
+      "explanation": "1 minggu = 7 hari (dikonversi ke satuan hari). 1 hari = 24 × 60 = 1.440 menit (dikonversi ke satuan menit). Hubungan: satuan waktu → nilai dalam satuan yang lebih kecil."
+    },
+    {
+      "id": 11,
+      "question": "GUNDUL : RAMBUT = ....",
+      "options": {
+        "A": "Kepala : Botak",
+        "B": "Rambut : Cukur",
+        "C": "Bugil : Pakaian",
+        "D": "Basah : Pakaian",
+        "E": "Gundul : Kepala"
+      },
+      "answer": "C",
+      "explanation": "Gundul = tidak memiliki rambut. Bugil = tidak memiliki pakaian (telanjang). Hubungan: kondisi → hal yang tidak dimiliki."
+    },
+    {
+      "id": 12,
+      "question": "KITA : SAYA = .... : ....",
+      "options": {
+        "A": "Beliau : Kami",
+        "B": "Kami : Kamu",
+        "C": "Kalian : Beliau",
+        "D": "Mereka : Dia",
+        "E": "Dia : Kalian"
+      },
+      "answer": "D",
+      "explanation": "Kita = bentuk jamak dari saya (orang pertama). Mereka = bentuk jamak dari dia (orang ketiga). Hubungan: kata ganti jamak → bentuk tunggalnya."
+    },
+    {
+      "id": 13,
+      "question": "JATUH : SAKIT = MENGANTUK : ....",
+      "options": {
+        "A": "Berjalan",
+        "B": "Tidur",
+        "C": "Kalori",
+        "D": "Teriakan",
+        "E": "Tersenyum"
+      },
+      "answer": "B",
+      "explanation": "Jatuh menyebabkan/mengakibatkan sakit. Mengantuk menyebabkan/mengakibatkan tidur. Hubungan: sebab → akibat."
+    },
+    {
+      "id": 14,
+      "question": "TINGGI : DALAM = AWAN : ....",
+      "options": {
+        "A": "Matahari",
+        "B": "Batu-batuan",
+        "C": "Pohon",
+        "D": "Minyak tanah",
+        "E": "Tiang listrik"
+      },
+      "answer": "D",
+      "explanation": "Tinggi (dimensi ke atas) dan Dalam (dimensi ke bawah) adalah dimensi berlawanan. Awan berada di tempat yang tinggi (di atas). Minyak tanah berada di tempat yang dalam (di bawah tanah). Hubungan: lokasi berdasarkan arah berlawanan."
+    },
+    {
+      "id": 15,
+      "question": "DRAMA : BABAK = TINJU : ...",
+      "options": {
+        "A": "Episode",
+        "B": "Ronde",
+        "C": "Lakon",
+        "D": "Sandiwara",
+        "E": "Adegan"
+      },
+      "answer": "B",
+      "explanation": "Drama dibagi menjadi babak-babak. Pertandingan tinju dibagi menjadi ronde-ronde. Hubungan: kegiatan/pertunjukan → satuan pembagiannya."
+    },
+    {
+      "id": 16,
+      "question": "ES : DINGIN = ....",
+      "options": {
+        "A": "Udara : Panas",
+        "B": "Matahari : Panas",
+        "C": "Utara : Selatan",
+        "D": "Langit : Bumi",
+        "E": "Darat : Laut"
+      },
+      "answer": "B",
+      "explanation": "Es memiliki sifat dingin. Matahari memiliki sifat panas. Hubungan: benda → sifat/karakteristiknya."
+    },
+    {
+      "id": 17,
+      "question": "MIKROSKOP : BAKTERIOLOGI = SARUNG TANGAN : ....",
+      "options": {
+        "A": "Peneliti",
+        "B": "Apoteker",
+        "C": "Dokter",
+        "D": "Petinju",
+        "E": "Analisis"
+      },
+      "answer": "D",
+      "explanation": "Mikroskop adalah alat utama yang digunakan oleh bakteriologi (ahli bakteri). Sarung tangan tinju adalah alat utama yang digunakan oleh petinju. Hubungan: alat khas → pengguna/profesi."
+    },
+    {
+      "id": 18,
+      "question": "PRODUKSI : USAHA = PRESTASI : ....",
+      "options": {
+        "A": "Harga",
+        "B": "Penawaran",
+        "C": "Hasil",
+        "D": "Penjualan",
+        "E": "Prestasi"
+      },
+      "answer": "C",
+      "explanation": "Produksi = usaha (sinonim dalam konteks kegiatan kerja/ekonomi). Prestasi = hasil (sinonim: prestasi adalah hasil/capaian). Hubungan: sinonim."
+    },
+    {
+      "id": 19,
+      "question": "JANTUNG : .... = OTAK : MEMIKIR",
+      "options": {
+        "A": "Pompa",
+        "B": "Syarat",
+        "C": "Kepala",
+        "D": "Sentra",
+        "E": "Kecerdasan"
+      },
+      "answer": "A",
+      "explanation": "Otak berfungsi untuk memikir (berpikir). Jantung berfungsi sebagai pompa (memompa darah ke seluruh tubuh). Hubungan: organ → fungsinya."
+    },
+    {
+      "id": 20,
+      "question": "ITALIA : EURO = .... : ....",
+      "options": {
+        "A": "Brunei Darussalam : Sultan",
+        "B": "Turki : Ankara",
+        "C": "Jerman : Dutch",
+        "D": "Inggris : Irlandia",
+        "E": "Argentina : Peso"
+      },
+      "answer": "E",
+      "explanation": "Italia menggunakan mata uang Euro. Argentina menggunakan mata uang Peso. Hubungan: negara → mata uang yang digunakan."
+    },
+    {
+      "id": 21,
+      "question": "GEMBIRA : SENANG = .... : ....",
+      "options": {
+        "A": "Taktik : Peran",
+        "B": "Kepemimpinan : Metode",
+        "C": "Pemikiran : Ide",
+        "D": "Panggung : Penonton",
+        "E": "Manajemen : Keuangan"
+      },
+      "answer": "C",
+      "explanation": "Gembira = senang (sinonim). Pemikiran = ide (sinonim). Hubungan: sinonim."
+    },
+    {
+      "id": 22,
+      "question": "BALET : PENARI = OPERA : ....",
+      "options": {
+        "A": "Penyanyi",
+        "B": "Seni",
+        "C": "Pesenam",
+        "D": "Koreografi",
+        "E": "Artis"
+      },
+      "answer": "A",
+      "explanation": "Balet dibawakan oleh penari. Opera dibawakan oleh penyanyi. Hubungan: seni pertunjukan → pelakunya."
+    },
+    {
+      "id": 23,
+      "question": "RENCANA : PELAKSANAAN = ....",
+      "options": {
+        "A": "Kaki : Berjalan",
+        "B": "Tahap : Tingkat",
+        "C": "Kereta : Listrik",
+        "D": "Planning : Implementasi",
+        "E": "Jalan : Mobil"
+      },
+      "answer": "D",
+      "explanation": "Rencana = planning (padanan bahasa Inggris). Pelaksanaan = implementasi (padanan bahasa Inggris). Hubungan: padanan kata dalam bahasa lain."
+    },
+    {
+      "id": 24,
+      "question": "CAIR : ENCER = ....",
+      "options": {
+        "A": "Kosong : Hampa",
+        "B": "Siang : malam",
+        "C": "Penuh : sesak",
+        "D": "Rinut : sorak",
+        "E": "Ubi : akar"
+      },
+      "answer": "A",
+      "explanation": "Cair = encer (sinonim). Kosong = hampa (sinonim). Hubungan: sinonim."
+    },
+    {
+      "id": 25,
+      "question": "API : BAKAR : PANAS = .... : .... : ....",
+      "options": {
+        "A": "Air : Lembab : Dingin",
+        "B": "Es : Beku : Dingin",
+        "C": "Udara : Segar : Hangat",
+        "D": "Kayu : Keras : Panjang",
+        "E": "Besi : Panas : Memuai"
+      },
+      "answer": "B",
+      "explanation": "Api → membakar → menghasilkan panas. Es → membekukan → menghasilkan dingin. Hubungan: benda → proses/sifat → akibat/hasil."
+    },
+    {
+      "id": 26,
+      "question": "MATA : TELINGA = LIDAH : ....",
+      "options": {
+        "A": "Tangan",
+        "B": "Paha",
+        "C": "Siku",
+        "D": "Hidung",
+        "E": "Dada"
+      },
+      "answer": "D",
+      "explanation": "Mata, telinga, lidah adalah organ indera. Hidung juga merupakan organ indera (penciuman). Hubungan: anggota dari kelompok yang sama (indera)."
+    },
+    {
+      "id": 27,
+      "question": "SUARA : GAMBAR : FILM = .... : .... : ....",
+      "options": {
+        "A": "Kertas : Tulisan : Buku",
+        "B": "Sepakbola : Lapangan : Wasit",
+        "C": "Tulis : Catat : Ketik",
+        "D": "Kertas : Komputer : Printer",
+        "E": "Bola : Sepatu : Raket"
+      },
+      "answer": "A",
+      "explanation": "Film terdiri dari suara + gambar. Buku terdiri dari kertas + tulisan. Hubungan: komponen 1 + komponen 2 → produk/hasil gabungan."
+    },
+    {
+      "id": 28,
+      "question": "KAHAYAN : SUNGAI : KALIMANTAN TENGAH = ....",
+      "options": {
+        "A": "Kerinci : Danau : Jambi",
+        "B": "Senggigi : Pantai : Bali",
+        "C": "Merapi : Gunung : Palembang",
+        "D": "Agung : Gunung : Jawa Timur",
+        "E": "Batur : Danau : Lombok"
+      },
+      "answer": "A",
+      "explanation": "Kahayan adalah nama sungai yang terletak di Kalimantan Tengah. Kerinci adalah nama danau yang terletak di Jambi. Hubungan: nama → jenis geografis → lokasi/provinsi."
+    },
+    {
+      "id": 29,
+      "question": "JENDELA : TIRAI = .... : ....",
+      "options": {
+        "A": "Hati : Sedih",
+        "B": "Hidung : Kuping",
+        "C": "Mata : Kelopak mata",
+        "D": "Sampul : Buku",
+        "E": "Tangan : Jam"
+      },
+      "answer": "C",
+      "explanation": "Jendela ditutupi oleh tirai. Mata ditutupi oleh kelopak mata. Hubungan: benda → penutupnya."
+    },
+    {
+      "id": 30,
+      "question": "CIUM : HIDUNG = .... : ....",
+      "options": {
+        "A": "Panas : Keringat",
+        "B": "Lihat : Mata",
+        "C": "Dahaga : Haus",
+        "D": "Kaki : Sepatu",
+        "E": "Raba : Rambut"
+      },
+      "answer": "B",
+      "explanation": "Mencium dilakukan menggunakan hidung. Melihat dilakukan menggunakan mata. Hubungan: aktivitas indera → organ yang digunakan."
+    },
+    {
+      "id": 31,
+      "question": "DINI HARI : SENJA = .... : ....",
+      "options": {
+        "A": "Sepatu : Tas",
+        "B": "Menit : Detik",
+        "C": "Barat : Selatan",
+        "D": "Siang : Malam",
+        "E": "Kakek : Anak"
+      },
+      "answer": "D",
+      "explanation": "Dini hari (awal/permulaan hari) berlawanan dengan senja (akhir/penghujung hari). Siang berlawanan dengan malam. Hubungan: dua bagian waktu yang berlawanan dalam satu siklus hari."
+    },
+    {
+      "id": 32,
+      "question": "PENA : TINTA : KERTAS = .... : .... : ....",
+      "options": {
+        "A": "Kuas : Palet : Kanvas",
+        "B": "Kuas : Cat : Dinding",
+        "C": "Mobil : Bensin : Jalan",
+        "D": "Kapur : Penghapus : Papan tulis",
+        "E": "Cat : Kaleng : Rumah"
+      },
+      "answer": "B",
+      "explanation": "Pena (alat) + tinta (bahan/media) digunakan di atas kertas (permukaan). Kuas (alat) + cat (bahan/media) digunakan di atas dinding (permukaan). Hubungan: alat → bahan → permukaan tempat digunakan."
+    },
+    {
+      "id": 33,
+      "question": "HUKUM : HAKIM = ....",
+      "options": {
+        "A": "Ulama : Masjid",
+        "B": "Sering : Kadang kala",
+        "C": "Keamanan : Polisi",
+        "D": "Air : Irigasi",
+        "E": "Siswa : Murid"
+      },
+      "answer": "C",
+      "explanation": "Hukum ditegakkan/dilaksanakan oleh hakim. Keamanan dijaga/dilaksanakan oleh polisi. Hubungan: bidang/urusan → petugas yang bertanggung jawab."
+    },
+    {
+      "id": 34,
+      "question": "BEROBAT : SEMBUH = TEMBAK : ....",
+      "options": {
+        "A": "Bunuh",
+        "B": "Mati",
+        "C": "Hutang",
+        "D": "Api",
+        "E": "Bahaya"
+      },
+      "answer": "B",
+      "explanation": "Berobat bertujuan/mengakibatkan sembuh. Menembak mengakibatkan mati. Hubungan: tindakan → akibat/hasil yang dituju."
+    },
+    {
+      "id": 35,
+      "question": "RAMALAN : ASTROLOGI = PENYAKIT : ....",
+      "options": {
+        "A": "Psikologi",
+        "B": "Kardiologi",
+        "C": "Teologi",
+        "D": "Patologi",
+        "E": "Bakteriologi"
+      },
+      "answer": "D",
+      "explanation": "Ramalan dipelajari oleh astrologi (ilmu perbintangan/ramalan). Penyakit dipelajari oleh patologi (ilmu yang mempelajari penyakit). Hubungan: objek kajian → ilmu yang mempelajarinya."
+    },
+    {
+      "id": 36,
+      "question": "KAYU : POHON = EMAS : ....",
+      "options": {
+        "A": "Mahal",
+        "B": "Logam",
+        "C": "Perhiasan",
+        "D": "Cincin",
+        "E": "Perak"
+      },
+      "answer": "B",
+      "explanation": "Kayu adalah jenis/produk yang berasal dari pohon (kayu adalah bagian dari pohon). Emas adalah jenis logam (emas termasuk dalam kategori logam mulia). Hubungan: produk/jenis → sumber/kategori asalnya."
+    },
+    {
+      "id": 37,
+      "question": "PUSKESMAS : SEHAT = .... : ....",
+      "options": {
+        "A": "Masjid : Ibadah",
+        "B": "Karyawan : Gaji",
+        "C": "Sekolah : Pandai",
+        "D": "Sakit : Dokter",
+        "E": "Yoga : Sembuh"
+      },
+      "answer": "C",
+      "explanation": "Puskesmas adalah fasilitas/sarana untuk menjadi sehat (kondisi). Sekolah adalah fasilitas/sarana untuk menjadi pandai (kondisi). Hubungan: fasilitas/sarana → kondisi yang dituju."
+    },
+    {
+      "id": 38,
+      "question": "KAMERA : .... = MANUSIA : MATA",
+      "options": {
+        "A": "Lensa",
+        "B": "Lidah",
+        "C": "Nyamuk",
+        "D": "Otak",
+        "E": "Mulut"
+      },
+      "answer": "A",
+      "explanation": "Manusia melihat menggunakan mata. Kamera 'melihat'/mengambil gambar menggunakan lensa. Hubungan: subjek → organ penglihatan/pengambil gambar."
+    },
+    {
+      "id": 39,
+      "question": "SUSU : HEWAN = .... : ....",
+      "options": {
+        "A": "Cat : Tembok",
+        "B": "Bola : Piring",
+        "C": "Kaca : Jendela",
+        "D": "Buah : Pohon",
+        "E": "Gelas : Teko"
+      },
+      "answer": "D",
+      "explanation": "Susu dihasilkan oleh hewan. Buah dihasilkan oleh pohon. Hubungan: produk → sumber yang menghasilkan."
+    },
+    {
+      "id": 40,
+      "question": "KAMBING : RUMPUT = .... : ....",
+      "options": {
+        "A": "Ayam : Jagung",
+        "B": "Rumah : Orang",
+        "C": "Kelapa : Nyiur",
+        "D": "Ular : Singa",
+        "E": "Neraka : Setan"
+      },
+      "answer": "A",
+      "explanation": "Kambing memakan rumput (makanan khas kambing). Ayam memakan jagung (makanan khas ayam). Hubungan: hewan → makanan pokoknya."
+    },
+    {
+      "id": 41,
+      "question": "KAPAL : BURITAN = BURUNG : ....",
+      "options": {
+        "A": "Bulu",
+        "B": "Tulang",
+        "C": "Ekor",
+        "D": "Dahan",
+        "E": "Sayap"
+      },
+      "answer": "C",
+      "explanation": "Buritan adalah bagian belakang kapal. Ekor adalah bagian belakang burung. Hubungan: benda → bagian belakangnya."
+    },
+    {
+      "id": 42,
+      "question": "PISTOL : .... = PULPEN : TULIS",
+      "options": {
+        "A": "Tembak",
+        "B": "Pukul",
+        "C": "Tajam",
+        "D": "Tutup",
+        "E": "Sayat"
+      },
+      "answer": "A",
+      "explanation": "Pulpen digunakan untuk menulis. Pistol digunakan untuk menembak. Hubungan: alat → fungsi/kegunaannya."
+    },
+    {
+      "id": 43,
+      "question": "MERAH PUTIH : INDONESIA = ....",
+      "options": {
+        "A": "Merah Hitam : Jepang",
+        "B": "Posisi : Positif",
+        "C": "Putih Merah : Portugis",
+        "D": "Hitam Merah Kuning : Jerman",
+        "E": "Biru : Thailand"
+      },
+      "answer": "D",
+      "explanation": "Merah putih adalah bendera Indonesia. Hitam merah kuning (emas) adalah bendera Jerman. Hubungan: warna bendera → negaranya. Jebakan: bendera Jepang = putih dengan bulatan merah (hinomaru), bukan merah hitam."
+    },
+    {
+      "id": 44,
+      "question": "BERAS : NASI : MAKAN = ....",
+      "options": {
+        "A": "Tembakau : Cerutu : Isap",
+        "B": "Penulis : Buku : Baca",
+        "C": "Koran : Majalah : Buletin",
+        "D": "Kulit : Sepatu : Kaki",
+        "E": "Bensin : Mesin : Mobil"
+      },
+      "answer": "A",
+      "explanation": "Beras (bahan mentah) diolah menjadi nasi (produk), digunakan dengan cara dimakan (fungsi). Tembakau (bahan mentah) diolah menjadi cerutu (produk), digunakan dengan cara dihisap/isap (fungsi). Hubungan: bahan mentah → produk olahan → cara penggunaan."
+    },
+    {
+      "id": 45,
+      "question": "AIR : UAP = ....",
+      "options": {
+        "A": "Membeku : Menguap",
+        "B": "Es : Air",
+        "C": "Mendidih : Mencair",
+        "D": "Uap : Beku",
+        "E": "Kabut : Asap"
+      },
+      "answer": "B",
+      "explanation": "Air (cair) berubah wujud menjadi uap (gas) — perubahan dari cair ke gas. Es (padat) berubah wujud menjadi air (cair) — perubahan dari padat ke cair. Hubungan: wujud awal → wujud setelah perubahan."
+    },
+    {
+      "id": 46,
+      "question": "KURSI : ROTAN = PINTU : ....",
+      "options": {
+        "A": "Kayu",
+        "B": "Atap",
+        "C": "Dinding",
+        "D": "Pohon",
+        "E": "Bangku"
+      },
+      "answer": "A",
+      "explanation": "Kursi (umumnya) dibuat dari rotan. Pintu (umumnya) dibuat dari kayu. Hubungan: benda → bahan pembuatnya."
+    },
+    {
+      "id": 47,
+      "question": "MAKANAN : LAPAR = ....",
+      "options": {
+        "A": "Air : Haus",
+        "B": "Minyak : Api",
+        "C": "Gelap : Lampu",
+        "D": "Rumput : Kambing",
+        "E": "Angin : Panas"
+      },
+      "answer": "A",
+      "explanation": "Makanan adalah solusi/obat untuk menghilangkan lapar. Air adalah solusi/obat untuk menghilangkan haus. Hubungan: solusi → masalah yang diatasi."
+    },
+    {
+      "id": 48,
+      "question": "DIAMETER : LINGKARAN = DIAGONAL : ....",
+      "options": {
+        "A": "Segiempat",
+        "B": "Segitiga",
+        "C": "Kerucut",
+        "D": "Bola",
+        "E": "Panjang"
+      },
+      "answer": "A",
+      "explanation": "Diameter adalah garis yang melintasi pusat lingkaran. Diagonal adalah garis yang menghubungkan dua sudut berhadapan pada segiempat. Segitiga tidak memiliki diagonal karena diagonal hanya ada pada segi banyak dengan minimal 4 sudut. Hubungan: garis khusus → bangun yang memiliki garis tersebut."
+    },
+    {
+      "id": 49,
+      "question": "TARIK : JAUH = .... : ....",
+      "options": {
+        "A": "Asah : Tajam",
+        "B": "Cuci : Kotor",
+        "C": "Lempar : Terbang",
+        "D": "Siram : Basah",
+        "E": "Tolak : Jauh"
+      },
+      "answer": "A",
+      "explanation": "Tarik (menarik karet/tali) mengakibatkan jarak menjadi jauh/panjang. Asah (mengasah pisau) mengakibatkan pisau menjadi tajam. Hubungan: tindakan → hasil/sifat yang dihasilkan."
+    },
+    {
+      "id": 50,
+      "question": "SAKIT : DOKTER = .... : ....",
+      "options": {
+        "A": "Patah : Tumbuh",
+        "B": "Album : Foto",
+        "C": "Lantai : Licin",
+        "D": "Rusak : Montir",
+        "E": "Maju : Mundur"
+      },
+      "answer": "D",
+      "explanation": "Sakit ditangani/disembuhkan oleh dokter. Rusak diperbaiki oleh montir. Hubungan: kondisi bermasalah → ahli yang menanganinya."
+    }
+  ]
+}

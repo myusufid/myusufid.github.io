@@ -1,0 +1,20 @@
+{
+  "id": "tiu-jarak-kecepatan",
+  "title": "TIU — Jarak, Kecepatan & Waktu",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Sebuah mobil dapat menempuh kota A dan B dengan kecepatan 60 km/jam dalam waktu 4 jam dan menghabiskan bahan bakar 1 liter untuk setiap 10 km. Jika mobil tersebut berkecepatan 80 km/jam dan jarak yang ditempuh lebih dari 100 km, maka mobil tersebut akan menggunakan bahan bakar 10% lebih banyak dibandingkan dengan kecepatan 60 km/jam. Mobil tersebut telah terisi bahan bakar 10 liter dan jika mengisi ulang membutuhkan waktu 10 menit. Berapakah waktu yang diperlukan mobil tersebut untuk mencapai tujuan dengan kecepatan 80 km/jam?",
+      "options": {
+        "A": "170 menit",
+        "B": "180 menit",
+        "C": "190 menit",
+        "D": "200 menit",
+        "E": "210 menit"
+      },
+      "answer": "C",
+      "explanation": "Langkah 1: Jarak = 60 × 4 = 240 km. Langkah 2: Kebutuhan bensin normal = 240/10 = 24 liter, pada 80 km/jam boros 10% → 24 × 1,1 = 26,4 liter. Bensin tersedia 10 liter → wajib isi ulang (+10 menit). Langkah 3: Waktu tempuh = 240/80 = 3 jam = 180 menit. Langkah 4: Total = 180 + 10 = 190 menit. Jebakan: jawaban B (180 menit) mengabaikan waktu isi bensin."
+    }
+  ]
+}

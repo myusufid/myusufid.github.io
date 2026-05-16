@@ -1,0 +1,52 @@
+{
+  "banks": [
+    {
+      "id": "twk-pancasila-uud",
+      "title": "TWK — Pancasila & UUD 1945",
+      "category": "TWK",
+      "description": "Soal Tes Wawasan Kebangsaan tentang Pancasila, UUD 1945, dan ketatanegaraan.",
+      "total": 10,
+      "file": "/notes-cpns/bank-soal/twk-pancasila-uud.json"
+    },
+    {
+      "id": "tiu-deret-angka",
+      "title": "TIU — Deret Angka",
+      "category": "TIU",
+      "description": "Soal Tes Intelejensi Umum tentang pola dan deret angka.",
+      "total": 3,
+      "file": "/notes-cpns/bank-soal/tiu-deret-angka.json"
+    },
+    {
+      "id": "tiu-rata-rata",
+      "title": "TIU — Rata-rata & Nilai Baru",
+      "category": "TIU",
+      "description": "Soal menentukan nilai baru agar rata-rata berubah, termasuk aplikasi Average Cost saham.",
+      "total": 2,
+      "file": "/notes-cpns/bank-soal/tiu-rata-rata.json"
+    },
+    {
+      "id": "tiu-jarak-kecepatan",
+      "title": "TIU — Jarak, Kecepatan & Waktu",
+      "category": "TIU",
+      "description": "Soal kecepatan, jarak, waktu tempuh, dan konsumsi bahan bakar.",
+      "total": 1,
+      "file": "/notes-cpns/bank-soal/tiu-jarak-kecepatan.json"
+    },
+    {
+      "id": "tiu-padanan-kata",
+      "title": "TIU — Padanan Kata (Sinonim)",
+      "category": "TIU",
+      "description": "Soal memilih kata yang bermakna paling dekat dengan kata yang dicetak kapital.",
+      "total": 37,
+      "file": "/notes-cpns/bank-soal/tiu-padanan-kata.json"
+    },
+    {
+      "id": "tiu-analogi",
+      "title": "TIU — Analogi",
+      "category": "TIU",
+      "description": "Soal menemukan hubungan antara pasangan kata dan menerapkan pola hubungan yang sama.",
+      "total": 50,
+      "file": "/notes-cpns/bank-soal/tiu-analogi.json"
+    }
+  ]
+}

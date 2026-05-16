@@ -1,0 +1,33 @@
+{
+  "id": "tiu-rata-rata",
+  "title": "TIU — Rata-rata & Nilai Baru",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Seorang siswa telah mengikuti tes sebanyak n kali dan memperoleh nilai rata-rata 80. Berapakah nilai yang harus dia peroleh pada tes selanjutnya agar nilai rata-ratanya menjadi 82?",
+      "options": {
+        "A": "2n – 82",
+        "B": "n + 82",
+        "C": "2n + 82",
+        "D": "2n + 80",
+        "E": "2n – 80"
+      },
+      "answer": "C",
+      "explanation": "Gunakan rumus x = n(B − A) + B, dengan A = 80 (rata-rata lama), B = 82 (rata-rata baru). x = n(82 − 80) + 82 = 2n + 82. Verifikasi: total lama = 80n, total baru harus = 82(n+1) = 82n + 82. Nilai baru = 82n + 82 − 80n = 2n + 82."
+    },
+    {
+      "id": 2,
+      "question": "Seorang investor membeli saham sebanyak n kali dengan rata-rata harga pembelian Rp80.000 per lembar. Berapakah harga saham yang harus ia beli pada pembelian ke-(n+1) agar rata-rata harga pembeliannya menjadi Rp82.000 per lembar?",
+      "options": {
+        "A": "2n – 82.000",
+        "B": "n + 82.000",
+        "C": "2n + 82.000",
+        "D": "2n + 80.000",
+        "E": "2n – 80.000"
+      },
+      "answer": "C",
+      "explanation": "Sama dengan konsep rata-rata ujian. Gunakan rumus x = n(B − A) + B, dengan A = 80.000, B = 82.000. x = n(82.000 − 80.000) + 82.000 = 2n + 82.000. Ini adalah konsep Average Cost dalam investasi saham."
+    }
+  ]
+}

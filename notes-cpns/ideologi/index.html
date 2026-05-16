@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideologi — Catatan</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; height: 100vh; display: flex; background: #f5f5f5; color: #1a1a1a; }
+#sidebar { width: 280px; min-width: 280px; background: #fff; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+#sidebar-header { padding: 16px 16px 8px; border-bottom: 1px solid #eee; }
+#sidebar-header h1 { font-size: 16px; font-weight: 700; color: #c0392b; }
+#sidebar-header p { font-size: 11px; color: #888; margin-top: 2px; }
+#search { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; margin-top: 10px; }
+#search:focus { border-color: #c0392b; }
+#file-tree { flex: 1; overflow-y: auto; padding: 8px 0; }
+.folder-label { padding: 6px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #999; margin-top: 8px; }
+.file-item { padding: 6px 16px 6px 28px; font-size: 13px; cursor: pointer; color: #444; border-left: 3px solid transparent; transition: all .15s; }
+.file-item:hover { background: #f0f0f0; color: #1a1a1a; }
+.file-item.active { background: #fdecea; color: #c0392b; border-left-color: #c0392b; font-weight: 600; }
+#content { flex: 1; overflow-y: auto; padding: 32px 40px; }
+#content h1 { font-size: 26px; margin-bottom: 16px; color: #1a1a1a; }
+#content h2 { font-size: 20px; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+#content h3 { font-size: 17px; margin: 20px 0 8px; }
+#content p { line-height: 1.7; margin-bottom: 12px; }
+#content ul, #content ol { margin: 8px 0 12px 24px; line-height: 1.7; }
+#content li { margin-bottom: 4px; }
+#content blockquote { border-left: 4px solid #c0392b; padding: 12px 16px; margin: 16px 0; background: #fdf6f2; border-radius: 0 6px 6px 0; font-style: italic; color: #555; }
+#content code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-size: .9em; }
+#content pre { background: #1a1a2e; color: #e0e0e0; padding: 16px; border-radius: 6px; overflow-x: auto; margin: 16px 0; font-size: 13px; line-height: 1.5; }
+#content table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 13px; }
+#content th, #content td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+#content th { background: #fafafa; font-weight: 600; }
+#content tr:nth-child(even) { background: #fafafa; }
+#content hr { border: none; border-top: 2px solid #eee; margin: 24px 0; }
+#content strong { color: #1a1a1a; }
+#content img { max-width: 720px; height: auto; border-radius: 6px; display: block; margin: 12px 0; }
+#content a { color: #c0392b; }
+#welcome { text-align: center; padding: 80px 20px; color: #888; }
+#welcome h1 { font-size: 28px; color: #c0392b; margin-bottom: 8px; }
+#search-results { margin-top: 16px; }
+.search-result-item { padding: 12px 16px; cursor: pointer; border-radius: 6px; margin-bottom: 4px; background: #fff; border: 1px solid #eee; }
+.search-result-item:hover { background: #fdf6f2; border-color: #c0392b; }
+.search-result-item h4 { font-size: 14px; color: #c0392b; margin-bottom: 4px; }
+.search-result-item p { font-size: 13px; color: #666; line-height: 1.5; }
+.search-result-item .match { background: #fde8b3; padding: 0 2px; border-radius: 2px; }
+.loading { text-align: center; padding: 40px; color: #888; }
+@media (max-width: 640px) {
+  #sidebar { width: 100%; min-width: 100%; height: auto; max-height: 50vh; border-right: none; border-bottom: 1px solid #e0e0e0; }
+  body { flex-direction: column; }
+  #content { padding: 20px; }
+}
+</style>
+</head>
+<body>
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <h1>📖 Ideologi</h1>
+    <p>Catatan CPNS TWK</p>
+    <input type="text" id="search" placeholder="Cari kata kunci..." autocomplete="off">
+  </div>
+  <div id="file-tree"></div>
+</aside>
+<main id="content">
+  <div id="welcome">
+    <h1>Selamat Datang</h1>
+    <p>Pilih file dari sidebar untuk membaca, atau gunakan kolom pencarian.</p>
+  </div>
+  <div id="markdown-content" style="display:none"></div>
+  <div id="search-results" style="display:none"></div>
+</main>
+<script>
+const state = { files: [], searchIndex: null, activePath: null };
+
+async function loadFileTree() {
+  const res = await fetch('files.json');
+  state.files = await res.json();
+  renderFileTree(state.files);
+}
+
+function renderFileTree(files) {
+  const tree = document.getElementById('file-tree');
+  const groups = {};
+  files.forEach(f => {
+    const key = f.folder || '__root__';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(f);
+  });
+  let html = '';
+  const order = ['__root__', 'Pancasila', 'UUD 1945', 'CPNS TWK'];
+  order.forEach(key => {
+    if (!groups[key]) return;
+    if (key !== '__root__') html += `<div class="folder-label">${key}</div>`;
+    groups[key].forEach(f => {
+      const active = state.activePath === f.path ? ' active' : '';
+      html += `<div class="file-item${active}" data-path="${f.path}">${f.title}</div>`;
+    });
+    delete groups[key];
+  });
+  Object.keys(groups).forEach(key => {
+    html += `<div class="folder-label">${key}</div>`;
+    groups[key].forEach(f => {
+      html += `<div class="file-item" data-path="${f.path}">${f.title}</div>`;
+    });
+  });
+  tree.innerHTML = html;
+  tree.querySelectorAll('.file-item').forEach(el => {
+    el.addEventListener('click', () => loadFile(el.dataset.path));
+  });
+}
+
+async function loadFile(path) {
+  state.activePath = path;
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('markdown-content').style.display = 'block';
+  document.getElementById('markdown-content').innerHTML = '<div class="loading">Loading...</div>';
+  document.querySelectorAll('.file-item').forEach(el => el.classList.toggle('active', el.dataset.path === path));
+  try {
+    const res = await fetch(path);
+    const md = await res.text();
+    const el = document.getElementById('markdown-content');
+    el.innerHTML = marked.parse(md);
+    const baseDir = path.includes('/') ? path.substring(0, path.lastIndexOf('/') + 1) : '';
+    el.querySelectorAll('img').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src && !src.startsWith('http') && !src.startsWith('/')) {
+        img.src = baseDir + src.replace(/^\.\//, '');
+      }
+    });
+    renderMathInElement(el, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      throwOnError: false,
+    });
+    document.getElementById('content').scrollTop = 0;
+  } catch (e) {
+    document.getElementById('markdown-content').innerHTML = '<p style="color:red">Gagal memuat file.</p>';
+  }
+}
+
+async function buildSearchIndex() {
+  if (state.searchIndex) return state.searchIndex;
+  const results = [];
+  for (const f of state.files) {
+    try {
+      const res = await fetch(f.path);
+      const text = await res.text();
+      results.push({ ...f, content: text });
+    } catch {}
+  }
+  state.searchIndex = results;
+  return results;
+}
+
+async function doSearch(query) {
+  query = query.toLowerCase().trim();
+  const container = document.getElementById('search-results');
+  if (!query) { container.style.display = 'none'; document.getElementById('markdown-content').style.display = state.activePath ? 'block' : 'none'; document.getElementById('welcome').style.display = state.activePath ? 'none' : 'block'; return; }
+  const index = await buildSearchIndex();
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('markdown-content').style.display = 'none';
+  container.style.display = 'block';
+  const matches = index.filter(f => f.title.toLowerCase().includes(query) || f.content.toLowerCase().includes(query));
+  if (!matches.length) { container.innerHTML = '<p style="color:#888;padding:20px">Tidak ditemukan.</p>'; return; }
+  let html = `<p style="color:#888;margin-bottom:12px">${matches.length} hasil untuk "${query}"</p>`;
+  matches.forEach(f => {
+    const idx = f.content.toLowerCase().indexOf(query);
+    const start = Math.max(0, idx - 60);
+    const end = Math.min(f.content.length, idx + 120);
+    let snippet = f.content.slice(start, end).replace(/^#+\s*/gm, '').replace(/\n+/g, ' ');
+    snippet = snippet.replace(new RegExp(query, 'gi'), m => `<span class="match">${m}</span>`);
+    html += `<div class="search-result-item" data-path="${f.path}"><h4>${f.title}</h4><p>${snippet}</p></div>`;
+  });
+  container.innerHTML = html;
+  container.querySelectorAll('.search-result-item').forEach(el => {
+    el.addEventListener('click', () => { document.getElementById('search').value = ''; container.style.display = 'none'; loadFile(el.dataset.path); });
+  });
+}
+
+document.getElementById('search').addEventListener('input', e => doSearch(e.target.value));
+loadFileTree();
+</script>
+</body>
+</html>
