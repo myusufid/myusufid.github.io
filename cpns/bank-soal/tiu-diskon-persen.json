@@ -1,0 +1,20 @@
+{
+  "id": "tiu-diskon-persen",
+  "title": "TIU — Diskon & Persen",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Harga sebuah sepatu di Toko Mike adalah Rp120.000,00. Toko tersebut memberikan diskon sebesar 15% jika membeli minimal 5 pasang sepatu. Jika Bu Indah ingin membeli 6 pasang sepatu untuk anaknya, berapa total harga yang harus dibayarkan Bu Indah setelah mendapatkan diskon?",
+      "options": {
+        "A": "Rp600.000,00",
+        "B": "Rp612.000,00",
+        "C": "Rp630.000,00",
+        "D": "Rp660.000,00",
+        "E": "Rp720.000,00"
+      },
+      "answer": "B",
+      "explanation": "Bu Indah membeli 6 pasang (memenuhi syarat minimal 5 pasang). Harga normal = 6 × Rp120.000 = Rp720.000. Diskon 15% = 0,15 × 720.000 = Rp108.000. Total bayar = Rp720.000 - Rp108.000 = Rp612.000. Alternatif: 720.000 × 0,85 = Rp612.000."
+    }
+  ]
+}

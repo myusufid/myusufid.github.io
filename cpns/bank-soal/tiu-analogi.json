@@ -652,6 +652,58 @@
       },
       "answer": "D",
       "explanation": "Sakit ditangani/disembuhkan oleh dokter. Rusak diperbaiki oleh montir. Hubungan: kondisi bermasalah → ahli yang menanganinya."
+    },
+    {
+      "id": 51,
+      "question": "LATIHAN : PRESTASI = ....",
+      "options": {
+        "A": "Makan : Lapar",
+        "B": "Belajar : Pandai",
+        "C": "Tidur : Kantuk",
+        "D": "Bekerja : Lembur",
+        "E": "Buah : Manis"
+      },
+      "answer": "B",
+      "explanation": "Latihan (proses) menghasilkan prestasi (hasil). Belajar (proses) menghasilkan kepandaian (hasil). Hubungan: aktivitas/proses → hasil yang dicapai."
+    },
+    {
+      "id": 52,
+      "question": "TELESKOP : BINTANG = ....",
+      "options": {
+        "A": "Mikroskop : Bakteri",
+        "B": "Kacamata : Mata",
+        "C": "Kamera : Film",
+        "D": "Kompas : Utara",
+        "E": "Jam : Jarum"
+      },
+      "answer": "A",
+      "explanation": "Teleskop digunakan untuk mengamati bintang (objek yang jauh). Mikroskop digunakan untuk mengamati bakteri (objek yang sangat kecil). Hubungan: alat optik → objek yang diamati."
+    },
+    {
+      "id": 53,
+      "question": "Senter dapat menyala jika memiliki baterai dan bohlam di dalamnya. Hubungan ini sama dengan...",
+      "options": {
+        "A": "Tanaman akan layu jika tidak mendapatkan air dan sinar matahari.",
+        "B": "Mobil memerlukan bahan bakar dan oli agar mesinnya dapat berjalan dengan baik.",
+        "C": "Kamera digunakan oleh fotografer untuk mengambil gambar dan video.",
+        "D": "Siswa menggunakan seragam dan sepatu saat pergi ke sekolah.",
+        "E": "Di dalam kotak pensil terdapat penggaris dan penghapus."
+      },
+      "answer": "B",
+      "explanation": "Senter berfungsi (menyala) karena memiliki komponen internal: baterai dan bohlam. Mobil berfungsi (berjalan) karena memiliki bahan bakar dan oli. Hubungan: benda/alat → komponen internal yang membuatnya berfungsi."
+    },
+    {
+      "id": 54,
+      "question": "Kita mengetahui bahwa kemeja memiliki kerah dan kancing. Hubungan ini sama dengan...",
+      "options": {
+        "A": "Sepatu memiliki sol dan tali sepatu sebagai bagian dari strukturnya.",
+        "B": "Celana memerlukan sabuk dan kaos kaki agar terlihat rapi.",
+        "C": "Jas biasanya digunakan bersama dengan dasi dan kemeja formal.",
+        "D": "Topi dibuat dengan menggunakan bahan kain dan benang jahit.",
+        "E": "Jaket berfungsi untuk melindungi tubuh dari hawa dingin dan angin."
+      },
+      "answer": "A",
+      "explanation": "Kemeja memiliki kerah dan kancing sebagai komponen struktural yang merupakan bagian dari kemeja itu sendiri. Sepatu memiliki sol dan tali sepatu sebagai bagian dari struktur sepatu. Hubungan: benda → komponen struktural yang menjadi bagian dari benda tersebut."
     }
   ]
 }

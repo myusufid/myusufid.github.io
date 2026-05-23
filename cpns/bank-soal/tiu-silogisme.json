@@ -1,0 +1,46 @@
+{
+  "id": "tiu-silogisme",
+  "title": "TIU — Silogisme",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Tidak ada auditor internal di Perusahaan Finasia Raya yang merangkap sebagai konsultan eksternal. Seorang konsultan eksternal memberikan paparan strategi bisnis di ruang rapat Perusahaan Finasia Raya.\n\nKesimpulan dari kedua premis di atas adalah...",
+      "options": {
+        "A": "Semua auditor internal Perusahaan Finasia Raya hadir dalam paparan strategi bisnis",
+        "B": "Tidak ada konsultan eksternal yang boleh memasuki Perusahaan Finasia Raya",
+        "C": "Konsultan eksternal yang memberikan paparan bukan auditor internal Perusahaan Finasia Raya",
+        "D": "Semua auditor internal Perusahaan Finasia Raya merangkap sebagai konsultan eksternal",
+        "E": "Sebagian auditor internal Perusahaan Finasia Raya juga menjadi konsultan eksternal"
+      },
+      "answer": "C",
+      "explanation": "Premis 1: Tidak ada auditor internal yang merangkap konsultan eksternal. Premis 2: Seseorang adalah konsultan eksternal. Kesimpulan silogisme: orang tersebut pasti bukan auditor internal Perusahaan Finasia Raya."
+    },
+    {
+      "id": 2,
+      "question": "Tidak ada karyawan di Perusahaan Logistik Nusantara yang bekerja sebagai kurir lepas. Sebagian kurir lepas tergabung dalam komunitas pengiriman cepat.\n\nKesimpulan dari kedua premis di atas adalah...",
+      "options": {
+        "A": "Semua karyawan Perusahaan Logistik Nusantara tergabung dalam komunitas pengiriman cepat",
+        "B": "Sebagian karyawan Perusahaan Logistik Nusantara adalah kurir lepas",
+        "C": "Kurir lepas yang tergabung dalam komunitas pengiriman cepat bukan karyawan Perusahaan Logistik Nusantara",
+        "D": "Semua anggota komunitas pengiriman cepat bekerja di Perusahaan Logistik Nusantara",
+        "E": "Tidak ada anggota komunitas pengiriman cepat yang bekerja sebagai kurir lepas"
+      },
+      "answer": "C",
+      "explanation": "Premis 1: Tidak ada karyawan PLN yang merangkap kurir lepas. Premis 2: Sebagian kurir lepas tergabung dalam komunitas pengiriman cepat. Kesimpulan: kurir lepas yang tergabung komunitas pengiriman cepat tersebut pasti bukan karyawan Perusahaan Logistik Nusantara."
+    },
+    {
+      "id": 3,
+      "question": "Tidak semua wajib pajak telah melaporkan SPT tahunan. Kantor pajak hanya memproses pengajuan restitusi bagi wajib pajak yang telah melaporkan SPT tahunan.\n\nKesimpulan yang paling tepat adalah...",
+      "options": {
+        "A": "Semua wajib pajak mengajukan restitusi",
+        "B": "Sebagian wajib pajak tidak dapat mengajukan restitusi",
+        "C": "Semua wajib pajak dapat mengajukan restitusi",
+        "D": "Tidak ada wajib pajak yang dapat mengajukan restitusi",
+        "E": "Wajib pajak yang belum melaporkan SPT tetap dapat mengajukan restitusi"
+      },
+      "answer": "B",
+      "explanation": "Premis 1: Tidak semua WP melaporkan SPT (artinya ada yang belum lapor). Premis 2: Hanya yang lapor SPT yang bisa mengajukan restitusi. Kesimpulan: sebagian WP (yang belum lapor SPT) tidak dapat mengajukan restitusi."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "tiu-pekerjaan",
+  "title": "TIU — Masalah Pekerjaan (Work Rate)",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Sebuah konveksi mampu menyelesaikan pesanan seragam sekolah dalam waktu 240 hari dengan bantuan 160 mesin jahit. Karena suatu alasan pesanan tersebut harus selesai dalam waktu 150 hari. Berapa banyak mesin jahit yang harus dioperasikan?",
+      "options": {
+        "A": "256 mesin",
+        "B": "272 mesin",
+        "C": "314 mesin",
+        "D": "324 mesin",
+        "E": "350 mesin"
+      },
+      "answer": "A",
+      "explanation": "Gunakan rumus: mesin × hari = konstan. M₁ × H₁ = M₂ × H₂. 160 × 240 = M₂ × 150. M₂ = 38.400 / 150 = 256 mesin."
+    },
+    {
+      "id": 2,
+      "question": "Sebuah proyek renovasi gedung ditargetkan selesai dalam 110 hari oleh 40 tukang. Setelah proyek berjalan selama 30 hari, terdapat 15 tukang yang jatuh sakit dan tidak bisa melanjutkan pekerjaan. Dengan pekerja yang sama (sisa tukang), berapa hari yang harus ditambahkan agar renovasi gedung dapat selesai?",
+      "options": {
+        "A": "25 hari",
+        "B": "32 hari",
+        "C": "35 hari",
+        "D": "40 hari",
+        "E": "48 hari"
+      },
+      "answer": "E",
+      "explanation": "Total pekerjaan = 110 × 40 = 4.400 unit. Pekerjaan selesai dalam 30 hari = 30 × 40 = 1.200 unit. Sisa pekerjaan = 4.400 - 1.200 = 3.200 unit. Tukang tersisa = 40 - 15 = 25 orang. Hari yang dibutuhkan = 3.200 / 25 = 128 hari. Sisa rencana semula = 110 - 30 = 80 hari. Tambahan hari = 128 - 80 = 48 hari."
+    }
+  ]
+}

@@ -45,8 +45,16 @@
       "title": "TIU — Analogi",
       "category": "TIU",
       "description": "Soal menemukan hubungan antara pasangan kata dan menerapkan pola hubungan yang sama.",
-      "total": 50,
+      "total": 54,
       "file": "/cpns/bank-soal/tiu-analogi.json"
+    },
+    {
+      "id": "tiu-silogisme",
+      "title": "TIU — Silogisme",
+      "category": "TIU",
+      "description": "Soal menarik kesimpulan dari dua premis menggunakan logika silogisme.",
+      "total": 3,
+      "file": "/cpns/bank-soal/tiu-silogisme.json"
     },
     {
       "id": "twk-implementasi-pancasila",
@@ -55,6 +63,38 @@
       "description": "Soal pemahaman implementasi butir-butir Pancasila dan kedudukannya dalam kehidupan sehari-hari.",
       "total": 27,
       "file": "/cpns/bank-soal/twk-implementasi-pancasila.json"
+    },
+    {
+      "id": "tiu-operasi-bilangan",
+      "title": "TIU — Operasi Bilangan & Pecahan",
+      "category": "TIU",
+      "description": "Soal operasi hitung bilangan bulat dan pecahan termasuk penjumlahan, pengurangan, perkalian, dan pembagian.",
+      "total": 2,
+      "file": "/cpns/bank-soal/tiu-operasi-bilangan.json"
+    },
+    {
+      "id": "tiu-perbandingan-kuantitas",
+      "title": "TIU — Perbandingan Kuantitas",
+      "category": "TIU",
+      "description": "Soal membandingkan dua kuantitas A dan B berdasarkan informasi yang diberikan.",
+      "total": 4,
+      "file": "/cpns/bank-soal/tiu-perbandingan-kuantitas.json"
+    },
+    {
+      "id": "tiu-diskon-persen",
+      "title": "TIU — Diskon & Persen",
+      "category": "TIU",
+      "description": "Soal menghitung harga setelah diskon, persentase keuntungan/kerugian, dan aplikasi persen dalam kehidupan sehari-hari.",
+      "total": 1,
+      "file": "/cpns/bank-soal/tiu-diskon-persen.json"
+    },
+    {
+      "id": "tiu-pekerjaan",
+      "title": "TIU — Masalah Pekerjaan (Work Rate)",
+      "category": "TIU",
+      "description": "Soal menghitung jumlah pekerja, waktu penyelesaian, dan kapasitas produksi menggunakan prinsip perbandingan berbalik nilai.",
+      "total": 2,
+      "file": "/cpns/bank-soal/tiu-pekerjaan.json"
     }
   ]
 }
