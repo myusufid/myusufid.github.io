@@ -47,6 +47,14 @@
       "description": "Soal menemukan hubungan antara pasangan kata dan menerapkan pola hubungan yang sama.",
       "total": 50,
       "file": "/notes-cpns/bank-soal/tiu-analogi.json"
+    },
+    {
+      "id": "twk-implementasi-pancasila",
+      "title": "TWK — Implementasi Pancasila",
+      "category": "TWK",
+      "description": "Soal pemahaman implementasi butir-butir Pancasila dan kedudukannya dalam kehidupan sehari-hari.",
+      "total": 27,
+      "file": "/notes-cpns/bank-soal/twk-implementasi-pancasila.json"
     }
   ]
 }

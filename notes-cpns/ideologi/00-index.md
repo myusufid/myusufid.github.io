@@ -6,7 +6,9 @@
 ├── 01-pengantar.md          — Pancasila sebagai Ideologi Indonesia
 ├── 02-fungsi-kedudukan.md   — Fungsi & Kedudukan + Trik Kunci
 ├── 03-perbandingan.md       — Ideologi Terbuka vs Tertutup
-└── 04-ringkasan.md          — Ringkasan Belajar (nilai, trik, istilah)
+├── 04-ringkasan.md          — Ringkasan Belajar (nilai, trik, istilah)
+├── 05-sejarah-bpupki-ppki.md — Sejarah Pembentukan Pancasila
+└── 06-implementasi-pancasila.md — Implementasi & Butir-butir Pancasila
 03-uud-1945/
 ├── 01-pembukaan.md          — Teks Pembukaan UUD 1945
 ├── 02-pasal-penting.md      — Pasal Penting (26, badan peradilan, hak DPR, hak warga negara)
