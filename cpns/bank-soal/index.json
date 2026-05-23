@@ -6,7 +6,7 @@
       "category": "TWK",
       "description": "Soal Tes Wawasan Kebangsaan tentang Pancasila, UUD 1945, dan ketatanegaraan.",
       "total": 10,
-      "file": "/notes-cpns/bank-soal/twk-pancasila-uud.json"
+      "file": "/cpns/bank-soal/twk-pancasila-uud.json"
     },
     {
       "id": "tiu-deret-angka",
@@ -14,7 +14,7 @@
       "category": "TIU",
       "description": "Soal Tes Intelejensi Umum tentang pola dan deret angka.",
       "total": 3,
-      "file": "/notes-cpns/bank-soal/tiu-deret-angka.json"
+      "file": "/cpns/bank-soal/tiu-deret-angka.json"
     },
     {
       "id": "tiu-rata-rata",
@@ -22,7 +22,7 @@
       "category": "TIU",
       "description": "Soal menentukan nilai baru agar rata-rata berubah, termasuk aplikasi Average Cost saham.",
       "total": 2,
-      "file": "/notes-cpns/bank-soal/tiu-rata-rata.json"
+      "file": "/cpns/bank-soal/tiu-rata-rata.json"
     },
     {
       "id": "tiu-jarak-kecepatan",
@@ -30,7 +30,7 @@
       "category": "TIU",
       "description": "Soal kecepatan, jarak, waktu tempuh, dan konsumsi bahan bakar.",
       "total": 1,
-      "file": "/notes-cpns/bank-soal/tiu-jarak-kecepatan.json"
+      "file": "/cpns/bank-soal/tiu-jarak-kecepatan.json"
     },
     {
       "id": "tiu-padanan-kata",
@@ -38,7 +38,7 @@
       "category": "TIU",
       "description": "Soal memilih kata yang bermakna paling dekat dengan kata yang dicetak kapital.",
       "total": 37,
-      "file": "/notes-cpns/bank-soal/tiu-padanan-kata.json"
+      "file": "/cpns/bank-soal/tiu-padanan-kata.json"
     },
     {
       "id": "tiu-analogi",
@@ -46,7 +46,7 @@
       "category": "TIU",
       "description": "Soal menemukan hubungan antara pasangan kata dan menerapkan pola hubungan yang sama.",
       "total": 50,
-      "file": "/notes-cpns/bank-soal/tiu-analogi.json"
+      "file": "/cpns/bank-soal/tiu-analogi.json"
     },
     {
       "id": "twk-implementasi-pancasila",
@@ -54,7 +54,7 @@
       "category": "TWK",
       "description": "Soal pemahaman implementasi butir-butir Pancasila dan kedudukannya dalam kehidupan sehari-hari.",
       "total": 27,
-      "file": "/notes-cpns/bank-soal/twk-implementasi-pancasila.json"
+      "file": "/cpns/bank-soal/twk-implementasi-pancasila.json"
     }
   ]
 }

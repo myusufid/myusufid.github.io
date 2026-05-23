@@ -216,7 +216,7 @@
         }
 
         async function loadBankIndex() {
-            const res = await fetch('/notes-cpns/bank-soal/index.json');
+            const res = await fetch('/cpns/bank-soal/index.json');
             const data = await res.json();
             state.banks = data.banks;
             renderHome();
