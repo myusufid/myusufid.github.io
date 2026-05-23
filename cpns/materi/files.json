@@ -14,5 +14,7 @@
   {"title": "TIU — Deret Angka", "path": "05-tiu/01-deret-angka.md", "folder": "TIU"},
   {"title": "TIU — Rata-rata & Nilai Baru", "path": "05-tiu/02-rata-rata.md", "folder": "TIU"},
   {"title": "TIU — Jarak, Kecepatan & Waktu", "path": "05-tiu/03-jarak-kecepatan-waktu.md", "folder": "TIU"},
-  {"title": "TIU — Padanan Kata (Sinonim)", "path": "05-tiu/04-padanan-kata.md", "folder": "TIU"}
+  {"title": "TIU — Padanan Kata (Sinonim)", "path": "05-tiu/04-padanan-kata.md", "folder": "TIU"},
+  {"title": "TIU — Perbandingan & Kali Silang", "path": "05-tiu/06-perbandingan.md", "folder": "TIU"},
+  {"title": "TIU — Diskon & Persentase", "path": "05-tiu/07-diskon-persen.md", "folder": "TIU"}
 ]
