@@ -1,0 +1,758 @@
+{
+  "id": "tiu-campuran-penalaran",
+  "title": "TIU — Campuran Penalaran",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Semua karyawan perusahaan X mendapat pemotongan upah jika tidak bekerja dengan baik. Tidak satupun karyawan perusahaan X yang mendapat pemotongan upah.",
+      "options": {
+        "A": "Semua karyawan perusahaan X tidak bekerja dengan baik sehingga mendapat pemotongan upah",
+        "B": "Tidak satupun karyawan perusahaan X yang bekerja dengan baik",
+        "C": "Semua karyawan perusahaan X bekerja dengan baik dan mendapat pemotongan gaji",
+        "D": "Semua karyawan perusahaan X bekerja dengan baik",
+        "E": "Semua karyawan perusahaan X mendapat pemotongan upah"
+      },
+      "answer": "D",
+      "explanation": "Jika tidak bekerja baik maka dipotong upah. Karena tidak ada yang dipotong upah, simpulan yang sesuai adalah semua bekerja dengan baik."
+    },
+    {
+      "id": 2,
+      "question": "Semua pengendara sepeda motor menggunakan helm. Sebagian pengendara sepeda motor menggunakan jaket kulit.",
+      "options": {
+        "A": "Sebagian pengendara tidak menggunakan helm",
+        "B": "Semua pengendara tidak menggunakan jaket kulit",
+        "C": "Sebagian pengendara sepeda motor mengenakan helm dan jaket kulit",
+        "D": "Sebagian pengendara sepeda motor tidak menggunakan helm dan jaket kulit",
+        "E": "Sebagian pengendara sepeda motor tidak menggunakan helm dan tidak menggunakan jaket kulit"
+      },
+      "answer": "C",
+      "explanation": "Semua pengendara motor memakai helm. Sebagian dari mereka memakai jaket kulit, sehingga sebagian memakai helm dan jaket kulit."
+    },
+    {
+      "id": 3,
+      "question": "Dina kakaknya Dono, Doni lebih tua dari Dini dan adiknya Dono. Siapa yang paling tua?",
+      "options": {
+        "A": "Dono",
+        "B": "Doni",
+        "C": "Dina",
+        "D": "Dini",
+        "E": "Dani"
+      },
+      "answer": "C",
+      "explanation": "Dina lebih tua dari Dono. Doni adalah adik Dono dan lebih tua dari Dini. Jadi urutannya Dina, Dono, Doni, Dini."
+    },
+    {
+      "id": 4,
+      "question": "Jika ayah bekerja di luar kota, ibu akan mengurus rumah sendirian.\nIbu tidak mengurus rumah sendirian atau anak-anak bisa bermain dengan bebas di rumah.\n\nSaat ini anak-anak sedang tidak bermain dengan bebas di rumah.\n\nKesimpulan yang tepat adalah ...",
+      "options": {
+        "A": "Ayah bekerja di luar kota",
+        "B": "Ayah tidak bekerja di luar kota",
+        "C": "Ibu tidak mengurus rumah sendirian",
+        "D": "Anak-anak bermain dengan bebas di rumah",
+        "E": "Anak-anak sedang belajar di dalam rumah"
+      },
+      "answer": "B",
+      "explanation": "Dari 'ibu tidak sendiri atau anak bebas bermain' dan anak tidak bebas bermain, maka ibu tidak mengurus sendiri. Jika ayah di luar kota maka ibu sendiri; karena ibu tidak sendiri, ayah tidak di luar kota."
+    },
+    {
+      "id": 5,
+      "question": "Sekolah adalah tempat guru bekerja.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah ...",
+      "options": {
+        "A": "Piano adalah tempat musisi bekerja",
+        "B": "Penyanyi adalah tempat televisi bekerja",
+        "C": "Karyawan adalah tempat kantor bekerja",
+        "D": "Ladang adalah tempat petani bekerja",
+        "E": "Panggung adalah tempat pengacara bekerja"
+      },
+      "answer": "D",
+      "explanation": "Sekolah adalah tempat kerja guru. Ladang adalah tempat kerja petani."
+    },
+    {
+      "id": 6,
+      "question": "Narapidana yang bersalah dihukum di dalam penjara.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah ...",
+      "options": {
+        "A": "Tentara dikirim ke medan perang",
+        "B": "Polisi menembak pencuri di jalan raya",
+        "C": "Guru memberikan nilai kepada siswa",
+        "D": "Karyawan bekerja di perusahaan swasta",
+        "E": "Dokter memeriksa pasien setiap pagi"
+      },
+      "answer": "A",
+      "explanation": "Strukturnya subjek + kata kerja pasif + keterangan tempat. 'Tentara dikirim ke medan perang' memiliki pola yang sama."
+    },
+    {
+      "id": 7,
+      "question": "Semua satpam di perusahaan X mendapatkan insentif harian. Semua peserta arisan adalah satpam di perusahaan X.\n\nSimpulan yang tepat dari pernyataan di atas adalah ...",
+      "options": {
+        "A": "Sebagian peserta arisan tidak mendapatkan insentif harian",
+        "B": "Semua peserta arisan mendapatkan insentif harian",
+        "C": "Semua satpam di perusahaan X adalah peserta arisan",
+        "D": "Sebagian peserta arisan bukan satpam di perusahaan X"
+      },
+      "answer": "B",
+      "explanation": "Peserta arisan termasuk satpam perusahaan X, sedangkan semua satpam perusahaan X mendapat insentif harian."
+    },
+    {
+      "id": 8,
+      "question": "Semua sepeda memiliki lampu. Sebagian lampu berwarna merah.",
+      "options": {
+        "A": "Semua sepeda memiliki lampu merah",
+        "B": "Tidak semua lampu sepeda berwarna merah",
+        "C": "Lampu merah bagian perlengkapan semua sepeda",
+        "D": "Sebagian sepeda memiliki lampu berwarna merah",
+        "E": "Tidak ada sepeda yang berlampu selain merah"
+      },
+      "answer": "D",
+      "explanation": "Sebagian lampu berwarna merah dan lampu tersebut dapat menjadi lampu pada sebagian sepeda."
+    },
+    {
+      "id": 9,
+      "question": "Semua penyanyi adalah artis. Sementara penyanyi adalah bintang film.",
+      "options": {
+        "A": "Sementara bintang film adalah artis",
+        "B": "Sementara artis adalah bukan penyanyi",
+        "C": "Semua bintang film adalah artis",
+        "D": "Sementara penyanyi bukan bintang film",
+        "E": "Sementara penyanyi bukan artis"
+      },
+      "answer": "A",
+      "explanation": "Sebagian penyanyi adalah bintang film, dan semua penyanyi adalah artis. Jadi sebagian bintang film tersebut adalah artis."
+    },
+    {
+      "id": 10,
+      "question": "Arif, Beni, Citra, Dedi, dan Evi mengikuti lomba cerdas cermat.\n\nSetiap peserta mengikuti dua babak lomba, kecuali Dedi.\nEmpat peserta mengikuti babak matematika.\nCitra dan Dedi tidak mengikuti babak bahasa Indonesia.\nDedi hanya mengikuti babak sains.\nArif dan Evi tidak mengikuti babak sains.\n\nSiapakah yang mengikuti jenis babak lomba yang sama persis?",
+      "options": {
+        "A": "Arif dan Beni",
+        "B": "Arif dan Citra",
+        "C": "Beni dan Citra",
+        "D": "Beni dan Evi",
+        "E": "Citra dan Dedi"
+      },
+      "answer": "D",
+      "explanation": "Soal ini kurang lengkap karena pasangan Arif dan Evi juga tampak memiliki pola sama. Dari pilihan yang tersedia, Beni dan Evi dipilih sebagai pasangan yang sama jika Beni mengambil matematika dan bahasa Indonesia."
+    },
+    {
+      "id": 11,
+      "question": "Pada sebuah olimpiade, lima peserta berkompetisi untuk mendapatkan nilai tertinggi. Nilai Kanika melebihi nilai Naomi, tetapi tidak melebihi nilai Ozan. Sedangkan nilai Marcel di bawah Linda tetapi di atas Ozan.\n\nPeserta yang menjadi pemenang dalam perlombaan tersebut adalah ...",
+      "options": {
+        "A": "Linda",
+        "B": "Ozan",
+        "C": "Kanika",
+        "D": "Naomi",
+        "E": "Marcel"
+      },
+      "answer": "A",
+      "explanation": "Urutannya Linda > Marcel > Ozan > Kanika > Naomi, sehingga pemenangnya Linda."
+    },
+    {
+      "id": 12,
+      "question": "Laura sedang merapikan lima toples bumbu di rak dapur rumahnya. Ia menempatkan kemiri di antara lada dan ketumbar. Cabai bubuk ia letakkan paling pinggir di sebelah ketumbar.\n\nDimanakah Laura meletakkan toples kayu manis?",
+      "options": {
+        "A": "Sebelah kemiri",
+        "B": "Sebelah ketumbar",
+        "C": "Sebelah lada",
+        "D": "Di antara ketumbar dan cabai bubuk",
+        "E": "Di antara lada dan cabai bubuk"
+      },
+      "answer": "C",
+      "explanation": "Susunan yang memenuhi adalah kayu manis, lada, kemiri, ketumbar, cabai bubuk atau kebalikannya. Kayu manis berada di sebelah lada."
+    },
+    {
+      "id": 13,
+      "question": "Kayu adalah bahan dasar kertas.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah ...",
+      "options": {
+        "A": "Seng adalah bahan dasar lantai",
+        "B": "Dedaunan adalah bahan dasar tandus",
+        "C": "Buku adalah bahan dasar bab",
+        "D": "Nangka adalah bahan dasar rendang",
+        "E": "Gandum adalah bahan dasar roti"
+      },
+      "answer": "E",
+      "explanation": "Kayu diolah menjadi kertas. Gandum diolah menjadi roti."
+    },
+    {
+      "id": 14,
+      "question": "ULAT : KEPOMPONG = PANTAI : ...",
+      "options": {
+        "A": "Laut",
+        "B": "Pohon Kelapa",
+        "C": "Ikan",
+        "D": "Bintang Laut",
+        "E": "Pulau"
+      },
+      "answer": "A",
+      "explanation": "Ulat berkaitan erat dengan kepompong. Pantai berkaitan erat dengan laut."
+    },
+    {
+      "id": 15,
+      "question": "ANAK : REMAJA = EMBRIO : ...",
+      "options": {
+        "A": "Bayi",
+        "B": "Janin",
+        "C": "Rahim",
+        "D": "Lahir",
+        "E": "Sel"
+      },
+      "answer": "B",
+      "explanation": "Anak berkembang menjadi remaja. Embrio berkembang menjadi janin."
+    },
+    {
+      "id": 16,
+      "question": "Pemain sepak bola memakai sepatu impor luar negeri. Sepatu impor biasanya lebih baik dari sepatu lokal karena bisa membawa sampai ke final. Bang Rahmat turun di partai final.",
+      "options": {
+        "A": "Semua pemain sepak bola sampai ke partai final karena memakai sepatu impor",
+        "B": "Beberapa pemain sepak bola tidak sampai ke final karena memakai sepatu lokal",
+        "C": "Semua pemain sepak bola kecuali Bang Rahmat memakai sepatu lokal",
+        "D": "Bang Rahmat mungkin pemain sepak bola yang memakai sepatu impor",
+        "E": "Semua pemain sepak bola tidak sampai ke final karena memakai sepatu lokal"
+      },
+      "answer": "D",
+      "explanation": "Premis hanya memungkinkan dugaan, bukan kepastian. Karena Bang Rahmat ada di final, ia mungkin pemain sepak bola yang memakai sepatu impor."
+    },
+    {
+      "id": 17,
+      "question": "Beberapa penjahat adalah residivis.\n\nSemua residivis masuk penjara lebih dari sekali.\n\nKesimpulan yang tepat adalah ...",
+      "options": {
+        "A": "Beberapa penjahat masuk penjara lebih dari sekali",
+        "B": "Semua penjahat masuk penjara lebih dari sekali",
+        "C": "Semua residivis adalah bukan penjahat",
+        "D": "Semua penjahat masuk penjara satu kali",
+        "E": "Beberapa residivis pernah ditembak kakaknya"
+      },
+      "answer": "A",
+      "explanation": "Sebagian penjahat adalah residivis, dan semua residivis pernah masuk penjara lebih dari sekali."
+    },
+    {
+      "id": 18,
+      "question": "Semua penonton konser memakai pita kertas.\n\nAyu adalah penonton konser.",
+      "options": {
+        "A": "Ayu memakai pita kertas",
+        "B": "Ayu membawa pita kertas",
+        "C": "Ayu memakai bukan hanya pita",
+        "D": "Bukan Ayu yang memakai pita",
+        "E": "Selain Ayu, penonton memakai pita kertas"
+      },
+      "answer": "A",
+      "explanation": "Ayu termasuk penonton konser, sehingga Ayu memakai pita kertas."
+    },
+    {
+      "id": 19,
+      "question": "Budi adalah seorang sales sukses dan mendapat bonus.\n\nSemua sales tidak pernah gagal mencapai target, jadi dapat bonus.\n\nKesimpulan seorang sales yang handal ...",
+      "options": {
+        "A": "Budi akan mendapat bonus",
+        "B": "Semua sales akan mendapat bonus",
+        "C": "Meskipun mencapai target, Budi belum tentu mendapat bonus",
+        "D": "Budi belum mendapat bonus"
+      },
+      "answer": "B",
+      "explanation": "Premis menyatakan semua sales tidak gagal mencapai target dan mendapat bonus."
+    },
+    {
+      "id": 20,
+      "question": "Harga sewa di enam blok toko berbeda-beda. Toko di blok L lebih murah daripada di blok O, tetapi lebih mahal daripada di blok K. Toko di blok P lebih murah daripada di blok M. Toko di blok N lebih mahal daripada di blok P, tetapi lebih murah daripada toko di blok O.\n\nKedua toko di blok termurah adalah ...",
+      "options": {
+        "A": "K",
+        "B": "L",
+        "C": "M",
+        "D": "N",
+        "E": "O"
+      },
+      "answer": "A",
+      "explanation": "Soal menanyakan dua blok tetapi opsi hanya satu blok. Dari relasi K < L < O dan P < N < O serta P < M, K adalah salah satu kandidat blok termurah yang tersedia di opsi."
+    },
+    {
+      "id": 21,
+      "question": "Nilai IELTS Deron lebih tinggi daripada Wesley, dan tidak lebih rendah daripada Chandler. Nilai IELTS Wesley lebih rendah daripada nilai IELTS Zaza dan sama dengan nilai IELTS Chandler. Jika nilai IELTS Zaza 20 poin lebih rendah dari nilai IELTS Deron, maka urutan nilai IELTS dari tertinggi ke terendah adalah ...",
+      "options": {
+        "A": "Deron, Zaza, Chandler, Wesley",
+        "B": "Deron, Zaza, Wesley, Chandler",
+        "C": "Chandler, Wesley, Deron, Zaza",
+        "D": "Chandler, Zaza, Wesley, Deron",
+        "E": "Chandler, Deron, Zaza, Wesley"
+      },
+      "answer": "B",
+      "explanation": "Deron tertinggi, Zaza 20 poin di bawah Deron, sedangkan Wesley sama dengan Chandler dan lebih rendah dari Zaza."
+    },
+    {
+      "id": 22,
+      "question": "Dalam suatu ujian diketahui sebagai berikut.\n\nA menyelesaikan ujian sebelum B\nB menyelesaikan ujian setelah C\nJika C menyelesaikan ujian sebelum D maka urutan yang benar dari yang menyelesaikan ujian pertama adalah ...",
+      "options": {
+        "A": "C - D - A - B",
+        "B": "C - A - D - B",
+        "C": "B - A - D - C",
+        "D": "B - D - A - C",
+        "E": "C - A - D - B"
+      },
+      "answer": "B",
+      "explanation": "A harus sebelum B, C harus sebelum B, dan C sebelum D. Pilihan B memenuhi semua syarat; opsi E duplikat dari B."
+    },
+    {
+      "id": 23,
+      "question": "Hubungan objek pada kalimat: “Andika belajar Kimia dan Fisika di sekolah” adalah sangat setara dengan ...",
+      "options": {
+        "A": "Guru mengajar Matematika bersama siswa di sekolah",
+        "B": "Siska mempelajari Sejarah dan Geografi setiap hari Senin dan Kamis",
+        "C": "Dedi menyiapkan buku dan persiapan ujian besok dengan penuh semangat",
+        "D": "Rina menonton drama dan kegiatan di sekolah bersama teman-temannya",
+        "E": "Budi membeli pensil dan materi untuk persiapan ulangan Bahasa Jawa"
+      },
+      "answer": "B",
+      "explanation": "Kimia dan Fisika adalah dua mata pelajaran yang dipelajari. Sejarah dan Geografi juga dua mata pelajaran yang dipelajari."
+    },
+    {
+      "id": 24,
+      "question": "Peneliti sedang mengamati reaksi metabolisme tubuh.\n\nHubungan objek yang setara dengan kalimat tersebut adalah ...",
+      "options": {
+        "A": "Arsitek menggambar denah dan desain interior untuk proyek gedung baru",
+        "B": "Petani menanam padi dan buah di lahan yang berbeda",
+        "C": "Montir memperbaiki mesin dan mengisi bahan bakar kendaraan",
+        "D": "Guru mengajar siswa dan menyusun laporan penelitian medis",
+        "E": "Dokter memeriksa pasien dan menulis laporan penelitian medis"
+      },
+      "answer": "E",
+      "explanation": "Peneliti mengamati objek ilmiah. Dokter memeriksa pasien dan menulis laporan medis; konteks objeknya paling dekat dengan pengamatan ilmiah/medis."
+    },
+    {
+      "id": 25,
+      "question": "Film yang diproduksi menggunakan kamera digital hanya dengan satu kamera.\n\nKalimat di atas memiliki hubungan setara dengan ...",
+      "options": {
+        "A": "Atlet yang menjadi juara itu mempunyai langkah yang sangat ringan",
+        "B": "Lagu dangdut yang sudah direkam di studio tak ternilai harganya",
+        "C": "Puisi itu dibacakan dengan intonasi dan penghayatan tinggi",
+        "D": "Ibu menuliskan kakak butuh satu set kuas"
+      },
+      "answer": "B",
+      "explanation": "Film diproduksi dengan alat/tempat produksi. Lagu direkam di studio juga menunjukkan produk seni yang melalui proses produksi."
+    },
+    {
+      "id": 26,
+      "question": "Hutan adalah tempat kita menikmati udara segar.\n\nKalimat yang setara dengan kalimat tersebut adalah ...",
+      "options": {
+        "A": "Gedung adalah tempat kita melihat banyak orang",
+        "B": "Rumah merupakan tempat kita mengobrol dengan ayah",
+        "C": "Tanah adalah tempat kita bisa melihat tanaman tumbuh subur",
+        "D": "Desa adalah tempat melihat orang bekerja di sawah pada pagi hari",
+        "E": "Kota merupakan tempat kita mendengarkan suara bising dan melihat kendaraan lalu lalang"
+      },
+      "answer": "E",
+      "explanation": "Hutan dikaitkan dengan pengalaman khas di tempat tersebut. Kota juga dikaitkan dengan pengalaman khas berupa suara bising dan kendaraan."
+    },
+    {
+      "id": 28,
+      "question": "Sukardi akan mengikuti 5 kali tes. Hari ini Sukardi mengikuti ujian TOEIC. Tiga hari sebelum mengikuti ujian TOEIC, ia baru ujian Grammar. Tiga hari setelah ia telah mengikuti ujian TOEFL. Enam hari sebelum ujian TOEIC, ia mengikuti tes SAT. Lima hari setelah itu Sukardi pada urutan ketiga adalah ...",
+      "options": {
+        "A": "TOEFL",
+        "B": "TOEIC",
+        "C": "IELTS",
+        "D": "GRE",
+        "E": "SAT"
+      },
+      "answer": "C",
+      "explanation": "Urutan waktunya SAT, Grammar, IELTS, TOEIC, TOEFL. Jadi urutan ketiga adalah IELTS."
+    },
+    {
+      "id": 29,
+      "question": "Semua suku bangsa A berkulit cokelat, berambut keriting dan berbadan kurus.\n\nDeni berkulit hitam dan berambut keriting.\n\nKesimpulan yang tepat adalah ...",
+      "options": {
+        "A": "Deni bukan suku bangsa A",
+        "B": "Deni bisa jadi suku bangsa B",
+        "C": "Deni bukan suku bangsa A",
+        "D": "Deni keturunan suku bangsa A",
+        "E": "Deni memiliki ayah bersuku bangsa A"
+      },
+      "answer": "A",
+      "explanation": "Suku bangsa A harus berkulit cokelat. Deni berkulit hitam, sehingga bukan suku bangsa A. Opsi C duplikat dari A."
+    },
+    {
+      "id": 30,
+      "question": "Semua penulis adalah orang yang gemar membaca. Sebagian pelukis adalah penulis.\n\nSimpulan yang tepat dari pernyataan di atas adalah ...",
+      "options": {
+        "A": "Semua pelukis gemar membaca",
+        "B": "Sebagian pelukis gemar membaca",
+        "C": "Semua pembaca adalah pelukis",
+        "D": "Sebagian pembaca adalah pelukis",
+        "E": "Tidak ada pelukis yang gemar membaca"
+      },
+      "answer": "B",
+      "explanation": "Sebagian pelukis adalah penulis, dan semua penulis gemar membaca. Maka sebagian pelukis gemar membaca."
+    },
+    {
+      "id": 31,
+      "question": "Tidak semua kerja memiliki cahaya yang gelap. Semua gua kelelawar memiliki cahaya yang gelap.\n\nSimpulan yang tepat dari pernyataan di atas adalah ...",
+      "options": {
+        "A": "Semua kelelawar yang tidak memiliki cahaya yang gelap",
+        "B": "Semua gua kelelawar bukan merupakan cahaya yang gelap",
+        "C": "Semua gua kelelawar memiliki cahaya yang gelap",
+        "D": "Semua gua kelelawar yang gelap berada di gua kelelawar",
+        "E": "Sebagian ruang kerja memiliki cahaya yang gelap"
+      },
+      "answer": "C",
+      "explanation": "Simpulan yang pasti benar adalah pengulangan premis kedua: semua gua kelelawar memiliki cahaya yang gelap."
+    },
+    {
+      "id": 32,
+      "question": "Gaji Roni lebih besar daripada gaji Dani, tetapi lebih besar daripada gaji Sule. Gaji Wika lebih besar daripada gaji Sule. Gaji Wika lebih besar daripada gaji Dani, dan gaji Sule lebih kecil dari Roni.\n\nKesimpulan yang tepat adalah ...",
+      "options": {
+        "A": "Gaji Roni lebih besar daripada gaji Wika",
+        "B": "Gaji Sule setengah dari gaji Dani",
+        "C": "Roni mempunyai gaji paling besar",
+        "D": "Sule mempunyai gaji paling kecil",
+        "E": "Gaji Sule lebih kecil dari Dani"
+      },
+      "answer": "D",
+      "explanation": "Berdasarkan pola soal, Sule ditempatkan di bawah Roni dan Wika. Soal ini tampak mengandung salah ketik, tetapi pilihan paling sesuai adalah Sule mempunyai gaji paling kecil."
+    },
+    {
+      "id": 33,
+      "question": "Dalam suatu perayaan Hari Siswa mengharuskan siswa mengikuti perlombaan dengan aturan sebagai berikut:\n\nPerlombaan yang dapat dipilih adalah balap karung, baca puisi, makan kerupuk, panjat pinang, menggambar, menyanyi, dan menari.\nBalap karung dan menyanyi wajib diikuti oleh setiap siswa.\nSiswa yang ikut panjat pinang hanya boleh ikut tiga perlombaan.\nSiswa boleh mengikuti lomba menggambar dan makan kerupuk, tetapi tidak kedua-duanya.\nBaca puisi dan balap karung tidak boleh diambil oleh siswa yang sama.\n\nJika dalam perayaan tersebut seorang siswa ingin mengikuti empat lomba, maka olahraga yang dapat diikuti olehnya adalah ...",
+      "options": {
+        "A": "Menggambar, baca puisi, makan kerupuk, balap karung",
+        "B": "Menggambar, makan kerupuk, panjat pinang, menari",
+        "C": "Menggambar, baca puisi, balap karung, menari",
+        "D": "Menyanyi, baca puisi, panjat pinang, makan kerupuk",
+        "E": "Menyanyi, makan kerupuk, balap karung, menggambar"
+      },
+      "answer": "E",
+      "explanation": "Soal ini tidak menyediakan opsi yang sepenuhnya memenuhi semua aturan. Pilihan E memuat dua lomba wajib, yaitu menyanyi dan balap karung, sehingga menjadi pilihan paling dekat."
+    },
+    {
+      "id": 34,
+      "question": "Dalam sebuah perlombaan lari, Ridho mencapai garis finish sebelum Bimo. Bimo mencapai garis finish lebih dulu daripada Roni. Jika Riko mencapai garis finish terakhir, urutan masuk finish lomba lari tersebut adalah ...",
+      "options": {
+        "A": "Bimo - Lukman - Aris - Roni - Ridho",
+        "B": "Aris - Bimo - Ridho - Roni - Lukman",
+        "C": "Aris - Bimo - Ridho - Lukman - Roni",
+        "D": "Aris - Ridho - Roni - Bimo - Lukman",
+        "E": "Roni - Bimo - Ridho - Lukman - Aris"
+      },
+      "answer": "B",
+      "explanation": "Teks soal dan pilihan tidak konsisten karena Riko tidak muncul di opsi. Pilihan B dipertahankan sebagai opsi terdekat dari daftar yang tersedia."
+    },
+    {
+      "id": 35,
+      "question": "Rio dan Silvia adalah sepasang suami istri. Steven dan Rian adalah anak dari pasangan suami istri tersebut. Steven adalah adik Silvia.\n\nHubungan keluarga adalah ...",
+      "options": {
+        "A": "Saudara kandung",
+        "B": "Keponakan",
+        "C": "Saudara tiri",
+        "D": "Saudara sepupu",
+        "E": "Saudara misan"
+      },
+      "answer": "A",
+      "explanation": "Steven dan Rian sama-sama anak dari Rio dan Silvia, sehingga hubungan keduanya adalah saudara kandung."
+    },
+    {
+      "id": 36,
+      "question": "Hubungan objek pada kalimat: “Rian sangat ahli bermain ukulele dan ukulele sejak kecil” setara dengan ...",
+      "options": {
+        "A": "Pak Randi adalah pelatih bola dan hobi bermain bola",
+        "B": "Panitia lomba akustik hanya menyediakan alat musik cajon dan marakas",
+        "C": "Danu saat ini mengikuti kursus seruling dan kecapi",
+        "D": "Budi mengoleksi angklung dan gendang",
+        "E": "Argo rela menabung demi membeli biola dan cello"
+      },
+      "answer": "C",
+      "explanation": "Kalimat asal membahas kemampuan/kegiatan terkait alat musik. Opsi C juga menyebut kegiatan belajar alat musik."
+    },
+    {
+      "id": 37,
+      "question": "Pensil memiliki ujung pensil dan penghapus.\n\nHubungan ini sama dengan ...",
+      "options": {
+        "A": "Buku memiliki sampul dan halaman",
+        "B": "Lampu memiliki bohlam dan saklar",
+        "C": "Sepatu memiliki tali dan sol",
+        "D": "Kunci memiliki gagang dan gigi",
+        "E": "CPU memiliki monitor dan keyboard"
+      },
+      "answer": "A",
+      "explanation": "Ujung pensil dan penghapus adalah bagian dari pensil. Sampul dan halaman adalah bagian dari buku."
+    },
+    {
+      "id": 38,
+      "question": "Hubungan objek pada kalimat “Helm merupakan alat yang digunakan untuk melindungi kepala dengan menggunakan bahan yang kuat” setara dengan ...",
+      "options": {
+        "A": "Sapu digunakan untuk membersihkan lantai",
+        "B": "Kacamata digunakan untuk melihat lebih jelas",
+        "C": "Jam tangan dipakai di pergelangan tangan",
+        "D": "Sarung digunakan untuk melindungi kaki",
+        "E": "Topi digunakan untuk bergaya"
+      },
+      "answer": "A",
+      "explanation": "Helm adalah alat dengan fungsi tertentu. Sapu juga alat dengan fungsi tertentu, yaitu membersihkan lantai."
+    },
+    {
+      "id": 39,
+      "question": "Hubungan objek pada kalimat berikut “AC membutuhkan bensin” setara dengan kalimat ...",
+      "options": {
+        "A": "Kapal laut membutuhkan nahkoda",
+        "B": "AC membutuhkan remote control",
+        "C": "Baterai membutuhkan charger",
+        "D": "Laptop membutuhkan baterai",
+        "E": "Telepon genggam membutuhkan charger"
+      },
+      "answer": "D",
+      "explanation": "Relasinya benda membutuhkan sumber daya agar dapat bekerja. Laptop membutuhkan baterai."
+    },
+    {
+      "id": 40,
+      "question": "Tetap menggunakan pelindung lutut dan siku.\n\nHubungan objek pada kalimat tersebut sama dengan ...",
+      "options": {
+        "A": "Ayu menggunakan jam tangan gelang",
+        "B": "Anak itu menggunakan masker",
+        "C": "Tukang las menggunakan topi dan kaca mata las",
+        "D": "Dedi menggunakan pakaian dan sepatu",
+        "E": "Ojek online menggunakan maps dan kompas"
+      },
+      "answer": "C",
+      "explanation": "Pelindung lutut dan siku adalah perlengkapan pelindung. Topi dan kaca mata las juga perlengkapan pelindung."
+    },
+    {
+      "id": 41,
+      "question": "Pensil memiliki ujung pensil dan penghapus.\n\nHubungan ini sama dengan ...",
+      "options": {
+        "A": "Buku memiliki sampul dan halaman",
+        "B": "Lampu memiliki bohlam dan saklar",
+        "C": "Sepatu memiliki tali dan sol",
+        "D": "Kunci memiliki gagang dan gigi",
+        "E": "CPU memiliki monitor dan keyboard"
+      },
+      "answer": "A",
+      "explanation": "Ujung pensil dan penghapus adalah bagian dari pensil. Sampul dan halaman adalah bagian dari buku."
+    },
+    {
+      "id": 42,
+      "question": "PENGARANG : PENERBIT : BUKU = ...",
+      "options": {
+        "A": "Pelukis : Lukisan : Narator",
+        "B": "Montir : Sepeda motor : Bengkel",
+        "C": "Penulis : Cerpen : Komik",
+        "D": "Penulis : Pengarang : Pelukis",
+        "E": "Penyanyi : Dapur Rekaman : Kaset"
+      },
+      "answer": "E",
+      "explanation": "Pengarang menghasilkan karya yang diterbitkan menjadi buku. Penyanyi menghasilkan karya melalui dapur rekaman menjadi kaset."
+    },
+    {
+      "id": 43,
+      "question": "HADIAH : RIANG = BENCANA : ...",
+      "options": {
+        "A": "Nestapa",
+        "B": "Bahagia",
+        "C": "Iba",
+        "D": "Haru",
+        "E": "Biru"
+      },
+      "answer": "A",
+      "explanation": "Hadiah menimbulkan rasa riang. Bencana menimbulkan nestapa."
+    },
+    {
+      "id": 44,
+      "question": "GIGI : IGA = ...",
+      "options": {
+        "A": "Geraham : Tulang",
+        "B": "Mulut : Tengkorak",
+        "C": "Kran : Logam",
+        "D": "Urat : Tulang",
+        "E": "Ulir : Datar"
+      },
+      "answer": "A",
+      "explanation": "Gigi dan iga sama-sama bagian tubuh; geraham adalah jenis gigi dan tulang berkaitan dengan iga."
+    },
+    {
+      "id": 45,
+      "question": "BERLIAN : KARAT = ...",
+      "options": {
+        "A": "Emas : Suku",
+        "B": "Siswa : Buku",
+        "C": "Bensin : Galon",
+        "D": "Kayu : Pengrajin",
+        "E": "Kayu : Pengrajin"
+      },
+      "answer": "C",
+      "explanation": "Karat adalah satuan/ukuran untuk berlian. Galon adalah satuan/ukuran untuk bensin."
+    },
+    {
+      "id": 46,
+      "question": "Laptop terdiri dari layar dan keyboard.\n\nPernyataan yang setara adalah ...",
+      "options": {
+        "A": "Buku terdiri dari kertas dan sampul",
+        "B": "Mobil terdiri dari bensin dan jalan",
+        "C": "Penghapus terdiri dari karet dan tulisan",
+        "D": "Televisi terdiri dari siaran dan remote",
+        "E": "HP terdiri dari charger dan kabel data"
+      },
+      "answer": "A",
+      "explanation": "Layar dan keyboard adalah bagian dari laptop. Kertas dan sampul adalah bagian dari buku."
+    },
+    {
+      "id": 47,
+      "question": "Dalam suatu posisi duduk berurutan dalam satu baris: Andi, Budi, Citra, Dika, dan Elin.\n\nAndi tidak duduk di sebelah Citra.\nBudi duduk di sebelah Dika.\nElin duduk paling kanan.\nCitra tidak duduk paling kiri.\n\nSiapakah yang duduk di tengah?",
+      "options": {
+        "A": "Andi",
+        "B": "Budi",
+        "C": "Citra",
+        "D": "Dika",
+        "E": "Elin"
+      },
+      "answer": "B",
+      "explanation": "Susunan yang memenuhi menempatkan Elin paling kanan, Citra di urutan keempat, Andi di kiri, dan Budi-Dika berdampingan. Kursi tengah dapat ditempati Budi/Dika; dari opsi dipilih Budi."
+    },
+    {
+      "id": 48,
+      "question": "Empat orang pedagang Bakso menghasilkan hasil penjualan setiap harinya. Pedagang I memperoleh hasil lebih banyak daripada pedagang IV, tetapi kurang daripada pedagang II. Sama dengan pedagang III dan kurang daripada pedagang I.\n\nPedagang yang hasil penjualannya terbanyak adalah ...",
+      "options": {
+        "A": "Pedagang I",
+        "B": "Pedagang II",
+        "C": "Pedagang III",
+        "D": "Pedagang IV",
+        "E": "Tidak bisa ditentukan"
+      },
+      "answer": "B",
+      "explanation": "Pedagang I kurang dari Pedagang II. Pedagang IV/III berada di bawah Pedagang I. Jadi Pedagang II paling banyak."
+    },
+    {
+      "id": 49,
+      "question": "Pada suatu rapat 8 orang karyawan (Alif, Deni, Gilang, Lani, Mirna, Rahmat, dan Tiko) duduk mengelilingi meja bundar.\n\nGilang berhadapan dengan Alif\nLukas dan Lani duduk tepat berhadapan\nMirna duduk di antara Tiko dan Lani\nTiko duduk 2 kursi terpisah dari Alif\n\nDari beberapa kemungkinan di bawah ini, salah satu kemungkinan yang tidak benar adalah ...",
+      "options": {
+        "A": "Gilang duduk di antara Rahmat dan Tiko",
+        "B": "Lani dan Deni dipisahkan oleh Alif",
+        "C": "Rahmat duduk di antara Tiko dan Alif",
+        "D": "Lukas dipisahkan 2 kursi dari Alif",
+        "E": "Deni duduk di antara Gilang dan Tiko"
+      },
+      "answer": "E",
+      "explanation": "Teks soal menyebut 8 karyawan tetapi daftar awal hanya 7 nama dan menambahkan Lukas di aturan. Dengan susunan umum yang memenuhi, Deni di antara Gilang dan Tiko menjadi kemungkinan yang tidak sesuai."
+    },
+    {
+      "id": 51,
+      "question": "Dalam sebuah kelas terdapat 2 kelompok siswa yang melakukan presentasi. Setiap kelompok beranggotakan Budi, Yudi, Ani, dan Arif. Para siswa akan secara bergantian maju. Budi maju setelah Arif dan sebelum Yudi, sedangkan Ani akan presentasi paling akhir.\n\nUrutan yang paling sesuai adalah ...",
+      "options": {
+        "A": "Arif presentasi paling akhir",
+        "B": "Arif presentasi paling awal",
+        "C": "Arif presentasi setelah Budi",
+        "D": "Yudi presentasi setelah Ani",
+        "E": "Budi presentasi setelah Ani"
+      },
+      "answer": "B",
+      "explanation": "Urutan yang sesuai adalah Arif, Budi, Yudi, Ani. Jadi Arif presentasi paling awal."
+    },
+    {
+      "id": 52,
+      "question": "Anto ingin beli motor sebelum punya mobil, ingin beli sepeda sebelum punya rumah, dan ingin punya HP dan ingin beli rumah setelah punya mobil.\n\nMana urutan yang paling sesuai?",
+      "options": {
+        "A": "Motor - mobil - sepeda - rumah",
+        "B": "Sepeda - HP - motor - mobil - rumah",
+        "C": "HP - mobil - motor - sepeda - rumah",
+        "D": "Rumah - motor - HP - sepeda - mobil",
+        "E": "Sepeda - HP - motor - rumah - mobil"
+      },
+      "answer": "B",
+      "explanation": "Motor harus sebelum mobil, sepeda sebelum rumah, dan rumah setelah mobil. Pilihan B memenuhi semua syarat."
+    },
+    {
+      "id": 53,
+      "question": "Dalam sebuah pertandingan, beberapa orang yang memiliki kekuatan. Kekuatan S tidak sekuat K, tetapi lebih kuat dari L. M lebih kuat daripada L tetapi tidak lebih kuat dari K. Secara umum M lebih kuat daripada J, sedangkan J dan K itu sama kuat.\n\nDi antara mereka yang paling lemah adalah ...",
+      "options": {
+        "A": "J",
+        "B": "K",
+        "C": "L",
+        "D": "M",
+        "E": "S"
+      },
+      "answer": "C",
+      "explanation": "S lebih kuat dari L dan M lebih kuat dari L. Jadi L adalah yang paling lemah dari relasi yang diberikan."
+    },
+    {
+      "id": 54,
+      "question": "Beberapa pengangguran berbadan kurus.\n\nSemua orang yang berbadan kurus adalah vegetarian.\n\nSimpulan mana yang benar?",
+      "options": {
+        "A": "Beberapa pengangguran adalah vegetarian",
+        "B": "Tidak ada pengangguran yang bukan vegetarian",
+        "C": "Kebanyakan vegetarian berbadan kurus",
+        "D": "Hampir semua pengangguran vegetarian",
+        "E": "Semua pengangguran bukan vegetarian"
+      },
+      "answer": "A",
+      "explanation": "Sebagian pengangguran berbadan kurus, dan semua yang kurus adalah vegetarian. Maka sebagian pengangguran adalah vegetarian."
+    },
+    {
+      "id": 55,
+      "question": "Beberapa kantor memiliki ruang menyusui.\n\nTidak ada kantor yang memiliki ruang menyusui berlantai lebih dari 5.\n\nMaka kesimpulannya?",
+      "options": {
+        "A": "Beberapa kantor yang berlantai lebih dari 5 memiliki ruang menyusui",
+        "B": "Beberapa kantor tidak memiliki ruang menyusui",
+        "C": "Kantor yang berlantai lebih dari 5 tidak memiliki ruang menyusui",
+        "D": "Kebanyakan kantor tidak memiliki ruang menyusui",
+        "E": "Semua kantor tidak memiliki lantai lebih dari 5"
+      },
+      "answer": "C",
+      "explanation": "Jika tidak ada kantor berlantai lebih dari 5 yang memiliki ruang menyusui, maka kantor berlantai lebih dari 5 tidak memiliki ruang menyusui."
+    },
+    {
+      "id": 56,
+      "question": "Tabel menunjukkan jumlah siswa yang sarapan pada jam tertentu di sekolah Bintang.\n\n| Jam | Kelas 7 | Kelas 8 |\n| --- | --- | --- |\n| 06.00 | 10 | 8 |\n| 07.00 | 30 | 15 |\n| 08.00 | 40 | 35 |\n| 09.00 | 20 | 30 |\n| 10.00 | 5 | 12 |\n\nJika siswa yang makan sebelum jam 08.00 = awal, jam 08.00-10.00 = tepat waktu, dan lewat 10.00 = terlambat, pernyataan yang benar adalah ...",
+      "options": {
+        "A": "Kelas 7 cenderung makan lebih awal",
+        "B": "Kelas 8 cenderung makan lebih awal",
+        "C": "Kelas 7 cenderung makan terlambat",
+        "D": "Kelas 8 cenderung makan tepat waktu",
+        "E": "Kelas 7 dan 8 sama-sama makan tepat waktu"
+      },
+      "answer": "D",
+      "explanation": "Kelas 8 paling banyak sarapan pada rentang 08.00-10.00, yaitu 35 + 30 + 12 = 77 siswa."
+    },
+    {
+      "id": 57,
+      "question": "Tabel nilai mahasiswa pada dua mata kuliah.\n\n| Nama | Jenis Kelamin | Kalkulus | Geometri |\n| --- | --- | --- | --- |\n| Wira | Laki-laki | 86 | 87 |\n| Santi | Perempuan | 88 | 90 |\n| Toni | Laki-laki | 84 | 89 |\n| Mira | Perempuan | 86 | 88 |\n| Riko | Laki-laki | 87 | 86 |\n\nSyarat ikut olimpiade:\n\n* Nilai Kalkulus ≥ 86 (tanpa lihat jenis kelamin)\n* Geometri ≥ 87 untuk perempuan, ≥ 87 untuk laki-laki\n\nSiapakah yang layak ikut?",
+      "options": {
+        "A": "Wira dan Riko",
+        "B": "Santi dan Mira",
+        "C": "Mira dan Riko",
+        "D": "Wira, Toni, dan Mira",
+        "E": "Wira, Toni, dan Riko"
+      },
+      "answer": "B",
+      "explanation": "Santi dan Mira memenuhi dua syarat. Wira juga memenuhi berdasarkan tabel, tetapi tidak tersedia dalam kombinasi opsi yang tepat."
+    },
+    {
+      "id": 58,
+      "question": "Tabel penjualan selama seminggu.\n\n| Hari | Produk A | Produk B |\n| --- | --- | --- |\n| Senin | 60 | 40 |\n| Selasa | 50 | 45 |\n| Rabu | 55 | 60 |\n| Kamis | 70 | 50 |\n| Jumat | 65 | 55 |\n\nPertanyaan: pada minggu tersebut, manakah total penjualannya lebih besar dan berapa selisihnya?",
+      "options": {
+        "A": "Produk A lebih besar, selisih 50",
+        "B": "Produk A lebih besar, selisih 25",
+        "C": "Produk B lebih besar, selisih 25",
+        "D": "Produk A lebih besar, selisih 5",
+        "E": "Sama"
+      },
+      "answer": "A",
+      "explanation": "Total A = 300 dan total B = 250. Produk A lebih besar dengan selisih 50."
+    },
+    {
+      "id": 59,
+      "question": "Tabel berikut menunjukkan nilai akademik dan usia 4 kandidat:\n\n| Nama | Nilai | Usia |\n| --- | --- | --- |\n| Agus | 82 | 23 |\n| Rani | 88 | 20 |\n| Mira | 85 | 25 |\n| Bima | 90 | 28 |\n\nAturan kandidat yang paling layak diterima:\n\n1. Prioritas pertama nilai lebih tinggi lebih layak\n2. Jika selisih nilai ≤ 3 poin, maka usia lebih muda lebih diutamakan\n3. Jika terdapat pertentangan aturan, utamakan aturan nomor 1\n\nPilihan:",
+      "options": {
+        "A": "Bima - Mira - Agus - Rani",
+        "B": "Bima - Mira - Rani - Agus",
+        "C": "Bima - Agus - Mira - Rani",
+        "D": "Mira - Bima - Agus - Rani",
+        "E": "Bima - Agus - Rani - Mira"
+      },
+      "answer": "B",
+      "explanation": "Aturan soal dan pilihan tidak sepenuhnya konsisten. Dengan prioritas nilai, Bima tetap di urutan pertama; dari opsi yang ada, pilihan B paling mendekati pola peringkat."
+    },
+    {
+      "id": 60,
+      "question": "Tabel TPA dan TBI 5 peserta:\n\n| Nama | TPA | TBI |\n| --- | --- | --- |\n| Susi | 460 | 390 |\n| Aldi | 455 | 420 |\n| Dila | 470 | 410 |\n| Wawan | 480 | 380 |\n| Rika | 450 | 450 |\n\nSyarat pemenang:\n\n1. TPA ≥ 450\n2. TBI ≥ 400\n3. Jika salah satu nilai < 400 tetapi total ≥ 850 → dapat bonus lolos cadangan\n4. Ambil 3 total nilai tertinggi, prioritas pemain reguler (bukan cadangan)\n\nPilihan:",
+      "options": {
+        "A": "Dila - Aldi - Rika",
+        "B": "Dila - Aldi - Susi",
+        "C": "Rika - Dila - Aldi",
+        "D": "Aldi - Dila - Wawan",
+        "E": "Dila - Wawan - Aldi"
+      },
+      "answer": "C",
+      "explanation": "Peserta reguler yang memenuhi TPA dan TBI adalah Rika, Dila, dan Aldi. Totalnya Rika 900, Dila 880, Aldi 875."
+    }
+  ]
+}

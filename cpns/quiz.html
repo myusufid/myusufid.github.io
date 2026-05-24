@@ -121,7 +121,7 @@
 
             <div class="mt-8 mb-6">
                 <span id="quiz-category" class="text-xs font-mono text-muted-foreground uppercase tracking-widest"></span>
-                <p id="quiz-question" class="text-lg font-medium mt-2 leading-relaxed"></p>
+                <p id="quiz-question" class="text-lg font-medium mt-2 leading-relaxed whitespace-pre-wrap"></p>
             </div>
 
             <div id="quiz-options" class="grid gap-3 mb-8"></div>
@@ -274,7 +274,7 @@
 
             state.questionCount = count;
             state.questions = shuffle(state.allQuestions).slice(0, count).map(q => {
-                const keys = ['A', 'B', 'C', 'D'];
+                const keys = Object.keys(q.options);
                 const values = shuffle(Object.values(q.options));
                 const options = Object.fromEntries(keys.map((k, i) => [k, values[i]]));
                 const answer = keys.find(k => options[k] === q.options[q.answer]);
@@ -377,7 +377,7 @@
                     <div class="rounded-lg border p-4 ${isCorrect ? 'border-green-500/20' : 'border-red-500/20'}">
                         <div class="flex items-start gap-2 mb-3">
                             <span class="text-sm mt-0.5">${isCorrect ? '✅' : '❌'}</span>
-                            <p class="text-sm font-medium leading-relaxed">${i + 1}. ${q.question}</p>
+                            <p class="text-sm font-medium leading-relaxed whitespace-pre-wrap">${i + 1}. ${q.question}</p>
                         </div>
                         <div class="ml-6 space-y-1 text-sm">
                             ${userAnswer && !isCorrect ? `<p class="text-red-500 dark:text-red-400">Jawaban kamu: <strong>${userAnswer}. ${q.options[userAnswer]}</strong></p>` : ''}

@@ -41,6 +41,96 @@
       },
       "answer": "B",
       "explanation": "Premis 1: Tidak semua WP melaporkan SPT (artinya ada yang belum lapor). Premis 2: Hanya yang lapor SPT yang bisa mengajukan restitusi. Kesimpulan: sebagian WP (yang belum lapor SPT) tidak dapat mengajukan restitusi."
+    },
+    {
+      "id": 4,
+      "question": "Semua satpam di perusahaan X mendapatkan insentif harian. Semua peserta arisan adalah satpam di perusahaan X.\n\nSimpulan yang tepat dari pernyataan di atas adalah...",
+      "options": {
+        "A": "Sebagian peserta arisan tidak mendapatkan insentif harian",
+        "B": "Semua peserta arisan mendapatkan insentif harian",
+        "C": "Semua satpam di perusahaan X adalah peserta arisan",
+        "D": "Sebagian peserta arisan bukan satpam di perusahaan X"
+      },
+      "answer": "B",
+      "explanation": "Premis 1: Semua satpam perusahaan X mendapat insentif. Premis 2: Semua peserta arisan adalah satpam X. Silogisme: peserta arisan adalah subhimpunan dari satpam X, sehingga semua peserta arisan mendapat insentif."
+    },
+    {
+      "id": 5,
+      "question": "Semua sepeda memiliki lampu. Sebagian lampu berwarna merah.\n\nKesimpulan yang paling tepat adalah...",
+      "options": {
+        "A": "Semua sepeda memiliki lampu berwarna merah",
+        "B": "Tidak semua lampu sepeda berwarna merah",
+        "C": "Lampu merah adalah bagian perlengkapan semua sepeda",
+        "D": "Sebagian sepeda memiliki lampu berwarna merah",
+        "E": "Tidak ada sepeda yang berlampu selain merah"
+      },
+      "answer": "D",
+      "explanation": "Premis 1: Semua sepeda punya lampu. Premis 2: Sebagian lampu berwarna merah. Penggabungan: sebagian lampu pada sepeda berwarna merah, maka sebagian sepeda memiliki lampu merah. Tidak bisa disimpulkan SEMUA sepeda berlampukan merah."
+    },
+    {
+      "id": 6,
+      "question": "Semua penyanyi adalah artis. Sementara penyanyi adalah bintang film.\n\nKesimpulan yang paling tepat adalah...",
+      "options": {
+        "A": "Sementara bintang film adalah artis",
+        "B": "Sementara artis adalah bukan penyanyi",
+        "C": "Semua bintang film adalah artis",
+        "D": "Sementara penyanyi bukan bintang film",
+        "E": "Sementara penyanyi bukan artis"
+      },
+      "answer": "A",
+      "explanation": "Premis 1: Semua penyanyi = artis. Premis 2: Sebagian penyanyi = bintang film. Karena sebagian penyanyi adalah bintang film, dan semua penyanyi adalah artis, maka sebagian bintang film tersebut juga artis."
+    },
+    {
+      "id": 7,
+      "question": "Beberapa penjahat adalah residivis. Semua residivis masuk penjara lebih dari sekali.\n\nKesimpulan yang paling tepat adalah...",
+      "options": {
+        "A": "Beberapa penjahat masuk penjara lebih dari sekali",
+        "B": "Semua penjahat masuk penjara lebih dari sekali",
+        "C": "Semua residivis adalah bukan penjahat",
+        "D": "Semua penjahat masuk penjara",
+        "E": "Beberapa residivis pernah ditembak kakinya"
+      },
+      "answer": "A",
+      "explanation": "Premis 1: Sebagian penjahat = residivis. Premis 2: Semua residivis masuk penjara >1x. Penggabungan: sebagian penjahat (yang berstatus residivis) pasti masuk penjara lebih dari sekali."
+    },
+    {
+      "id": 8,
+      "question": "Semua penonton konser memakai pita kertas. Arsyi adalah penonton konser.\n\nKesimpulan yang tepat adalah...",
+      "options": {
+        "A": "Arsyi tidak memakai pita kertas",
+        "B": "Arsyi memakai pita kertas",
+        "C": "Arsyi memakai bukan hanya pita kertas",
+        "D": "Bukan Arsyi, penonton yang memakai pita kertas",
+        "E": "Selain Arsyi, penonton memakai pita kertas"
+      },
+      "answer": "B",
+      "explanation": "Premis 1: Semua penonton konser memakai pita kertas. Premis 2: Arsyi adalah penonton konser. Silogisme sederhana: Arsyi pasti memakai pita kertas."
+    },
+    {
+      "id": 9,
+      "question": "Beberapa pengangguran berbadan kurus. Tidak seorang pun yang berbadan kurus adalah vegetarian.\n\nSimpulan mana yang benar?",
+      "options": {
+        "A": "Beberapa pengangguran adalah bukan vegetarian",
+        "B": "Tidak ada pengangguran yang bukan vegetarian",
+        "C": "Kebanyakan vegetarian berbadan kurus",
+        "D": "Hampir semua pengangguran bukan vegetarian",
+        "E": "Semua pengangguran adalah bukan vegetarian"
+      },
+      "answer": "A",
+      "explanation": "Premis 1: Sebagian pengangguran = berbadan kurus. Premis 2: Tidak ada yang kurus = vegetarian (kurus ∩ vegetarian = ∅). Maka: sebagian pengangguran (yang kurus) bukan vegetarian. Tidak bisa disimpulkan SEMUA pengangguran bukan vegetarian."
+    },
+    {
+      "id": 10,
+      "question": "Beberapa kantor memiliki ruang menyusui. Tidak ada kantor yang memiliki ruang menyusui berlantai lebih dari 5.\n\nMakna kesimpulannya adalah...",
+      "options": {
+        "A": "Beberapa kantor yang berlantai lebih dari 5 memiliki ruang menyusui",
+        "B": "Beberapa kantor tidak memiliki lantai lebih dari 5",
+        "C": "Kantor yang berlantai lebih dari 5 memiliki ruang menyusui",
+        "D": "Kebanyakan kantor tidak memiliki lantai lebih dari 5",
+        "E": "Kantor tidak memiliki lantai lebih dari 5"
+      },
+      "answer": "B",
+      "explanation": "Premis 1: Sebagian kantor punya ruang menyusui. Premis 2: Kantor yang punya ruang menyusui tidak berlantai >5. Maka: kantor-kantor yang punya ruang menyusui itu tidak berlantai >5 — artinya beberapa kantor tidak berlantai lebih dari 5."
     }
   ]
 }

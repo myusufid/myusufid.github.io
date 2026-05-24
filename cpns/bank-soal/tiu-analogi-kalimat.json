@@ -1,0 +1,46 @@
+{
+  "id": "tiu-analogi-kalimat",
+  "title": "TIU — Analogi Kalimat (Persamaan Struktur)",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Sekolah adalah tempat guru bekerja.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah...",
+      "options": {
+        "A": "Piano adalah tempat musisi bekerja",
+        "B": "Penyanyi adalah tempat televisi bekerja",
+        "C": "Karyawan adalah tempat kantor bekerja",
+        "D": "Ladang adalah tempat petani bekerja",
+        "E": "Panggung adalah tempat penjahat bekerja"
+      },
+      "answer": "D",
+      "explanation": "Struktur kalimat: [tempat] adalah tempat [profesi] bekerja. Sekolah = tempat guru bekerja (sekolah adalah lokasi kerja guru). Ladang = tempat petani bekerja (ladang adalah lokasi kerja petani). Opsi A salah karena piano bukan tempat/lokasi. Opsi B dan C strukturnya terbalik."
+    },
+    {
+      "id": 2,
+      "question": "Narapidana yang bersalah dihukum di dalam penjara.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah...",
+      "options": {
+        "A": "Tentara dikirim ke medan perang",
+        "B": "Polisi menembak pencuri di jalan raya",
+        "C": "Guru memberikan nilai kepada siswa",
+        "D": "Karyawan bekerja di perusahaan swasta",
+        "E": "Dokter memeriksa pasien setiap pagi"
+      },
+      "answer": "A",
+      "explanation": "Struktur kalimat: [subjek] [kata kerja pasif] [keterangan tempat]. Narapidana yang bersalah (subjek) → dihukum (kata kerja pasif) → di dalam penjara (keterangan tempat). Tentara (subjek) → dikirim (kata kerja pasif) → ke medan perang (keterangan tempat). Opsi lain menggunakan kata kerja aktif."
+    },
+    {
+      "id": 3,
+      "question": "Kayu adalah bahan dasar kertas.\n\nKalimat yang memiliki persamaan struktur dengan kalimat di atas adalah...",
+      "options": {
+        "A": "Seng adalah bahan dasar lantai",
+        "B": "Dedaunan adalah bahan dasar tandus",
+        "C": "Buku adalah bahan dasar baca",
+        "D": "Nangka adalah bahan dasar rendang",
+        "E": "Gandum adalah bahan dasar roti"
+      },
+      "answer": "E",
+      "explanation": "Struktur: [bahan mentah] adalah bahan dasar [produk]. Kayu → bahan dasar → kertas (kayu diolah menjadi kertas). Gandum → bahan dasar → roti (gandum diolah menjadi roti). Seng bukan bahan dasar lantai (lantai bisa dari keramik/semen). Rendang berbahan dasar daging, bukan nangka."
+    }
+  ]
+}

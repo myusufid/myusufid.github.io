@@ -1,0 +1,85 @@
+{
+  "id": "tiu-deret-logika",
+  "title": "TIU — Deret Logika & Urutan",
+  "category": "TIU",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Pada sebuah olimpiade, lima peserta berkompetisi untuk mendapatkan nilai tertinggi. Nilai Kanika melebihi nilai Naomi, tetapi tidak melebihi nilai Ozan. Sedangkan nilai Marcel di bawah Linda tetapi di atas Ozan. Peserta yang menjadi pemenang dalam perlombaan tersebut adalah...",
+      "options": {
+        "A": "Linda",
+        "B": "Ozan",
+        "C": "Kanika",
+        "D": "Naomi",
+        "E": "Marcel"
+      },
+      "answer": "A",
+      "explanation": "Dari premis: Kanika > Naomi dan Ozan ≥ Kanika → Ozan ≥ Kanika > Naomi. Marcel < Linda dan Marcel > Ozan → Linda > Marcel > Ozan. Urutan lengkap: Linda > Marcel > Ozan ≥ Kanika > Naomi. Pemenang (nilai tertinggi) = Linda."
+    },
+    {
+      "id": 2,
+      "question": "Dalam suatu ujian diketahui sebagai berikut:\n- A menyelesaikan ujian sebelum B\n- D menyelesaikan ujian sebelum A\n- B menyelesaikan ujian setelah C\n\nJika C menyelesaikan ujian sebelum D, maka urutan yang benar dari awal adalah...",
+      "options": {
+        "A": "C - D - A - B",
+        "B": "C - A - D - B",
+        "C": "B - A - D - C",
+        "D": "B - D - A - C",
+        "E": "C - A - D - B"
+      },
+      "answer": "A",
+      "explanation": "Dari semua syarat: D sebelum A (D < A), A sebelum B (A < B), C sebelum B (C < B), C sebelum D (C < D). Menggabungkan: C < D < A < B. Urutan dari awal: C - D - A - B."
+    },
+    {
+      "id": 3,
+      "question": "Nilai IELTS Deron lebih tinggi daripada nilai IELTS Wesley dan tidak lebih rendah daripada nilai IELTS Chandler. Nilai IELTS Wesley dua poin lebih tinggi daripada nilai IELTS Chandler dan sama dengan nilai IELTS Zaza dikurangi tiga poin. Jika nilai IELTS Zaza satu poin lebih rendah dari nilai IELTS Deron, maka urutan nilai IELTS dari yang terendah adalah...",
+      "options": {
+        "A": "Deron, Zaza, Chandler, Wesley",
+        "B": "Deron, Zaza, Wesley, Chandler",
+        "C": "Chandler, Wesley, Zaza, Deron",
+        "D": "Chandler, Wesley, Deron, Zaza",
+        "E": "Wesley, Deron, Zaza, Wesley"
+      },
+      "answer": "C",
+      "explanation": "Misalkan Chandler = x. Wesley = x+2. Zaza = Wesley+3 = x+5. Deron = Zaza+1 = x+6. Urutan dari terendah: Chandler(x) < Wesley(x+2) < Zaza(x+5) < Deron(x+6). Jadi: Chandler, Wesley, Zaza, Deron."
+    },
+    {
+      "id": 4,
+      "question": "Di dalam sebuah kelas terdapat 2 kelompok siswa yang akan melakukan presentasi. Kelompok 1 beranggotakan Budi, Yudi, Ani, dan Arif. Para siswa akan secara bergantian melakukan presentasi. Budi maju setelah Arif dan sebelum Yudi, sedangkan Ani adalah yang paling akhir.\n\nPernyataan yang paling sesuai adalah...",
+      "options": {
+        "A": "Budi presentasi pertama kali",
+        "B": "Arif presentasi paling akhir",
+        "C": "Arif presentasi setelah Budi",
+        "D": "Arif presentasi pertama kali",
+        "E": "Yudi presentasi setelah Ani"
+      },
+      "answer": "D",
+      "explanation": "Dari syarat: Arif sebelum Budi, Budi sebelum Yudi, Ani paling akhir. Urutan: Arif → Budi → Yudi → Ani. Maka Arif presentasi pertama kali (opsi D). Opsi A salah (Budi kedua), B salah (Ani paling akhir), C salah (Arif sebelum Budi), E salah (Yudi sebelum Ani)."
+    },
+    {
+      "id": 5,
+      "question": "Anto ingin beli motor sebelum punya mobil. Anto ingin beli sepeda sebelum punya motor. Setelah Anto beli sepeda, ia ingin punya HP. Anto juga ingin beli motor setelah punya HP. Anto ingin beli rumah setelah punya mobil.\n\nMana urutan yang paling sesuai?",
+      "options": {
+        "A": "Motor - Mobil - Sepeda - Rumah - HP",
+        "B": "Sepeda - HP - Motor - Mobil - Rumah",
+        "C": "HP - Mobil - Motor - Sepeda - Rumah",
+        "D": "Rumah - Motor - HP - Sepeda - Mobil",
+        "E": "Sepeda - HP - Motor - Rumah - Mobil"
+      },
+      "answer": "B",
+      "explanation": "Dari syarat: sepeda sebelum motor, motor sebelum mobil → sepeda < motor < mobil. Setelah beli sepeda → punya HP, dan motor setelah HP → sepeda < HP < motor. Rumah setelah mobil → mobil < rumah. Urutan lengkap: Sepeda → HP → Motor → Mobil → Rumah."
+    },
+    {
+      "id": 6,
+      "question": "Empat orang pedagang Bakso menghitung hasil penjualan dalam satu hari. Pedagang III lebih banyak menjual daripada pedagang IV, tetapi kurang daripada pedagang I. Penjualan pedagang II sama dengan pedagang IV dan kurang daripada pedagang I.\n\nPedagang mana yang hasil penjualannya terbanyak?",
+      "options": {
+        "A": "Pedagang I",
+        "B": "Pedagang II",
+        "C": "Pedagang III",
+        "D": "Pedagang IV",
+        "E": "Tidak bisa ditentukan"
+      },
+      "answer": "A",
+      "explanation": "Dari syarat: I > III > IV dan I > II = IV. Menggabungkan: I > III > II = IV. Pedagang I memiliki penjualan terbanyak."
+    }
+  ]
+}

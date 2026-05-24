@@ -45,7 +45,7 @@
       "title": "TIU — Analogi",
       "category": "TIU",
       "description": "Soal menemukan hubungan antara pasangan kata dan menerapkan pola hubungan yang sama.",
-      "total": 54,
+      "total": 62,
       "file": "/cpns/bank-soal/tiu-analogi.json"
     },
     {
@@ -53,7 +53,7 @@
       "title": "TIU — Silogisme",
       "category": "TIU",
       "description": "Soal menarik kesimpulan dari dua premis menggunakan logika silogisme.",
-      "total": 3,
+      "total": 10,
       "file": "/cpns/bank-soal/tiu-silogisme.json"
     },
     {
@@ -95,6 +95,38 @@
       "description": "Soal menghitung jumlah pekerja, waktu penyelesaian, dan kapasitas produksi menggunakan prinsip perbandingan berbalik nilai.",
       "total": 2,
       "file": "/cpns/bank-soal/tiu-pekerjaan.json"
+    },
+    {
+      "id": "tiu-analogi-kalimat",
+      "title": "TIU — Analogi Kalimat (Persamaan Struktur)",
+      "category": "TIU",
+      "description": "Soal menemukan kalimat yang memiliki persamaan struktur dengan kalimat yang diberikan.",
+      "total": 3,
+      "file": "/cpns/bank-soal/tiu-analogi-kalimat.json"
+    },
+    {
+      "id": "tiu-deret-logika",
+      "title": "TIU — Deret Logika & Urutan",
+      "category": "TIU",
+      "description": "Soal menentukan urutan berdasarkan syarat logika, peringkat, dan deret hubungan.",
+      "total": 6,
+      "file": "/cpns/bank-soal/tiu-deret-logika.json"
+    },
+    {
+      "id": "tiu-analisis-tabel",
+      "title": "TIU — Analisis Tabel & Data",
+      "category": "TIU",
+      "description": "Soal membaca dan menganalisis data dari tabel untuk menarik kesimpulan yang tepat.",
+      "total": 3,
+      "file": "/cpns/bank-soal/tiu-analisis-tabel.json"
+    },
+    {
+      "id": "tiu-campuran-penalaran",
+      "title": "TIU — Campuran Penalaran",
+      "category": "TIU",
+      "description": "Kumpulan soal campuran silogisme, analogi, urutan, hubungan objek, dan analisis tabel.",
+      "total": 58,
+      "file": "/cpns/bank-soal/tiu-campuran-penalaran.json"
     }
   ]
 }

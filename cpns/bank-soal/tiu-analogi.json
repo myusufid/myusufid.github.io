@@ -704,6 +704,110 @@
       },
       "answer": "A",
       "explanation": "Kemeja memiliki kerah dan kancing sebagai komponen struktural yang merupakan bagian dari kemeja itu sendiri. Sepatu memiliki sol dan tali sepatu sebagai bagian dari struktur sepatu. Hubungan: benda → komponen struktural yang menjadi bagian dari benda tersebut."
+    },
+    {
+      "id": 55,
+      "question": "ANAK : REMAJA = EMBRIO : ....",
+      "options": {
+        "A": "Bayi",
+        "B": "Janin",
+        "C": "Rahim",
+        "D": "Lahir",
+        "E": "Sel"
+      },
+      "answer": "B",
+      "explanation": "Anak berkembang menjadi remaja (tahap perkembangan manusia setelah anak-anak). Embrio berkembang menjadi janin (tahap perkembangan dalam kandungan setelah embrio). Hubungan: tahap awal → tahap berikutnya dalam siklus perkembangan."
+    },
+    {
+      "id": 56,
+      "question": "Helm merupakan alat yang digunakan untuk melindungi kepala. Hubungan objek pada kalimat tersebut setara dengan....",
+      "options": {
+        "A": "Sapu digunakan untuk membersihkan lantai",
+        "B": "Kacamata digunakan untuk melihat lebih jelas",
+        "C": "Jam tangan dipakai di pergelangan tangan",
+        "D": "Sepatu digunakan untuk melindungi kaki",
+        "E": "Topi digunakan untuk bergaya"
+      },
+      "answer": "D",
+      "explanation": "Helm = alat pelindung untuk kepala. Sepatu = alat pelindung untuk kaki. Hubungan: alat perlindungan → bagian tubuh yang dilindungi."
+    },
+    {
+      "id": 57,
+      "question": "Motor membutuhkan bensin. Hubungan objek pada kalimat tersebut setara dengan....",
+      "options": {
+        "A": "Kapal laut membutuhkan nahkoda",
+        "B": "AC membutuhkan remote",
+        "C": "Anak membutuhkan spion",
+        "D": "Laptop membutuhkan baterai",
+        "E": "Telepon genggam membutuhkan charger"
+      },
+      "answer": "D",
+      "explanation": "Motor membutuhkan bensin sebagai sumber energi untuk beroperasi. Laptop membutuhkan baterai sebagai sumber energi untuk beroperasi. Hubungan: alat/kendaraan → sumber energi yang dibutuhkan agar berfungsi."
+    },
+    {
+      "id": 58,
+      "question": "Pembalap menggunakan pelindung lutut dan siku. Hubungan objek pada kalimat tersebut sama dengan....",
+      "options": {
+        "A": "Aura menggunakan jam tangan dan gelang",
+        "B": "Anak itu menggunakan masker dan topi",
+        "C": "Tukang las menggunakan topeng dan kaca mata las",
+        "D": "Polisi menggunakan pakaian dinas dan sepatu",
+        "E": "Ojek online menggunakan helm dan kompas"
+      },
+      "answer": "C",
+      "explanation": "Pembalap memakai pelindung lutut DAN siku — dua alat proteksi untuk dua bagian tubuh berbeda. Tukang las memakai topeng DAN kaca mata las — dua alat proteksi untuk dua bagian tubuh berbeda (wajah dan mata). Hubungan: profesi → dua alat pelindung untuk dua area tubuh."
+    },
+    {
+      "id": 59,
+      "question": "Pensil memiliki ujung pensil dan penghapus. Hubungan ini sama dengan....",
+      "options": {
+        "A": "Buku memiliki sampul dan halaman",
+        "B": "Lampu memiliki bohlam dan saklar",
+        "C": "Sepatu memiliki tali dan sol",
+        "D": "Kursi memiliki gagang dan kaki",
+        "E": "CPU memiliki monitor dan keyboard"
+      },
+      "answer": "A",
+      "explanation": "Pensil memiliki ujung (untuk menulis) dan penghapus (untuk menghapus) sebagai dua komponen utama yang melekat. Buku memiliki sampul (cover) dan halaman (isi) sebagai dua komponen utama yang terintegrasi. Hubungan: benda → dua komponen utama yang menjadi satu kesatuan."
+    },
+    {
+      "id": 60,
+      "question": "PENGARANG : PENERBIT : BUKU = ....",
+      "options": {
+        "A": "Pelukis : Lukisan : Narator",
+        "B": "Montir : Sepeda motor : Bengkel",
+        "C": "Pemahat : Batu : Candi",
+        "D": "Penulis : Pengarang : Pelukis",
+        "E": "Penyanyi : Dapur Rekaman : Kaset"
+      },
+      "answer": "E",
+      "explanation": "Pengarang (kreator konten) bekerja melalui Penerbit (distributor) untuk menghasilkan Buku (produk). Penyanyi (kreator konten) merekam di Dapur Rekaman/studio (distributor) untuk menghasilkan Kaset (produk). Hubungan: kreator → distributor → produk."
+    },
+    {
+      "id": 61,
+      "question": "HADIAH : RIANG = BENCANA : ....",
+      "options": {
+        "A": "Nestapa",
+        "B": "Kasihan",
+        "C": "Iba",
+        "D": "Haru",
+        "E": "Biru"
+      },
+      "answer": "A",
+      "explanation": "Hadiah menyebabkan perasaan riang (gembira). Bencana menyebabkan perasaan nestapa (sengsara/kesedihan mendalam). Hubungan: peristiwa → emosi yang ditimbulkan (berlawanan: positif vs negatif)."
+    },
+    {
+      "id": 62,
+      "question": "Laptop terdiri dari layar dan keyboard. Hubungan ini sama dengan....",
+      "options": {
+        "A": "Buku terdiri dari kertas dan sampul",
+        "B": "Mobil terdiri dari bensin dan jalan",
+        "C": "Pensil terdiri dari tulisan dan penghapus",
+        "D": "Televisi terdiri dari siaran dan remote",
+        "E": "HP terdiri dari charger dan kabel data"
+      },
+      "answer": "A",
+      "explanation": "Laptop terdiri dari layar dan keyboard sebagai dua komponen fisik utama yang terintegrasi. Buku terdiri dari kertas (isi) dan sampul (cover) sebagai dua komponen fisik utama. Hubungan: benda → dua komponen fisik utama yang membentuknya."
     }
   ]
 }
