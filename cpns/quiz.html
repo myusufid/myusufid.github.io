@@ -38,7 +38,7 @@
     </script>
 </head>
 
-<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+<body class="min-h-screen flex flex-col bg-background text-foreground antialiased transition-colors duration-300">
     <header
         class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
@@ -71,15 +71,15 @@
         </div>
     </header>
 
-    <main class="container mx-auto py-10 px-4 max-w-3xl">
+    <main class="flex-1 container mx-auto py-10 px-4 max-w-3xl">
 
         <!-- SCREEN: Bank Selection -->
         <div id="screen-home">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold tracking-tight mb-2">CPNS Tryout</h1>
-                <p class="text-muted-foreground">Pilih bank soal untuk memulai latihan.</p>
+                <p class="text-muted-foreground">Pilih kategori soal untuk memulai latihan.</p>
             </div>
-            <div id="bank-list" class="grid gap-4 sm:grid-cols-2"></div>
+            <div id="bank-list" class="grid gap-4 sm:grid-cols-3"></div>
         </div>
 
         <!-- SCREEN: Config -->
@@ -121,7 +121,7 @@
 
             <div class="mt-8 mb-6">
                 <span id="quiz-category" class="text-xs font-mono text-muted-foreground uppercase tracking-widest"></span>
-                <p id="quiz-question" class="text-lg font-medium mt-2 leading-relaxed whitespace-pre-wrap"></p>
+                <div id="quiz-question" class="text-lg font-medium mt-2 leading-relaxed"></div>
             </div>
 
             <div id="quiz-options" class="grid gap-3 mb-8"></div>
@@ -222,39 +222,68 @@
             renderHome();
         }
 
+        const CATEGORIES = {
+            TWK: {
+                label: 'TWK',
+                title: 'Tes Wawasan Kebangsaan',
+                description: 'Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika.',
+                colorBorder: 'border-blue-500/30',
+                colorText: 'text-blue-500',
+            },
+            TIU: {
+                label: 'TIU',
+                title: 'Tes Intelejensi Umum',
+                description: 'Kemampuan verbal, numerik, dan penalaran logis.',
+                colorBorder: 'border-orange-500/30',
+                colorText: 'text-orange-500',
+            },
+            TKP: {
+                label: 'TKP',
+                title: 'Tes Karakteristik Pribadi',
+                description: 'Pelayanan publik, jejaring kerja, sosial budaya, dan integritas diri.',
+                colorBorder: 'border-green-500/30',
+                colorText: 'text-green-500',
+            },
+        };
+
         function renderHome() {
+            const totals = {};
+            state.banks.forEach(b => {
+                totals[b.category] = (totals[b.category] || 0) + b.total;
+            });
+
             const list = document.getElementById('bank-list');
-            list.innerHTML = state.banks.map(bank => `
-                <div class="rounded-lg border p-5 hover:border-primary/50 transition-colors cursor-pointer group"
-                     onclick="selectBank('${bank.id}')">
-                    <div class="flex items-start justify-between mb-3">
-                        <span class="text-xs font-mono px-2 py-0.5 rounded-full border ${
-                            bank.category === 'TWK' ? 'border-blue-500/30 text-blue-500' : 'border-orange-500/30 text-orange-500'
-                        }">${bank.category}</span>
-                        <span class="text-xs text-muted-foreground">${bank.total} soal</span>
+            list.innerHTML = Object.values(CATEGORIES).map(cat => {
+                const total = totals[cat.label] || 0;
+                const available = total > 0;
+                return `
+                <div class="rounded-lg border p-6 transition-colors cursor-pointer group ${available ? 'hover:border-primary/50' : 'opacity-40 cursor-not-allowed'}"
+                     onclick="${available ? `selectCategory('${cat.label}')` : ''}">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="text-xs font-mono px-2 py-0.5 rounded-full border ${cat.colorBorder} ${cat.colorText}">${cat.label}</span>
+                        <span class="text-xs text-muted-foreground">${total > 0 ? total + ' soal' : 'segera'}</span>
                     </div>
-                    <h3 class="font-semibold mb-1 group-hover:text-primary transition-colors">${bank.title}</h3>
-                    <p class="text-sm text-muted-foreground">${bank.description}</p>
-                    <div class="mt-4 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                        Mulai Tryout →
-                    </div>
-                </div>
-            `).join('');
+                    <h3 class="font-semibold mb-1 ${available ? 'group-hover:text-primary' : ''} transition-colors">${cat.title}</h3>
+                    <p class="text-sm text-muted-foreground">${cat.description}</p>
+                    ${available ? `<div class="mt-4 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">Mulai Tryout →</div>` : ''}
+                </div>`;
+            }).join('');
         }
 
-        async function selectBank(bankId) {
-            const bank = state.banks.find(b => b.id === bankId);
-            const res = await fetch(bank.file);
-            const data = await res.json();
+        async function selectCategory(categoryLabel) {
+            const catBanks = state.banks.filter(b => b.category === categoryLabel);
+            const results = await Promise.all(catBanks.map(b => fetch(b.file).then(r => r.json())));
+            const allQuestions = results.flatMap(d => d.questions);
 
-            state.currentBank = bank;
-            state.allQuestions = data.questions;
+            const cat = CATEGORIES[categoryLabel];
+            state.currentBank = { category: categoryLabel, title: cat.title, description: cat.description };
+            state.allQuestions = allQuestions;
 
-            const total = data.questions.length;
+            const total = allQuestions.length;
             const defaultCount = Math.min(20, total);
 
-            document.getElementById('config-title').textContent = bank.title;
-            document.getElementById('config-desc').textContent = bank.description;
+            document.getElementById('config-title').textContent = cat.title;
+            document.getElementById('config-desc').textContent = `${catBanks.length} bank soal · ${total} soal tersedia`;
             document.getElementById('config-total').textContent = `dari ${total} soal tersedia`;
 
             const input = document.getElementById('input-count');
@@ -288,13 +317,41 @@
             renderQuestion();
         }
 
+        function parseMarkdown(text) {
+            const lines = text.split('\n');
+            let html = '';
+            let i = 0;
+            while (i < lines.length) {
+                const line = lines[i];
+                const nextLine = lines[i + 1] || '';
+                if (nextLine.match(/^\s*\|?\s*[-:]+[-| :]*\s*\|?\s*$/)) {
+                    // markdown table
+                    const headers = line.split('|').map(s => s.trim()).filter(s => s !== '');
+                    html += '<div class="overflow-x-auto my-4"><table class="w-full text-sm border-collapse">';
+                    html += '<thead><tr>' + headers.map(h => `<th class="border border-border px-3 py-2 text-left font-semibold bg-muted">${h}</th>`).join('') + '</tr></thead>';
+                    html += '<tbody>';
+                    i += 2;
+                    while (i < lines.length && lines[i].includes('|')) {
+                        const cells = lines[i].split('|').map(s => s.trim()).filter(s => s !== '');
+                        html += '<tr>' + cells.map(c => `<td class="border border-border px-3 py-2">${c}</td>`).join('') + '</tr>';
+                        i++;
+                    }
+                    html += '</tbody></table></div>';
+                } else {
+                    html += `<span>${line}</span>\n`;
+                    i++;
+                }
+            }
+            return html;
+        }
+
         function renderQuestion() {
             const q = state.questions[state.currentIndex];
             const total = state.questions.length;
             const idx = state.currentIndex;
 
             document.getElementById('quiz-category').textContent = state.currentBank.category;
-            document.getElementById('quiz-question').textContent = q.question;
+            document.getElementById('quiz-question').innerHTML = parseMarkdown(q.question);
             document.getElementById('quiz-progress').textContent = `${idx + 1} / ${total}`;
             document.getElementById('progress-bar').style.width = `${((idx + 1) / total) * 100}%`;
 
@@ -314,13 +371,22 @@
         }
 
         function selectOption(key) {
+            if (state.selected !== null) return;
             state.selected = key;
+
+            const correct = state.questions[state.currentIndex].answer;
+            const isCorrect = key === correct;
+
             document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('border-primary', 'bg-primary/10');
-                if (btn.dataset.key === key) {
-                    btn.classList.add('border-primary', 'bg-primary/10');
+                btn.onclick = null;
+                btn.classList.add('cursor-default');
+                if (btn.dataset.key === correct) {
+                    btn.classList.add('border-green-500', 'bg-green-500/10', 'text-green-600', 'dark:text-green-400');
+                } else if (btn.dataset.key === key && !isCorrect) {
+                    btn.classList.add('border-red-500', 'bg-red-500/10', 'text-red-600', 'dark:text-red-400');
                 }
             });
+
             document.getElementById('btn-next').disabled = false;
         }
 
