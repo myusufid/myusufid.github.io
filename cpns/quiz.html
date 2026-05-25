@@ -45,29 +45,47 @@
             <div class="flex items-center gap-4">
                 <a href="/" class="flex flex-col">
                     <span class="text-lg font-bold tracking-tight">M YUSUF</span>
-                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                    <span class="text-xs text-muted-foreground hidden sm:block">Backend Developer</span>
                 </a>
             </div>
-            <nav class="flex items-center gap-6">
-                <div class="flex items-center gap-4 text-sm font-medium">
+            <nav class="flex items-center gap-2">
+                <!-- Desktop nav -->
+                <div class="hidden sm:flex items-center gap-4 text-sm font-medium">
                     <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
                     <a href="/tools/index.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
                     <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
                     <a href="/about.html" class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
                     <a href="/quiz.html" class="transition-colors hover:text-foreground/80 text-foreground">Quiz</a>
-                    <button id="themeToggle"
-                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
-                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
-                            fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
-                        </svg>
-                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
-                            fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-                        </svg>
-                    </button>
                 </div>
+                <button id="themeToggle"
+                    class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                    <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                    </svg>
+                    <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                    </svg>
+                </button>
+                <!-- Mobile hamburger -->
+                <button id="mobileMenuBtn"
+                    class="sm:hidden inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </nav>
+        </div>
+        <!-- Mobile menu dropdown -->
+        <div id="mobileMenu" class="hidden sm:hidden border-t bg-background">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-3 text-sm font-medium max-w-5xl">
+                <a href="/" class="transition-colors hover:text-foreground text-foreground/60 py-1">Blog</a>
+                <a href="/tools/index.html" class="transition-colors hover:text-foreground text-foreground/60 py-1">Tools</a>
+                <a href="/tags.html" class="transition-colors hover:text-foreground text-foreground/60 py-1">Tags</a>
+                <a href="/about.html" class="transition-colors hover:text-foreground text-foreground/60 py-1">About</a>
+                <a href="/quiz.html" class="transition-colors hover:text-foreground text-foreground py-1 font-semibold">Quiz</a>
+            </div>
         </div>
     </header>
 
@@ -461,6 +479,10 @@
             });
             document.getElementById(`screen-${name}`).classList.remove('hidden');
         }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
 
         loadBankIndex();
     </script>
