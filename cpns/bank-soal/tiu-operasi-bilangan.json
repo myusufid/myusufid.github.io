@@ -14,7 +14,8 @@
         "E": "3,2"
       },
       "answer": "C",
-      "explanation": "Samakan penyebut ke 10: 4 = 40/10, 7/5 = 14/10, 3/10 = 3/10. Hasil = 40/10 - 14/10 + 3/10 = 29/10 = 2,9."
+      "explanation": "Samakan penyebut ke 10: 4 = 40/10, 7/5 = 14/10, 3/10 = 3/10. Hasil = 40/10 - 14/10 + 3/10 = 29/10 = 2,9.",
+      "discussion": "/cpns/materi/pembahasan/soal-tiu-735cda6e.md"
     },
     {
       "id": 2,
@@ -27,7 +28,36 @@
         "E": "9/13"
       },
       "answer": "B",
-      "explanation": "Langkah 1: 4/7 ÷ 6/7 = 4/7 × 7/6 = 4/6 = 2/3. Langkah 2: 4 × 1/3 = 4/3. Langkah 3: 2/3 + 4/3 = 6/3 = 2. Langkah 4: 2 - 2/5 = 10/5 - 2/5 = 8/5."
+      "explanation": "Langkah 1: 4/7 ÷ 6/7 = 4/7 × 7/6 = 4/6 = 2/3. Langkah 2: 4 × 1/3 = 4/3. Langkah 3: 2/3 + 4/3 = 6/3 = 2. Langkah 4: 2 - 2/5 = 10/5 - 2/5 = 8/5.",
+      "discussion": "/cpns/materi/pembahasan/soal-tiu-15dcf6b8.md"
+    },
+    {
+      "id": 3,
+      "question": "Hasil operasi 2,5 + 2/5 × 1,5 ÷ 2 - 80% = ...",
+      "options": {
+        "A": "2",
+        "B": "4",
+        "C": "6",
+        "D": "8",
+        "E": "10"
+      },
+      "answer": "A",
+      "explanation": "Aturan: × dan ÷ didahulukan sebelum + dan −. Langkah 1: ubah 80% = 4/5 dan 1,5 = 15/10 = 3/2. Langkah 2: 2/5 × 3/2 = 6/10 = 3/5. Langkah 3: 3/5 ÷ 2 = 3/10. Langkah 4: jadi 2,5 + 3/10 − 4/5. Samakan ke penyebut 10: 25/10 + 3/10 − 8/10 = 20/10 = 2.",
+      "discussion": "/cpns/materi/pembahasan/soal-tiu-a91dec30.md"
+    },
+    {
+      "id": 4,
+      "question": "8 × 3/7 - 2,4 ÷ 6/5 - 4/5 = ...",
+      "options": {
+        "A": "22/35",
+        "B": "26/35",
+        "C": "31/34",
+        "D": "34/35",
+        "E": "36/35"
+      },
+      "answer": "A",
+      "explanation": "Aturan: × dan ÷ didahulukan sebelum + dan −. Langkah 1: 8 × 3/7 = 24/7. Langkah 2: 2,4 ÷ 6/5 = 12/5 × 5/6 = 60/30 = 2. Langkah 3: jadi 24/7 - 2 - 4/5. Samakan ke penyebut 35: 24/7 = 120/35, 2 = 70/35, 4/5 = 28/35. Hasil = (120 - 70 - 28)/35 = 22/35.",
+      "discussion": "/cpns/materi/pembahasan/soal-tiu-1e743520.md"
     }
   ]
 }

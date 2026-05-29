@@ -17,5 +17,10 @@
   {"title": "TIU — Padanan Kata (Sinonim)", "path": "05-tiu/04-padanan-kata.md", "folder": "TIU"},
   {"title": "TIU — Perbandingan & Kali Silang", "path": "05-tiu/06-perbandingan.md", "folder": "TIU"},
   {"title": "TIU — Diskon & Persentase", "path": "05-tiu/07-diskon-persen.md", "folder": "TIU"},
-  {"title": "TIU — Penjumlahan & Pengurangan Pecahan", "path": "05-tiu/08-pecahan.md", "folder": "TIU"}
+  {"title": "TIU — Penjumlahan & Pengurangan Pecahan", "path": "05-tiu/08-pecahan.md", "folder": "TIU"},
+  {"title": "TIU — Operasi Campuran Persen, Pecahan & Desimal", "path": "05-tiu/09-operasi-campuran-persen-pecahan.md", "folder": "TIU"},
+  {"title": "Soal TIU — Operasi Hitung Campuran (a91dec30)", "path": "pembahasan/soal-tiu-a91dec30.md", "folder": "Pembahasan"},
+  {"title": "Soal TIU — Operasi Hitung Pecahan Sederhana (735cda6e)", "path": "pembahasan/soal-tiu-735cda6e.md", "folder": "Pembahasan"},
+  {"title": "Soal TIU — Operasi Campuran Pecahan: Bagi, Kali, Tambah, Kurang (15dcf6b8)", "path": "pembahasan/soal-tiu-15dcf6b8.md", "folder": "Pembahasan"},
+  {"title": "Soal TIU — 8 × 3/7 − 2,4 ÷ 6/5 − 4/5 (1e743520)", "path": "pembahasan/soal-tiu-1e743520.md", "folder": "Pembahasan"}
 ]
