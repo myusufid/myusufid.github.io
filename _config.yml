@@ -1,0 +1,5 @@
+exclude:
+  - cpns/materi/env
+  - cpns/build.py
+  - cpns/materi-content
+  - cpns/materi/template.html
