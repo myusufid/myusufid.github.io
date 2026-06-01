@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Cepat Akar &amp; Kuadrat 1–100 — CPNS</title>
+<link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; background: #f5f5f5; color: #1a1a1a; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; }
+.back { align-self: flex-start; max-width: 720px; width: 100%; margin: 0 auto 16px; }
+.back a { color: #c0392b; text-decoration: none; font-size: 14px; font-weight: 600; }
+.back a:hover { text-decoration: underline; }
+.quiz-wrap { width: 100%; max-width: 720px; }
+.quiz-wrap h2 { font-size: 22px; font-weight: 700; color: #1f3a8a; margin-bottom: 8px; }
+.quiz-wrap > p { font-size: 14px; color: #444; margin-bottom: 16px; line-height: 1.6; }
+.quiz-outer { border: 2px dashed #93b4d9; background: #f0f6ff; border-radius: 14px; padding: 28px; }
+.quiz-card { background: #fff; border: 2px solid #1f3a8a; border-radius: 12px; padding: 24px; max-width: 560px; margin: 0 auto; }
+.quiz-score { font-size: 18px; font-weight: 700; color: #1f3a8a; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.quiz-progress { height: 8px; background: #e8eef5; border-radius: 4px; margin: 14px 0 20px; overflow: hidden; }
+.quiz-progress-bar { height: 100%; background: #22a06b; width: 100%; transition: width .2s linear; border-radius: 4px; }
+.quiz-question { text-align: center; font-size: 36px; font-weight: 800; color: #1a1a1a; padding: 24px 0; min-height: 100px; }
+.quiz-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.quiz-opt { background: #f4c948; border: none; border-bottom: 4px solid #c99a1f; border-radius: 8px; padding: 14px 0; font-size: 20px; font-weight: 700; color: #1a1a1a; cursor: pointer; transition: transform .08s; }
+.quiz-opt:hover:not(:disabled) { transform: translateY(-1px); }
+.quiz-opt:active:not(:disabled) { transform: translateY(1px); }
+.quiz-opt:disabled { cursor: default; }
+.quiz-opt.correct { background: #4caf50; border-bottom-color: #2f7a32; color: #fff; }
+.quiz-opt.wrong { background: #c62828; border-bottom-color: #7f1717; color: #fff; }
+.quiz-opt.dim { background: #f9e5a0; border-bottom-color: #d8c178; color: #5a5a5a; opacity: .75; }
+.quiz-feedback { text-align: center; font-size: 14px; font-weight: 700; padding: 8px 0; min-height: 28px; }
+.quiz-feedback.info { color: #1f3a8a; }
+.quiz-feedback.ok { color: #2e7d32; }
+.quiz-feedback.no { color: #c62828; }
+.quiz-btn { display: block; width: 100%; margin-top: 12px; background: #1f3a8a; color: #fff; border: none; border-radius: 8px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s; }
+.quiz-btn:hover { background: #182d6b; }
+.quiz-btn.hidden { display: none; }
+.quiz-summary { text-align: center; padding: 20px 0; }
+.quiz-summary .big { font-size: 42px; font-weight: 800; color: #1f3a8a; }
+.quiz-summary .lbl { font-size: 14px; color: #555; margin-top: 4px; }
+.sqrt-sym { font-family: 'Times New Roman', serif; }
+@media (max-width: 480px) {
+  .quiz-options { grid-template-columns: repeat(2, 1fr); }
+  .quiz-question { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+  <div class="back"><a href="./">← Kembali</a></div>
+  <div class="quiz-wrap">
+    <h2>Kuis Cepat: Akar &amp; Kuadrat (1–100)</h2>
+    <p>Latih hafalan <strong>n²</strong> dan <strong>√n²</strong> dari 1 sampai 100. Soal acak antara "<strong>n² = ?</strong>" dan "<strong>√x = ?</strong>". Streak jawaban benar berturut-turut memberi bonus poin!</p>
+    <div class="quiz-outer">
+      <div class="quiz-card">
+        <div class="quiz-score">Skor: <span id="qScore">0</span></div>
+        <div class="quiz-progress" id="qProgressWrap" style="visibility:hidden"><div class="quiz-progress-bar" id="qProgress"></div></div>
+        <div class="quiz-question" id="qQuestion">Siap?</div>
+        <div class="quiz-options" id="qOptions"></div>
+        <div class="quiz-feedback info" id="qFeedback"></div>
+        <button class="quiz-btn" id="qBtn">Mulai Kuis</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const TOTAL = 10;
+  const TIME_PER_Q = 10;
+  const MAX_N = 100;
+  const $ = id => document.getElementById(id);
+  const state = { score: 0, streak: 0, idx: 0, current: null, timer: null, timeLeft: 0, locked: false };
+
+  const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+  function makeQuestion() {
+    const n = rand(2, MAX_N);
+    const sq = n * n;
+    const isSquare = Math.random() < 0.5;
+    let text, answer;
+    if (isSquare) {
+      text = `${n}² = ...`;
+      answer = sq;
+    } else {
+      text = `√${sq} = ...`;
+      answer = n;
+    }
+    const opts = new Set([answer]);
+    while (opts.size < 4) {
+      let distractor;
+      if (isSquare) {
+        const delta = rand(1, 4) * (Math.random() < 0.5 ? -1 : 1);
+        const altN = Math.max(1, Math.min(MAX_N + 5, n + delta));
+        distractor = altN * altN;
+      } else {
+        const delta = rand(1, 3) * (Math.random() < 0.5 ? -1 : 1);
+        distractor = Math.max(1, n + delta);
+      }
+      if (distractor !== answer) opts.add(distractor);
+    }
+    return { text, answer, options: [...opts].sort(() => Math.random() - 0.5) };
+  }
+
+  function renderQuestion() {
+    state.current = makeQuestion();
+    state.locked = false;
+    $('qQuestion').textContent = state.current.text;
+    const wrap = $('qOptions');
+    wrap.innerHTML = '';
+    state.current.options.forEach(v => {
+      const b = document.createElement('button');
+      b.className = 'quiz-opt';
+      b.textContent = v;
+      b.onclick = () => answer(v, b);
+      wrap.appendChild(b);
+    });
+    $('qFeedback').textContent = 'Waktu terus berjalan!';
+    $('qFeedback').className = 'quiz-feedback info';
+    $('qBtn').classList.add('hidden');
+    startTimer();
+  }
+
+  function startTimer() {
+    state.timeLeft = TIME_PER_Q;
+    $('qProgressWrap').style.visibility = 'visible';
+    $('qProgress').style.width = '100%';
+    clearInterval(state.timer);
+    state.timer = setInterval(() => {
+      state.timeLeft -= 0.1;
+      const pct = Math.max(0, state.timeLeft / TIME_PER_Q * 100);
+      $('qProgress').style.width = pct + '%';
+      if (state.timeLeft <= 0) {
+        clearInterval(state.timer);
+        timeout();
+      }
+    }, 100);
+  }
+
+  function answer(v, btn) {
+    if (state.locked) return;
+    state.locked = true;
+    clearInterval(state.timer);
+    const correct = v === state.current.answer;
+    document.querySelectorAll('.quiz-opt').forEach(b => {
+      b.disabled = true;
+      const val = Number(b.textContent);
+      if (val === state.current.answer) b.classList.add('correct');
+      else if (b === btn) b.classList.add('wrong');
+      else b.classList.add('dim');
+    });
+    if (correct) {
+      state.streak++;
+      const bonus = Math.min(state.streak - 1, 5) * 2;
+      const gained = 10 + bonus;
+      state.score += gained;
+      $('qScore').textContent = state.score;
+      $('qFeedback').textContent = bonus > 0
+        ? `Benar! +${gained} (streak ×${state.streak}, bonus +${bonus})`
+        : `Benar! +${gained}`;
+      $('qFeedback').className = 'quiz-feedback ok';
+    } else {
+      state.streak = 0;
+      $('qFeedback').textContent = `Kurang tepat. Jawaban yang benar adalah ${state.current.answer}.`;
+      $('qFeedback').className = 'quiz-feedback no';
+    }
+    next();
+  }
+
+  function timeout() {
+    state.locked = true;
+    state.streak = 0;
+    document.querySelectorAll('.quiz-opt').forEach(b => {
+      b.disabled = true;
+      if (Number(b.textContent) === state.current.answer) b.classList.add('correct');
+      else b.classList.add('dim');
+    });
+    $('qFeedback').textContent = `Waktu habis! Jawaban yang benar adalah ${state.current.answer}.`;
+    $('qFeedback').className = 'quiz-feedback no';
+    next();
+  }
+
+  function next() {
+    state.idx++;
+    const btn = $('qBtn');
+    btn.classList.remove('hidden');
+    if (state.idx >= TOTAL) {
+      btn.textContent = 'Lihat Hasil';
+      btn.onclick = showSummary;
+    } else {
+      btn.textContent = 'Soal Berikutnya';
+      btn.onclick = renderQuestion;
+    }
+  }
+
+  function showSummary() {
+    clearInterval(state.timer);
+    $('qProgressWrap').style.visibility = 'hidden';
+    $('qOptions').innerHTML = '';
+    $('qFeedback').textContent = '';
+    $('qQuestion').innerHTML = `<div class="quiz-summary"><div class="big">${state.score}</div><div class="lbl">Skor akhir dari ${TOTAL} soal</div></div>`;
+    const btn = $('qBtn');
+    btn.textContent = 'Coba Lagi';
+    btn.classList.remove('hidden');
+    btn.onclick = start;
+  }
+
+  function start() {
+    state.score = 0;
+    state.streak = 0;
+    state.idx = 0;
+    $('qScore').textContent = '0';
+    renderQuestion();
+  }
+
+  $('qBtn').onclick = start;
+})();
+</script>
+</body>
+</html>
