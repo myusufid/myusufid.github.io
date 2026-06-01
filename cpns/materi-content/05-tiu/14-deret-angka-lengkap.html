@@ -1,0 +1,123 @@
+<h1>TIU — Deret Angka Lengkap (Jenis &amp; Tipe Pola)</h1>
+<p>Materi lengkap deret angka untuk soal TIU CPNS: jenis deret, tipe larik, tingkat, Fibonacci, dan kombinasi, lengkap dengan pembahasan.</p>
+<hr>
+
+<h2>1. Pengertian</h2>
+<p>Barisan bilangan adalah deretan bilangan yang tersusun atas <strong>pola tertentu</strong>. Pola dapat berupa operasi aljabar antar suku, atau hubungan khusus seperti penjumlahan dua suku sebelumnya.</p>
+<hr>
+
+<h2>2. Jenis Deret Angka</h2>
+
+<h3>a. Satu Deret</h3>
+<p>Deretan angka dengan pola yang dapat ditentukan oleh operasi aljabar antara satu suku dengan suku lainnya. Semua suku berada dalam satu pola berurutan.</p>
+
+<h3>b. Dua Deret</h3>
+<p>Deretan angka yang <strong>tidak memiliki hubungan langsung</strong> antara satu suku dengan suku berikutnya — karena sebenarnya merupakan gabungan dari dua pola berbeda (lihat tipe Larik di bawah).</p>
+<hr>
+
+<h2>3. Tipe Deret Angka</h2>
+
+<h3>a. Larik</h3>
+
+<h4>Satu Larik</h4>
+<p>Deret dengan satu pola bilangan dan hubungan antar suku mudah ditentukan karena hanya satu pola.</p>
+
+<h4>Dua Larik</h4>
+<p>Dua pola berbeda yang dibagi jadi dua sub-deret. Pola larik pertama pada suku <strong>ganjil</strong>, pola larik kedua pada suku <strong>genap</strong>.</p>
+
+<p><strong>Contoh:</strong> $3, 5, 7, 10, 11, 15, 15, \ldots$</p>
+<pre><code>Larik 1 (ganjil): 3, 7, 11, 15, ...   → pola +4
+Larik 2 (genap): 5, 10, 15, ...        → pola +5
+</code></pre>
+<p>Suku selanjutnya melanjutkan larik 2 → $15 + 5 = \mathbf{20}$.</p>
+
+<h4>Tiga Larik</h4>
+<p>Dibedakan jadi 3 larik dengan pola berbeda:</p>
+<ul>
+<li>Larik 1: $U_1, U_4, U_7, \ldots$</li>
+<li>Larik 2: $U_2, U_5, U_8, \ldots$</li>
+<li>Larik 3: $U_3, U_6, U_9, \ldots$</li>
+</ul>
+
+<p><strong>Contoh:</strong> $3, 6, 12, 15, 30, 33, \ldots$</p>
+<pre><code>Larik 1: 3, 15, ...    → +12 (atau pola gabungan +3, ×2)
+Larik 2: 6, 30, ...    → ×5
+Larik 3: 12, 33, ...   → +21
+</code></pre>
+<p>Atau dilihat sebagai pola berselang-seling <strong>+3, ×2, +3, ×2, +3, ×2</strong> → suku berikutnya: $33 \times 2 = \mathbf{66}$.</p>
+
+<h3>b. Tingkat</h3>
+<p>Pola bilangan pada tingkat pertama belum teratur; pada tingkat kedua/ketiga (selisih dari selisih) baru muncul pola tetap.</p>
+
+<p><strong>Contoh 1:</strong> $2, 5, 10, 17, 26, \ldots$</p>
+<pre><code>Tingkat 1 (selisih): +3, +5, +7, +9, +11
+Tingkat 2 (selisih dari selisih): +2, +2, +2, +2
+</code></pre>
+<p>Suku berikutnya: $26 + 11 = \mathbf{37}$.</p>
+
+<p><strong>Contoh 2:</strong> $3, 4, 7, 14, 29, 60, \ldots$</p>
+<pre><code>Tingkat 1: +1, +3, +7, +15, +31, +63
+Tingkat 2: +2, +4, +8, +16, +32 (×2 setiap kali)
+</code></pre>
+<p>Suku berikutnya: $60 + 63 = \mathbf{123}$.</p>
+
+<h3>c. Fibonacci</h3>
+<p>Suku berikutnya = jumlah dua suku sebelumnya.</p>
+<p>$$U_n = U_{n-1} + U_{n-2}$$</p>
+
+<p><strong>Contoh:</strong> $2, 3, 5, 8, 13, 21, \ldots$</p>
+<ul>
+<li>$5 = 2 + 3$</li>
+<li>$8 = 3 + 5$</li>
+<li>$13 = 5 + 8$</li>
+<li>$21 = 8 + 13$</li>
+</ul>
+<p>Suku berikutnya: $13 + 21 = \mathbf{34}$.</p>
+
+<h3>d. Kombinasi</h3>
+<p>Deret yang aturannya merupakan kombinasi dari larik + tingkat + Fibonacci.</p>
+
+<p><strong>Contoh:</strong> $2, 3, 3, 5, 6, 9, 11, 15, 18, \ldots$</p>
+<pre><code>Larik 1 (ganjil): 2, 3, 6, 11, 18, ...  → tingkat (+1, +3, +5, +7)
+Larik 2 (genap): 3, 5, 9, 15, ...        → tingkat (+2, +4, +6)
+</code></pre>
+<p>Suku berikutnya (larik 2): $15 + 6 = \mathbf{21}$.</p>
+<hr>
+
+<h2>4. Strategi Mengerjakan Soal Deret</h2>
+<ol>
+<li><strong>Cek selisih antar suku</strong> dulu (tingkat 1). Pola tetap? → deret aritmetika.</li>
+<li>Jika tidak tetap, <strong>cek rasio</strong> (pembagian). Tetap? → deret geometri.</li>
+<li>Tidak ada juga? <strong>Cek selisih dari selisih</strong> (deret bertingkat).</li>
+<li>Masih random? Pisahkan jadi <strong>larik ganjil &amp; genap</strong>, atau larik 3 sub-deret.</li>
+<li>Cek pola <strong>Fibonacci</strong> (jumlah dua suku sebelumnya).</li>
+<li>Jika tetap rumit → coba kombinasi (larik + tingkat).</li>
+</ol>
+<hr>
+
+<h2>5. Latihan Soal</h2>
+<ol>
+<li>$1, 4, 9, 16, 25, \ldots$ → ?</li>
+<li>$1, 1, 2, 3, 5, 8, \ldots$ → ?</li>
+<li>$2, 5, 11, 23, 47, \ldots$ → ?</li>
+<li>$3, 7, 5, 9, 7, 11, \ldots$ → ?</li>
+<li>$1, 2, 6, 24, 120, \ldots$ → ?</li>
+</ol>
+
+<h3>Kunci Jawaban</h3>
+<ol>
+<li>Kuadrat ($n^2$) → $6^2 = \mathbf{36}$</li>
+<li>Fibonacci → $5 + 8 = \mathbf{13}$</li>
+<li>Pola $\times 2 + 1$: $47 \times 2 + 1 = \mathbf{95}$</li>
+<li>Dua larik: ganjil (3,5,7,…) +2 → 9; genap (7,9,11,…) +2 → 13. Suku berikutnya = <strong>9</strong></li>
+<li>$\times 2, \times 3, \times 4, \times 5$ → $120 \times 6 = \mathbf{720}$ (faktorial)</li>
+</ol>
+<hr>
+
+<h2>6. Jebakan Umum</h2>
+<ul>
+<li>❌ Hanya memeriksa selisih sekali — banyak soal pakai pola tingkat ke-2 atau ke-3.</li>
+<li>❌ Tidak menyadari deret <strong>larik ganda</strong> — selalu coba pisahkan suku ganjil vs genap kalau pola "kacau".</li>
+<li>❌ Mengira pola tetap pada 2 suku → minimal verifikasi 3 selisih.</li>
+<li>❌ Lupa pola <strong>perkalian/pembagian</strong> — bukan hanya tambah/kurang.</li>
+</ul>
