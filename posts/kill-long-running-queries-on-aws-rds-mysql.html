@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kill Long Running Queries on AWS RDS MySQL | M Yusuf</title>
+
+    <!-- SEO & Favicon (Relative for build script) -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon_io/favicon-32x32.png">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Syntax Highlighting & Search -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Add common languages for backend devs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+            <div class="flex items-center gap-4">
+                <a href="/" class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                    <span class="text-xs text-muted-foreground">Backend Developer</span>
+                </a>
+            </div>
+
+            <nav class="flex items-center gap-6">
+                <div class="hidden md:flex relative group">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="h-9 w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <div id="searchResults"
+                        class="absolute top-full mt-2 w-80 rounded-md border bg-background text-foreground shadow-md hidden z-50 max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-sm font-medium">
+                    <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                    <a href="/tools/index.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
+                    <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                    <a href="/about.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html"
+                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <button id="themeToggle"
+                        class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                        <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                        </svg>
+                        <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-5xl">
+        
+        <div class="mb-10 overflow-hidden rounded-xl border bg-muted">
+            <img src="/assets/images/ChatGPT Image Jun 18, 2026, 11_36_01 AM.png" alt="Kill Long Running Queries on AWS RDS MySQL" class="aspect-video w-full object-cover transition-all hover:scale-105">
+            <div class="p-2 text-center text-xs text-muted-foreground italic border-t bg-background">
+                Image source: ChatGPT, June 18, 2026
+            </div>
+        </div>
+        
+        <article class="prose dark:prose-invert max-w-none">
+            <article class="blog-post">
+    <h1>Kill Long Running Queries on AWS RDS MySQL</h1>
+    <div class="meta mb-4">June 18, 2026</div>
+
+    <p>Long-running queries can lock tables, eat up CPU, and slow down your entire application. On a self-managed MySQL server you would just use the regular <code>KILL</code> command, but on AWS RDS you do not have <code>SUPER</code> privileges. The good news: AWS provides two stored procedures that do the same job safely.</p>
+
+    <div class="alert alert-warning">
+        <strong>Important:</strong> These queries must be executed on the <strong>writer instance</strong> (primary). The reader/replica only sees its own sessions, so you cannot kill a query running on the writer from a reader endpoint.
+    </div>
+
+    <h2>1. Find the Long-Running Queries</h2>
+
+    <p>Connect to your RDS MySQL writer endpoint using any client (MySQL Workbench, DBeaver, or the <code>mysql</code> CLI) with your master/admin user, then run:</p>
+
+    <pre><code class="language-sql">SELECT
+    id,
+    user,
+    host,
+    db,
+    command,
+    time AS seconds_running,
+    state,
+    info AS current_query
+FROM information_schema.PROCESSLIST
+WHERE command != 'Sleep'
+  AND time > 60                    -- adjust this, e.g. 300 = 5 minutes
+ORDER BY time DESC;</code></pre>
+
+    <p>This lists every active query that has been running for more than 60 seconds. The <code>id</code> column is the value you will pass to the kill procedure.</p>
+
+    <h2>2. Kill the Query Safely</h2>
+
+    <p>RDS exposes two procedures. Prefer the first one whenever possible.</p>
+
+    <pre><code class="language-sql">-- Kill only the QUERY (recommended - keeps the connection alive)
+CALL mysql.rds_kill_query(123456);   -- replace 123456 with the id from PROCESSLIST
+
+-- Kill the whole CONNECTION (more aggressive)
+CALL mysql.rds_kill(123456);</code></pre>
+
+    <h3>Which One Should You Use?</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Command</th>
+                <th>What it does</th>
+                <th>Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>mysql.rds_kill_query(id)</code></td>
+                <td>Stops the current statement, the connection stays alive</td>
+                <td>Lower &mdash; best default choice</td>
+            </tr>
+            <tr>
+                <td><code>mysql.rds_kill(id)</code></td>
+                <td>Terminates the whole client connection</td>
+                <td>Higher &mdash; use only when the connection is stuck</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Generate Kill Commands Automatically</h2>
+
+    <p>If you have several queries to kill, let MySQL build the statements for you:</p>
+
+    <pre><code class="language-sql">SELECT
+    CONCAT('CALL mysql.rds_kill_query(', id, '); -- running for ', time, ' seconds') AS kill_command
+FROM information_schema.PROCESSLIST
+WHERE command != 'Sleep'
+  AND time > 300                    -- queries running more than 5 minutes
+ORDER BY time DESC;</code></pre>
+
+    <p>Copy the output, review it, and paste it back into your client to execute.</p>
+
+    <h2>4. Visual Inspection with Performance Insights</h2>
+
+    <p>If you prefer a UI, AWS Performance Insights gives you a live view of what is happening on the database:</p>
+
+    <ol>
+        <li>Open the AWS Console &rarr; <strong>RDS</strong> &rarr; your DB instance.</li>
+        <li>Click <strong>Performance Insights</strong>.</li>
+        <li>Use the <strong>Top SQL</strong> tab to see the heaviest queries and the <strong>Active sessions</strong> chart to spot waits.</li>
+    </ol>
+
+    <div class="alert alert-info">
+        <strong>Heads up:</strong> Performance Insights is being deprecated on June 30, 2026. After that date the functionality moves to <strong>CloudWatch Database Insights</strong>.
+    </div>
+
+    <h2>5. Safety Warnings</h2>
+
+    <ul>
+        <li>Killing a query in the middle of an <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> triggers a rollback. Large transactions can take a long time to roll back.</li>
+        <li>Always look at the <code>state</code> column first. Queries stuck on <em>Locked</em> or <em>Waiting for metadata lock</em> are usually safe to kill.</li>
+        <li>Killing queries owned by application users may surface errors in your service &mdash; coordinate with the team if you can.</li>
+        <li>Never run these kills against a reader endpoint. The session ids you see there are local to that replica.</li>
+    </ul>
+
+    <h2>Bonus: One-Liner to Kill Everything Older Than 10 Minutes</h2>
+
+    <pre><code class="language-sql">SELECT CONCAT('CALL mysql.rds_kill_query(', id, ');')
+FROM information_schema.PROCESSLIST
+WHERE time > 600
+  AND command != 'Sleep';</code></pre>
+
+    <p>Again, this just <em>generates</em> the statements. Review them before running, because automating a blanket kill is a great way to take down a healthy reporting job by accident.</p>
+
+    <h2>Wrapping Up</h2>
+
+    <p>On AWS RDS MySQL you trade the regular <code>KILL</code> command for two safer stored procedures: <code>mysql.rds_kill_query</code> for the statement and <code>mysql.rds_kill</code> for the whole connection. Combined with <code>information_schema.PROCESSLIST</code> and Performance Insights, you have everything you need to investigate and stop runaway queries &mdash; just remember to do it on the writer.</p>
+</article>
+        </article>
+    </main>
+
+    <footer class="border-t py-8 mt-auto">
+        <div class="container mx-auto px-4 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">© 2026 M Yusuf</p>
+            <div class="flex items-center gap-4 text-muted-foreground">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground"><svg class="h-5 w-5"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground"><svg
+                        class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

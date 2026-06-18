@@ -1,0 +1,123 @@
+<!--
+title: Kill Long Running Queries on AWS RDS MySQL
+description: Learn how to find and safely kill long-running queries on AWS RDS MySQL using the special mysql.rds_kill_query and mysql.rds_kill stored procedures.
+date: 2026-06-18
+tags: aws, rds, mysql, database, performance, devops, backend
+author: M Yusuf
+image: /assets/images/ChatGPT Image Jun 18, 2026, 11_36_01 AM.png
+image_credit: ChatGPT, June 18, 2026
+-->
+
+<article class="blog-post">
+    <h1>Kill Long Running Queries on AWS RDS MySQL</h1>
+    <div class="meta mb-4">June 18, 2026</div>
+
+    <p>Long-running queries can lock tables, eat up CPU, and slow down your entire application. On a self-managed MySQL server you would just use the regular <code>KILL</code> command, but on AWS RDS you do not have <code>SUPER</code> privileges. The good news: AWS provides two stored procedures that do the same job safely.</p>
+
+    <div class="alert alert-warning">
+        <strong>Important:</strong> These queries must be executed on the <strong>writer instance</strong> (primary). The reader/replica only sees its own sessions, so you cannot kill a query running on the writer from a reader endpoint.
+    </div>
+
+    <h2>1. Find the Long-Running Queries</h2>
+
+    <p>Connect to your RDS MySQL writer endpoint using any client (MySQL Workbench, DBeaver, or the <code>mysql</code> CLI) with your master/admin user, then run:</p>
+
+    <pre><code class="language-sql">SELECT
+    id,
+    user,
+    host,
+    db,
+    command,
+    time AS seconds_running,
+    state,
+    info AS current_query
+FROM information_schema.PROCESSLIST
+WHERE command != 'Sleep'
+  AND time > 60                    -- adjust this, e.g. 300 = 5 minutes
+ORDER BY time DESC;</code></pre>
+
+    <p>This lists every active query that has been running for more than 60 seconds. The <code>id</code> column is the value you will pass to the kill procedure.</p>
+
+    <h2>2. Kill the Query Safely</h2>
+
+    <p>RDS exposes two procedures. Prefer the first one whenever possible.</p>
+
+    <pre><code class="language-sql">-- Kill only the QUERY (recommended - keeps the connection alive)
+CALL mysql.rds_kill_query(123456);   -- replace 123456 with the id from PROCESSLIST
+
+-- Kill the whole CONNECTION (more aggressive)
+CALL mysql.rds_kill(123456);</code></pre>
+
+    <h3>Which One Should You Use?</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Command</th>
+                <th>What it does</th>
+                <th>Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>mysql.rds_kill_query(id)</code></td>
+                <td>Stops the current statement, the connection stays alive</td>
+                <td>Lower &mdash; best default choice</td>
+            </tr>
+            <tr>
+                <td><code>mysql.rds_kill(id)</code></td>
+                <td>Terminates the whole client connection</td>
+                <td>Higher &mdash; use only when the connection is stuck</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Generate Kill Commands Automatically</h2>
+
+    <p>If you have several queries to kill, let MySQL build the statements for you:</p>
+
+    <pre><code class="language-sql">SELECT
+    CONCAT('CALL mysql.rds_kill_query(', id, '); -- running for ', time, ' seconds') AS kill_command
+FROM information_schema.PROCESSLIST
+WHERE command != 'Sleep'
+  AND time > 300                    -- queries running more than 5 minutes
+ORDER BY time DESC;</code></pre>
+
+    <p>Copy the output, review it, and paste it back into your client to execute.</p>
+
+    <h2>4. Visual Inspection with Performance Insights</h2>
+
+    <p>If you prefer a UI, AWS Performance Insights gives you a live view of what is happening on the database:</p>
+
+    <ol>
+        <li>Open the AWS Console &rarr; <strong>RDS</strong> &rarr; your DB instance.</li>
+        <li>Click <strong>Performance Insights</strong>.</li>
+        <li>Use the <strong>Top SQL</strong> tab to see the heaviest queries and the <strong>Active sessions</strong> chart to spot waits.</li>
+    </ol>
+
+    <div class="alert alert-info">
+        <strong>Heads up:</strong> Performance Insights is being deprecated on June 30, 2026. After that date the functionality moves to <strong>CloudWatch Database Insights</strong>.
+    </div>
+
+    <h2>5. Safety Warnings</h2>
+
+    <ul>
+        <li>Killing a query in the middle of an <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> triggers a rollback. Large transactions can take a long time to roll back.</li>
+        <li>Always look at the <code>state</code> column first. Queries stuck on <em>Locked</em> or <em>Waiting for metadata lock</em> are usually safe to kill.</li>
+        <li>Killing queries owned by application users may surface errors in your service &mdash; coordinate with the team if you can.</li>
+        <li>Never run these kills against a reader endpoint. The session ids you see there are local to that replica.</li>
+    </ul>
+
+    <h2>Bonus: One-Liner to Kill Everything Older Than 10 Minutes</h2>
+
+    <pre><code class="language-sql">SELECT CONCAT('CALL mysql.rds_kill_query(', id, ');')
+FROM information_schema.PROCESSLIST
+WHERE time > 600
+  AND command != 'Sleep';</code></pre>
+
+    <p>Again, this just <em>generates</em> the statements. Review them before running, because automating a blanket kill is a great way to take down a healthy reporting job by accident.</p>
+
+    <h2>Wrapping Up</h2>
+
+    <p>On AWS RDS MySQL you trade the regular <code>KILL</code> command for two safer stored procedures: <code>mysql.rds_kill_query</code> for the statement and <code>mysql.rds_kill</code> for the whole connection. Combined with <code>information_schema.PROCESSLIST</code> and Performance Insights, you have everything you need to investigate and stop runaway queries &mdash; just remember to do it on the writer.</p>
+</article>
