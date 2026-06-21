@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films | M Yusuf</title>
+    <meta name="description" content="My chaotic film diary — movies, dramas, and K-dramas I rate like my life depends on it.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+                        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+                        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+                        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+                        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+                    },
+                    borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 2px)", sm: "calc(var(--radius) - 4px)" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+        id="light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai.min.css"
+        id="dark-theme">
+
+    <style>
+        .poster {
+            aspect-ratio: 2 / 3;
+            background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--secondary)) 100%);
+        }
+        .poster-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0.75rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            line-height: 1.2;
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.02em;
+        }
+        .rating-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 0.35rem;
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+        .rating-10 { background: #16a34a; }
+        .rating-9 { background: #22c55e; }
+        .rating-8 { background: #84cc16; }
+        .rating-7 { background: #eab308; }
+        .rating-6 { background: #f97316; }
+        .rating-5 { background: #ef4444; }
+        .film-card {
+            transition: transform 0.2s ease;
+        }
+        .film-card:hover {
+            transform: translateY(-4px);
+        }
+        .film-card:hover .poster-img {
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.4);
+        }
+        .filter-btn.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-background text-foreground antialiased transition-colors duration-300">
+    <header
+        class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-6xl">
+            <a href="/" class="flex flex-col">
+                <span class="text-lg font-bold tracking-tight">M YUSUF</span>
+                <span class="text-xs text-muted-foreground">Backend Developer</span>
+            </a>
+            <nav class="flex items-center gap-4 text-sm font-medium">
+                <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
+                <a href="/tools/index.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
+                <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
+                <a href="/about.html" class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                <a href="/my_works.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                <a href="/films.html" class="transition-colors hover:text-foreground/80 text-foreground">Films</a>
+                <button id="themeToggle"
+                    class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                    <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                    </svg>
+                    <svg class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 light-icon"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-10 px-4 max-w-6xl">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold tracking-tight mb-2">Film Diary</h1>
+            <p class="text-muted-foreground">A personal log of the films and dramas I've watched — heavy on Korean cinema, lightly opinionated, and rated by one simple measure: how much it made me feel.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="rounded-xl border bg-card p-4">
+                <div class="text-xs uppercase tracking-widest text-muted-foreground">Total</div>
+                <div class="text-2xl font-bold mt-1" id="stat-total">—</div>
+            </div>
+            <div class="rounded-xl border bg-card p-4">
+                <div class="text-xs uppercase tracking-widest text-muted-foreground">Avg Rating</div>
+                <div class="text-2xl font-bold mt-1" id="stat-avg">—</div>
+            </div>
+            <div class="rounded-xl border bg-card p-4">
+                <div class="text-xs uppercase tracking-widest text-muted-foreground">Perfect 10s</div>
+                <div class="text-2xl font-bold mt-1" id="stat-tens">—</div>
+            </div>
+            <div class="rounded-xl border bg-card p-4">
+                <div class="text-xs uppercase tracking-widest text-muted-foreground">K-Drama Count</div>
+                <div class="text-2xl font-bold mt-1" id="stat-kdrama">—</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-2 mb-8 items-center">
+            <input id="search" type="search" placeholder="Search titles…"
+                class="rounded-md border bg-background px-3 py-1.5 text-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-ring">
+            <div class="flex flex-wrap gap-2">
+                <button class="filter-btn active rounded-md border px-3 py-1.5 text-xs font-medium" data-filter="all">All</button>
+                <button class="filter-btn rounded-md border px-3 py-1.5 text-xs font-medium" data-filter="film">Films</button>
+                <button class="filter-btn rounded-md border px-3 py-1.5 text-xs font-medium" data-filter="drama">Drama</button>
+                <button class="filter-btn rounded-md border px-3 py-1.5 text-xs font-medium" data-filter="kdrama">K-Drama</button>
+                <button class="filter-btn rounded-md border px-3 py-1.5 text-xs font-medium" data-filter="top">10/10 Only</button>
+            </div>
+            <select id="sort" class="ml-auto rounded-md border bg-background px-3 py-1.5 text-sm">
+                <option value="watched">Sort: Recently Watched</option>
+                <option value="rating">Sort: Rating ↓</option>
+                <option value="title">Sort: Title A–Z</option>
+                <option value="category">Sort: Category</option>
+            </select>
+        </div>
+
+        <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+
+        <div id="empty" class="hidden text-center py-16 text-muted-foreground">No matches.</div>
+    </main>
+
+    <footer class="border-t py-12 mt-20">
+        <div class="container mx-auto px-4 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4 text-muted-foreground">
+            <p class="text-sm">© 2026 M Yusuf</p>
+            <div class="flex gap-4">
+                <a href="https://github.com/myusufid" target="_blank" class="hover:text-foreground">GitHub</a>
+                <a href="https://linkedin.com/in/m-yusuf" target="_blank" class="hover:text-foreground">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const FILMS = [
+            // category: film | drama | kdrama
+            // poster: filename in assets/images/movies/ (optional)
+            // watched_date: "YYYY-MM-DD" (optional — drives default sort; undated entries fall to the end)
+            { title: "Titanic", rating: 9, category: "film" },
+            { title: "A Visit Long", rating: 10, category: "film" },
+            { title: "You Are the Apple of My Eye", rating: 10, category: "film" },
+            { title: "My Sassy Girl", rating: 8, category: "film" },
+            { title: "Count Down", rating: 9, category: "film", country: "Thailand" },
+            { title: "WALL·E", rating: 9, category: "film" },
+            { title: "The Uninvited", rating: 8, category: "film" },
+            { title: "Munafik", rating: 8, category: "film", country: "Malaysia" },
+            { title: "Filosofi Kopi", rating: 10, category: "film" },
+            { title: "Train to Busan", rating: 9, category: "film" },
+            { title: "1 Litre of Tears", rating: 10, category: "film" },
+            { title: "Wedding Dress", rating: 9, category: "film" },
+            { title: "Miracle in Cell No.7", rating: 10, category: "film" },
+            { title: "The Green Mile", rating: 9, category: "film" },
+            { title: "3 Idiots", rating: 9, category: "film" },
+            { title: "One Week Friends", rating: 8, category: "film" },
+            { title: "Bad Genius", rating: 9, category: "film" },
+            { title: "The Teacher's Diary", rating: 8, category: "film" },
+            { title: "How to Train Your Dragon", rating: 8, category: "film" },
+            { title: "A Moment to Remember", rating: 8, category: "film" },
+            { title: "Kim Ji-young, Born 1982", rating: 8, category: "film" },
+            { title: "The Host", rating: 8.5, category: "film" },
+            { title: "Parasite", rating: 10, category: "film" },
+            { title: "Extreme Job", rating: 7, category: "film" },
+            { title: "Exit", rating: 10, category: "film" },
+            { title: "Along with the Gods: The Two Worlds", rating: 8.5, category: "film" },
+            { title: "Okja", rating: 8, category: "film" },
+            { title: "Mother", rating: 9, category: "film" },
+            { title: "Keluarga Cemara", rating: 8, category: "film" },
+            { title: "Dua Garis Biru", rating: 9, category: "film" },
+            { title: "Ghost Writer", rating: 8, category: "film" },
+            { title: "Pengabdi Setan", rating: 9, category: "film" },
+            { title: "Marriage Story", rating: 9, category: "film" },
+            { title: "Joker", rating: 9.5, category: "film", year: 2019 },
+            { title: "Searching", rating: 8, category: "film" },
+            { title: "Little Forest", rating: 9, category: "film", country: "Korea" },
+            { title: "Speedy Scandal", rating: 8, category: "film" },
+            { title: "Detective K: Secret of the Lost Island", rating: 8, category: "film" },
+            { title: "Detective K: Secret of the Living Dead", rating: 8, category: "film" },
+            { title: "700 Days of Battle: Us vs. The Police", rating: 7, category: "film" },
+            { title: "Hot Fuzz", rating: 7, category: "film", year: 2007 },
+            { title: "Shaun of the Dead", rating: 7, category: "film", year: 2004 },
+            { title: "Luck-Key", rating: 7, category: "film" },
+            { title: "I Am a Hero", rating: 7, category: "film" },
+            { title: "The Walk", rating: 8, category: "film" },
+            { title: "The Peanut Butter Falcon", rating: 7, category: "film" },
+            { title: "Psychokinesis", rating: 7, category: "film" },
+            { title: "YOLO", rating: 6, category: "film" },
+            { title: "Roh", rating: 8, category: "film", country: "Malaysia" },
+            { title: "Malignant", rating: 8, category: "film" },
+            { title: "Pearl", rating: 7, category: "film" },
+            { title: "Se7en", rating: 6, category: "film" },
+            { title: "The Medium", rating: 7, category: "film" },
+            { title: "Happy Ending", rating: 5, category: "film" },
+            { title: "Eternal Sunshine of the Spotless Mind", rating: 8, category: "film" },
+            { title: "The Disastrous Life of Saiki K.", rating: 9, category: "drama", poster: "saikik.jpeg", watched_date: "2026-06-21" },
+            { title: "Bet", rating: 7, category: "drama", year: 2025, poster: "MV5BZWFkNjVkMTAtNjAwZS00YmZmLWEzY2ItMjc0MGEwNmFhMzk3XkEyXkFqcGc@._V1_.jpg", watched_date: "2026-06-21" },
+            { title: "Kang Solah from Kang Mak X Nenek Gayung", rating: 8, category: "film", country: "Indonesia", poster: "img_2552578797fd21fa57309715a5a321e2.jpg", watched_date: "2026-06-21" },
+            { title: "Modal Nekad", rating: 7, category: "film", country: "Indonesia", poster: "modal-nekad.jpg", watched_date: "2026-06-21" },
+            { title: "Modal Nekad 2", rating: 8, category: "film", country: "Indonesia", poster: "modal-nekad.jpg", watched_date: "2026-06-21" },
+            { title: "Teach You a Lesson", rating: 8, category: "drama", poster: "teach-you-a-lesson-1-1.jpg", watched_date: "2026-06-21" },
+            { title: "Jumbo", rating: 9, category: "film", poster: "images (2).jpeg", watched_date: "2026-06-21" },
+            { title: "Pesugihan Sate Gagak", rating: 6, category: "film", country: "Indonesia", poster: "7f52db9d34c3ed2b769b9f938e087684.jpg", watched_date: "2026-06-21" },
+            { title: "Suka Duka Tawa", rating: 6, category: "film", country: "Indonesia", poster: "16SDTA.jpg", watched_date: "2026-06-21" },
+
+            { title: "Mr. Robot", rating: 10, category: "drama" },
+            { title: "Kisah Tanah Jawa", rating: 8, category: "drama" },
+            { title: "Arteta Rachel Amanda", rating: 7, category: "drama" },
+            { title: "Prison Break", rating: 9, category: "drama" },
+
+            { title: "Reply 1988", rating: 10, category: "kdrama" },
+            { title: "Live", rating: 10, category: "kdrama" },
+            { title: "Kingdom", rating: 9, category: "kdrama" },
+            { title: "Vagabond", rating: 9, category: "kdrama" },
+            { title: "Itaewon Class", rating: 9, category: "kdrama" },
+            { title: "The K2", rating: 8, category: "kdrama" },
+            { title: "Goblin", rating: 8, category: "kdrama" },
+            { title: "What's Wrong with Secretary Kim", rating: 8, category: "kdrama" },
+            { title: "Crash Landing on You", rating: 8, category: "kdrama" },
+            { title: "Memories of the Alhambra", rating: 8, category: "kdrama" },
+            { title: "Fight for My Way", rating: 7, category: "kdrama" },
+            { title: "Arthdal Chronicles", rating: 7, category: "kdrama", poster: "Arthdal_Chronicles-P01.jpg", watched_date: "2026-06-21" },
+            { title: "Be Melodramatic", rating: 7, category: "kdrama" },
+            { title: "The Wonderfools", rating: 7, category: "kdrama", poster: "poster-The-WONDERfoolsjpg-1.jpg", watched_date: "2026-06-21" },
+            { title: "Bloodhounds", rating: 9, category: "kdrama", poster: "MV5BYjhjZmYwYjItYjA1Yy00NzkwLTk1OWMtZjYzZTg2MWFiYmFjXkEyXkFqcGc@._V1_.jpg", watched_date: "2026-06-21" },
+            { title: "Phantom Lawyer", rating: 7, category: "kdrama", poster: "Yoo-Yeon-Seok-Esom-Phantom-Lawyer-신이랑-법률사무소-viu-korean-drama-ghost-horror-dramas-k-drama-legal-dramas-4-vertical.jpeg", watched_date: "2026-06-21" },
+        ];
+
+        const CATEGORY_LABEL = { film: "Film", drama: "Drama", kdrama: "K-Drama" };
+
+        const ratingClass = (r) => {
+            const f = Math.floor(r);
+            return `rating-${Math.min(10, Math.max(5, f))}`;
+        };
+
+        const initials = (t) => t
+            .replace(/[^A-Za-z0-9\s]/g, "")
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 3)
+            .map(w => w[0].toUpperCase())
+            .join("");
+
+        const cardHTML = (f) => {
+            const poster = f.poster
+                ? `<img class="poster poster-img w-full h-full object-cover rounded-lg border" src="/assets/images/movies/${f.poster}" alt="${f.title}" loading="lazy">`
+                : `<div class="poster poster-img poster-placeholder w-full rounded-lg border"><span>${f.title}</span></div>`;
+            const meta = [CATEGORY_LABEL[f.category], f.country, f.year].filter(Boolean).join(" · ");
+            const watched = f.watched_date ? `<div class="text-[10px] text-muted-foreground/70 mt-0.5">Watched ${f.watched_date}</div>` : "";
+            return `
+                <div class="film-card" data-category="${f.category}" data-rating="${f.rating}" data-title="${f.title.toLowerCase()}">
+                    <div class="relative">
+                        ${poster}
+                        <span class="rating-badge ${ratingClass(f.rating)}">${f.rating}</span>
+                    </div>
+                    <div class="mt-2">
+                        <div class="text-sm font-semibold leading-tight truncate" title="${f.title}">${f.title}</div>
+                        <div class="text-xs text-muted-foreground mt-0.5">${meta}</div>
+                        ${watched}
+                    </div>
+                </div>`;
+        };
+
+        const grid = document.getElementById("grid");
+        const empty = document.getElementById("empty");
+        const searchEl = document.getElementById("search");
+        const sortEl = document.getElementById("sort");
+        let activeFilter = "all";
+
+        const apply = () => {
+            const q = searchEl.value.trim().toLowerCase();
+            const sortBy = sortEl.value;
+            let items = FILMS.slice();
+            if (activeFilter === "top") items = items.filter(f => f.rating === 10);
+            else if (activeFilter !== "all") items = items.filter(f => f.category === activeFilter);
+            if (q) items = items.filter(f => f.title.toLowerCase().includes(q));
+            if (sortBy === "watched") items.sort((a, b) => {
+                const da = a.watched_date || "", db = b.watched_date || "";
+                if (!da && !db) return b.rating - a.rating || a.title.localeCompare(b.title);
+                if (!da) return 1;
+                if (!db) return -1;
+                return db.localeCompare(da);
+            });
+            else if (sortBy === "rating") items.sort((a, b) => b.rating - a.rating || a.title.localeCompare(b.title));
+            else if (sortBy === "title") items.sort((a, b) => a.title.localeCompare(b.title));
+            else if (sortBy === "category") items.sort((a, b) => a.category.localeCompare(b.category) || b.rating - a.rating);
+            grid.innerHTML = items.map(cardHTML).join("");
+            empty.classList.toggle("hidden", items.length > 0);
+        };
+
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeFilter = btn.dataset.filter;
+                apply();
+            });
+        });
+        searchEl.addEventListener("input", apply);
+        sortEl.addEventListener("change", apply);
+
+        // Stats
+        document.getElementById("stat-total").textContent = FILMS.length;
+        const avg = FILMS.reduce((s, f) => s + f.rating, 0) / FILMS.length;
+        document.getElementById("stat-avg").textContent = avg.toFixed(1);
+        document.getElementById("stat-tens").textContent = FILMS.filter(f => f.rating === 10).length;
+        document.getElementById("stat-kdrama").textContent = FILMS.filter(f => f.category === "kdrama").length;
+
+        apply();
+    </script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
