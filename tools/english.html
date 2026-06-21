@@ -127,16 +127,14 @@
                 </div>
 
                 <div class="flex items-center gap-4 text-sm font-medium">
+                    <div class="hidden md:flex items-center gap-4">
                     <a href="/" class="transition-colors hover:text-foreground/80 text-foreground/60">Blog</a>
-                    <a href="/tools/index.html"
-                        class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
+                    <a href="/tools/index.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tools</a>
                     <a href="/tags.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Tags</a>
-                    <a href="/about.html"
-                        class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
-                    <a href="/my_works.html"
-                        class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
-                    <a href="/films.html"
-                        class="transition-colors hover:text-foreground/80 text-foreground/60">Films</a>
+                    <a href="/about.html" class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                    <a href="/my_works.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Works</a>
+                    <a href="/films.html" class="transition-colors hover:text-foreground/80 text-foreground/60">Films</a>
+                </div>
                     <button id="themeToggle"
                         class="inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
                         <svg class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 dark-icon"
@@ -149,10 +147,39 @@
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                         </svg>
                     </button>
+                <button id="menuToggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center rounded-md w-9 h-9 border hover:bg-accent hover:text-accent-foreground">
+                    <svg id="menuIconOpen" class="h-[1.2rem] w-[1.2rem]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    <svg id="menuIconClose" class="hidden h-[1.2rem] w-[1.2rem]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M6 18L18 6" /></svg>
+                </button>
                 </div>
             </nav>
         </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t bg-background">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-1 text-sm font-medium">
+                <a href="/" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">Blog</a>
+                <a href="/tools/index.html" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">Tools</a>
+                <a href="/tags.html" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">Tags</a>
+                <a href="/about.html" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">About</a>
+                <a href="/my_works.html" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">Works</a>
+                <a href="/films.html" class="px-2 py-2 rounded-md hover:bg-accent text-foreground/70">Films</a>
+            </div>
+        </div>
     </header>
+    <script>
+        (function () {
+            var btn = document.getElementById("menuToggle");
+            var menu = document.getElementById("mobileMenu");
+            var iconOpen = document.getElementById("menuIconOpen");
+            var iconClose = document.getElementById("menuIconClose");
+            if (!btn || !menu) return;
+            btn.addEventListener("click", function () {
+                var open = menu.classList.toggle("hidden") === false;
+                btn.setAttribute("aria-expanded", String(open));
+                if (iconOpen) iconOpen.classList.toggle("hidden", open);
+                if (iconClose) iconClose.classList.toggle("hidden", !open);
+            });
+        })();
+    </script>
 
     <main class="container mx-auto py-10 px-4 max-w-5xl flex-grow">
         <div class="mb-8">
